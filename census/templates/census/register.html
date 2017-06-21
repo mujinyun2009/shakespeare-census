@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'census/style.css' %}" />
+
+<html>
+
+<body>
+<div class="wrapper">
+
+<ul>
+<li><a class="not.active" href="http://localhost:8000/"><p class="sansserif">
+Titles</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/editions"><p class="sansserif">
+Editions</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/provenance"><p class="sansserif">
+Provenance</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/copy"><p class="sansserif">
+Copy</p></a></li>
+
+
+<li class="dropdown">
+    <a class="not.active" href="http://localhost:8000/census/submission" class="dropbtn"><p class="sansserif">Submission</p></a>
+    <div class="dropdown-content">
+        <a href="http://localhost:8000/census/submission" class="not.active"><p class="sansserif">Titles</p></a>
+        <a href="http://localhost:8000/census/submissionedition"><p class="sansserif">Editions</p></a>
+        <a href="http://localhost:8000/census/submissioncopy"><p class="sansserif">Copies</p></a>
+    </div>
+</li>
+
+<li><a class="active" href="http://localhost:8000/census/register"><p class="sansserif">Register</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/login"><p class="sansserif">Login</p></a></li>
+
+</ul>
+
+<hr width = "30%"></hr>
+	<p class="sansserifgrey">
+	Welcome to Shakespeare Census. </br> Please register below.
+	</p>
+</div>
+<hr width = "30%"></hr>
+{% block content %}
+		<div id="bodycontent">
+		<p class="errors sansserif">
+		<form id="user_form" method="post" action="/census/register">
+				{% csrf_token %}
+			{% if user_form.errors %}  Please correct the error{{ user_form.errors|pluralize }} below. </p> {% endif %}
+				{{ user_form.as_p }}
+				<input type="submit" name="submit" value="Register"/>
+			</p>
+		</form>
+	</div>
+
+{% endblock content %}
+</body>
+</html>

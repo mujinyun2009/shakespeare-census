@@ -1,0 +1,112 @@
+<html>
+<head>
+<style type="text/css">a {text-decoration: none}</style>
+
+
+<style>
+
+label {
+	font-family:"Century Gothic", AppleGothic, sans-serif;
+}
+form {
+	font-family:"Century Gothic", AppleGothic, sans-serif;
+}
+input {
+	font-family:"Century Gothic", AppleGothic, sans-serif;
+}
+button {
+	font-family:"Century Gothic", AppleGothic, sans-serif;
+}
+body {
+	background-color: #FFFFFF;
+}
+p.sansserif {
+	font-family: "Century Gothic", AppleGothic, sans-serif;
+}
+p.sansserifgrey {
+	font-family: "Century Gothic", AppleGothic, sans-serif;
+	color: #808080;
+	font-weight: lighter;
+}
+	.wrapper {
+		text-align: center;
+	}
+	.wrapper ul {
+		display: inline-block;
+		margin: 0;
+		padding: 0;
+		/* For IE, the outcast */
+		zoom:1;
+		*display: inline;
+	}
+
+	ul {
+		list-style-type: none;
+		margin: auto;
+		padding: auto;
+		overflow: hidden;
+		background-color: #FFFFFF;
+	}
+
+	li {
+		float: left;
+	}
+
+	li a {
+		display: block;
+		color: black;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+	}
+
+	li a:hover:not(.active) {
+		background-color: #8FBC8F;
+	}
+
+	.active {
+		background-color: #4CAF50;
+	
+
+</style>
+</head>{% load staticfiles %}
+<body>
+<div class="wrapper">
+
+<ul>
+<li><a class="not.active" href="http://localhost:8000/"><p class="sansserif">
+Titles</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/editions"><p class="sansserif">
+Editions</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/provenance"><p class="sansserif">
+Provenance</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/copy"><p class="sansserif">
+Copy</p></a></li>
+<li><a class="active" href="http://localhost:8000/census/submission"><p class="sansserif">Submission</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/register"><p class="sansserif">Register</p></a></li>
+
+</ul>
+
+<hr width = "30%"></hr>
+	<p class="sansserifgrey">
+	Hello! </br> Please submit your books below. </br> 1. Input your title. </br> 2. Click "Submit". </br> 3. Click "next page".
+	</p>
+</div>
+<hr width = "30%"></hr>
+{% block content %}
+	<div class="wrapper">
+	<p class ="sansserif">
+
+		<form method="post" action="/census/submissionprovenance">
+			{% csrf_token %}
+			{{ provenance_form.as_p }}
+		
+			<input type="submit" name="submit" value="Submit" />
+		<button action ="/census/submission"><a href="http://localhost:8000/census/submission">Next Page</a></button>
+		</form>
+	</p>
+	</div>
+		
+{% endblock content %}
+</body>
+</html>

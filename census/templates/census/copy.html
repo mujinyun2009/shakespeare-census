@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'census/style.css' %}" />
+<html>
+
+<body>
+<div class="wrapper">
+
+<ul>
+<li><a class="not.active" href="http://localhost:8000/"><p class="sansserif">
+Titles</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/editions"><p class="sansserif">
+Editions</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/provenance"><p class="sansserif">
+Provenance</p></a></li>
+<li><a class="active" href="http://localhost:8000/census/copy"><p class="sansserif">
+Copy</p></a></li>
+
+
+<li class="dropdown">
+    <a class="not.active" href="http://localhost:8000/census/submission" class="dropbtn"><p class="sansserif">Submission</p></a>
+    <div class="dropdown-content">
+        <a href="http://localhost:8000/census/submission" class="not.active"><p class="sansserif">Titles</p></a>
+        <a href="http://localhost:8000/census/submissionedition"><p class="sansserif">Editions</p></a>
+        <a href="http://localhost:8000/census/submissioncopy"><p class="sansserif">Copies</p></a>
+    </div>
+</li>
+
+<li><a class="not.active" href="http://localhost:8000/census/register"><p class="sansserif">Register</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/login"><p class="sansserif">Login</p></a></li>
+
+</ul>
+
+
+<hr width = "30%"></hr>
+	<p class="sansserifgrey">
+	This is an interesting sentence. <br>We'll be describing the content of this page with this sentence. This sentence will be very informative. </br> Hopefully, people actually read this sentence.
+	</p>
+</div>
+<hr width = "30%"></hr>
+<br>
+<br>
+<div class="newspaper">
+{% if copies %}
+    {% for copy in copies %}
+    <p class="sansserif">
+    	<table class = "center">
+    		<tr>
+    			<th> Info type </th>
+    			<th> Book info </th>
+    		</tr>
+    		<tr>
+    			<td>Issue</td>
+   				<td>{{ copy.issue }}</td>
+   			</tr>
+
+   			<tr>
+   				<td> NSC </td>
+   				<td>{{ copy.NSC }}</td>
+   			</tr>
+            <tr>
+                <td> Owner </td>
+                <td>{{ copy.Owner }}</td>
+            </tr>
+            <tr>
+                <td> Height </td>
+                <td>{{ copy.Height }}</td>
+            </tr>
+            <tr>
+                <td> Width </td>
+                <td>{{ copy.Width }}</td>
+            </tr>
+            <tr>
+                <td> Condition </td>
+                <td>{{ copy.Condition }}</td>
+            </tr>
+            <tr>
+                <td> Binding </td>
+                <td>{{ copy.Binding }}</td>
+            </tr>
+        </table>
+        <button><a href="{% url 'transactions' copy.id %}">Available transactions</a></button>
+    </p>
+    {% endfor %}
+
+</div>
+</div>
+{% else %}
+    <p class="sansserif" align="center">Oh no! No copies are available.</p>
+{% endif %}
+</body>
+</html>

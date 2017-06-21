@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'census/style.css' %}" />
+
+<html>
+<body>
+<div class="wrapper">
+
+<ul>
+<li><a class="not.active" href="http://localhost:8000/"><p class="sansserif">
+Titles</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/editions"><p class="sansserif">
+Editions</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/provenance"><p class="sansserif">
+Provenance</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/copy"><p class="sansserif">
+Copy</p></a></li>
+
+
+<li class="dropdown">
+	<a class="active" href="http://localhost:8000/census/submission" class="dropbtn"><p class="sansserif">Submission</p></a>
+	<div class="dropdown-content">
+    	<a href="http://localhost:8000/census/submission" class="active2"><p class="sansserif">Titles</p></a>
+    	<a href="http://localhost:8000/census/submissionedition"><p class="sansserif">Editions</p></a>
+    	<a href="http://localhost:8000/census/submissioncopy"><p class="sansserif">Copies</p></a>
+  	</div>
+</li>
+
+<li><a class="not.active" href="http://localhost:8000/census/register"><p class="sansserif">Register</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/login"><p class="sansserif">Login</p></a></li>
+
+</ul>
+
+<hr width = "30%"></hr>
+	<p class="sansserifgrey">
+    1. Input the information. </br> 2. Click "Submit".
+	<!-- <font size = "6"> <light>Title</light> </font></br>1. Input the information. </br> 2. Click "Submit". -->
+	</p>
+</div>
+<hr width = "30%"></hr>
+{% block content %}
+	<div class="wrapper">
+	<p class ="sansserif">
+		<form method="post" action="/census/submission">
+			{% csrf_token %}
+      <h2>About the title:</h2>
+			{{ title_dropdown_form.as_table }}
+      <button><a href="/census/addTitle">Add title+</a></button>
+      <h2>About the edition:</h2>
+      {{ edition_form.as_p }}
+      <h2>About the issue:</h2>
+      {{ issue_form.as_p }}
+      <h2>About the copy:</h2>
+      {{ copy_form.as_p }}
+      <h2>About the provenance:</h2>
+      {{ provenance_form.as_p }}
+
+		<div class="my-button">
+    		<input type="submit" name="submit" value="Submit" class="django-submit"/>
+		</div>
+
+		</form>
+	</p>
+	</div>
+
+{% endblock content %}
+</body>
+</html>
