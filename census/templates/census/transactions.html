@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-{% load staticfiles %}
+{% extends "base.html" %}
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'census/style.css' %}" />
-
-<html>
-<body>
+{% block content %}
 <div class="wrapper">
 
 <ul>
@@ -74,23 +70,6 @@ Copy</p></a></li>
    				<td> Price: </td>
    				<td>${{ transaction.price }}</td>
    			</tr>
-
-   			<!-- <tr>
-   				<td>Publication Year</td>
-       			<td>{{ edition.year }}</td>
-       		</tr>
-        	<tr>
-        		<td>Edition Format</td>
-        		<td>{{ edition.Edition_format }}</td>
-        	</tr>
-        	<tr>
-        		<td>STC</td>
-       			<td>{{ edition.STC }}</td>
-       		</tr>
-       		<tr>
-       			<td>ESTC</td>
-        		<td>{{ edition.ESTC }}</td>
-        	</tr>
         </table>
     </p>
     {% endfor %}
@@ -102,3 +81,4 @@ Copy</p></a></li>
 {% endif %}
 </body>
 </html>
+{% endblock content %}

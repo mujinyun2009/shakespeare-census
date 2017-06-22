@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-{% load staticfiles %}
+{% extends "base.html" %}
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'census/style.css' %}" />
-<html>
-
-<body>
+{% block content %}
 <div class="wrapper">
 
 <ul>
@@ -91,3 +87,4 @@ Copy</p></a></li>
 {% endif %}
 </body>
 </html>
+{% endblock content %}

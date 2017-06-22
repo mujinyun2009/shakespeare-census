@@ -31,6 +31,9 @@ class ProvenanceForm(forms.ModelForm):
 class TitleDropDownForm(forms.Form):
 	title = forms.ModelChoiceField(queryset=Title.objects.all().order_by('-pk'), empty_label=None)
 
+class EditionDropDownForm(forms.Form):
+	Edition = forms.ModelChoiceField(queryset=Edition.objects.all().order_by('-pk'), empty_label=None)
+
 class LoginForm(forms.ModelForm):
 	error_messages = {'password_mismatch': "The two password fields didn't "
 					  "match. Please enter both fields again",

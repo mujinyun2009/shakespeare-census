@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-{% load staticfiles %}
+{% extends "base.html" %}
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'census/style.css' %}" />
-
-<html>
-<body>
+{% block content %}
 <div class="wrapper">
 
 <ul>
@@ -39,7 +35,7 @@ Copy</p></a></li>
 	</p>
 </div>
 <hr width = "30%"></hr>
-{% block content %}
+
 	<div class="wrapper">
 	<p class ="sansserif">
 		<form method="post" action="/census/submission">
@@ -63,7 +59,4 @@ Copy</p></a></li>
 		</form>
 	</p>
 	</div>
-
 {% endblock content %}
-</body>
-</html>
