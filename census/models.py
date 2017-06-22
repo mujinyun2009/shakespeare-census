@@ -85,30 +85,20 @@ class UserProfile(models.Model):
 		self.user.delete()
 		return super(UserProfile,self).delete(*args, **kwargs)
 
+class Entity(models.Model):
+	name = models.CharField(max_length=200)
+	notes = models.CharField(max_length=500)
+	def __str__(self):
+		return "%s" % (self.name)
+	class Meta:
+		verbose_name_plural = "entities"
+
 class Transaction(models.Model):
 	copy = models.ForeignKey(Copy, on_delete=models.CASCADE)
-	owner = models.CharField(max_length=100)
-	seller = models.CharField(max_length=100)
-	data_transaction = models.CharField(max_length=200)
+	buyer = models.ForeignKey(Entity, related_name="entity_buyer", max_length=100)
+	seller = models.ForeignKey(Entity, related_name="entity_seller", max_length=100)
+	# data_transaction = models.CharField(max_length=200)
 	date = models.DateField()
 	price = models.DecimalField(max_digits = 10, decimal_places=2)
 	def __str__(self):
-		return "%s to %s" % (self.owner, self.seller)
-
-# class TitleForm(ModelForm):
-# 	class Meta:
-# 		model = Title
-# 		fields = '__all__'
-# class EditionForm(ModelForm):
-# 	class Meta:
-# 		model = Edition
-# 		fields = '__all__'
-#
-# class CopyForm(ModelForm):
-# 	class Meta:
-# 		model = Copy
-# 		fields = '__all__'
-# class ProvenanceForm(ModelForm):
-# 	class Meta:
-# 		model = Provenance
-# 		fields = '__all__'
+		return "Sold from %s to %s" % (self.seller, self.buyer)

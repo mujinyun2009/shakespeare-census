@@ -88,6 +88,12 @@ def login_user(request):
 	else:
 		return HttpResponse(template.render({'next': request.GET.get('next', '/census')}, request))
 
+def logout_user(request):
+	template = loader.get_template('census/logout.html')
+	logout(request)
+	context = {}
+	return HttpResponse(template.render(context,request))
+
 @login_required()
 def addTitle(request):
 	template=loader.get_template('census/addTitle.html')

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+  <div class="wrapper">
+  <h3>Logged out</h3>
+  <p>Thanks for spending some quality time with the Web site today.</p>
+  <a class="not.active" href="{% url 'login_user' %}"><p class="sansserif">Login again</p></a>
+  </div>
+{% endblock content %}

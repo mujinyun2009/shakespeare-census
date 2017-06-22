@@ -1,0 +1,55 @@
+  {% load static %}
+<html>
+    <head>
+        <title>Shakespeare Census</title>
+	<meta charset="utf-7">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="http://s3.amazonaws.com/libapps/customers/220/images/favicon.ico" type="image/png">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    	<link rel="stylesheet" type="text/css" href="{% static 'census/style.css' %}" />
+      <style>
+        #banner-top {
+          width: auto;
+          height: 130px;
+          padding: 10px 40px;
+          background: #417690;
+          line-height: 40px;
+          color: #ffc;
+        }
+
+        #banner-top a {
+            color: #eaeaea;
+            text-decoration: none;
+        }
+        .user-tools {
+          float: right;
+          margin: 25px 25px 0px 0px;
+        }
+        .pagetitle {
+            color: #f5dd5d;
+            font-family: "Times New Roman", Times, serif;
+            float: left;
+            margin: 30px 0px 30px 20px;
+        }
+      </style>
+    </head>
+
+    <body>
+      <div id="banner-top">
+          <h1 class="pagetitle"> Shakespeare Census </h1>
+          <div class="user-tools">
+            Welcome,<strong>user</strong>.
+            <a href="{% url 'index' %}">Register</a>/
+            <a href="{% url 'login_user' %}">Log in</a>/
+            <a href="{% url 'logout_user' %}">Log out</a>
+        </div>
+      </div>
+        {% block content %}{% endblock content %}
+    </body>
+</html>

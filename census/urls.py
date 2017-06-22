@@ -15,5 +15,6 @@ urlpatterns = [
 	# url(r'^submissioncopy$', views.Copyz, name='Copyz'),
 	# url(r'^submissionprovenance$', views.Provenancez, name='Provenancez'),
 	url(r'^login$', views.login_user, name='login_user'),
-	url(r'^accounts/login/$', views.login_user, name='login_user')
+	url(r'^accounts/login/$', views.login_user, name='login_user'),
+	url(r'^logout$', views.logout_user, name='logout_user'),
 ]

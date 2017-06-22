@@ -29,7 +29,7 @@ class ProvenanceForm(forms.ModelForm):
 		exclude = ['copy']
 
 class TitleDropDownForm(forms.Form):
-	title = forms.ModelChoiceField(queryset=Title.objects.all().order_by('title'))
+	title = forms.ModelChoiceField(queryset=Title.objects.all().order_by('-pk'), empty_label=None)
 
 class LoginForm(forms.ModelForm):
 	error_messages = {'password_mismatch': "The two password fields didn't "
