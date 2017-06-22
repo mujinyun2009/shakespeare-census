@@ -116,28 +116,28 @@ def addTitle(request):
 def submissionForm(request):
 	template=loader.get_template('census/submission.html')
 	title_dropdown_form=TitleDropDownForm()
-	# title_form=TitleForm()
-	edition_form=EditionForm()
+	edition_form=EditionDropDownForm()
+	# edition_form=EditionForm()
 	issue_form=IssueForm()
 	copy_form=CopyForm()
 	provenance_form=ProvenanceForm()
 
 	if request.method == 'POST':
 		title_dropdown_form= TitleDropDownForm(data=request.POST)
-		# title_form=TitleForm(data=request.POST)
-		edition_form = EditionForm(data=request.POST)
+		edition_form=EditionDropDownForm(data=request.POST)
+		# edition_form = EditionForm(data=request.POST)
 		issue_form = IssueForm(data=request.POST)
 		copy_form = CopyForm(data=request.POST)
 		provenance_form = ProvenanceForm(data=request.POST)
 
 		if title_dropdown_form.is_valid():
 			title = title_dropdown_form.cleaned_data['title']
-			# title=title_form.save(commit=True)
-			title.save()
+			
 			if edition_form.is_valid():
-				edition = edition_form.save(commit=False)
-				edition.title = title
-				edition.save()
+				edition = edition_forms.cleaned_data['edition']
+				# edition = edition_form.save(commit=False)
+				# edition.title = title
+				# edition.save()
 				if issue_form.is_valid():
 					issue = issue_form.save(commit=False)
 					issue.edition = edition
