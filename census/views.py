@@ -16,8 +16,18 @@ from django.views.generic import ListView
 from django.forms import formset_factory
 from django.contrib import admin
 
-
 # Create your views here.
+
+def homepage(request):
+    template=loader.get_template('frontpage.html')
+    context = {
+
+    }
+    return HttpResponse(template.render(context, request))
+def search(request):
+    query = request.POST.get('qs', '')
+    results = Title.objects.filter(title=query) # Your search algo goes here
+    return render(request, 'census/index.html', dict(results=results))
 
 def index(request):
 	title = Title.objects.all()
@@ -132,7 +142,7 @@ def submissionForm(request):
 
 		if title_dropdown_form.is_valid():
 			title = title_dropdown_form.cleaned_data['title']
-			
+
 			if edition_form.is_valid():
 				edition = edition_forms.cleaned_data['edition']
 				# edition = edition_form.save(commit=False)
