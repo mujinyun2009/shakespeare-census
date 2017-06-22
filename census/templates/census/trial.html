@@ -1,0 +1,55 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<form action="" method="get" accept-charset="utf-8">
+
+<select name="title" id="title">
+<option value="Z">Select a title</option>
+{% for title in all_titles %}
+  <option value="{{ title.id }}">{{ title.title }}</option>
+{% endfor %}
+</select>
+
+<select name="edition" id="edition" disabled="true">
+<option>Select an edition</option>
+</select>
+</form>
+
+
+<script>
+$(document).ready(
+function() {
+$("select#title").change(function() {
+if ($(this).val() == 'Z') {
+$("select#edition").html("<option>Select an edition</option>");
+$("select#edition").attr('disabled', false);
+}
+else {
+var url = "/title/" + $(this).val() + "/";
+var title = $(this).val();
+$.getJSON(url, function(editions) {
+var options = '<option value="Z">Select an edition</option>';
+for (var i = 0; i < editions.length; i++) {
+options += '<option value="' + editions[i].pk + '">' + editions[i].fields['edition'] + '</option>';
+}
+$("select#edition").html(options);
+$("select#edition option:first").attr('selected', 'selected');
+$("select#edition").attr('disabled', false);
+});
+}
+});
+
+
+$("select#edition").change(function(vent) {
+if ($(this).val() == -1) {
+return;
+}
+myAwesomeFunctionToCallWhenAModelIsSelected();
+});
+});
+}
+
+</script>
+{% endblock content %}

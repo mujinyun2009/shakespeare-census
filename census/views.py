@@ -16,6 +16,7 @@ from django.views.generic import ListView
 from django.forms import formset_factory
 from django.contrib import admin
 
+
 # Create your views here.
 
 def homepage(request):
@@ -104,6 +105,22 @@ def logout_user(request):
 	context = {}
 	return HttpResponse(template.render(context,request))
 
+def trial(request):
+	template = loader.get_template('census/trial.html')
+	all_titles = Title.objects.all()
+	context = {
+	'all_titles': all_titles
+	}
+	return HttpResponse(template.render(context, request))
+
+def all_json_models(request, id):
+	current_title = Title.objects.get(pk=id)
+	editions = current_title.edition_set.all()
+	# editions=Edition.objects.all().filter(title=current_title)
+	json_models = serializers.serialize("json", editions)
+	return HttpResponse(json_models, mimetype="application/javascript")
+
+
 @login_required()
 def addTitle(request):
 	template=loader.get_template('census/addTitle.html')
@@ -144,7 +161,7 @@ def submissionForm(request):
 			title = title_dropdown_form.cleaned_data['title']
 
 			if edition_form.is_valid():
-				edition = edition_forms.cleaned_data['edition']
+				edition = edition_form.cleaned_data['edition']
 				# edition = edition_form.save(commit=False)
 				# edition.title = title
 				# edition.save()
@@ -191,6 +208,7 @@ def transactions(request, copy_id):
 		'transactions': transactions
 	}
 	return HttpResponse(template.render(context,request))
+
 
 # @login_required()
 # def Editionz(request):
