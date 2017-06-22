@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<style>
+p.sansserif {
+	font-family: "Century Gothic", AppleGothic, sans-serif;
+}
+p.sansserifgrey {
+	font-family: "Century Gothic", AppleGothic, sans-serif;
+	color: #808080;
+	font-weight: lighter;
+}
+.verticalLine {
+  border-left: thin solid #808080;
+}
+table {
+	border-collapse:collapse;
+  padding: auto;
+  overflow: hidden;
+}
+tr {
+	border:none;
+}
+th, td {
+	padding-top:0;
+	padding-bottom:0;
+}
+#content img {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+td a {
+  display: block;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+}
+
+td:hover:not(.active) {
+  background-color: #8FBC8F;
+}
+
+.active {
+  background-color: #4CAF50;
+  text-decoration: none;
+}
+.active2 {
+  background-color: #83cca5;
+}
+
+.header {
+  text-align: center;
+}
+table.center {
+  width:300px;
+  height:100px;
+  margin-left:-150px;
+  top:50%;
+  left:50%;
+  position:fixed;
+  margin-top:-50px;
+}
+
+
+table td {
+border-left: 1px solid #000;
+border-right: 1px solid #000;
+border-top: 0px;
+border-bottom: 0;
+}
+
+table td:first-child {
+border-left: none;
+}
+
+table td:last-child {
+border-right: none;
+}
+
+
+</style>
+<head>
+</head>
+<body>
+<div class = "header">
+<table class = "center">
+<tr>
+<td>
+<p class = sansserif>
+<a class="not.active" href="http://localhost:8000/">search</a>
+</p>
+</td>
+<td>
+<p class = sansserif>
+<a class="not.active" href="http://localhost:8000/">submit</a>
+</p>
+</td>
+<td>
+<p class = sansserif>
+<a class="not.active" href="http://localhost:8000/">account</a>
+</p>
+</td>
+</table>
+</div>
+<div id = "content">
+<img src="login button.png" style ="width:20px;height:27px;">
+</div>
+</body>
