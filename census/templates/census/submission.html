@@ -1,62 +1,61 @@
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<div class="wrapper">
-
-<ul>
-<li><a class="not.active" href="http://localhost:8000/"><p class="sansserif">
-Titles</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/editions"><p class="sansserif">
-Editions</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/provenance"><p class="sansserif">
-Provenance</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/copy"><p class="sansserif">
-Copy</p></a></li>
-
-
-<li class="dropdown">
-	<a class="active" href="http://localhost:8000/census/submission" class="dropbtn"><p class="sansserif">Submission</p></a>
-	<div class="dropdown-content">
-    	<a href="http://localhost:8000/census/submission" class="active2"><p class="sansserif">Titles</p></a>
-    	<a href="http://localhost:8000/census/submissionedition"><p class="sansserif">Editions</p></a>
-    	<a href="http://localhost:8000/census/submissioncopy"><p class="sansserif">Copies</p></a>
-  	</div>
-</li>
-
-<li><a class="not.active" href="http://localhost:8000/census/register"><p class="sansserif">Register</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/login"><p class="sansserif">Login</p></a></li>
-
-</ul>
-
-<hr width = "30%"></hr>
-	<p class="sansserifgrey">
-    1. Input the information. </br> 2. Click "Submit".
-	<!-- <font size = "6"> <light>Title</light> </font></br>1. Input the information. </br> 2. Click "Submit". -->
-	</p>
+<form action="" method="get" accept-charset="utf-8" style="margin-left:20px">
+<div>
+  <p>Select a title</p>
+  <select name="title" id="title">
+  <option value="Z">Select a title</option>
+  {% for title in all_titles %}
+    <option value="{{ title.id }}">{{ title.title }}</option>
+  {% endfor %}
+  </select>
+  <button class="btn btn-info"><a href="{% url 'addTitle' %}" target="_blank">Add title+</a></button>
 </div>
-<hr width = "30%"></hr>
 
-	<div class="wrapper">
-	<p class ="sansserif">
-		<form method="post" action="/census/submission">
-			{% csrf_token %}
-      <h2>About the title:</h2>
-			{{ title_dropdown_form.as_table }}
-      <button><a href="/census/addTitle">Add title+</a></button>
-      <h2>About the edition:</h2>
-      {{ edition_form.as_p }}
-      <h2>About the issue:</h2>
-      {{ issue_form.as_p }}
-      <h2>About the copy:</h2>
-      {{ copy_form.as_p }}
-      <h2>About the provenance:</h2>
-      {{ provenance_form.as_p }}
+<div class='edition_section' style='display:none'>
+  <p>Select an edition</p>
+  <select name="edition" id="edition">
+  <option>Select an edition</option>
+  </select>
+  <button class="btn btn-info"><a href="#" target="_blank" id="add_edition">Add edition+</a></button>
+</div>
+</form>
 
-		<div class="my-button">
-    		<input type="submit" name="submit" value="Submit" class="django-submit"/>
-		</div>
 
-		</form>
-	</p>
-	</div>
+<script type="text/javascript">
+$(document).ready(function() {
+  $("select#title").change(function() {
+    if ($(this).val() == 'Z') {
+      $('.edition_section').attr('style', 'display:none');
+    }
+    else {
+      $('.edition_section').attr('style', 'display:inline');
+      var title = $(this).val();
+      var new_url = "/census/addEdition/" + $(this).val() + "/";
+      $('#add_edition').attr('href', new_url);
+      var url = "/census/title/" + $(this).val() + "/";
+      $.getJSON(url, function(editions) {
+        var options = '<option value="Z">Select an edition</option>';
+        for (var i = 0; i < editions.length; i++) {
+          options += '<option value="' + editions[i]['id'] + '">Edition ' + editions[i]['Edition_number'] + '</option>';
+        }
+        $("select#edition").html(options);
+        $("select#edition option:first").attr('selected', 'selected');
+      });
+    }
+  });
+
+// $("select#edition").change(function(vent) {
+//   if ($(this).val() == -1) {
+//     return;
+//   }
+//   myFunctionToCallWhenAModelIsSelected();
+//   });
+});
+
+
+</script>
 {% endblock content %}
