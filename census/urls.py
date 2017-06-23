@@ -10,6 +10,7 @@ urlpatterns = [
  	url(r'^register$', views.register, name='register'),
 	url(r'^submission$', views.submissionForm, name='submission'),
 	url(r'^addTitle$', views.addTitle, name='addTitle'),
+	url(r'^addEdition/(?P<title_id>[0-9]+)/$', views.addEdition, name='add_Edition'),
 	url(r'^transactions/(?P<copy_id>[0-9]+)/$', views.transactions, name='transactions'),
 	# url(r'^submissionedition$', views.Editionz, name='Editionz'),
 	# url(r'^submissioncopy$', views.Copyz, name='Copyz'),

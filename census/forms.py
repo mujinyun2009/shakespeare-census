@@ -8,10 +8,10 @@ class TitleForm(forms.ModelForm):
 		model = Title
 		fields = '__all__'
 
-class EditionForm(forms.ModelForm):
-	class Meta:
-		model = Edition
-		exclude = ['title']
+class EditionForm(forms.Form):
+	year = forms.IntegerField()
+	Edition_number = forms.IntegerField()
+	Edition_format = forms.CharField()
 
 class CopyForm(forms.ModelForm):
 	class Meta:

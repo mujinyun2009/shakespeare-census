@@ -15,7 +15,9 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
 from django.forms import formset_factory
 from django.contrib import admin
-
+from django.core import serializers
+from django.forms.models import model_to_dict
+import json
 
 # Create your views here.
 
@@ -116,10 +118,10 @@ def trial(request):
 def all_json_models(request, id):
 	current_title = Title.objects.get(pk=id)
 	editions = current_title.edition_set.all()
-	# editions=Edition.objects.all().filter(title=current_title)
-	json_models = serializers.serialize("json", editions)
-	return HttpResponse(json_models, mimetype="application/javascript")
-
+	data = []
+	for edition in editions:
+		data.append(model_to_dict(edition))
+	return HttpResponse(json.dumps(data), content_type='application/json')
 
 @login_required()
 def addTitle(request):
@@ -128,16 +130,40 @@ def addTitle(request):
 		title_form= TitleForm(data=request.POST)
 		if title_form.is_valid():
 			title_form = title_form.save(commit=True)
-			return HttpResponseRedirect("/census/submission")
+			return HttpResponseRedirect("/census/trial")
 		else:
 			print(title_form.errors)
 	else:
 		title_form=TitleForm()
 	context = {
-	'title_form': title_form
+	   'title_form': title_form
 	}
 	return HttpResponse(template.render(context, request))
 
+def addEdition(request, title_id):
+    template=loader.get_template('census/addEdition.html')
+    selected_title =Title.objects.get(pk=title_id)
+    edition_form=EditionForm()
+    if request.method=='POST':
+        edition_form=EditionForm(data=request.POST)
+        if edition_form.is_valid():
+            # print (selected_title)
+            new_year = edition_form.cleaned_data['year']
+            print (new_year)
+            new_Edition_number = edition_form.cleaned_data['Edition_number']
+            new_Edition_format = edition_form.cleaned_data['Edition_format']
+            Edition.objects.create(title=selected_title, year=new_year, Edition_number=new_Edition_number, Edition_format=new_Edition_format)
+            # edition=edition_form.save(commit=False)
+            # edition.title=selected_title
+            # edition.save()
+            return HttpResponseRedirect("/census/trial")
+        else:
+            print(edition_form.errors)
+    context={
+        'edition_form':edition_form,
+        'selected_title': selected_title,
+    }
+    return HttpResponse(template.render(context, request))
 
 @login_required()
 def submissionForm(request):
