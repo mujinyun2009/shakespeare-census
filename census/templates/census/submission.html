@@ -3,6 +3,12 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<style>
+	.hidden {
+		display: none;
+	}
+</style>
+
 <form action="" method="get" accept-charset="utf-8" style="margin-left:20px">
 <div>
   <p>Select a title</p>
@@ -22,6 +28,16 @@
   </select>
   <button class="btn btn-info"><a href="#" target="_blank" id="add_edition">Add edition+</a></button>
 </div>
+
+<div class='issue_section' style='display:none'>
+  <p>Select an issue</p>
+  <select name="issue" id="issue">
+  <option>Select an issue</option>
+  </select>
+  <button class="btn btn-info"><a href="#" target="_blank" id="add_issue">Add issue+</a></button>
+</div>
+
+
 </form>
 
 
@@ -48,14 +64,29 @@ $(document).ready(function() {
     }
   });
 
-// $("select#edition").change(function(vent) {
-//   if ($(this).val() == -1) {
-//     return;
-//   }
-//   myFunctionToCallWhenAModelIsSelected();
-//   });
-});
+  $("select#edition").change(function(vent) {
+    if ($(this).val() == 'Z') {
+      $('.issue_section').attr('style', 'display:none');
+    }
+    else {
+      $('.issue_section').attr('style', 'display:inline');
+      var edition = $(this).val();
+      var new_url = "/census/addIssue/" + $(this).val() + "/";
+      $('#add_issue').attr('href', new_url);
+      var url = "/census/edition/" + $(this).val() + "/";
+      $.getJSON(url, function(issues) {
+        var options = '<option value="Z">Select an issue</option>';
+        for (var i = 0; i < issues.length; i++) {
+          options += '<option value="' + issues[i]['id'] + '">Issue ' + issues[i]['STC_Wing'] + '</option>';
+        }
+        $("select#issue").html(options);
+        $("select#issue option:first").attr('selected', 'selected');
+      });
+    }
+  });
 
+
+});
 
 </script>
 {% endblock content %}

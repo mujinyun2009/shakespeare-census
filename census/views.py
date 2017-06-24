@@ -132,6 +132,14 @@ def json_editions(request, id):
 		data.append(model_to_dict(edition))
 	return HttpResponse(json.dumps(data), content_type='application/json')
 
+def json_issues(request, id):
+	current_edition = Edition.objects.get(pk=id)
+	issues = current_edition.issue_set.all()
+	data = []
+	for issue in issues:
+		data.append(model_to_dict(issue))
+	return HttpResponse(json.dumps(data), content_type='application/json')
+
 @login_required()
 def addTitle(request):
 	template=loader.get_template('census/addTitle.html')
@@ -165,10 +173,34 @@ def add_edition(request, title_id):
         else:
             print(edition_form.errors)
     else:
-        edition_form=EditionForm()        
+        edition_form=EditionForm()
+
     context={
         'edition_form':edition_form,
         'title_id': title_id,
+    }
+    return HttpResponse(template.render(context, request))
+
+@login_required()
+def add_issue(request, edition_id):
+    template=loader.get_template('census/addIssue.html')
+    selected_edition =Edition.objects.get(pk=edition_id)
+
+    if request.method=='POST':
+        issue_form=IssueForm(data=request.POST)
+        if issue_form.is_valid():
+            issue=issue_form.save(commit=False)
+            issue.edition=selected_edition
+            issue.save()
+            return HttpResponseRedirect("/census/submission")
+        else:
+            print(issue_form.errors)
+    else:
+        issue_form=IssueForm()
+
+    context={
+        'issue_form':issue_form,
+        'edition_id': edition_id,
     }
     return HttpResponse(template.render(context, request))
 
