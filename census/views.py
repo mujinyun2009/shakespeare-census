@@ -23,16 +23,20 @@ from itertools import chain
 def search(request):
 	template=loader.get_template('results.html')
 	query = request.GET.get('q')
-	print type(query)
+	category = request.GET.get('j')
 	title_list = Title.objects.all()
 	issue_list = Issue.objects.all()
+	edition_list = Edition.objects.all()
 	if query:
-		if any(s in query for s in ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')):
+		if category == "DEEP":
 			issue_list = issue_list.filter(Q(DEEP=query))
 			result_list = list(chain(issue_list))
-		else:
+		if category == "Title":
 			title_list = title_list.filter(Q(title__icontains= query))
 			result_list = list(chain(title_list))
+		if category == "Year":
+			edition_list = edition_list.filter(Q(year = query))
+			result_list = list(chain(edition_list))
 	else:
 		print(form.errors)
 	context = {
