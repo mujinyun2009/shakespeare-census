@@ -38,7 +38,7 @@ Copy</p></a></li>
 
 	<div class="wrapper">
 	<p class ="sansserif">
-		<form method="post" action="{% url 'addTitle' %}">
+		<form method="post" action="{% url 'add_title' %}">
 			{% csrf_token %}
 			{{ title_form.as_p }}
 		<div class="my-button">

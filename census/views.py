@@ -117,12 +117,27 @@ def logout_user(request):
 	return HttpResponse(template.render(context,request))
 
 def submission(request):
-	template = loader.get_template('census/submission.html')
-	all_titles = Title.objects.all()
-	context = {
-	'all_titles': all_titles
+    template = loader.get_template('census/submission.html')
+    all_titles = Title.objects.all()
+    copy_form = CopyForm()
+    if request.method=='POST':
+        issue_id=request.POST.get('issue')
+        selected_issue=Issue.objects.get(pk=issue_id)
+        copy_form=CopyForm(data=request.POST)
+        if copy_form.is_valid():
+            copy=copy_form.save(commit=False)
+            copy.issue=selected_issue
+            copy.save()
+            return HttpResponseRedirect("/census/submission")
+    else:
+        copy_form=CopyForm()
+
+    context = {
+	'all_titles': all_titles,
+    'copy_form': copy_form,
 	}
-	return HttpResponse(template.render(context, request))
+
+    return HttpResponse(template.render(context, request))
 
 def json_editions(request, id):
 	current_title = Title.objects.get(pk=id)
@@ -141,7 +156,7 @@ def json_issues(request, id):
 	return HttpResponse(json.dumps(data), content_type='application/json')
 
 @login_required()
-def addTitle(request):
+def add_title(request):
 	template=loader.get_template('census/addTitle.html')
 	if request.method == 'POST':
 		title_form= TitleForm(data=request.POST)
