@@ -8,6 +8,9 @@ class TitleForm(forms.ModelForm):
 		model = Title
 		fields = '__all__'
 
+class SearchForm(forms.Form):
+    search = forms.CharField()
+
 class EditionForm(forms.ModelForm):
 	class Meta:
 		model = Edition

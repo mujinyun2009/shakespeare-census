@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 
 from . import views
 
@@ -18,7 +18,7 @@ urlpatterns = [
 	url(r'^accounts/login/$', views.login_user, name='login_user'),
 	url(r'^logout$', views.logout_user, name='logout_user'),
 	url(r'^homepage$',views.homepage, name='homepage'),
-	url(r'^search$', views.search, name='search'),
+	url(r'^search/$', views.search, name='search_for_something'),
 	url(r'^trial$', views.trial, name='trial'),
 	url(r'^title/(?P<id>[0-9]+)/$', views.all_json_models, name='addEdition'),
 ]

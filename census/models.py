@@ -4,6 +4,15 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 #from pillow import Image
 #Create your models here.
+class Note(models.Model):
+    user = models.ForeignKey(User)
+    pub_date = models.DateTimeField()
+    title = models.CharField(max_length=200)
+    body = models.TextField()
+
+    def __unicode__(self):
+        return self.title
+
 class Title(models.Model):
 	title = models.CharField(max_length=128, unique=False)
 	Apocryphal = models.BooleanField(default=False)

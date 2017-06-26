@@ -1,2 +1,4 @@
 Django
 MySQL-python
+django-haystack
+Whoosh
