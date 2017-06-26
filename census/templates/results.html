@@ -1,8 +1,12 @@
+{% extends "base.html" %}
 {% block content %}
 
-
+DEEP
 {% for obj in result_list %}
 {{ obj.DEEP }}
+{% endfor %}
+TITLE
+{% for obj in result_list %}
 {{ obj.title }}
 {% endfor %}
 {% endblock content %}

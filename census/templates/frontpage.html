@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
 <style>
 p.sansserif {
 	font-family: "Century Gothic", AppleGothic, sans-serif;
@@ -16,6 +21,26 @@ table {
 	border-collapse:collapse;
   padding: auto;
   overflow: hidden;
+}
+input {
+  font-family:"Century Gothic", AppleGothic, sans-serif;
+  color: #808080;
+  font-weight: lighter;
+}
+
+.form-control:focus {
+    border-color: #ffffff;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0) inset, 0px 0px 0px rgba(0, 0, 0, 0);
+}
+
+.hidden {
+  display: none;
+}
+form {
+  position: fixed;
+  margin-left:-150px;
+  left:52%;
+  top: 65%;
 }
 tr {
 	border:none;
@@ -60,7 +85,17 @@ table.center {
   position:fixed;
   margin-top:-50px;
 }
-
+.Submission {
+  text-decoration: none;
+  border : none;
+  padding: 10px 30px;
+  position:fixed;
+  top:65%;
+  left:56%;
+  color: #FFFFFF;
+  background: #8FBC8F;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+}
 
 table td {
 border-left: 1px solid #000;
@@ -96,9 +131,11 @@ p.title {
 <table class = "center">
 <tr>
 <td>
-<p class = sansserif>
-<a class="not.active" href="http://localhost:8000/">search</a>
-</p>
+  <div id = "unhidebutton">
+    <p class = sansserif>
+    search
+    </p>
+  </div>
 </td>
 <td>
 <p class = sansserif>
@@ -112,13 +149,20 @@ p.title {
 </td>
 </table>
 </div>
-
+<div id = "hideme" class = "hidden">
 <form method="GET" action="{% url 'search_for_something' %}">
-<input type = 'text' name = 'q'/>
-<input type = 'submit' value = 'Search'/>
-
+<input type = 'text' name = 'q' class ="form-control" style="height: 50px; width: 200px; font-size:30px"/>
+<input type = 'submit' value = 'search' class = "Submission" style="height: 56px"/>
 </form>
+</div>
+<script>
+var tohide = document.getElementById('hideme');
+var hidebutton = document.getElementById('hidebutton');
+var unhidebutton = document.getElementById('unhidebutton');
+unhidebutton.addEventListener('click', function() {
+  tohide.classList.remove('hidden')
+});
 
-
+</script>
 
 </body>

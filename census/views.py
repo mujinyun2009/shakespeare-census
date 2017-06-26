@@ -29,9 +29,10 @@ def search(request):
 	if query:
 		if any(s in query for s in ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')):
 			issue_list = issue_list.filter(Q(DEEP=query))
+			result_list = list(chain(issue_list))
 		else:
 			title_list = title_list.filter(Q(title__icontains= query))
-		result_list = list(chain(issue_list, title_list))
+			result_list = list(chain(title_list))
 	else:
 		print(form.errors)
 	context = {
