@@ -1,12 +1,48 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
 
-DEEP
+<div class="wrapper">
+
+<ul>
+<li><a class="active" href="http://localhost:8000/"><p class="sansserif">
+Titles</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/editions"><p class="sansserif">
+Editions</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/provenance"><p class="sansserif">
+Provenance</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/copy"><p class="sansserif">
+Copy</p></a></li>
+
+
+<li class="dropdown">
+    <a class="not.active" href="http://localhost:8000/census/submission" class="dropbtn"><p class="sansserif">Submission</p></a>
+    <div class="dropdown-content">
+        <a href="http://localhost:8000/census/submission" class="not.active"><p class="sansserif">Titles</p></a>
+        <a href="http://localhost:8000/census/submissionedition"><p class="sansserif">Editions</p></a>
+        <a href="http://localhost:8000/census/submissioncopy"><p class="sansserif">Copies</p></a>
+    </div>
+</li>
+
+<li><a class="not.active" href="http://localhost:8000/census/register"><p class="sansserif">Register</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/login"><p class="sansserif">Login</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/logout"><p class="sansserif">Logout</p></a></li>
+
+</ul>
+<hr width = "30%"></hr>
+	<p class="sansserifgrey">
+	Find searches below.
+	</p>
+</div>
+<hr width = "30%"></hr>
+DEEP:
 {% for obj in result_list %}
 {{ obj.DEEP }}
 {% endfor %}
-TITLE
+</br>
+TITLE:
 {% for obj in result_list %}
 {{ obj.title }}
+</br>
 {% endfor %}
 {% endblock content %}
