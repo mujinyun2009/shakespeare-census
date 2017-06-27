@@ -1,7 +1,9 @@
-{% extends "base.html" %}
 {% load static %}
 {% block content %}
-
+<head>
+<title>Shakespeare Census</title>
+</head>
+<link rel="stylesheet" type="text/css" href="{% static 'census/style.css' %}" />
 <div class="wrapper">
 
 <ul>
@@ -35,19 +37,33 @@ Copy</p></a></li>
 	</p>
 </div>
 <hr width = "30%"></hr>
-DEEP:
+<table class ="center">
+<th>
+DEEP found:
+</th>
+<tr>
 {% for obj in result_list %}
-{{ obj.DEEP }}
+<td>{{ obj.DEEP }}</td>
+</tr>
 {% endfor %}
+</table>
 </br>
-TITLE:
+<table class = "center">
+<th>Titles found:</th>
+<tr>
 {% for obj in result_list %}
-{{ obj.title }}
+<td><a href ="{% url 'detail' obj.id %}">{{ obj.title }}</a></td>
+</tr>
 </br>
 {% endfor %}
-Year:
+</table>
+<table class="center">
+<th>Years found:</th>
+<tr>
 {% for obj in result_list %}
-{{ obj.year }}
+<td>{{ obj.year }}</td>
+</tr>
 </br>
 {% endfor %}
+</table>
 {% endblock content %}
