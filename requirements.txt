@@ -1,2 +1,4 @@
 Django
 MySQL-python
+django_select2
+django-jquery

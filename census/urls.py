@@ -18,6 +18,7 @@ urlpatterns = [
 	url(r'^addEdition/(?P<title_id>[0-9]+)/$', views.add_edition, name='add_edition'),
 	url(r'^addIssue/(?P<edition_id>[0-9]+)/$', views.add_issue, name='add_issue'),
 	url(r'^transactions/(?P<copy_id>[0-9]+)/$', views.transactions, name='transactions'),
+	url(r'^filter$', views.filter, name='filter'),
 
 
 	# url(r'^submissionedition$', views.Editionz, name='Editionz'),

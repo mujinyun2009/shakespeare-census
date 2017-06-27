@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.core import serializers
 from django.forms.models import model_to_dict
 import json
+from django.utils.html import escape
 
 # Create your views here.
 
@@ -218,6 +219,21 @@ def add_issue(request, edition_id):
         'edition_id': edition_id,
     }
     return HttpResponse(template.render(context, request))
+
+def filter(request):
+    template=loader.get_template('census/filterForCopySubmission.html')
+    filter_form=FilterForm()
+    # if filter_form.is_valid():
+    #     edition_id=filter_form.cleaned_data['edition']
+    #     edition=Edition.objects.get(pk=issue_id)
+    #     return HttpResponseRedirect("/census/submission")
+    # else:
+    #     filter_form=FilterForm()
+    context={
+        'filter_form':filter_form,
+    }
+    return HttpResponse(template.render(context, request))
+
 
 # @login_required()
 # def submissionForm(request):

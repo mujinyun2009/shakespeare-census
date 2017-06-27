@@ -17,6 +17,7 @@ class Edition (models.Model):
 	Edition_format = models.CharField(max_length=10)
 	def __str__(self):
 		return "%s Edition %s" % (self.title, self.Edition_number)
+
 class Issue (models.Model):
 	edition = models.ForeignKey(Edition, unique=False)
 	STC_Wing = models.IntegerField(default=0)
