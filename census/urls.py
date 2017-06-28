@@ -8,7 +8,6 @@ urlpatterns = [
 	url(r'^copy$', views.copy, name='copy'),
  	url(r'^provenance$', views.provenance, name='provenance'),
  	url(r'^register$', views.register, name='register'),
-	# url(r'^submission$', views.submissionForm, name='submission'),
 
 	# Jinyun-urls for submission forms
 	url(r'^submission$', views.submission, name='submission'),
@@ -17,13 +16,11 @@ urlpatterns = [
 	url(r'^addTitle$', views.add_title, name='add_title'),
 	url(r'^addEdition/(?P<title_id>[0-9]+)/$', views.add_edition, name='add_edition'),
 	url(r'^addIssue/(?P<edition_id>[0-9]+)/$', views.add_issue, name='add_issue'),
+
+	#for adding transaction to a copy
 	url(r'^transactions/(?P<copy_id>[0-9]+)/$', views.transactions, name='transactions'),
-	url(r'^filter$', views.filter, name='filter'),
 
 
-	# url(r'^submissionedition$', views.Editionz, name='Editionz'),
-	# url(r'^submissioncopy$', views.Copyz, name='Copyz'),
-	# url(r'^submissionprovenance$', views.Provenancez, name='Provenancez'),
 	url(r'^login$', views.login_user, name='login_user'),
 	url(r'^accounts/login/$', views.login_user, name='login_user'),
 	url(r'^logout$', views.logout_user, name='logout_user'),

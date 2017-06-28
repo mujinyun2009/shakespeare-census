@@ -60,7 +60,7 @@ class ProvenanceForm(forms.ModelForm):
 		exclude = ['copy']
 
 class TitleDropDownForm(forms.Form):
-	title = forms.ModelChoiceField(queryset=Title.objects.all().order_by('-pk'), empty_label=None)
+	title = forms.ModelChoiceField(queryset=Title.objects.all().order_by('-pk'), empty_label="Select a title")
 
 class EditionDropDownForm(forms.Form):
 	# widget = ModelSelect2Widget(queryset=Edition.objects.all(), search_fields=['title__icontains'],)

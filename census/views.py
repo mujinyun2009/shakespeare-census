@@ -23,15 +23,15 @@ from django.utils.html import escape
 # Create your views here.
 
 def homepage(request):
-    template=loader.get_template('frontpage.html')
-    context = {
+	template=loader.get_template('frontpage.html')
+	context = {
 
-    }
-    return HttpResponse(template.render(context, request))
+	}
+	return HttpResponse(template.render(context, request))
 def search(request):
-    query = request.POST.get('qs', '')
-    results = Title.objects.filter(title=query) # Your search algo goes here
-    return render(request, 'census/index.html', dict(results=results))
+	query = request.POST.get('qs', '')
+	results = Title.objects.filter(title=query) # Your search algo goes here
+	return render(request, 'census/index.html', dict(results=results))
 
 def index(request):
 	title = Title.objects.all()
@@ -117,28 +117,29 @@ def logout_user(request):
 	context = {}
 	return HttpResponse(template.render(context,request))
 
+#Jinyun - dependent dropdowns and popups
 def submission(request):
-    template = loader.get_template('census/submission.html')
-    all_titles = Title.objects.all()
-    copy_form = CopyForm()
-    if request.method=='POST':
-        issue_id=request.POST.get('issue')
-        selected_issue=Issue.objects.get(pk=issue_id)
-        copy_form=CopyForm(data=request.POST)
-        if copy_form.is_valid():
-            copy=copy_form.save(commit=False)
-            copy.issue=selected_issue
-            copy.save()
-            return HttpResponseRedirect("/census/submission")
-    else:
-        copy_form=CopyForm()
+	template = loader.get_template('census/submission.html')
+	all_titles = Title.objects.all()
+	copy_form = CopyForm()
+	if request.method=='POST':
+		issue_id=request.POST.get('issue')
+		selected_issue=Issue.objects.get(pk=issue_id)
+		copy_form=CopyForm(data=request.POST)
+		if copy_form.is_valid():
+			copy=copy_form.save(commit=False)
+			copy.issue=selected_issue
+			copy.save()
+			return HttpResponseRedirect("/census/submission")
+	else:
+		copy_form=CopyForm()
 
-    context = {
+	context = {
 	'all_titles': all_titles,
-    'copy_form': copy_form,
+	'copy_form': copy_form,
 	}
 
-    return HttpResponse(template.render(context, request))
+	return HttpResponse(template.render(context, request))
 
 def json_editions(request, id):
 	current_title = Title.objects.get(pk=id)
@@ -162,8 +163,9 @@ def add_title(request):
 	if request.method == 'POST':
 		title_form= TitleForm(data=request.POST)
 		if title_form.is_valid():
-			title_form = title_form.save(commit=True)
-			return HttpResponseRedirect("/census/submission")
+			title = title_form.save(commit=True)
+			myScript = '<script type="text/javascript">opener.dismissAddAnotherTitle(window, "%s", "%s");</script>' % (title.id, title.title)
+			return HttpResponse(myScript)
 		else:
 			print(title_form.errors)
 	else:
@@ -176,64 +178,52 @@ def add_title(request):
 
 @login_required()
 def add_edition(request, title_id):
-    template=loader.get_template('census/addEdition.html')
-    selected_title =Title.objects.get(pk=title_id)
+	template=loader.get_template('census/addEdition.html')
+	selected_title =Title.objects.get(pk=title_id)
 
-    if request.method=='POST':
-        edition_form=EditionForm(data=request.POST)
-        if edition_form.is_valid():
-            edition=edition_form.save(commit=False)
-            edition.title=selected_title
-            edition.save()
-            return HttpResponseRedirect("/census/submission")
-        else:
-            print(edition_form.errors)
-    else:
-        edition_form=EditionForm()
+	if request.method=='POST':
+		edition_form=EditionForm(data=request.POST)
+		if edition_form.is_valid():
+			edition=edition_form.save(commit=False)
+			edition.title=selected_title
+			edition.save()
+			myScript = '<script type="text/javascript">opener.dismissAddAnotherEdition(window, "%s", "%s");</script>' % (edition.id, edition.Edition_number)
+			return HttpResponse(myScript)
+		else:
+			print(edition_form.errors)
+	else:
+		edition_form=EditionForm()
 
-    context={
-        'edition_form':edition_form,
-        'title_id': title_id,
-    }
-    return HttpResponse(template.render(context, request))
+	context={
+		'edition_form':edition_form,
+		'title_id': title_id,
+	}
+	return HttpResponse(template.render(context, request))
 
 @login_required()
 def add_issue(request, edition_id):
-    template=loader.get_template('census/addIssue.html')
-    selected_edition =Edition.objects.get(pk=edition_id)
+	template=loader.get_template('census/addIssue.html')
+	selected_edition =Edition.objects.get(pk=edition_id)
 
-    if request.method=='POST':
-        issue_form=IssueForm(data=request.POST)
-        if issue_form.is_valid():
-            issue=issue_form.save(commit=False)
-            issue.edition=selected_edition
-            issue.save()
-            return HttpResponseRedirect("/census/submission")
-        else:
-            print(issue_form.errors)
-    else:
-        issue_form=IssueForm()
+	if request.method=='POST':
+		issue_form=IssueForm(data=request.POST)
+		if issue_form.is_valid():
+			issue=issue_form.save(commit=False)
+			issue.edition=selected_edition
+			issue.save()
+			myScript = '<script type="text/javascript">opener.dismissAddAnotherIssue(window, "%s", "%s");</script>' % (issue.id, issue.STC_Wing)
+			return HttpResponse(myScript)
+		else:
+			print(issue_form.errors)
+	else:
+		issue_form=IssueForm()
 
-    context={
-        'issue_form':issue_form,
-        'edition_id': edition_id,
-    }
-    return HttpResponse(template.render(context, request))
-
-def filter(request):
-    template=loader.get_template('census/filterForCopySubmission.html')
-    filter_form=FilterForm()
-    # if filter_form.is_valid():
-    #     edition_id=filter_form.cleaned_data['edition']
-    #     edition=Edition.objects.get(pk=issue_id)
-    #     return HttpResponseRedirect("/census/submission")
-    # else:
-    #     filter_form=FilterForm()
-    context={
-        'filter_form':filter_form,
-    }
-    return HttpResponse(template.render(context, request))
-
+	context={
+		'issue_form':issue_form,
+		'edition_id': edition_id,
+	}
+	return HttpResponse(template.render(context, request))
+#dependent dropdowns and popups trials end here
 
 # @login_required()
 # def submissionForm(request):
