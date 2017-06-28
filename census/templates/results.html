@@ -38,30 +38,13 @@ Copy</p></a></li>
 </div>
 <hr width = "30%"></hr>
 <table class ="center">
-<th>
-DEEP found:
-</th>
-<tr>
-{% for obj in result_list %}
-<td>{{ obj.DEEP }}</td>
-</tr>
-{% endfor %}
-</table>
+
 </br>
 <table class = "center">
-<th>Titles found:</th>
+<th>Books found:</th>
 <tr>
 {% for obj in result_list %}
-<td><a href ="{% url 'detail' obj.id %}">{{ obj.title }}</a></td>
-</tr>
-</br>
-{% endfor %}
-</table>
-<table class="center">
-<th>Years found:</th>
-<tr>
-{% for obj in result_list %}
-<td>{{ obj.year }}</td>
+<td><a href ="{% url 'detail' obj.id %}">{{ obj.title }}: published in {{obj.year}}</a></td>
 </tr>
 </br>
 {% endfor %}

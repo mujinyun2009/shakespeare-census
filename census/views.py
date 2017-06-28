@@ -22,27 +22,57 @@ from itertools import chain
 
 def search(request):
 	template=loader.get_template('results.html')
-	query = request.GET.get('q')
-	category = request.GET.get('j')
+	query1 = request.GET.get('a')
+	query2 = request.GET.get('b')
+	query3 = request.GET.get('c')
+	category1 = request.GET.get('j')
+	category2 = request.GET.get('k')
+	category3 = request.GET.get('l')
 	title_list = Title.objects.all()
-	issue_list = Issue.objects.all()
 	edition_list = Edition.objects.all()
-	if query:
-		if category == "DEEP":
-			issue_list = issue_list.filter(Q(DEEP=query))
-			result_list = list(chain(issue_list))
-		if category == "Title":
-			title_list = title_list.filter(Q(title__icontains= query))
+	issue_list = Issue.objects.all()
+	if query1 and not query2:
+		if category1 == "Title":
+			title_list = title_list.filter(Q(title__icontains= query1))
 			result_list = list(chain(title_list))
-		if category == "Year":
-			edition_list = edition_list.filter(Q(year = query))
+		elif category1 == "Year":
+			edition_list = edition_list.filter(Q(year = query1))
 			result_list = list(chain(edition_list))
+		context = {
+		'result_list': result_list
+		}
+		return HttpResponse(template.render(context, request))
+	if query1 and query2 and not query3:
+		if category1 == "Title":
+			edition_list = edition_list.filter(Q(title__title__icontains=query1))
+			edition_list = edition_list.filter(Q(year=query2))
+			result_list = list(chain(edition_list))
+		elif category1 == "Year":
+			edition_list = edition_list.filter(Q(year=query1))
+			edition_list = edition_list.filter(Q(title__title__icontains=query2))
+			result_list = list(chain(edition_list))
+		context = {
+		'result_list': result_list
+		}
+		return HttpResponse(template.render(context, request))
+	if query1 and query2 and query3:
+		if category1 == "Title":
+			edition_list = edition_list.filter(Q(title__title__icontains=query1))
+			edition_list = edition_list.filter(Q(year=query2))
+			result_list = list(chain(edition_list))
+		elif category1 == "Year":
+			edition_list = edition_list.filter(Q(year=query1))
+			edition_list = edition_list.filter(Q(title__title__icontains=query2))
+			result_list = list(chain(edition_list))
+		context = {
+		'result_list': result_list
+		}
+		return HttpResponse(template.render(context, request))
+
 	else:
-		print(form.errors)
-	context = {
-	'result_list': result_list
-	}
-	return HttpResponse(template.render(context, request))
+		print("WHOOPS")
+	
+	
 
 
 

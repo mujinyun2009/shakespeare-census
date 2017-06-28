@@ -5,6 +5,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <style>
+* {
+  overflow: scroll;
+}
+html { 
+  min-height: 100%;
+}
+body {
+  overflow: auto;
+  height: 120%;
+}
+
 p.sansserif {
 	font-family: "Century Gothic", AppleGothic, sans-serif;
 }
@@ -19,28 +30,48 @@ p.sansserifgrey {
 table {
 	border-collapse:collapse;
   padding: auto;
-  overflow: hidden;
 }
-select {
-  width:70px;
+
+
+.select1 {
+  width:75px;
   text-align:center;
-  padding:12px;
-  color:#ffff00;
-  background-color: #8FBC8F;
-  line-height:1;
+  background-color: #FFFFFF;
   position: relative;
-  height: 56px;
-  bottom:7.5px;
-  right:24.3%;
+  height: 40px;
+  left:46.09%;
+  margin:auto;
   font-family: "Century Gothic";
-  border-radius:0px;
-  border-width: 0px;
   border-color: #FFFFFF;
-  color:#FFFFFF;
-  font-size:10px;
-  -webkit-appearance:none;
-  box-shadow:inset 0 0 0px 0 rgba(0,0,0,0);
-  outline:none
+  color:#A9A9A9;
+  font-size:20px;
+}
+.select2 {
+  width:75px;
+  text-align:center;
+  background-color: #FFFFFF;
+  position: relative;
+  height: 40px;
+  margin:auto;
+  left:46.09%;
+  font-family: "Century Gothic";
+  border-color: #FFFFFF;
+  color:#A9A9A9;
+  font-size:20px;
+}
+
+.select3 {
+  width:75px;
+  text-align:center;
+  background-color: #FFFFFF;
+  position: relative;
+  height: 40px;
+  margin:auto;
+  left:46.09%;
+  font-family: "Century Gothic";
+  border-color: #FFFFFF;
+  color:#A9A9A9;
+  font-size:20px;
 }
 
 input {
@@ -48,18 +79,31 @@ input {
   color: #808080;
   font-weight: lighter;
 }
+.addfields {
+  text-decoration: none;
+  text-align: center;
+  width: 100px;
+  height:50px;
+  border : none;
+  padding: 10px 30px;
+  position:relative;
+  color: #FFFFFF;
+  background: #8FBC8F;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+ 
+}
 
 
 .hidden {
   display: none;
+  overflow: auto;
 }
-form {
-  position: relative;
-  right:0px;
-  left:450px;
-  margin-top:130px;
-  top: 50%;
+.hidden2 {
+  display: none;
+  overflow: auto;
 }
+
+
 tr {
 	border:none;
 }
@@ -67,11 +111,7 @@ th, td {
 	padding-top:0;
 	padding-bottom:0;
 }
-#content img {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
+
 td a {
   display: block;
   color: black;
@@ -98,18 +138,17 @@ table.center {
   width:300px;
   height:100px;
   margin-left:-150px;
-  top:50%;
+  position:relative;
   left:50%;
-  position:fixed;
-  margin-top:-50px;
 }
-.Submission {
+.Submission2 {
   text-decoration: none;
   border : none;
   padding: 10px 30px;
   position:relative;
-  bottom:7.5px;
-  right:6.9%;
+  width:100px;
+  height:50px;
+  left:44.79%;
   color: #FFFFFF;
   background: #8FBC8F;
   font-family: "Century Gothic", AppleGothic, sans-serif;
@@ -136,15 +175,15 @@ p.title {
   font-weight: 100;
   text-align: center;
   margin-top:190px;
-  top:25%;
   position:relative;
 }
 
 </style>
 <head>
+<p class = "title" style="text-align:center;">shakespeare census</p>
+
 </head>
 <body>
-<p class = "title">shakespeare census</p>
 <div class = "header">
 <table class = "center">
 <tr>
@@ -168,39 +207,82 @@ p.title {
 </tr>
 </table>
 </div>
-<div id = "testing">
+
+<span id = "myForm">
+<div id = "testing" style="overflow-y: auto;">
 &nbsp;
-<div id = "hideme" class = "hidden" overflow: hidden;>
-<form method="GET" action="{% url 'search_for_something' %}">
-<input type = 'text' name = 'q' style="height: 50px; width: 200px; font-size:30px"/>
-    <select name='j'>
-      <option value="DEEP">DEEP:</option>
-      <option value="Title">Title:</option>
-      <option value="Year">Year:</option>
-    </select>
-<input type = 'submit' value = 'search' class = "Submission" style="height: 56px"/>
+<div id = "hideme" class = "hidden">
+<button class = "addfields" id="unhidebutton2">add fields</button>
+
+<!-- <hr style="width:100px; position:relative; right:35%; bottom:40%; margin:auto; height:0.5px; border:none;" color="black" NOSHADE>
+<hr style="width:100px; position:relative; left:35%;  bottom:40%; margin:auto; height:0.5px; border:none;" color="black" NOSHADE>
+ -->
+<form method="GET" action="{% url 'search_for_something' %}" class="form1">
+
+
+<select name='j' class="select1">
+<option value="Title">title</option>
+<option value="Year">year</option>
+<option value="Year">deep</option>
+</select>
+<br>
+<br>
+<input type = 'text' name = 'a' style="height: 50px; width: 200px; font-size:30px; position:relative; left:39.555%;"/>
+<div id = "hide2" class="hidden2">
+<select name='k' class="select2">
+<option value="Title">title</option>
+<option value="Year">year</option>
+<option value="Year">deep</option>
+</select>
+<br>
+<br>
+<input type = 'text' name = 'b' style="height: 50px; width: 200px; font-size:30px; position:relative; left:39.555%"/>
+
+</div>
+<div id = "hide3" class = "hidden2">
+<select name='l' class="select3">
+<option value="Title">title</option>
+<option value="Year">year</option>
+<option value="Year">deep</option>
+</select>
+<br>
+<br>
+<input type = 'text' name = 'c' style="height: 50px; width: 200px; font-size:30px; position:relative; left:39.555%"/>
+</div>
+<br>
+<input type = 'submit' id="search" value = 'search' class = "Submission2"/>
+
 </form>
 </div>
 </div>
+</span>
+
 </body>
 </tr>
 <script>
 var tohide = document.getElementById('hideme');
-var hidebutton = document.getElementById('hidebutton');
 var unhidebutton = document.getElementById('unhidebutton');
 unhidebutton.addEventListener('click', function() {
   tohide.classList.remove('hidden')
 });
 
-
-$(document).ready(function(){
-    $("#unhidebutton").click(function(){
-        $("#testing").slideToggle("slow");
-    });
+var tohide2 = document.getElementById('hide2');
+var search = document.getElementById('search');
+var tohide3 =document.getElementById('hide3')
+var unhidebutton2 = document.getElementById('unhidebutton2');
+unhidebutton2.addEventListener('click', function() {
+  if ($(tohide2).hasClass('hidden2')){
+    tohide2.classList.remove('hidden2')
+  }
+  else {
+    tohide3.classList.remove('hidden2')
+  }
 });
+
+
+
 </script>
 
-</head>
 
 
 </html>
