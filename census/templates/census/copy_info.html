@@ -28,61 +28,67 @@ Copy</p></a></li>
 
 </ul>
 
+<h2>You have submitted the following copy:</h2>
 
-<hr width = "30%"></hr>
-	<p class="sansserifgrey">
-	This is an interesting sentence. <br>We'll be describing the content of this page with this sentence. This sentence will be very informative. </br> Hopefully, people actually read this sentence.
-	</p>
-</div>
-<hr width = "30%"></hr>
 <br>
 <br>
 <div class="newspaper">
-{% if copies %}
-    {% for copy in copies %}
     <p class="sansserif">
     	<table class = "center">
     		<tr>
     			<th> Info type </th>
     			<th> Book info </th>
     		</tr>
+        <tr>
+    			<td>Title</td>
+   				<td>{{ selected_edition.title }}</td>
+   			</tr>
+        <tr>
+    			<td>Edition</td>
+   				<td>{{ selected_edition }}</td>
+   			</tr>
     		<tr>
     			<td>Issue</td>
-   				<td>{{ copy.issue }}</td>
+   				<td>{{ selected_copy.issue }}</td>
    			</tr>
-
+        <tr>
+    			<td>Thumbnail URL</td>
+   				<td>{{ selected_copy.thumbnail_URL }}</td>
+   			</tr>
    			<tr>
    				<td> NSC </td>
-   				<td>{{ copy.NSC }}</td>
+   				<td>{{ selected_copy.NSC }}</td>
    			</tr>
             <tr>
                 <td> Owner </td>
-                <td>{{ copy.Owner }}</td>
+                <td>{{ selected_copy.Owner }}</td>
+            </tr>
+            <tr>
+                <td> Shelfmark </td>
+                <td>{{ selected_copy.Shelfmark }}</td>
             </tr>
             <tr>
                 <td> Height </td>
-                <td>{{ copy.Height }}</td>
+                <td>{{ selected_copy.Height }}</td>
             </tr>
             <tr>
                 <td> Width </td>
-                <td>{{ copy.Width }}</td>
+                <td>{{ selected_copy.Width }}</td>
+            </tr>
+            <tr>
+                <td> Marginalia </td>
+                <td>{{ selected_copy.Marginalia }}</td>
             </tr>
             <tr>
                 <td> Condition </td>
-                <td>{{ copy.Condition }}</td>
+                <td>{{ selected_copy.Condition }}</td>
             </tr>
             <tr>
                 <td> Binding </td>
-                <td>{{ copy.Binding }}</td>
+                <td>{{ selected_copy.Binding }}</td>
             </tr>
         </table>
-        <button><a href="{% url 'transactions' copy.id %}">Available transactions</a></button>
-    </p>
-    {% endfor %}
+        </p>
+</div>
 
-</div>
-</div>
-{% else %}
-    <p class="sansserif" align="center">Oh no! No copies are available.</p>
-{% endif %}
 {% endblock content %}

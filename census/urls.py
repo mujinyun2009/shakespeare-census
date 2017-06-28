@@ -16,8 +16,9 @@ urlpatterns = [
 	url(r'^addTitle$', views.add_title, name='add_title'),
 	url(r'^addEdition/(?P<title_id>[0-9]+)/$', views.add_edition, name='add_edition'),
 	url(r'^addIssue/(?P<edition_id>[0-9]+)/$', views.add_issue, name='add_issue'),
+	url(r'^copy_info/(?P<copy_id>[0-9]+)/$', views.copy_info, name='copy_info'),
 
-	#for adding transaction to a copy
+	#for viewing transactions related to a copy
 	url(r'^transactions/(?P<copy_id>[0-9]+)/$', views.transactions, name='transactions'),
 
 

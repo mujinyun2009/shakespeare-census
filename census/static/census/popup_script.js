@@ -24,7 +24,7 @@ function dismissAddAnotherTitle(win, newId, newTitle) {
 function dismissAddAnotherEdition(win, newId, newEdition) {
 		var x = document.getElementById('edition');
 		var option = document.createElement("option");
-		option.text = newEdition;
+		option.text = "Edition "+ newEdition;
 		option.value = newId;
 		option.selected = true;
 		x.add(option);
@@ -39,7 +39,7 @@ function dismissAddAnotherEdition(win, newId, newEdition) {
 function dismissAddAnotherIssue(win, newId, newIssue) {
 		var x = document.getElementById('issue');
 		var option = document.createElement("option");
-		option.text = newIssue;
+		option.text = "Issue " + newIssue;
 		option.value = newId;
 		option.selected = true;
 		x.add(option);

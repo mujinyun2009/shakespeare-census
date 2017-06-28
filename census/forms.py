@@ -3,13 +3,6 @@ from django.contrib.auth.models import User
 from .models import *
 from django.forms import inlineformset_factory, TextInput, formset_factory
 import datetime
-from django.utils.encoding import force_text
-
-from django_select2.forms import (
-    HeavySelect2MultipleWidget, HeavySelect2Widget, ModelSelect2MultipleWidget,
-    ModelSelect2TagWidget, ModelSelect2Widget, Select2MultipleWidget,
-    Select2Widget
-)
 
 class TitleForm(forms.ModelForm):
 	class Meta:
@@ -20,29 +13,6 @@ class EditionForm(forms.ModelForm):
 	class Meta:
 		model = Edition
 		exclude = ['title']
-
-class FilterForm(forms.Form):
-    title = forms.ModelChoiceField(
-        queryset=Title.objects.all(),
-        label='Title',
-        widget=ModelSelect2Widget(
-            model=Title,
-            search_fields=['title__icontains'],
-            max_results=500,
-            dependent_fields={'edition': 'editions'},
-        )
-    )
-
-    city = forms.ModelChoiceField(
-        queryset=Edition.objects.all(),
-        label='Edition',
-        widget=ModelSelect2Widget(
-            model=Edition,
-            search_fields=['title__icontains'],
-            dependent_fields={'title': 'title'},
-            max_results=500,
-        )
-    )
 
 class CopyForm(forms.ModelForm):
 	class Meta:
@@ -58,14 +28,6 @@ class ProvenanceForm(forms.ModelForm):
 	class Meta:
 		model = Provenance
 		exclude = ['copy']
-
-class TitleDropDownForm(forms.Form):
-	title = forms.ModelChoiceField(queryset=Title.objects.all().order_by('-pk'), empty_label="Select a title")
-
-class EditionDropDownForm(forms.Form):
-	# widget = ModelSelect2Widget(queryset=Edition.objects.all(), search_fields=['title__icontains'],)
-	# result = widget.filter_queryset(edition.title)
-	Edition = forms.ModelChoiceField(queryset=Edition.objects.all().order_by('-pk'), empty_label=None)
 
 class LoginForm(forms.ModelForm):
 	error_messages = {'password_mismatch': "The two password fields didn't "

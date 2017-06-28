@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.template import Context, Template
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.template import loader
 import models
 from .models import *
@@ -19,6 +19,7 @@ from django.core import serializers
 from django.forms.models import model_to_dict
 import json
 from django.utils.html import escape
+from django.urls import reverse
 
 # Create your views here.
 
@@ -49,6 +50,7 @@ def detail(request, id):
 		'editions': editions
 	}
 	return HttpResponse(template.render(context, request))
+
 def copy(request):
 	copies = Copy.objects.all()
 	template = loader.get_template('census/copy.html')
@@ -117,6 +119,17 @@ def logout_user(request):
 	context = {}
 	return HttpResponse(template.render(context,request))
 
+def copy_info(request, copy_id):
+	template=loader.get_template('census/copy_info.html')
+	selected_copy=get_object_or_404(Copy, pk=copy_id)
+	selected_issue=selected_copy.issue
+	selected_edition=selected_issue.edition
+	context={
+		'selected_edition': selected_edition,
+		'selected_copy': selected_copy,
+	}
+	return HttpResponse(template.render(context,request))
+
 #Jinyun - dependent dropdowns and popups
 def submission(request):
 	template = loader.get_template('census/submission.html')
@@ -130,7 +143,7 @@ def submission(request):
 			copy=copy_form.save(commit=False)
 			copy.issue=selected_issue
 			copy.save()
-			return HttpResponseRedirect("/census/submission")
+			return HttpResponseRedirect(reverse('copy_info', args=(copy.id,)))
 	else:
 		copy_form=CopyForm()
 
