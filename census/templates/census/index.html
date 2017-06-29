@@ -37,28 +37,22 @@ Copy</p></a></li>
 <hr width = "30%"></hr>
 <br>
 <br>
-<div class="newspaper">
 {% if titles %}
+  <p class="sansserif">
+  <table class = "center" align="center" width="90%">
+        <tr>
+          <th> Title </th>
+          <th> Apocryphal? </th>
+        </tr>
+        <tr>
     {% for title in titles %}
-    <p class="sansserif">
-    	<table class = "center">
-    		<tr>
-    			<th> Info type </th>
-    			<th> Book info </th>
-    		</tr>
-    		<tr>
-          <td>Title</td>
     			<td><a href="{% url 'detail' title.id %}">{{ title.title }}</a></td>
-   			</tr>
-   			<tr>
-   				<td> Apocryphal? </td>
    				<td>{{ title.Apocryphal }}</td>
-   			</tr>
+   			 </tr>
+    {% endfor %}
+       
         </table>
     </p>
-    {% endfor %}
-
-</div>
 </div>
 {% else %}
     <p class="sansserif" align="center">Oh no! No books are available.</p>
