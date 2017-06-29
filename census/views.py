@@ -115,9 +115,7 @@ def logout_user(request):
 	context = {}
 	return HttpResponse(template.render(context,request))
 
-#Jinyun - dependent dropdowns and popups start here:
-
-#expected to be called when a new copy is submitted; displaying the copy info
+#Jinyun - submission forms with smart-selects
 def copy_info(request, copy_id):
 	template=loader.get_template('census/copy_info.html')
 	selected_copy=get_object_or_404(Copy, pk=copy_id)
@@ -146,24 +144,7 @@ def submission(request):
 	'edition': copy_form['edition'],
 	'issue': copy_form['issue'],
 	}
-
 	return HttpResponse(template.render(context, request))
-
-def json_editions(request, id):
-	current_title = Title.objects.get(pk=id)
-	editions = current_title.edition_set.all()
-	data = []
-	for edition in editions:
-		data.append(model_to_dict(edition))
-	return HttpResponse(json.dumps(data), content_type='application/json')
-
-def json_issues(request, id):
-	current_edition = Edition.objects.get(pk=id)
-	issues = current_edition.issue_set.all()
-	data = []
-	for issue in issues:
-		data.append(model_to_dict(issue))
-	return HttpResponse(json.dumps(data), content_type='application/json')
 
 @login_required()
 def add_title(request):
@@ -232,4 +213,4 @@ def add_issue(request, edition_id):
 		'edition_id': edition_id,
 	}
 	return HttpResponse(template.render(context, request))
-#dependent dropdowns and popups trials end here
+#submission form views end here
