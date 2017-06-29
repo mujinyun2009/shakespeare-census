@@ -1,3 +1,4 @@
 Django
 MySQL-python
+django-smart-selects
 django-jquery
