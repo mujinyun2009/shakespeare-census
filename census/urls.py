@@ -21,7 +21,6 @@ urlpatterns = [
 	#for viewing transactions related to a copy
 	url(r'^transactions/(?P<copy_id>[0-9]+)/$', views.transactions, name='transactions'),
 
-
 	url(r'^login$', views.login_user, name='login_user'),
 	url(r'^accounts/login/$', views.login_user, name='login_user'),
 	url(r'^logout$', views.logout_user, name='logout_user'),

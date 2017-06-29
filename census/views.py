@@ -5,10 +5,8 @@ from django.shortcuts import render, get_object_or_404
 from django.template import loader
 import models
 from .models import *
-# from.models import Title, Edition, Copy, UserProfile, Provenance, BookPlate
 from django.contrib.auth.models import User
 from .forms import *
-# from .forms import TitleForm, EditionForm, IssueForm, CopyForm, ProvenanceForm, LoginForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import get_object_or_404
@@ -18,11 +16,9 @@ from django.contrib import admin
 from django.core import serializers
 from django.forms.models import model_to_dict
 import json
-from django.utils.html import escape
 from django.urls import reverse
 
 # Create your views here.
-
 def homepage(request):
 	template=loader.get_template('frontpage.html')
 	context = {
@@ -119,6 +115,9 @@ def logout_user(request):
 	context = {}
 	return HttpResponse(template.render(context,request))
 
+#Jinyun - dependent dropdowns and popups start here:
+
+#expected to be called when a new copy is submitted; displaying the copy info
 def copy_info(request, copy_id):
 	template=loader.get_template('census/copy_info.html')
 	selected_copy=get_object_or_404(Copy, pk=copy_id)
@@ -130,7 +129,6 @@ def copy_info(request, copy_id):
 	}
 	return HttpResponse(template.render(context,request))
 
-#Jinyun - dependent dropdowns and popups
 def submission(request):
 	template = loader.get_template('census/submission.html')
 	all_titles = Title.objects.all()
@@ -237,117 +235,3 @@ def add_issue(request, edition_id):
 	}
 	return HttpResponse(template.render(context, request))
 #dependent dropdowns and popups trials end here
-
-# @login_required()
-# def submissionForm(request):
-# 	template=loader.get_template('census/submission.html')
-# 	title_dropdown_form=TitleDropDownForm()
-# 	edition_form=EditionDropDownForm()
-# 	# edition_form=EditionForm()
-# 	issue_form=IssueForm()
-# 	copy_form=CopyForm()
-# 	provenance_form=ProvenanceForm()
-#
-# 	if request.method == 'POST':
-# 		title_dropdown_form= TitleDropDownForm(data=request.POST)
-# 		edition_form=EditionDropDownForm(data=request.POST)
-# 		# edition_form = EditionForm(data=request.POST)
-# 		issue_form = IssueForm(data=request.POST)
-# 		copy_form = CopyForm(data=request.POST)
-# 		provenance_form = ProvenanceForm(data=request.POST)
-#
-# 		if title_dropdown_form.is_valid():
-# 			title = title_dropdown_form.cleaned_data['title']
-#
-# 			if edition_form.is_valid():
-# 				edition = edition_form.cleaned_data['edition']
-# 				# edition = edition_form.save(commit=False)
-# 				# edition.title = title
-# 				# edition.save()
-# 				if issue_form.is_valid():
-# 					issue = issue_form.save(commit=False)
-# 					issue.edition = edition
-# 					issue.save()
-# 					if copy_form.is_valid():
-# 						copy = copy_form.save(commit=False)
-# 						copy.issue = issue
-# 						copy.save()
-# 						if provenance_form.is_valid():
-# 							provenance = provenance_form.save(commit=False)
-# 							provenance.copy = copy
-# 							provenance.save()
-# 						else:
-# 							print(provenance_form.errors)
-# 					else:
-# 						print(copy_form.errors)
-# 				else:
-# 					print(issue_form.erros)
-# 				return HttpResponseRedirect("/census/")
-# 			else:
-# 				print(edition_form.errors)
-# 		else:
-# 			print(title_dropdown_form.errors)
-# 			# print(title_form.errors)
-#
-# 	context = {
-# 		'title_dropdown_form': title_dropdown_form,
-# 		# 'title_form': title_form,
-# 		'edition_form': edition_form,
-# 		'issue_form': issue_form,
-# 		'copy_form': copy_form,
-# 		'provenance_form': provenance_form
-# 	}
-# 	return HttpResponse(template.render(context, request))
-#
-
-
-
-# @login_required()
-# def Editionz(request):
-# 	template=loader.get_template('submissionedition.html')
-# 	if request.method == 'POST':
-# 		edition_form = EditionForm(data=request.POST)
-# 		if edition_form.is_valid():
-# 			edition_form = edition_form.save(commit=False)
-# 			edition_form.title=Title.objects.get(pk=1)
-# 			edition_form.save()
-# 		else:
-# 			print(edition_form.errors)
-# 	else:
-# 		edition_form=EditionForm()
-# 	context = {
-# 	'edition_form': edition_form
-# 	}
-# 	return HttpResponse(template.render(context, request))
-# @login_required()
-# def Copyz(request):
-# 	template=loader.get_template('submissioncopy.html')
-# 	if request.method == 'POST':
-# 		copy_form = CopyForm(data=request.POST)
-# 		if copy_form.is_valid():
-# 			copy_form = copy_form.save(commit=True)
-# 			copy_form.save()
-# 		else:
-# 			print(copy_form.errors)
-# 	else:
-# 		copy_form=CopyForm()
-# 	context = {
-# 	'copy_form': copy_form
-# 	}
-# 	return HttpResponse(template.render(context, request))
-# @login_required()
-# def Provenancez(request):
-# 	template=loader.get_template('submissionprovenance.html')
-# 	if request.method == 'POST':
-# 		provenance_form = ProvenanceForm(data=request.POST)
-# 		if provenance_form.is_valid():
-# 			provenance_form = provenance_form.save(commit=True)
-# 			provenance_form.save()
-# 		else:
-# 			print(provenance_form.errors)
-# 	else:
-# 		provenance_form=ProvenanceForm()
-# 	context = {
-# 	'provenance_form': provenance_form
-# 	}
-# 	return HttpResponse(template.render(context, request))
