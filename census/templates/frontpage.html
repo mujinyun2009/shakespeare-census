@@ -8,13 +8,7 @@
 * {
   overflow: scroll;
 }
-html { 
-  min-height: 100%;
-}
-body {
-  overflow: auto;
-  height: 120%;
-}
+
 
 p.sansserif {
 	font-family: "Century Gothic", AppleGothic, sans-serif;
@@ -221,18 +215,23 @@ p.title {
 
 
 <select name='j' class="select1">
-<option value="Title">title</option>
-<option value="Year">year</option>
-<option value="Year">deep</option>
+<option value="issue__edition__title__title__icontains">title</option>
+<option value="issue__edition__year">year</option>
+<option value="STC_Wing">stc wing</option>
 </select>
 <br>
 <br>
 <input type = 'text' name = 'a' style="height: 50px; width: 200px; font-size:30px; position:relative; left:39.555%;"/>
 <div id = "hide2" class="hidden2">
 <select name='k' class="select2">
-<option value="Title">title</option>
-<option value="Year">year</option>
-<option value="Year">deep</option>
+<option value="issue__edition__title__title__icontains">title</option>
+<option value="issue__edition__year">year</option>
+<option value="issue__edition__Edition_number">edition number</option>
+<option value="issue__edition__Edition_format">edition format</option>
+<option value="issue__STC_Wing">stc wing</option>
+<option value="issue__DEEP">DEEP</option>
+<option value="issue__ESTC">ESTC</option>
+<option value="NSC">NSC</option>
 </select>
 <br>
 <br>
@@ -241,13 +240,32 @@ p.title {
 </div>
 <div id = "hide3" class = "hidden2">
 <select name='l' class="select3">
-<option value="Title">title</option>
-<option value="Year">year</option>
-<option value="Year">deep</option>
+<option value="issue__edition__title__title__icontains">title</option>
+<option value="issue__edition__year">year</option>
+<option value="issue__edition__Edition_number">edition number</option>
+<option value="issue__edition__Edition_format">edition format</option>
+<option value="issue__STC_Wing">stc wing</option>
+<option value="issue__DEEP">DEEP</option>
+<option value="issue__ESTC">ESTC</option>
+<option value="NSC">NSC</option>
+<option value="Owner">owner</option>
+<option value="Shelfmark">shelfmark</option>
+<option value="Barlett1939">Barlett1939</option>
+<option value="Barlet1916">Barlet1916</option>
 </select>
 <br>
 <br>
 <input type = 'text' name = 'c' style="height: 50px; width: 200px; font-size:30px; position:relative; left:39.555%"/>
+</div>
+<div id = "hide4" class = "hidden2">
+<select name='z' class="select3">
+<option value="issue__edition__title__title__icontains">title</option>
+<option value="issue__edition__year">year</option>
+<option value="issue__STC_Wing">stc wing</option>
+</select>
+<br>
+<br>
+<input type = 'text' name = 'd' style="height: 50px; width: 200px; font-size:30px; position:relative; left:39.555%"/>
 </div>
 <br>
 <input type = 'submit' id="search" value = 'search' class = "Submission2"/>
@@ -268,14 +286,20 @@ unhidebutton.addEventListener('click', function() {
 
 var tohide2 = document.getElementById('hide2');
 var search = document.getElementById('search');
-var tohide3 =document.getElementById('hide3')
+var tohide3 =document.getElementById('hide3');
+var tohide4 = document.getElementById('hide4');
 var unhidebutton2 = document.getElementById('unhidebutton2');
 unhidebutton2.addEventListener('click', function() {
   if ($(tohide2).hasClass('hidden2')){
     tohide2.classList.remove('hidden2')
   }
   else {
-    tohide3.classList.remove('hidden2')
+    if ($(tohide3).hasClass('hidden2')){
+      tohide3.classList.remove('hidden2')
+    }
+    else {
+      tohide4.classList.remove('hidden2')
+    }
   }
 });
 

@@ -25,50 +25,48 @@ def search(request):
 	query1 = request.GET.get('a')
 	query2 = request.GET.get('b')
 	query3 = request.GET.get('c')
+	query4 = request.GET.get('d')
 	category1 = request.GET.get('j')
 	category2 = request.GET.get('k')
 	category3 = request.GET.get('l')
-	title_list = Title.objects.all()
-	edition_list = Edition.objects.all()
-	issue_list = Issue.objects.all()
-	if query1 and not query2:
-		if category1 == "Title":
-			title_list = title_list.filter(Q(title__icontains= query1))
-			result_list = list(chain(title_list))
-		elif category1 == "Year":
-			edition_list = edition_list.filter(Q(year = query1))
-			result_list = list(chain(edition_list))
+	category4 = request.GET.get('z')
+	copy_list = Copy.objects.all()
+	if query1 and not query2 and not query3 and not query4:
+		results_list = copy_list.filter(Q(**{category1: query1}))
+		result_list = list(chain(results_list))
 		context = {
 		'result_list': result_list
 		}
 		return HttpResponse(template.render(context, request))
-	if query1 and query2 and not query3:
-		if category1 == "Title":
-			edition_list = edition_list.filter(Q(title__title__icontains=query1))
-			edition_list = edition_list.filter(Q(year=query2))
-			result_list = list(chain(edition_list))
-		elif category1 == "Year":
-			edition_list = edition_list.filter(Q(year=query1))
-			edition_list = edition_list.filter(Q(title__title__icontains=query2))
-			result_list = list(chain(edition_list))
+	if query1 and query2 and not query3 and not query4:
+		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2}))
+		result_list = list(chain(results_list))
 		context = {
 		'result_list': result_list
 		}
 		return HttpResponse(template.render(context, request))
-	if query1 and query2 and query3:
-		if category1 == "Title":
-			edition_list = edition_list.filter(Q(title__title__icontains=query1))
-			edition_list = edition_list.filter(Q(year=query2))
-			result_list = list(chain(edition_list))
-		elif category1 == "Year":
-			edition_list = edition_list.filter(Q(year=query1))
-			edition_list = edition_list.filter(Q(title__title__icontains=query2))
-			result_list = list(chain(edition_list))
+	if query1 and query2 and query3 and not query4:
+		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category3: query3}))
+		result_list = list(chain(results_list))
 		context = {
 		'result_list': result_list
 		}
 		return HttpResponse(template.render(context, request))
-
+	if query1 and query2 and query3 and query4:
+		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category4: query4}))
+		result_list = list(chain(results_list))
+		context = {
+		'result_list': result_list
+		}
+		return HttpResponse(template.render(context, request))
+	if not query1 and not query2 and not query3 and not query4:
+		template=loader.get_template('frontpage.html')
+		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category4: query4}))
+		result_list = list(chain(results_list))
+		context = {
+		'result_list': result_list
+		}
+		return HttpResponse(template.render(context, request))
 	else:
 		print("WHOOPS")
 	

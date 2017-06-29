@@ -44,7 +44,7 @@ Copy</p></a></li>
 <th>Books found:</th>
 <tr>
 {% for obj in result_list %}
-<td><a href ="{% url 'detail' obj.id %}">{{ obj.title }}: published in {{obj.year}}</a></td>
+<td><a href ="{% url 'detail' obj.id %}">{{ obj.issue.edition.title}}: published in {{obj.issue.edition.year}}</a></td>
 </tr>
 </br>
 {% endfor %}
