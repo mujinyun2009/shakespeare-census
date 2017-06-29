@@ -17,12 +17,12 @@ class EditionForm(forms.ModelForm):
 class CopyForm(forms.ModelForm):
 	class Meta:
 		model = Copy
-		exclude = ['issue']
+		fields = '__all__'
 
 class IssueForm(forms.ModelForm):
 	class Meta:
 		model = Issue
-		exclude = ['edition']
+		exclude = ['title','edition']
 
 class ProvenanceForm(forms.ModelForm):
 	class Meta:

@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ModelForm
+from smart_selects.db_fields import ChainedForeignKey
 
 class Title(models.Model):
 	title = models.CharField(max_length=128, unique=False)
@@ -18,7 +19,13 @@ class Edition (models.Model):
 		return "%s Edition %s" % (self.title, self.Edition_number)
 
 class Issue (models.Model):
-	edition = models.ForeignKey(Edition, unique=False)
+	title=models.ForeignKey(Title)
+	edition=ChainedForeignKey(
+		Edition,
+		chained_field="title",
+		chained_model_field="title",
+		show_all=False,
+	)
 	STC_Wing = models.IntegerField(default=0)
 	DEEP = models.IntegerField(default=0)
 	ESTC = models.IntegerField(default=0)
@@ -27,7 +34,19 @@ class Issue (models.Model):
 		return "%s Issue %s" % (self.edition, self.STC_Wing)
 
 class Copy (models.Model):
-	issue = models.ForeignKey(Issue, unique=False)
+	title=models.ForeignKey(Title)
+	edition=ChainedForeignKey(
+		Edition,
+		chained_field="title",
+		chained_model_field="title",
+		show_all=False,
+	)
+	issue = ChainedForeignKey(
+		Issue,
+		chained_field="edition",
+		chained_model_field="edition",
+		show_all=False,
+	)
 	thumbnail_URL = models.URLField(max_length=200)
 	NSC = models.IntegerField(default=0)
 	Owner = models.CharField(max_length=40)

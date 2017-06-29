@@ -7,7 +7,7 @@ function showAddAnotherPopup(triggeringLink) {
 }
 
 function dismissAddAnotherTitle(win, newId, newTitle) {
-		var x = document.getElementById('id_title');
+		var x = document.getElementById('title');
 		var option = document.createElement("option");
 		option.text = newTitle;
 		option.value = newId;
@@ -22,7 +22,7 @@ function dismissAddAnotherTitle(win, newId, newTitle) {
 }
 
 function dismissAddAnotherEdition(win, newId, newEdition) {
-		var x = document.getElementById('id_edition');
+		var x = document.getElementById('edition');
 		var option = document.createElement("option");
 		option.text = "Edition "+ newEdition;
 		option.value = newId;
@@ -37,14 +37,14 @@ function dismissAddAnotherEdition(win, newId, newEdition) {
 }
 
 function dismissAddAnotherIssue(win, newId, newIssue) {
-		var x = document.getElementById('id_issue');
+		var x = document.getElementById('issue');
 		var option = document.createElement("option");
 		option.text = "Issue " + newIssue;
 		option.value = newId;
 		option.selected = true;
 		x.add(option);
-		var copy_section=document.getElementById('copy_section');
-		copy_section.style.display="inline";
+		var edition_section=document.getElementById('copy_section');
+		edition_section.style.display="inline";
 		var copy_submit=document.getElementById('copy_submit');
 		copy_submit.style.display="inline";
 		win.close();

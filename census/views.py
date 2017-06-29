@@ -131,23 +131,20 @@ def copy_info(request, copy_id):
 
 def submission(request):
 	template = loader.get_template('census/submission.html')
-	all_titles = Title.objects.all()
 	copy_form = CopyForm()
 	if request.method=='POST':
-		issue_id=request.POST.get('issue')
-		selected_issue=Issue.objects.get(pk=issue_id)
 		copy_form=CopyForm(data=request.POST)
 		if copy_form.is_valid():
-			copy=copy_form.save(commit=False)
-			copy.issue=selected_issue
-			copy.save()
+			copy=copy_form.save(commit=True)
 			return HttpResponseRedirect(reverse('copy_info', args=(copy.id,)))
 	else:
 		copy_form=CopyForm()
 
 	context = {
-	'all_titles': all_titles,
 	'copy_form': copy_form,
+	'title': copy_form['title'],
+	'edition': copy_form['edition'],
+	'issue': copy_form['issue'],
 	}
 
 	return HttpResponse(template.render(context, request))
@@ -221,6 +218,7 @@ def add_issue(request, edition_id):
 		if issue_form.is_valid():
 			issue=issue_form.save(commit=False)
 			issue.edition=selected_edition
+			issue.title=selected_edition.title
 			issue.save()
 			myScript = '<script type="text/javascript">opener.dismissAddAnotherIssue(window, "%s", "%s");</script>' % (issue.id, issue.STC_Wing)
 			return HttpResponse(myScript)

@@ -17,10 +17,11 @@ from django.conf.urls import url
 from django.conf.urls import include
 from django.contrib import admin
 import census.views
+from smart_selects import urls as smart_selects_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^census/', include('census.urls')),
     url(r'', include('census.urls')),
-    url(r'^select2/', include('django_select2.urls')),
+    url(r'^chaining/', include('smart_selects.urls')),
     ]
