@@ -12,23 +12,86 @@ from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
 from django.forms import formset_factory
+from django.db.models import Q
 from django.contrib import admin
+from django.core.paginator import Paginator, PageNotAnInteger
+from itertools import chain
 from django.core import serializers
 from django.forms.models import model_to_dict
 import json
 from django.urls import reverse
 
 # Create your views here.
-def homepage(request):
-	template=loader.get_template('frontpage.html')
-	context = {
+def search(request):
+	template=loader.get_template('results.html')
+	query1 = request.GET.get('a')
+	query2 = request.GET.get('b')
+	query3 = request.GET.get('c')
+	query4 = request.GET.get('d')
+	category1 = request.GET.get('j')
+	category2 = request.GET.get('k')
+	category3 = request.GET.get('l')
+	category4 = request.GET.get('z')
+	copy_list = Copy.objects.all()
+	if query1 and not query2 and not query3 and not query4:
+		results_list = copy_list.filter(Q(**{category1: query1}))
+		result_list = list(chain(results_list))
+		context = {
+		'result_list': result_list
+		}
+		return HttpResponse(template.render(context, request))
+	if query1 and query2 and not query3 and not query4:
+		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2}))
+		result_list = list(chain(results_list))
+		context = {
+		'result_list': result_list
+		}
+		return HttpResponse(template.render(context, request))
+	if query1 and query2 and query3 and not query4:
+		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category3: query3}))
+		result_list = list(chain(results_list))
+		context = {
+		'result_list': result_list
+		}
+		return HttpResponse(template.render(context, request))
+	if query1 and query2 and query3 and query4:
+		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category4: query4}))
+		result_list = list(chain(results_list))
+		context = {
+		'result_list': result_list
+		}
+		return HttpResponse(template.render(context, request))
+	if not query1 and not query2 and not query3 and not query4:
+		template=loader.get_template('frontpage.html')
+		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category4: query4}))
+		result_list = list(chain(results_list))
+		context = {
+		'result_list': result_list
+		}
+		return HttpResponse(template.render(context, request))
+	else:
+		print('Whoops!')
 
+def homepage(request):
+    template=loader.get_template('frontpage.html')
+    queryset_list = Title.objects.all()
+    query = request.GET.get('q')
+    if query:
+    	queryset_list = queryset_list.filter(title__icontains=query)
+
+    paginator= Paginator(queryset_list, 10)
+    page_request_var = "page"
+    page = request.GET.get(page_request_var)
+    try:
+    	queryset = paginator.page(page)
+    except PageNotAnInteger:
+    	queryset = paginator.page(1)
+	context = {
+		"object_list": queryset,
+		"title": "List",
+		"page_request_var": page_request_var,
 	}
 	return HttpResponse(template.render(context, request))
-def search(request):
-	query = request.POST.get('qs', '')
-	results = Title.objects.filter(title=query) # Your search algo goes here
-	return render(request, 'census/index.html', dict(results=results))
 
 def index(request):
 	title = Title.objects.all()

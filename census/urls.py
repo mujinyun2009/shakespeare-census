@@ -1,9 +1,10 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 
 from . import views
 
 urlpatterns = [
-	url(r'^$', views.index, name='index'),
+	url(r'^$', views.homepage, name='homepage'),
+	url(r'^titles', views.index, name='index'),
 	url(r'^editions/(?P<id>[0-9]+)/$', views.detail, name='detail'),
 	url(r'^copy$', views.copy, name='copy'),
  	url(r'^provenance$', views.provenance, name='provenance'),
@@ -28,6 +29,5 @@ urlpatterns = [
 	url(r'^accounts/login/$', views.login_user, name='login_user'),
 	url(r'^logout$', views.logout_user, name='logout_user'),
 	url(r'^homepage$',views.homepage, name='homepage'),
-	url(r'^search$', views.search, name='search'),
-
+	url(r'^search/$', views.search, name='search_for_something'),
 ]

@@ -1,10 +1,25 @@
-{% extends "base.html" %}
 {% load static %}
+<style type="text/css">a {text-decoration: none}</style>
+
 {% block content %}
+<style>
+.subhead {
+	font-size: 13;
+	font-weight: lighter;
+	font-family: "Century Gothic", AppleGothic, sans-serif;
+	background:#A7C87B;
+
+}
+
+</style>
+<head>
+<title>Shakespeare Census</title>
+</head>
+<link rel="stylesheet" type="text/css" href="{% static 'census/style.css' %}" />
 <div class="wrapper">
 
 <ul>
-<li><a class="active" href="http://localhost:8000/titles"><p class="sansserif">
+<li><a class="not.active" href="http://localhost:8000/titles"><p class="sansserif">
 Titles</p></a></li>
 <li><a class="not.active" href="http://localhost:8000/census/editions"><p class="sansserif">
 Editions</p></a></li>
@@ -28,33 +43,39 @@ Copy</p></a></li>
 <li><a class="not.active" href="http://localhost:8000/census/logout"><p class="sansserif">Logout</p></a></li>
 
 </ul>
-
+{%if result_list%}
 <hr width = "30%"></hr>
 	<p class="sansserifgrey">
-	This is an interesting sentence. <br>We'll be describing the content of this page with this sentence. This sentence will be very informative. </br> Hopefully, people actually read this sentence.
+	Find searches below.
 	</p>
 </div>
 <hr width = "30%"></hr>
-<br>
-<br>
-{% if titles %}
-  <p class="sansserif">
-  <table class = "center" align="center" width="90%">
-        <tr>
-          <th> Title </th>
-          <th> Apocryphal? </th>
-        </tr>
-        <tr>
-    {% for title in titles %}
-    			<td><a href="{% url 'detail' title.id %}">{{ title.title }}</a></td>
-   				<td>{{ title.Apocryphal }}</td>
-   			 </tr>
-    {% endfor %}
-       
-        </table>
-    </p>
+
+</br>
+<center>
+<table class = "center" align="center">
+<th colspan="3">Books found:</th>
+<tr>
+<td class="subhead">Title</td>
+<td class="subhead">Year Published</td>
+<td class="subhead">Edition Number</td>
+</tr>
+<tr>
+{% for obj in result_list %}
+<td><a href ="{% url 'detail' obj.issue.edition.title.id %}">{{ obj.issue.edition.title}}</a></td>
+<td>{{ obj.issue.edition.year}}</td>
+<td>{{ obj.issue.edition.Edition_number}}</td>
+</tr>
+</br>
+{% endfor %}
+</table>
+{%else%}
+<hr width = "30%"></hr>
+	<p class="sansserifgrey">
+	No matches were found.<br> Did you misspell your query?
+	</p>
+<hr width = "30%"></hr>
 </div>
-{% else %}
-    <p class="sansserif" align="center">Oh no! No books are available.</p>
 {% endif %}
+</center>
 {% endblock content %}

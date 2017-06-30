@@ -37,46 +37,31 @@ Copy</p></a></li>
 <hr width = "30%"></hr>
 <br>
 <br>
-<div class="newspaper">
-{% if editions %}
-    {% for edition in editions %}
-    <p class="sansserif">
-    	<table class = "center">
-    		<tr>
-    			<th> Info type </th>
-    			<th> Book info </th>
-    		</tr>
-    		<tr>
-    			<td>Title</td>
-   				<td>{{ edition.title }}</td>
-   			</tr>
 
-   			<tr>
-   				<td> Edition Number </td>
+{% if editions %}
+<p class="sansserif">
+      <table class = "center" align="center" width="90%">
+        <tr>
+          <th> Title </th>
+          <th> Edition Number </th>
+          <th> Publication Year </th>
+          <th> Edition Format </th>
+          <th> STC </th>
+          <th> ESTC </th>
+        </tr>
+    {% for edition in editions %}
+   				<td>{{ edition.title }}</td>
    				<td>{{ edition.Edition_number }}</td>
-   			</tr>
-   			<tr>
-   				<td>Publication Year</td>
-       			<td>{{ edition.year }}</td>
-       		</tr>
-        	<tr>
-        		<td>Edition Format</td>
-        		<td>{{ edition.Edition_format }}</td>
+       		<td>{{ edition.year }}</td>
+        	<td>{{ edition.Edition_format }}</td>
+       		<td>{{ edition.STC }}</td>
+        	<td>{{ edition.ESTC }}</td>
         	</tr>
-        	<tr>
-        		<td>STC</td>
-       			<td>{{ edition.STC }}</td>
-       		</tr>
-       		<tr>
-       			<td>ESTC</td>
-        		<td>{{ edition.ESTC }}</td>
-        	</tr>
+    {% endfor %}
         </table>
     </p>
-    {% endfor %}
+</div>
 
-</div>
-</div>
 {% else %}
     <p class="sansserif" align="center">Oh no! No editions are available.</p>
 {% endif %}
