@@ -19,7 +19,7 @@
 <div class="wrapper">
 
 <ul>
-<li><a class="not.active" href="http://localhost:8000/"><p class="sansserif">
+<li><a class="not.active" href="http://localhost:8000/titles"><p class="sansserif">
 Titles</p></a></li>
 <li><a class="not.active" href="http://localhost:8000/census/editions"><p class="sansserif">
 Editions</p></a></li>
@@ -62,7 +62,7 @@ Copy</p></a></li>
 </tr>
 <tr>
 {% for obj in result_list %}
-<td><a href ="{% url 'detail' obj.id %}">{{ obj.issue.edition.title}}</a></td>
+<td><a href ="{% url 'detail' obj.issue.edition.title.id %}">{{ obj.issue.edition.title}}</a></td>
 <td>{{ obj.issue.edition.year}}</td>
 <td>{{ obj.issue.edition.Edition_number}}</td>
 </tr>
