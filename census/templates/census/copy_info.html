@@ -91,4 +91,10 @@ Copy</p></a></li>
         </p>
 </div>
 
+<div>
+  <a href="{% url 'edit_copy_submission' selected_copy.id %}" class="btn btn-info" role="button">Edit</a>
+  <a href="{% url 'copy_success' %}" class="btn btn-info" role="button">Confirm</a>
+  <a href="{% url 'cancel_copy_submission' selected_copy.id %}" class="btn btn-info">Cancel</a>
+</div>
+
 {% endblock content %}

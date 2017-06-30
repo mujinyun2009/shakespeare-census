@@ -51,6 +51,5 @@ $(document).ready(function() {
 			$('.copy_submit').attr('style', 'display:inline');
 		}
 	});
-
 });
 });

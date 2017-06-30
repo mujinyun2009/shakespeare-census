@@ -152,6 +152,60 @@ def submission(request):
 
 	return HttpResponse(template.render(context, request))
 
+def edit_copy_submission(request, copy_id):
+	template = loader.get_template('census/submission.html')
+	all_titles = Title.objects.all()
+	copy_to_edit=Copy.objects.get(pk=copy_id)
+
+	data={"thumbnail_URL": copy_to_edit.thumbnail_URL,
+			"NSC": copy_to_edit.NSC,
+			"Owner": copy_to_edit.Owner,
+			"Shelfmark": copy_to_edit.Shelfmark,
+			"Height": copy_to_edit.Height,
+			"Width": copy_to_edit.Width,
+			"Marginalia": copy_to_edit.Marginalia,
+			"Condition": copy_to_edit.Condition,
+			"Binding": copy_to_edit.Binding,
+			"Binder": copy_to_edit.Binder,
+			"Bookplate":copy_to_edit.Bookplate,
+			"Bookplate_Location": copy_to_edit.Bookplate_Location,
+			"Barlett1939": copy_to_edit.Barlett1939,
+			"Barlet1939_Notes": copy_to_edit.Barlet1939_Notes,
+			"Barlet1916": copy_to_edit.Barlet1916,
+			"Barlet1916_Notes": copy_to_edit.Barlet1916_Notes,
+			"Lee_Notes": copy_to_edit.Lee_Notes,
+			"Library_Notes": copy_to_edit.Library_Notes,}
+
+	copy_to_edit.delete()
+	copy_form = CopyForm(initial=data)
+
+	if request.method=='POST':
+		issue_id=request.POST.get('issue')
+		selected_issue=Issue.objects.get(pk=issue_id)
+		copy_form=CopyForm(request.POST, initial=data)
+		if copy_form.is_valid():
+			new_copy=copy_form.save(commit=False)
+			new_copy.issue=selected_issue
+			return HttpResponseRedirect(reverse('copy_info', args=(new_copy.id,)))
+	else:
+		copy_form=CopyForm(initial=data)
+
+	context = {
+	'all_titles': all_titles,
+	'copy_form': copy_form,
+	}
+	return HttpResponse(template.render(context, request))
+
+def copy_submission_success(request):
+	template=loader.get_template('census/copysubmissionsuccess.html')
+	context={}
+	return HttpResponse(template.render(context, request))
+
+def cancel_copy_submission(request, copy_id):
+	copy_to_delete=Copy.objects.get(pk=copy_id)
+	copy_to_delete.delete()
+	return HttpResponseRedirect(reverse('homepage'))
+
 def json_editions(request, id):
 	current_title = Title.objects.get(pk=id)
 	editions = current_title.edition_set.all()

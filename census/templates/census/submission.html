@@ -48,4 +48,13 @@
 </div>
 </form>
 
+<script>
+if(window.location.hash === '#editCopy') {
+  $('.edition_section').attr('style', 'display:inline');
+  $('.issue_section').attr('style', 'display:inline');
+  $('.copy_section').attr('style', 'display:inline');
+  $('.copy_submit').attr('style', 'display:inline');
+}
+</script>
+
 {% endblock content %}
