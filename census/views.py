@@ -68,9 +68,7 @@ def search(request):
 		}
 		return HttpResponse(template.render(context, request))
 	else:
-		print("WHOOPS")
-	
-	
+		print('Whoops!')
 
 
 
