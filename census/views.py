@@ -239,17 +239,15 @@ def edit_copy_submission(request, copy_id):
 			"Lee_Notes": copy_to_edit.Lee_Notes,
 			"Library_Notes": copy_to_edit.Library_Notes,}
 
-	copy_to_edit.delete()
-	copy_form = CopyForm(initial=data)
-
+	# copy_form =CopyForm(instance=Copy.objects.get(pk=copy_id))
 	if request.method=='POST':
 		issue_id=request.POST.get('issue')
 		selected_issue=Issue.objects.get(pk=issue_id)
-		copy_form=CopyForm(request.POST, initial=data)
+		copy_form=CopyForm(request.POST)
 		if copy_form.is_valid():
-			new_copy=copy_form.save(commit=False)
-			new_copy.issue=selected_issue
-			return HttpResponseRedirect(reverse('copy_info', args=(new_copy.id,)))
+			copy_to_edit.NSC = copy_form.cleaned_data['NSC']
+			copy_to_edit.issue=selected_issue
+			return HttpResponseRedirect(reverse('copy_info', args=(copy_id,)))
 	else:
 		copy_form=CopyForm(initial=data)
 
