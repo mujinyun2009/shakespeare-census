@@ -178,8 +178,6 @@ def logout_user(request):
 	context = {}
 	return HttpResponse(template.render(context,request))
 
-#Jinyun - dependent dropdowns and popups start here:
-
 #expected to be called when a new copy is submitted; displaying the copy info
 def copy_info(request, copy_id):
 	template=loader.get_template('census/copy_info.html')
@@ -219,6 +217,9 @@ def edit_copy_submission(request, copy_id):
 	template = loader.get_template('census/edit_submission.html')
 	all_titles = Title.objects.all()
 	copy_to_edit=Copy.objects.get(pk=copy_id)
+	old_issue=copy_to_edit.issue
+	old_edition=old_issue.edition
+	old_title=old_edition.title
 
 	if request.method=='POST':
 		issue_id=request.POST.get('issue')
@@ -236,6 +237,7 @@ def edit_copy_submission(request, copy_id):
 	'all_titles': all_titles,
 	'copy_form': copy_form,
 	'copy_id': copy_id,
+	'old_title': old_title,
 	}
 	return HttpResponse(template.render(context, request))
 
@@ -288,7 +290,6 @@ def add_title(request):
 def add_edition(request, title_id):
 	template=loader.get_template('census/addEdition.html')
 	selected_title =Title.objects.get(pk=title_id)
-
 	if request.method=='POST':
 		edition_form=EditionForm(data=request.POST)
 		if edition_form.is_valid():
@@ -306,6 +307,11 @@ def add_edition(request, title_id):
 		'edition_form':edition_form,
 		'title_id': title_id,
 	}
+	return HttpResponse(template.render(context, request))
+
+def error_add_edition(request):
+	template=loader.get_template('census/error_add_edition.html')
+	context={}
 	return HttpResponse(template.render(context, request))
 
 @login_required()
@@ -331,4 +337,8 @@ def add_issue(request, edition_id):
 		'edition_id': edition_id,
 	}
 	return HttpResponse(template.render(context, request))
-#dependent dropdowns and popups trials end here
+
+def error_add_issue(request):
+	template=loader.get_template('census/error_add_issue.html')
+	context={}
+	return HttpResponse(template.render(context, request))

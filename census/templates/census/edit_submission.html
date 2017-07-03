@@ -21,24 +21,24 @@
 
 </div>
 
-<div class='edition_section' id ='edition_section' style='display:none'>
+<div class='edition_section' id ='edition_section'>
   <p>Select an edition</p>
   <select name="edition" id="edition">
   <option>Select an edition</option>
   </select>
-  <button class="btn btn-info"><a href="#" id="add_edition" name ="add another edition" onclick="return showAddAnotherPopup(this);">Add edition+</a></button>
+  <button class="btn btn-info"><a href="{% url 'error_add_edition' %}" id="add_edition" name ="add another edition" onclick="return showAddAnotherPopup(this);">Add edition+</a></button>
 </div>
 
-<div class='issue_section' id='issue_section' style='display:none'>
+<div class='issue_section' id='issue_section'>
   <p>Select an issue</p>
   <select name="issue" id="issue">
   <option>Select an issue</option>
   </select>
-  <button class="btn btn-info"><a href="#" id="add_issue" name ="add another issue" onclick="return showAddAnotherPopup(this);">Add issue+</a></button>
+  <button class="btn btn-info"><a href="{% url 'error_add_issue' %}" id="add_issue" name ="add another issue" onclick="return showAddAnotherPopup(this);">Add issue+</a></button>
 
 </div>
 
-<div class='copy_section' id='copy_section' style='display:none'>
+<div class='copy_section' id='copy_section'>
 	<p>Fill in the information about the copy</p>
 	{{ copy_form.as_p }}
 </div>
@@ -47,12 +47,5 @@
 	<input type="submit" name="submit" value="Submit" class="copy_submit" id="copy_submit" style='display:none'/>
 </div>
 </form>
-
-<script>
-  $('.edition_section').attr('style', 'display:inline');
-  $('.issue_section').attr('style', 'display:inline');
-  $('.copy_section').attr('style', 'display:inline');
-  $('.copy_submit').attr('style', 'display:inline');
-</script>
 
 {% endblock content %}
