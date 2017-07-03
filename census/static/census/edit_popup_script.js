@@ -13,8 +13,13 @@ function dismissAddAnotherTitle(win, newId, newTitle) {
 		option.value = newId;
 		option.selected = true;
 		x.add(option);
-		var edition_section=document.getElementById('edition_section');
-		edition_section.style.display="inline";
+
+		var editions = document.getElementById('edition');
+		editions.options.length = 0;
+
+		var issues = document.getElementById('issue');
+		issues.options.length = 0;
+
 		var new_url = "/census/addEdition/" + newId + "/";
 		var add_edition=document.getElementById('add_edition');
 		add_edition.href = new_url;
@@ -28,8 +33,10 @@ function dismissAddAnotherEdition(win, newId, newEdition) {
 		option.value = newId;
 		option.selected = true;
 		x.add(option);
-		var issue_section=document.getElementById('issue_section');
-		issue_section.style.display="inline";
+
+		var issues = document.getElementById('issue');
+		issues.options.length = 0;
+
 		var new_url = "/census/addIssue/" + newId + "/";
 		var add_issue=document.getElementById('add_issue');
 		add_issue.href = new_url;
@@ -43,8 +50,7 @@ function dismissAddAnotherIssue(win, newId, newIssue) {
 		option.value = newId;
 		option.selected = true;
 		x.add(option);
-		var copy_section=document.getElementById('copy_section');
-		copy_section.style.display="inline";
+
 		var copy_submit=document.getElementById('copy_submit');
 		copy_submit.style.display="inline";
 		win.close();

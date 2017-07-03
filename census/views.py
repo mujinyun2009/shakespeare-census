@@ -196,13 +196,16 @@ def submission(request):
 	copy_form = CopyForm()
 	if request.method=='POST':
 		issue_id=request.POST.get('issue')
-		selected_issue=Issue.objects.get(pk=issue_id)
-		copy_form=CopyForm(data=request.POST)
-		if copy_form.is_valid():
-			copy=copy_form.save(commit=False)
-			copy.issue=selected_issue
-			copy.save()
-			return HttpResponseRedirect(reverse('copy_info', args=(copy.id,)))
+		if not issue_id or issue_id == 'Z':
+			copy_form=CopyForm()
+		else:
+			selected_issue=Issue.objects.get(pk=issue_id)
+			copy_form=CopyForm(data=request.POST)
+			if copy_form.is_valid():
+				copy=copy_form.save(commit=False)
+				copy.issue=selected_issue
+				copy.save()
+				return HttpResponseRedirect(reverse('copy_info', args=(copy.id,)))
 	else:
 		copy_form=CopyForm()
 
@@ -223,13 +226,17 @@ def edit_copy_submission(request, copy_id):
 
 	if request.method=='POST':
 		issue_id=request.POST.get('issue')
-		selected_issue=Issue.objects.get(pk=issue_id)
-		copy_to_edit=CopyForm(request.POST, instance=copy_to_edit)
+		if not issue_id or issue_id == 'Z':
+			copy_form=CopyForm(instance=copy_to_edit)
+		else:
+			selected_issue=Issue.objects.get(pk=issue_id)
+			copy_form=CopyForm(request.POST, instance=copy_to_edit)
 
-		if copy_to_edit.is_valid():
-			copy_to_edit.issue = selected_issue
-			copy_to_edit.save()
-			return HttpResponseRedirect(reverse('copy_info', args=(copy_id,)))
+			if copy_form.is_valid():
+				new_copy=copy_form.save()
+				new_copy.issue = selected_issue
+				new_copy.save(force_update=True)
+			return HttpResponseRedirect(reverse('copy_info', args=(new_copy.id,)))
 	else:
 		copy_form=CopyForm(instance=copy_to_edit)
 
@@ -237,7 +244,11 @@ def edit_copy_submission(request, copy_id):
 	'all_titles': all_titles,
 	'copy_form': copy_form,
 	'copy_id': copy_id,
-	'old_title': old_title,
+	'old_title_id': old_title.id,
+	'old_edition_set': old_title.edition_set.all(),
+	'old_edition_id': old_edition.id,
+	'old_issue_set': old_edition.issue_set.all(),
+	'old_issue_id': old_issue.id,
 	}
 	return HttpResponse(template.render(context, request))
 
@@ -309,11 +320,6 @@ def add_edition(request, title_id):
 	}
 	return HttpResponse(template.render(context, request))
 
-def error_add_edition(request):
-	template=loader.get_template('census/error_add_edition.html')
-	context={}
-	return HttpResponse(template.render(context, request))
-
 @login_required()
 def add_issue(request, edition_id):
 	template=loader.get_template('census/addIssue.html')
@@ -336,9 +342,4 @@ def add_issue(request, edition_id):
 		'issue_form':issue_form,
 		'edition_id': edition_id,
 	}
-	return HttpResponse(template.render(context, request))
-
-def error_add_issue(request):
-	template=loader.get_template('census/error_add_issue.html')
-	context={}
 	return HttpResponse(template.render(context, request))
