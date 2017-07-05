@@ -5,6 +5,33 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <style>
 a {text-decoration: none;}
+tr {
+  border:none;
+}
+td {
+  border:none;
+}
+th, td {
+  padding-top:0;
+  padding-bottom:0;
+  background:#A7C87B;
+}
+table {
+  border-collapse: collapse;
+  font-family:"Century Gothic", AppleGothic, sans-serif;
+}
+td:nth-child(even) {background-color: #ff9966}
+
+table.center {
+  width:300px;
+  height:100px;
+  margin-left:-150px;
+  position:relative;
+  left:50%;
+}
+table td:nth-child(odd) {
+  border-right:1px solid #FFFFFF;
+}
 
 hr.style14 { 
   border: 0; 
@@ -15,39 +42,45 @@ hr.style14 {
   background-image: -o-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0); 
 
 }
+hr.style1 { 
+  border: 0; 
+  height: 1px; 
+  border-color:#6E728A;
+  padding:0px;
+  margin:0;
+}
+
 .select {
-  width:215px;
   text-align:center;
   background-color: #FFFFFF;
   position: relative;
   height: 35px;
-  left:37.8%;
+  left:0%;
   margin:auto;
   border:none;
   background:none;
-  color:#A9A9A9;
-  font-size:20px;
+  color:#FFFFFF;
+  font-size:15px;
   font-family:"Century Gothic", AppleGothic, sans-serif;
   font-weight: lighter;
 }
 .Submission {
   border : none;
-  padding: 10px 30px;
+  padding: 0px 0px;
   position:relative;
-  width:100px;
   height:50px;
-  left:38.6%;
+  left:0%;
   color: #FFFFFF;
-  background: #E8CB89;
+  background: #ff9966;
   font-family: "Century Gothic", AppleGothic, sans-serif;
 }
 .Submission2 {
   border : none;
   padding: 10px 30px;
   position:relative;
-  width:100px;
+  width:300px;
   height:50px;
-  left:38.6%;
+  left:37.3%;
   color: #FFFFFF;
   background: #8FBC8F;
   font-family: "Century Gothic", AppleGothic, sans-serif;
@@ -98,41 +131,64 @@ Register</p></a></li>
 	{% csrf_token %}
 <div>
   <center><p style="font-size:25; font-weight: lighter;">1. select a title</p></center>
+  <table class = 'center'>
+  <tr>
+  <td>
   <select name="title" id="title" class ="select">
   <option value="Z">select a title</option>
   {% for title in all_titles %}
     <option value="{{ title.id }}">{{ title.title }}</option>
   {% endfor %}
   </select>
-
+  </td>
+  <td>
   <button class="Submission"><a href="{% url 'add_title' %}" style="color:#FFFFFF;" name="add another title" onclick="return showAddAnotherPopup(this);">add title+</a></button>
-
+  </td>
+  </tr>
+  </table>
 </div>
 
 <div class='edition_section' id ='edition_section' style='display:none'>
-<hr class = "style14" width = "40%">
   <center><p style="font-size:25; font-weight: lighter;">2. select an edition</p></center>
+  <table class = 'center'>
+  <tr>
+  <td>
   <select name="edition" id="edition" class = "select">
   <option>select an edition</option>
   </select>
+  </td>
+  <td>
   <button class = "Submission"><a href="#" id="add_edition" style="color:#FFFFFF;" name ="add another edition" onclick="return showAddAnotherPopup(this);">add edition+</a></button>
+  </td>
+  </tr>
+  </table>
 </div>
 
 <div class='issue_section' id='issue_section' style='display:none'>
-<hr class ="style14" width = "40%">
   <center><p style="font-size:25; font-weight: lighter;">3. select an issue</p></center>
+  <table class = 'center'>
+  <tr>
+  <td>
   <select name="issue" id="issue" class="select">
   <option>select an issue</option>
   </select>
+  </td>
+  <td>
   <button class="Submission"><a href="#" id="add_issue" style="color:#FFFFFF;" name ="add another issue" onclick="return showAddAnotherPopup(this);">add issue+</a></button>
-
+  </td>
+  </tr>
+  </table>
 </div>
 <div class='copy_section' id='copy_section' style='display:none'>
   <center><p style="font-size:25; font-weight: lighter;">4. fill in the information about the copy</p></center>
+  <center>
+  <table>
 	{{ copy_form.as_p }}
+  </table>
+  </center>
 </div>
-
-<div class="my-button" style='display:none'>
+<hr class="style1"></hr>
+<div class="my-button">
 	<input type="submit" name="submit" value="submit" class="Submission2" id="copy_submit" display:none'/>
 </div>
 </form>

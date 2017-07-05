@@ -11,7 +11,7 @@ $(document).ready(function() {
       $('#add_edition').attr('href', new_url);
       var url = "/census/title/" + $(this).val() + "/";
       $.getJSON(url, function(editions) {
-        var options = '<option value="Z">Select an edition</option>';
+        var options = '<option value="Z">select an edition</option>';
         for (var i = 0; i < editions.length; i++) {
           options += '<option value="' + editions[i]['id'] + '">Edition ' + editions[i]['Edition_number'] + '</option>';
         }
@@ -49,6 +49,7 @@ $(document).ready(function() {
 		else {
 			$('.copy_section').attr('style', 'display:inline');
 			$('.copy_submit').attr('style', 'display:inline');
+      var new_url = "/census/"
 		}
 	});
 });
