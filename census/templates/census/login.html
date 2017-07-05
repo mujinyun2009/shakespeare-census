@@ -1,66 +1,232 @@
-{% extends "base.html" %}
 {% load static %}
-{% block content %}
-<div class="wrapper">
 
-<ul>
-<li><a class="not.active" href="http://localhost:8000/"><p class="sansserif">
-Titles</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/editions"><p class="sansserif">
-Editions</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/provenance"><p class="sansserif">
-Provenance</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/copy"><p class="sansserif">
-Copy</p></a></li>
+<html>
+<title>Shakespeare Census</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<style>
+.login {
+  border : none;
+  position:relative;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+}
+th {
+    background-color: #8FBC8F;
+    background:#8FBC8F;
+    color: #FFFFFF;
+    width:100%;
+    height:40px;
+}
 
 
-<li class="dropdown">
-    <a class="not.active" href="http://localhost:8000/census/submission" class="dropbtn"><p class="sansserif">Submission</p></a>
-    <div class="dropdown-content">
-        <a href="http://localhost:8000/census/submission" class="not.active"><p class="sansserif">Titles</p></a>
-        <a href="http://localhost:8000/census/submissionedition"><p class="sansserif">Editions</p></a>
-        <a href="http://localhost:8000/census/submissioncopy"><p class="sansserif">Copies</p></a>
-    </div>
-</li>
 
-<li><a class="not.active" href="http://localhost:8000/census/register"><p class="sansserif">Register</p></a></li>
-<li><a class="active" href="http://localhost:8000/census/login"><p class="sansserif">Login</p></a></li>
+p.sansserif {
+    font-family: "Century Gothic", AppleGothic, sans-serif;
+}
+p.sansserifgrey {
+    font-family: "Century Gothic", AppleGothic, sans-serif;
+    color: #808080;
+    font-weight: lighter;
+}
+.verticalLine {
+  border-left: thin solid #808080;
+}
+table {
+    border-collapse:collapse;
+  padding: auto;
+}
+.table2 {
+  padding-top:0;
+  padding-bottom:0;
+  background:#FFFFFF;
+  border: 0;
+  th height
 
-</ul>
+}
+.table2:hover:not(.active) {
+  background-color: #FFFFFF;
+}
 
-<hr width = "30%"></hr>
-	<p class="sansserifgrey">
-	Welcome to Shakespeare Census. </br> Please log in below.
-	</p>
+.table2:nth-child(odd) {background-color: #ff9966}
+
+
+.select1 {
+  width:215px;
+  text-align:center;
+  background-color: #FFFFFF;
+  position: relative;
+  height: 35px;
+  left:40%;
+  margin:auto;
+  border:none;
+  background:none;
+  color:#A9A9A9;
+  font-size:20px;
+}
+select option {
+  background-color:#FFFFFF;
+  color:#FFFFFF;
+  background:none;
+}
+
+input {
+  color: #808080;
+  font-weight: lighter;
+}
+input, select, textarea{
+    color: #808080;
+    font-weight:lighter;
+}
+.addfields {
+  text-decoration: none;
+  width: 100px;
+  height:50px;
+  border : none;
+  left: 40.7%;
+  padding: 10px 30px;
+  position:relative;
+  color: #FFFFFF;
+  background: #D19B1E;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+ 
+}
+
+
+.hidden {
+  display: none;
+  overflow: auto;
+}
+.hidden2 {
+  display: none;
+  overflow: auto;
+}
+
+
+tr {
+    border:none;
+}
+th, td {
+    padding-top:0;
+    padding-bottom:0;
+}
+
+td a {
+  display: block;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+}
+
+td:hover:not(.active) {
+  background-color: #F2E8CE;
+}
+
+.header {
+  text-align: center;
+}
+table.center {
+  width:300px;
+  height:100px;
+  margin-left:-150px;
+  position:relative;
+  left:50%;
+}
+.Submission {
+  text-decoration: none;
+  border : none;
+  padding: 10px 30px;
+  position:relative;
+  width:100px;
+  height:50px;
+  left:40.7%;
+  color: #FFFFFF;
+  background: #8FBC8F;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+}
+
+table td {
+border-left: 1px solid #000;
+border-right: 1px solid #000;
+border-top: 0px;
+border-bottom: 0;
+}
+
+table td:first-child {
+border-left: none;
+}
+
+table td:last-child {
+border-right: none;
+}
+
+p.title {
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  font-size: 25px;
+  font-weight: 100;
+  text-align: center;
+  margin-top:190px;
+  position:relative;
+}
+</style>
+<head>
+<p class = "title" style="text-align:center;">shakespeare census</p>
+
+</head>
+
+<body>
+<div class = "header">
+<table class = "center">
+<tr>
+<td>
+<div id = "unhidebutton">
+    <p class = sansserif>
+    search
+    </p>
+  </div>
+</td>
+<td>
+<p class = sansserif>
+<a class="not.active" href="http://localhost:8000/census/submission">submit</a>
+</p>
+</td>
+<td>
+<p class = sansserif>
+<a class="active" href="http://localhost:8000/census/login">account</a>
+</p>
+</td>
+</tr>
+</table>
 </div>
-<hr width = "30%"></hr>
-
+<br>
     <div class="main-content">
         <link rel="stylesheet" type="text/css" href="{% static 'WSKsearch/login.css' %}">
-        <p class="sansserif"><heavy>Login to start your search</heavy></p>
         {% if failed == True %}
-        <p class="errors">Your account is inactive, please enter the correct username and password</p>
+        <p class="sansserif">Your account is inactive, please enter the correct username and password</p>
         {% endif %}
     <div class="content-form">
             <form id="login_form" method="post" action="/census/login">
                 {% csrf_token %}
-                <table>
-                    <tr>
-                    <td>Username: <input type="text" name="username" value="" size="30" /></td>
+                <p class = "sansserif">
+                <table class = "center">
+                    <tr class = "table2" height ="40">
+                    <td class = "table2">Username:</td>
+                    <td class = "table2"><input type="text" name="username" value="" size="30" style="height:40px;" /></td>
                     </tr>
-                    <tr>
-                    <td>Password: <input type="password" name="password" value="" size="30" /></td>
+                    <tr height="40">
+                    <td class = "table2">
+                    Password:
+                    </td>
+                    <td class = "table2"><input type="password" name="password" value="" size="30" style="height:40px;" /></td>
                     </tr>
-                    <tr>
-                    <td><a href="\UpennWSK/user/password_reset">Password Reset?</a></td>
+                     <tr class = "table2" height="40">
+                    <td class = "table2"><a href="\UpennWSK/user/password_reset">Password Reset?</a></td>
                     </tr>
-                    <tr>
-                    <td><input type="submit" value="login" />
-                        <input type="hidden" name="next" value={{next}}></td>
+                    <tr class = "table2" height="40">
+                    <th colspan="2"><input type="submit" value="login" class="login" />
+                    <input type="hidden" name="next" value={{next}}></th>
                     </tr>
+                    </p>
         </table>
             </form>
     </div>
     </div>
-
-{% endblock content %}
