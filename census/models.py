@@ -48,7 +48,7 @@ class Copy (models.Model):
 	Barlet1916_Notes = models.CharField(max_length=1000)
 	Lee_Notes = models.CharField(max_length=2000)
 	Library_Notes=models.CharField(max_length=2000)
-	created_by=models.ForeignKey(User, related_name="copies")
+	created_by=models.ForeignKey(User, related_name="submitted_copies")
 	def __str__(self):
 		return  "%s %s" % (self.issue, self.NSC)
 	class Meta:
@@ -81,7 +81,7 @@ class Transaction(models.Model):
 
 class UserHistory(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	copies = models.ManyToManyField(Copy, null=True, blank=True)
+	editted_copies = models.ManyToManyField(Copy, null=True, blank=True)
 
 	def __str__(self):
 		return self.user.username

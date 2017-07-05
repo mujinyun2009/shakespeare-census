@@ -243,7 +243,7 @@ def edit_copy_submission(request, copy_id):
 				new_copy.save(force_update=True)
 				current_user = request.user
 				current_userHistory=UserHistory.objects.get(user=current_user)
-				current_userHistory.copies.add(new_copy)
+				current_userHistory.editted_copies.add(new_copy)
 			return HttpResponseRedirect(reverse('copy_info', args=(new_copy.id,)))
 	else:
 		copy_form=CopyForm(instance=copy_to_edit)
@@ -385,9 +385,9 @@ def edit_profile(request):
 def user_history(request):
 	template=loader.get_template('census/userHistory.html')
 	current_user=request.user
-	submissions=current_user.copies.all()
+	submissions=current_user.submitted_copies.all()
 	cur_user_history=UserHistory.objects.get(user=current_user)
-	editted_copies=cur_user_history.copies.all()
+	editted_copies=cur_user_history.editted_copies.all()
 
 	context={
 		'submissions': submissions,
