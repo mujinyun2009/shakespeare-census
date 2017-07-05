@@ -201,6 +201,7 @@ def submission(request):
 		issue_id=request.POST.get('issue')
 		if not issue_id or issue_id == 'Z':
 			copy_form=CopyForm()
+			messages.error(request, 'Please choose or add an issue.')
 		else:
 			selected_issue=Issue.objects.get(pk=issue_id)
 			copy_form=CopyForm(data=request.POST)
@@ -210,6 +211,9 @@ def submission(request):
 				copy.created_by=request.user
 				copy.save()
 				return HttpResponseRedirect(reverse('copy_info', args=(copy.id,)))
+			else:
+				copy_form=CopyForm()
+				messages.error(request, 'The information you entered is invalid.')
 	else:
 		copy_form=CopyForm()
 
