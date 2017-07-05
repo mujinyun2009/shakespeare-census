@@ -172,6 +172,7 @@ def login_user(request):
 	else:
 		return HttpResponse(template.render({'next': request.GET.get('next', '/census')}, request))
 
+@login_required
 def logout_user(request):
 	template = loader.get_template('census/logout.html')
 	logout(request)
@@ -344,5 +345,44 @@ def add_issue(request, edition_id):
 	context={
 		'issue_form':issue_form,
 		'edition_id': edition_id,
+	}
+	return HttpResponse(template.render(context, request))
+
+@login_required
+def display_user_profile(request):
+	template=loader.get_template('census/userProfile.html')
+	current_user=request.user
+	context={
+		'user': current_user,
+	}
+	return HttpResponse(template.render(context, request))
+
+@login_required
+def edit_profile(request):
+	template=loader.get_template('census/editProfile.html')
+	current_user=request.user
+	if request.method=='POST':
+		profile_form = editProfileForm(request.POST, instance=current_user)
+		if profile_form.is_valid():
+			profile_form.save()
+			return HttpResponseRedirect(reverse('profile'))
+		else:
+			print(profile_form.errors)
+	else:
+		profile_form=editProfileForm(instance=current_user)
+
+	context={
+		'user': current_user,
+		'profile_form': profile_form,
+	}
+	return HttpResponse(template.render(context, request))
+
+@login_required
+def user_submissions(request):
+	template=loader.get_template('census/userSubmissions.html')
+	current_user=request.user
+	submissions=current_user.copies.all()
+	context={
+		'submissions': submissions,
 	}
 	return HttpResponse(template.render(context, request))

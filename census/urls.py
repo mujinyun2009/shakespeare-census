@@ -30,4 +30,11 @@ urlpatterns = [
 	url(r'^logout$', views.logout_user, name='logout_user'),
 	url(r'^homepage$',views.homepage, name='homepage'),
 	url(r'^search/$', views.search, name='search_for_something'),
+
+	#for viewing user's profile
+	url(r'^profile$', views.display_user_profile, name='profile'),
+	#for viewing user's submissions
+	url(r'^user_submissions$', views.user_submissions, name='user_submissions'),
+
+	url(r'^editProfile$', views.edit_profile, name='edit_profile'),
 ]

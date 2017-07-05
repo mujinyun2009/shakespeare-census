@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!-- <script type="text/javascript" src="/static/census/popup_script.js"></script> -->
+<br>
+<br>
+<table>
+	<tr>
+		<td>Username: </td>
+		<td>{{ user.username}}</td>
+	</tr>
+	<tr>
+		<td>Email: </td>
+		<td>{{ user.email }}</td>
+	</tr>
+	<tr>
+		<td>First name: </td>
+		<td>{{ user.first_name }}</td>
+	</tr>
+	<tr>
+		<td>Last name: </td>
+		<td>{{ user.last_name }}</td>
+	</tr>
+</table>
+<hr>
+<a href="{% url 'edit_profile' %}" class="btn btn-info" role="button">Edit</a>
+
+{% endblock content %}
