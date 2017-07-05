@@ -5,20 +5,34 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <style>
+
+hr.style1 { 
+  border: 0; 
+  height: 1px; 
+  border-color:#6E728A;
+  padding:0px;
+  margin:0px;
+}
+
+a {text-decoration: None}
 .login {
   border : none;
   position:relative;
   font-family: "Century Gothic", AppleGothic, sans-serif;
+  color: #FFFFFF;
+  background-color: #8FBC8F;
+  width: 300px;
 }
-th {
-    background-color: #8FBC8F;
-    background:#8FBC8F;
+
+
+input {
+    border: None;
     color: #FFFFFF;
-    width:100%;
-    height:40px;
+    background: none;
+    width: 200px;
+    font-size:20px;
+    font-family:"Century Gothic", AppleGothic, sans-serif;
 }
-
-
 
 p.sansserif {
     font-family: "Century Gothic", AppleGothic, sans-serif;
@@ -39,68 +53,19 @@ table {
   padding-top:0;
   padding-bottom:0;
   background:#FFFFFF;
-  border: 0;
-  th height
-
-}
-.table2:hover:not(.active) {
-  background-color: #FFFFFF;
-}
-
-.table2:nth-child(odd) {background-color: #ff9966}
-
-
-.select1 {
-  width:215px;
-  text-align:center;
-  background-color: #FFFFFF;
-  position: relative;
-  height: 35px;
-  left:40%;
-  margin:auto;
-  border:none;
-  background:none;
-  color:#A9A9A9;
-  font-size:20px;
-}
-select option {
-  background-color:#FFFFFF;
-  color:#FFFFFF;
-  background:none;
-}
-
-input {
-  color: #808080;
-  font-weight: lighter;
-}
-input, select, textarea{
-    color: #808080;
-    font-weight:lighter;
-}
-.addfields {
-  text-decoration: none;
-  width: 100px;
-  height:50px;
-  border : none;
-  left: 40.7%;
-  padding: 10px 30px;
-  position:relative;
+  border: 0px;
   color: #FFFFFF;
-  background: #D19B1E;
-  font-family: "Century Gothic", AppleGothic, sans-serif;
- 
+  margin:0px;
+  padding:5px;
+  border-collapse: collapse;
 }
 
 
-.hidden {
-  display: none;
-  overflow: auto;
-}
-.hidden2 {
-  display: none;
-  overflow: auto;
-}
+.table2:nth-child(2) {background-color: #ff9966; border-left: 2px solid #FFFFFF; border-bottom:2px solid #FFFFFF;}
 
+.table2:nth-child(odd) {background-color: #a7c87b; border-bottom:none;}
+
+table th:nth-child(odd) {background-color: #ff9966}
 
 tr {
     border:none;
@@ -117,7 +82,7 @@ td a {
   text-decoration: none;
 }
 
-td:hover:not(.active) {
+td:hover:not(.table2) {
   background-color: #F2E8CE;
 }
 
@@ -131,6 +96,13 @@ table.center {
   position:relative;
   left:50%;
 }
+table.center2 {
+  width:300px;
+  margin-left:-150px;
+  position:relative;
+  left:50%;
+}
+
 .Submission {
   text-decoration: none;
   border : none;
@@ -177,21 +149,21 @@ p.title {
 <div class = "header">
 <table class = "center">
 <tr>
-<td>
+<td class = "topbar">
 <div id = "unhidebutton">
     <p class = sansserif>
     search
     </p>
   </div>
 </td>
-<td>
+<td class = "topbar">
 <p class = sansserif>
-<a class="not.active" href="http://localhost:8000/census/submission">submit</a>
+<a  href="http://localhost:8000/census/submission">submit</a>
 </p>
 </td>
-<td>
+<td class = "topbar">
 <p class = sansserif>
-<a class="active" href="http://localhost:8000/census/login">account</a>
+<a class href="http://localhost:8000/census/login">account</a>
 </p>
 </td>
 </tr>
@@ -199,7 +171,6 @@ p.title {
 </div>
 <br>
     <div class="main-content">
-        <link rel="stylesheet" type="text/css" href="{% static 'WSKsearch/login.css' %}">
         {% if failed == True %}
         <p class="sansserif">Your account is inactive, please enter the correct username and password</p>
         {% endif %}
@@ -207,26 +178,25 @@ p.title {
             <form id="login_form" method="post" action="/census/login">
                 {% csrf_token %}
                 <p class = "sansserif">
-                <table class = "center">
-                    <tr class = "table2" height ="40">
-                    <td class = "table2">Username:</td>
+                <table class = "center2">
+                    <tr height ="40">
+                    <td class = "table2">Username</td>
                     <td class = "table2"><input type="text" name="username" value="" size="30" style="height:40px;" /></td>
                     </tr>
-                    <tr height="40">
+                    <tr  height="40">
                     <td class = "table2">
-                    Password:
+                    Password
                     </td>
-                    <td class = "table2"><input type="password" name="password" value="" size="30" style="height:40px;" /></td>
+                    <td class = "table2"><input type="password" name="password" value="" size="30" style="height:40px;"/></td>
                     </tr>
-                     <tr class = "table2" height="40">
-                    <td class = "table2"><a href="\UpennWSK/user/password_reset">Password Reset?</a></td>
-                    </tr>
-                    <tr class = "table2" height="40">
-                    <th colspan="2"><input type="submit" value="login" class="login" />
-                    <input type="hidden" name="next" value={{next}}></th>
-                    </tr>
-                    </p>
-        </table>
+                </table>
+                                <hr class="style1"></hr>
+
+<!--                     <th><a href="\UpennWSK/user/password_reset">Password Reset?</a></th>
+ -->               <center>  
+                    <input type="submit" value="login" class="login" />
+                    <input type="hidden" name="next" value={{next}}>
+                    
             </form>
     </div>
     </div>
