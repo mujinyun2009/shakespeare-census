@@ -20,6 +20,7 @@ from django.core import serializers
 from django.forms.models import model_to_dict
 import json
 from django.urls import reverse
+from django.contrib import messages
 
 # Create your views here.
 def search(request):
@@ -240,6 +241,9 @@ def edit_copy_submission(request, copy_id):
 				new_copy=copy_form.save()
 				new_copy.issue = selected_issue
 				new_copy.save(force_update=True)
+				current_user = request.user
+				current_userHistory=UserHistory.objects.get(user=current_user)
+				current_userHistory.copies.add(new_copy)
 			return HttpResponseRedirect(reverse('copy_info', args=(new_copy.id,)))
 	else:
 		copy_form=CopyForm(instance=copy_to_edit)
@@ -367,7 +371,7 @@ def edit_profile(request):
 			profile_form.save()
 			return HttpResponseRedirect(reverse('profile'))
 		else:
-			print(profile_form.errors)
+			messages.error(request, 'Please correct the error below.')
 	else:
 		profile_form=editProfileForm(instance=current_user)
 
@@ -378,11 +382,26 @@ def edit_profile(request):
 	return HttpResponse(template.render(context, request))
 
 @login_required
-def user_submissions(request):
-	template=loader.get_template('census/userSubmissions.html')
+def user_history(request):
+	template=loader.get_template('census/userHistory.html')
 	current_user=request.user
 	submissions=current_user.copies.all()
+	cur_user_history=UserHistory.objects.get(user=current_user)
+	editted_copies=cur_user_history.copies.all()
+
 	context={
 		'submissions': submissions,
+		'editted_copies': editted_copies,
 	}
 	return HttpResponse(template.render(context, request))
+
+def copy_detail(request, copy_id):
+	template=loader.get_template('census/copy_detail.html')
+	selected_copy=get_object_or_404(Copy, pk=copy_id)
+	selected_issue=selected_copy.issue
+	selected_edition=selected_issue.edition
+	context={
+		'selected_edition': selected_edition,
+		'selected_copy': selected_copy,
+	}
+	return HttpResponse(template.render(context,request))

@@ -4,6 +4,14 @@
 <!-- <script type="text/javascript" src="/static/census/popup_script.js"></script> -->
 <br>
 <br>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 <div>
 <p class="errors sansserif">
 	<form method="post" action="{% url 'edit_profile' %}">

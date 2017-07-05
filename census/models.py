@@ -2,6 +2,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ModelForm
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class Title(models.Model):
 	title = models.CharField(max_length=128, unique=False)
@@ -76,6 +78,20 @@ class Transaction(models.Model):
 	price = models.DecimalField(max_digits = 10, decimal_places=2)
 	def __str__(self):
 		return "Sold from %s to %s" % (self.seller, self.buyer)
+
+class UserHistory(models.Model):
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	copies = models.ManyToManyField(Copy, null=True, blank=True)
+
+	def __str__(self):
+		return self.user.username
+	class Meta:
+		verbose_name_plural = "user histories"
+
+@receiver(post_save, sender=User)
+def create_user_history(sender, instance, created, **kwargs):
+	if created:
+		UserHistory.objects.create(user=instance)
 
 #The following models are not used right now. Need further information.
 class Provenance (models.Model):

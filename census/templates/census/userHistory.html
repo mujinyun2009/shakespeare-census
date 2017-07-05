@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<br>
+<br>
+<table>
+	<tr>
+		<td><h3>Copies you have submitted: </h3></td>
+	</tr>
+	{% for submission in submissions %}
+		<tr>
+			<td>{{ submission }}<td>
+			<td><a href="{% url 'copy_detail' submission.id %}" class="btn btn-info" role="button" onclick="return popup(this);">Details</a></td>
+			<td><a href="{% url 'edit_copy_submission' submission.id %}" class="btn btn-info" role="button" onclick="return popup(this);">Edit</a></td>
+		</tr>
+	{% endfor %}
+</table>
+<hr>
+
+<table>
+	<tr>
+		<td><h3>Copies you have editted: </h3></td>
+	</tr>
+	{% for copy in editted_copies %}
+		<tr>
+			<td>{{ copy }}<td>
+			<td><a href="{% url 'copy_detail' copy.id %}" class="btn btn-info" role="button" onclick="return popup(this);">Details</a></td>
+			<td><a href="{% url 'edit_copy_submission' copy.id %}" class="btn btn-info" role="button" onclick="return popup(this);">Edit</a></td>
+		</tr>
+	{% endfor %}
+</table>
+
+<script>
+function popup(triggeringLink) {
+	var href = triggeringLink.href
+	var name = triggeringLink.name
+	var win = window.open(href, name, "height=800,width=1000,resizable=yes,scrollbars=yes");
+	win.focus();
+	return false;
+}
+</script>
+
+{% endblock content %}
