@@ -190,6 +190,7 @@ def copy_info(request, copy_id):
 	}
 	return HttpResponse(template.render(context,request))
 
+@login_required()
 def submission(request):
 	template = loader.get_template('census/submission.html')
 	all_titles = Title.objects.all()
@@ -204,6 +205,7 @@ def submission(request):
 			if copy_form.is_valid():
 				copy=copy_form.save(commit=False)
 				copy.issue=selected_issue
+				copy.created_by=request.user
 				copy.save()
 				return HttpResponseRedirect(reverse('copy_info', args=(copy.id,)))
 	else:
@@ -216,6 +218,7 @@ def submission(request):
 
 	return HttpResponse(template.render(context, request))
 
+@login_required()
 def edit_copy_submission(request, copy_id):
 	template = loader.get_template('census/edit_submission.html')
 	all_titles = Title.objects.all()

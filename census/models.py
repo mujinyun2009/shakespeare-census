@@ -46,6 +46,7 @@ class Copy (models.Model):
 	Barlet1916_Notes = models.CharField(max_length=1000)
 	Lee_Notes = models.CharField(max_length=2000)
 	Library_Notes=models.CharField(max_length=2000)
+	created_by=models.ForeignKey(User, related_name="created_by")
 	def __str__(self):
 		return  "%s %s" % (self.issue, self.NSC)
 	class Meta:

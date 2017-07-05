@@ -20,7 +20,7 @@ class EditionForm(forms.ModelForm):
 class CopyForm(forms.ModelForm):
 	class Meta:
 		model = Copy
-		exclude = ['issue']
+		exclude = ['issue', 'created_by']
 
 class IssueForm(forms.ModelForm):
 	class Meta:
