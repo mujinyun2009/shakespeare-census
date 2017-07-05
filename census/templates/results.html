@@ -54,17 +54,19 @@ Copy</p></a></li>
 </br>
 <center>
 <table class = "center" align="center">
-<th colspan="3">Books found:</th>
+<th colspan="4">Books found:</th>
 <tr>
 <td class="subhead">Title</td>
 <td class="subhead">Year Published</td>
 <td class="subhead">Edition Number</td>
+<td class="subhead">Detail</td>
 </tr>
 <tr>
 {% for obj in result_list %}
-<td><a href ="{% url 'detail' obj.issue.edition.title.id %}">{{ obj.issue.edition.title}}</a></td>
+<td>{{ obj.issue.edition.title}}</td>
 <td>{{ obj.issue.edition.year}}</td>
 <td>{{ obj.issue.edition.Edition_number}}</td>
+<td><a href="{% url 'copy_detail' obj.id %}" class="btn btn-info" onclick="return popup(this);">Detail</a></td>
 </tr>
 </br>
 {% endfor %}
@@ -78,4 +80,14 @@ Copy</p></a></li>
 </div>
 {% endif %}
 </center>
+
+<script>
+function popup(triggeringLink) {
+	var href = triggeringLink.href
+	var name = triggeringLink.name
+	var win = window.open(href, name, "height=800,width=1000,resizable=yes,scrollbars=yes");
+	win.focus();
+	return false;
+}
+</script>
 {% endblock content %}
