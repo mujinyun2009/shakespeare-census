@@ -6,6 +6,15 @@
 <script type="text/javascript" src="/static/census/edit_dropdown.js"></script>
 <script type="text/javascript" src="/static/census/edit_popup_script.js"></script>
 
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+<hr>
+{% endif %}
+
 <form action="{% url 'edit_copy_submission' copy_id %}" method="post" accept-charset="utf-8" style="margin-left:20px">
 	{% csrf_token %}
 <div>

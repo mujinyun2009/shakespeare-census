@@ -12,6 +12,7 @@
     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
     {% endfor %}
 </ul>
+<hr>
 {% endif %}
 
 <form action="{% url 'submission' %}" method="post" accept-charset="utf-8" style="margin-left:20px">

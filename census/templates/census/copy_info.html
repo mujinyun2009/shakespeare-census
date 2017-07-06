@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<style>
+.hidden {
+  display: none;
+  overflow: auto;
+}
+</style>
+
 <div class="wrapper">
 
 <ul>
@@ -27,8 +34,13 @@ Copy</p></a></li>
 <li><a class="not.active" href="http://localhost:8000/census/login"><p class="sansserif">Login</p></a></li>
 
 </ul>
+<div id="submitted_line">
+<h2>You have submitted the following copy: </h2>
+</div>
 
-<h2>You have submitted/editted the following copy: </h2>
+<div id="editted_line">
+<h2>You have editted the following copy: </h2>
+</div>
 
 <br>
 <br>
@@ -98,7 +110,21 @@ Copy</p></a></li>
 <div>
   <a href="{% url 'edit_copy_submission' selected_copy.id %}" class="btn btn-info" role="button">Edit</a>
   <a href="{% url 'copy_success' %}" class="btn btn-info" role="button">Confirm</a>
-  <a href="{% url 'cancel_copy_submission' selected_copy.id %}" class="btn btn-info">Cancel</a>
+  <a href="{% url 'cancel_copy_submission' selected_copy.id %}" class="btn btn-info" id="delete">Delete</a>
 </div>
+
+<script>
+var opener_url = document.referrer;
+var delete_button = document.getElementById("delete");
+var submitted_line=document.getElementById("submitted_line");
+var editted_line=document.getElementById("editted_line");
+
+if(opener_url.indexOf('editcopysubmission') > -1) {
+  delete_button.classList.add("hidden");
+  submitted_line.classList.add("hidden");
+} else {
+  editted_line.classList.add("hidden");
+}
+</script>
 
 {% endblock content %}

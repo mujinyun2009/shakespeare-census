@@ -235,8 +235,18 @@ def edit_copy_submission(request, copy_id):
 
 	if request.method=='POST':
 		issue_id=request.POST.get('issue')
+		edition_id=request.POST.get('edition')
+		title_id=request.POST.get('title')
 		if not issue_id or issue_id == 'Z':
 			copy_form=CopyForm(instance=copy_to_edit)
+			messages.error(request, 'Please choose or add an issue.')
+		elif not edition_id or edition_id == 'Z':
+			copy_form=CopyForm(instance=copy_to_edit)
+			messages.error(request, 'Please choose or add an edition.')
+		elif not title_id or title_id == 'Z':
+			copy_form=CopyForm(instance=copy_to_edit)
+			messages.error(request, 'Please choose or add a title.')
+
 		else:
 			selected_issue=Issue.objects.get(pk=issue_id)
 			copy_form=CopyForm(request.POST, instance=copy_to_edit)
@@ -248,7 +258,10 @@ def edit_copy_submission(request, copy_id):
 				current_user = request.user
 				current_userHistory=UserHistory.objects.get(user=current_user)
 				current_userHistory.editted_copies.add(new_copy)
-			return HttpResponseRedirect(reverse('copy_info', args=(new_copy.id,)))
+				return HttpResponseRedirect(reverse('copy_info', args=(new_copy.id,)))
+			else:
+				messages.error(request, 'The information you entered is invalid.')
+				copy_form=CopyForm(instance=copy_to_edit)
 	else:
 		copy_form=CopyForm(instance=copy_to_edit)
 
