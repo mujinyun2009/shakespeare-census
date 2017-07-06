@@ -7,6 +7,13 @@
 
 <style>
 
+hr.style1 { 
+  border: 0; 
+  height: 10px; 
+  border-color:#6E728A;
+  padding:0px;
+  margin:0px;
+}
 
 p.sansserif {
 	font-family: "Century Gothic", AppleGothic, sans-serif;
@@ -45,13 +52,28 @@ select option {
 }
 
 input {
-  color: #808080;
+  color: #FFFFFF;
   font-weight: lighter;
+  -webkit-transition: box-shadow 0.3s;
+  outline:none;
+  border:0px;
+  background: none;
+  box-shadow: 0px 10px 0px -9px #4D4C4A, 0px 10px 0px -9px #4D4C4A;
+  -webkit-transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s;
+
 }
 input, select, textarea{
     color: #808080;
     font-weight:lighter;
+
 }
+
+input[type=text]:focus {
+  outline: none;
+  box-shadow: 0px 1px 0px 0px #4D4C4A , 0px 1px 0px 0px #4D4C4A;
+}
+
 .addfields {
   text-decoration: none;
   width: 100px;
@@ -61,7 +83,7 @@ input, select, textarea{
   padding: 10px 30px;
   position:relative;
   color: #FFFFFF;
-  background: #D19B1E;
+  background: #ff9966;
   font-family: "Century Gothic", AppleGothic, sans-serif;
  
 }
@@ -189,6 +211,7 @@ p.title {
 <input type = 'text' name = 'a' style="height: 50px; width: 200px; font-size:30px; position:relative; left:40.6%;"/>
 <br>
 <div id = "hide2" class="hidden2">
+<hr class="style1">
 <select name='k' class="select1">
 <optgroup label="Title">
   <option value="issue__edition__title__title__icontains">title</option>
@@ -211,6 +234,7 @@ p.title {
 <input type = 'text' name = 'b' style="height: 50px; width: 200px; font-size:30px; position:relative; left:40.6%"/>
 </div>
 <div id = "hide3" class = "hidden2">
+<hr class="style1">
 <select name='l' class="select1">
 <optgroup label="Title"> 
   <option value="issue__edition__title__title__icontains">title</option>
@@ -237,6 +261,8 @@ p.title {
 <input type = 'text' name = 'c' style="height: 50px; width: 200px; font-size:30px; position:relative; left:40.6%"/>
 </div>
 <div id = "hide4" class = "hidden2">
+<hr class="style1">
+
 <select name='z' class="select1">
 <option value="issue__edition__title__title__icontains">title</option>
 <option value="issue__edition__year">year</option>

@@ -21,17 +21,17 @@ a:visited {color:#000000;}
   position:relative;
   font-family: "Century Gothic", AppleGothic, sans-serif;
   color: #FFFFFF;
-  background-color: #8FBC8F;
+  background-color: #8fbc8f;
   width: 300px;
 }
 
 input[type=text]:focus {
   outline: none;
-  box-shadow: 0px 10px 0px -9px #ebebeb, 0px 10px 0px -9px #ebebeb;
+  box-shadow: 0px 1px 0px 0px #ebebeb, 0px 1px 0px 0px #ebebeb;
 }
 input[type=password]:focus {
   outline: none;
-  box-shadow: 0px 10px 0px -9px #ebebeb, 0px 10px 0px -9px #ebebeb;
+  box-shadow: 0px 1px 0px 0px #ebebeb, 0px 1px 0px 0px #ebebeb;
 }
 
 input[type=submit]{
@@ -41,13 +41,13 @@ input[type=submit]{
 
 
 input {
-    border: None;
+    border: none;
     color: #FFFFFF;
     background: none;
     box-shadow: 0px 0px 0px 0px #ebebeb, 0px 0px 0px 0px #ebebeb;
     -webkit-transition: box-shadow 0.3s;
   	transition: box-shadow 0.3s;
-    width: 200px;
+    width: 100%;
     font-size:20px;
     font-family:"Century Gothic", AppleGothic, sans-serif;
 }
@@ -81,17 +81,19 @@ table {
 }
 ::-webkit-input-placeholder { /* Chrome */
   color: #EAEAEA;
+  opacity:0.5;
 }
 :-ms-input-placeholder { /* IE 10+ */
   color: #EAEAEA;
+  opacity:0.5;
 }
 ::-moz-placeholder { /* Firefox 19+ */
   color: #EAEAEA;
-  opacity: 1;
+  opacity:0.5;
 }
 :-moz-placeholder { /* Firefox 4 - 18 */
   color: #EAEAEA;
-  opacity: 1;
+  opacity:0.5;
 }
 .special {
   padding-top:0;
@@ -104,8 +106,8 @@ table {
   padding:5px;
   border-collapse: collapse;
   font-family:"Century Gothic", AppleGothic, sans-serif;
-
 }
+
 .table2:nth-child(2) {background-color: #ff9966; border-left: 2px solid #FFFFFF; border-bottom:0px solid #FFFFFF;}
 
 .table2:nth-child(odd) {background-color: #a7c87b; border-bottom:none;}
@@ -187,7 +189,7 @@ p.title {
 <div id = "unhidebutton">
     <center>
     <p class = sansserif>
-    search
+    <a  href="http://localhost:8000/">search</a>
     </p>
     </center>
   </div>
@@ -227,7 +229,7 @@ p.title {
                     <td class = "table2"><input type="password" name="password" placeholder="password" value="" size="30" style="height:40px;"/></td>
                     </tr>
                 </table>
-                                <hr class="style1"></hr>
+               <hr class="style1"></hr>
 
 <!--                     <th><a href="\UpennWSK/user/password_reset">Password Reset?</a></th>
  -->               <center>  
