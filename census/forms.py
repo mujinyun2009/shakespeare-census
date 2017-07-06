@@ -20,7 +20,7 @@ class EditionForm(forms.ModelForm):
 class CopyForm(forms.ModelForm):
 	class Meta:
 		model = Copy
-		exclude = ['issue']
+		exclude = ['issue', 'created_by']
 
 class IssueForm(forms.ModelForm):
 	class Meta:
@@ -77,6 +77,22 @@ class LoginForm(forms.ModelForm):
 		data = self.cleaned_data['email']
 		if data.endswith("upenn.edu"):
 			if User.objects.filter(email=data).exists():
+				raise forms.ValidationError("This email is already used")
+		else:
+			raise forms.ValidationError("Must be a Penn email address")
+		return data
+
+class editProfileForm(forms.ModelForm):
+	email = forms.CharField(max_length=150, required=True)
+
+	class Meta:
+		model = User
+		fields = ['username', 'first_name', 'last_name', 'email',]
+
+	def clean_email(self):
+		data = self.cleaned_data['email']
+		if data.endswith("upenn.edu"):
+			if not data == self.instance.email and User.objects.filter(email=data).exists():
 				raise forms.ValidationError("This email is already used")
 		else:
 			raise forms.ValidationError("Must be a Penn email address")

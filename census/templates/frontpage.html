@@ -2,14 +2,30 @@
 {% load static %}
 
 <html>
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+<meta charset="utf-7">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+			<link rel="shortcut icon" href="http://s3.amazonaws.com/libapps/customers/220/images/favicon.ico" type="image/png">
+			<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+			<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+			<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+			<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+			<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <title>Shakespeare Census</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 
 <style>
 
-hr.style1 { 
-  border: 0; 
-  height: 10px; 
+hr.style1 {
+  border: 0;
+  height: 10px;
   border-color:#6E728A;
   padding:0px;
   margin:0px;
@@ -85,7 +101,7 @@ input[type=text]:focus {
   color: #FFFFFF;
   background: #ff9966;
   font-family: "Century Gothic", AppleGothic, sans-serif;
- 
+
 }
 
 
@@ -187,9 +203,16 @@ p.title {
 </p>
 </td>
 <td>
-<p class = sansserif>
-<a class="not.active" href="http://localhost:8000/census/login">account</a>
-</p>
+
+<div class="dropdown">
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">account
+		<span class="caret"></span></a>
+<ul class="dropdown-menu">
+	<li><a href="http://localhost:8000/census/profile">My profile</a></li>
+	<li><a href="http://localhost:8000/census/user_history">My history</li>
+</ul>
+<!-- <a class="not.active" href="http://localhost:8000/census/login">account</a> -->
+</div>
 </td>
 </tr>
 </table>
@@ -216,7 +239,7 @@ p.title {
 <optgroup label="Title">
   <option value="issue__edition__title__title__icontains">title</option>
 </optgroup>
-<optgroup label="Edition"> 
+<optgroup label="Edition">
   <option value="issue__edition__year">year</option>
   <option value="issue__edition__Edition_number">edition number</option>
   <option value="issue__edition__Edition_format">edition format</option>
@@ -225,7 +248,7 @@ p.title {
   <option value="issue__STC_Wing">stc wing</option>
   <option value="issue__DEEP">DEEP</option>
   <option value="issue__ESTC">ESTC</option>
-</optgroup>  
+</optgroup>
 <optgroup label="Copy">
   <option value="NSC">NSC</option>
 </optgroup>
@@ -236,20 +259,20 @@ p.title {
 <div id = "hide3" class = "hidden2">
 <hr class="style1">
 <select name='l' class="select1">
-<optgroup label="Title"> 
+<optgroup label="Title">
   <option value="issue__edition__title__title__icontains">title</option>
 </optgroup>
-<optgroup label="Edition"> 
+<optgroup label="Edition">
   <option value="issue__edition__Edition_number">edition number</option>
   <option value="issue__edition__year">year</option>
   <option value="issue__edition__Edition_format">edition format</option>
 </optgroup>
-<optgroup label="Issue"> 
+<optgroup label="Issue">
   <option value="issue__STC_Wing">stc wing</option>
   <option value="issue__DEEP">DEEP</option>
   <option value="issue__ESTC">ESTC</option>
 </optgroup>
-<optgroup label="Copy"> 
+<optgroup label="Copy">
   <option value="NSC">NSC</option>
   <option value="Owner">owner</option>
   <option value="Shelfmark">shelfmark</option>
@@ -312,4 +335,3 @@ unhidebutton2.addEventListener('click', function() {
 
 
 </html>
-

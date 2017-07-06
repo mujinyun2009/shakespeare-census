@@ -17,7 +17,13 @@ urlpatterns = [
 	url(r'^addTitle$', views.add_title, name='add_title'),
 	url(r'^addEdition/(?P<title_id>[0-9]+)/$', views.add_edition, name='add_edition'),
 	url(r'^addIssue/(?P<edition_id>[0-9]+)/$', views.add_issue, name='add_issue'),
+
+	#reviewing submitted copy-info, having edit, confirm, and cancel buttons
 	url(r'^copy_info/(?P<copy_id>[0-9]+)/$', views.copy_info, name='copy_info'),
+
+	#displaying copy info for all
+	url(r'^copy_detail/(?P<copy_id>[0-9]+)/$', views.copy_detail, name='copy_detail'),
+
 	url(r'^copysubmissionsuccess$', views.copy_submission_success, name='copy_success'),
 	url(r'^cancelcopysubmission/(?P<copy_id>[0-9]+)/$', views.cancel_copy_submission, name='cancel_copy_submission'),
 	url(r'^editcopysubmission/(?P<copy_id>[0-9]+)/$', views.edit_copy_submission, name='edit_copy_submission'),
@@ -30,4 +36,12 @@ urlpatterns = [
 	url(r'^logout$', views.logout_user, name='logout_user'),
 	url(r'^homepage$',views.homepage, name='homepage'),
 	url(r'^search/$', views.search, name='search_for_something'),
+
+	#for viewing user's profile
+	url(r'^profile$', views.display_user_profile, name='profile'),
+	
+	#for viewing user's history (submitted copies & editted copies)
+	url(r'^user_history$', views.user_history, name='user_history'),
+
+	url(r'^editProfile$', views.edit_profile, name='edit_profile'),
 ]

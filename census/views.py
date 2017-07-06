@@ -19,6 +19,7 @@ from django.core import serializers
 from django.forms.models import model_to_dict
 import json
 from django.urls import reverse
+from django.contrib import messages
 
 # Create your views here.
 def search(request):
@@ -156,13 +157,12 @@ def login_user(request):
 	else:
 		return HttpResponse(template.render({'next': request.GET.get('next', '/census')}, request))
 
+@login_required
 def logout_user(request):
 	template = loader.get_template('census/logout.html')
 	logout(request)
 	context = {}
 	return HttpResponse(template.render(context,request))
-
-#Jinyun - dependent dropdowns and popups start here:
 
 #expected to be called when a new copy is submitted; displaying the copy info
 def copy_info(request, copy_id):
@@ -176,19 +176,28 @@ def copy_info(request, copy_id):
 	}
 	return HttpResponse(template.render(context,request))
 
+@login_required()
 def submission(request):
 	template = loader.get_template('census/submission.html')
 	all_titles = Title.objects.all()
 	copy_form = CopyForm()
 	if request.method=='POST':
 		issue_id=request.POST.get('issue')
-		selected_issue=Issue.objects.get(pk=issue_id)
-		copy_form=CopyForm(data=request.POST)
-		if copy_form.is_valid():
-			copy=copy_form.save(commit=False)
-			copy.issue=selected_issue
-			copy.save()
-			return HttpResponseRedirect(reverse('copy_info', args=(copy.id,)))
+		if not issue_id or issue_id == 'Z':
+			copy_form=CopyForm()
+			messages.error(request, 'Please choose or add an issue.')
+		else:
+			selected_issue=Issue.objects.get(pk=issue_id)
+			copy_form=CopyForm(data=request.POST)
+			if copy_form.is_valid():
+				copy=copy_form.save(commit=False)
+				copy.issue=selected_issue
+				copy.created_by=request.user
+				copy.save()
+				return HttpResponseRedirect(reverse('copy_info', args=(copy.id,)))
+			else:
+				copy_form=CopyForm()
+				messages.error(request, 'The information you entered is invalid.')
 	else:
 		copy_form=CopyForm()
 
@@ -199,47 +208,56 @@ def submission(request):
 
 	return HttpResponse(template.render(context, request))
 
+@login_required()
 def edit_copy_submission(request, copy_id):
-	template = loader.get_template('census/submission.html')
+	template = loader.get_template('census/edit_submission.html')
 	all_titles = Title.objects.all()
 	copy_to_edit=Copy.objects.get(pk=copy_id)
-
-	data={"thumbnail_URL": copy_to_edit.thumbnail_URL,
-			"NSC": copy_to_edit.NSC,
-			"Owner": copy_to_edit.Owner,
-			"Shelfmark": copy_to_edit.Shelfmark,
-			"Height": copy_to_edit.Height,
-			"Width": copy_to_edit.Width,
-			"Marginalia": copy_to_edit.Marginalia,
-			"Condition": copy_to_edit.Condition,
-			"Binding": copy_to_edit.Binding,
-			"Binder": copy_to_edit.Binder,
-			"Bookplate":copy_to_edit.Bookplate,
-			"Bookplate_Location": copy_to_edit.Bookplate_Location,
-			"Barlett1939": copy_to_edit.Barlett1939,
-			"Barlet1939_Notes": copy_to_edit.Barlet1939_Notes,
-			"Barlet1916": copy_to_edit.Barlet1916,
-			"Barlet1916_Notes": copy_to_edit.Barlet1916_Notes,
-			"Lee_Notes": copy_to_edit.Lee_Notes,
-			"Library_Notes": copy_to_edit.Library_Notes,}
-
-	copy_to_edit.delete()
-	copy_form = CopyForm(initial=data)
+	old_issue=copy_to_edit.issue
+	old_edition=old_issue.edition
+	old_title=old_edition.title
 
 	if request.method=='POST':
 		issue_id=request.POST.get('issue')
-		selected_issue=Issue.objects.get(pk=issue_id)
-		copy_form=CopyForm(request.POST, initial=data)
-		if copy_form.is_valid():
-			new_copy=copy_form.save(commit=False)
-			new_copy.issue=selected_issue
-			return HttpResponseRedirect(reverse('copy_info', args=(new_copy.id,)))
+		edition_id=request.POST.get('edition')
+		title_id=request.POST.get('title')
+		if not issue_id or issue_id == 'Z':
+			copy_form=CopyForm(instance=copy_to_edit)
+			messages.error(request, 'Please choose or add an issue.')
+		elif not edition_id or edition_id == 'Z':
+			copy_form=CopyForm(instance=copy_to_edit)
+			messages.error(request, 'Please choose or add an edition.')
+		elif not title_id or title_id == 'Z':
+			copy_form=CopyForm(instance=copy_to_edit)
+			messages.error(request, 'Please choose or add a title.')
+
+		else:
+			selected_issue=Issue.objects.get(pk=issue_id)
+			copy_form=CopyForm(request.POST, instance=copy_to_edit)
+
+			if copy_form.is_valid():
+				new_copy=copy_form.save()
+				new_copy.issue = selected_issue
+				new_copy.save(force_update=True)
+				current_user = request.user
+				current_userHistory=UserHistory.objects.get(user=current_user)
+				current_userHistory.editted_copies.add(new_copy)
+				return HttpResponseRedirect(reverse('copy_info', args=(new_copy.id,)))
+			else:
+				messages.error(request, 'The information you entered is invalid.')
+				copy_form=CopyForm(instance=copy_to_edit)
 	else:
-		copy_form=CopyForm(initial=data)
+		copy_form=CopyForm(instance=copy_to_edit)
 
 	context = {
 	'all_titles': all_titles,
 	'copy_form': copy_form,
+	'copy_id': copy_id,
+	'old_title_id': old_title.id,
+	'old_edition_set': old_title.edition_set.all(),
+	'old_edition_id': old_edition.id,
+	'old_issue_set': old_edition.issue_set.all(),
+	'old_issue_id': old_issue.id,
 	}
 	return HttpResponse(template.render(context, request))
 
@@ -292,7 +310,6 @@ def add_title(request):
 def add_edition(request, title_id):
 	template=loader.get_template('census/addEdition.html')
 	selected_title =Title.objects.get(pk=title_id)
-
 	if request.method=='POST':
 		edition_form=EditionForm(data=request.POST)
 		if edition_form.is_valid():
@@ -335,4 +352,57 @@ def add_issue(request, edition_id):
 		'edition_id': edition_id,
 	}
 	return HttpResponse(template.render(context, request))
-#dependent dropdowns and popups trials end here
+
+@login_required
+def display_user_profile(request):
+	template=loader.get_template('census/userProfile.html')
+	current_user=request.user
+	context={
+		'user': current_user,
+	}
+	return HttpResponse(template.render(context, request))
+
+@login_required
+def edit_profile(request):
+	template=loader.get_template('census/editProfile.html')
+	current_user=request.user
+	if request.method=='POST':
+		profile_form = editProfileForm(request.POST, instance=current_user)
+		if profile_form.is_valid():
+			profile_form.save()
+			return HttpResponseRedirect(reverse('profile'))
+		else:
+			messages.error(request, 'Please correct the error below.')
+	else:
+		profile_form=editProfileForm(instance=current_user)
+
+	context={
+		'user': current_user,
+		'profile_form': profile_form,
+	}
+	return HttpResponse(template.render(context, request))
+
+@login_required
+def user_history(request):
+	template=loader.get_template('census/userHistory.html')
+	current_user=request.user
+	submissions=current_user.submitted_copies.all()
+	cur_user_history=UserHistory.objects.get(user=current_user)
+	editted_copies=cur_user_history.editted_copies.all()
+
+	context={
+		'submissions': submissions,
+		'editted_copies': editted_copies,
+	}
+	return HttpResponse(template.render(context, request))
+
+def copy_detail(request, copy_id):
+	template=loader.get_template('census/copy_detail.html')
+	selected_copy=get_object_or_404(Copy, pk=copy_id)
+	selected_issue=selected_copy.issue
+	selected_edition=selected_issue.edition
+	context={
+		'selected_edition': selected_edition,
+		'selected_copy': selected_copy,
+	}
+	return HttpResponse(template.render(context,request))

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!-- <script type="text/javascript" src="/static/census/popup_script.js"></script> -->
+<br>
+<br>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div>
+<p class="errors sansserif">
+	<form method="post" action="{% url 'edit_profile' %}">
+		{% csrf_token %}
+		{{ profile_form.as_p }}
+	<div class="my-button">
+			<input type="submit" name="submit" value="Submit" class="django-submit"/>
+	</div>
+
+	</form>
+</p>
+</div>
+
+{% endblock content %}
