@@ -1,5 +1,8 @@
 <!DOCTYPE html>
+{% load static %}
+
 <html>
+
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 
@@ -9,15 +12,24 @@
 			<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 			<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 			<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 			<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 			<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<title>Shakespeare Census</title>
+
 
 <style>
 
+hr.style1 {
+  border: 0;
+  height: 10px;
+  border-color:#6E728A;
+  padding:0px;
+  margin:0px;
+}
 
 p.sansserif {
 	font-family: "Century Gothic", AppleGothic, sans-serif;
@@ -42,7 +54,7 @@ table {
   background-color: #FFFFFF;
   position: relative;
   height: 35px;
-  left:37.8%;
+  left:40%;
   margin:auto;
   border:none;
   background:none;
@@ -56,23 +68,38 @@ select option {
 }
 
 input {
-  color: #808080;
+  color: #FFFFFF;
   font-weight: lighter;
+  -webkit-transition: box-shadow 0.3s;
+  outline:none;
+  border:0px;
+  background: none;
+  box-shadow: 0px 10px 0px -9px #4D4C4A, 0px 10px 0px -9px #4D4C4A;
+  -webkit-transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s;
+
 }
 input, select, textarea{
     color: #808080;
     font-weight:lighter;
+
 }
+
+input[type=text]:focus {
+  outline: none;
+  box-shadow: 0px 1px 0px 0px #4D4C4A , 0px 1px 0px 0px #4D4C4A;
+}
+
 .addfields {
   text-decoration: none;
   width: 100px;
   height:50px;
   border : none;
-  left: 38.78%;
+  left: 40.7%;
   padding: 10px 30px;
   position:relative;
   color: #FFFFFF;
-  background: #D19B1E;
+  background: #ff9966;
   font-family: "Century Gothic", AppleGothic, sans-serif;
 
 }
@@ -117,14 +144,14 @@ table.center {
   position:relative;
   left:50%;
 }
-.Submission2 {
+.Submission {
   text-decoration: none;
   border : none;
   padding: 10px 30px;
   position:relative;
   width:100px;
   height:50px;
-  left:38.6%;
+  left:40.7%;
   color: #FFFFFF;
   background: #8FBC8F;
   font-family: "Century Gothic", AppleGothic, sans-serif;
@@ -195,21 +222,19 @@ p.title {
 &nbsp;
 <div id = "hideme" class = "hidden">
 
-<!-- <hr style="width:100px; position:relative; right:35%; bottom:40%; margin:auto; height:0.5px; border:none;" color="black" NOSHADE>
-<hr style="width:100px; position:relative; left:35%;  bottom:40%; margin:auto; height:0.5px; border:none;" color="black" NOSHADE>
- -->
 <form method="GET" action="{% url 'search_for_something' %}" class="form1">
 
 
 <select name='j' class="select1">
 <option value="issue__edition__title__title__icontains">title</option>
 <option value="issue__edition__year">year</option>
-<option value="STC_Wing">stc wing</option>
+<option value="issue__STC_Wing">stc wing</option>
 </select>
 <br>
-<input type = 'text' name = 'a' style="height: 50px; width: 200px; font-size:30px; position:relative; left:38.6%;"/>
+<input type = 'text' name = 'a' style="height: 50px; width: 200px; font-size:30px; position:relative; left:40.6%;"/>
 <br>
 <div id = "hide2" class="hidden2">
+<hr class="style1">
 <select name='k' class="select1">
 <optgroup label="Title">
   <option value="issue__edition__title__title__icontains">title</option>
@@ -229,9 +254,10 @@ p.title {
 </optgroup>
 </select>
 <br>
-<input type = 'text' name = 'b' style="height: 50px; width: 200px; font-size:30px; position:relative; left:38.5%"/>
+<input type = 'text' name = 'b' style="height: 50px; width: 200px; font-size:30px; position:relative; left:40.6%"/>
 </div>
 <div id = "hide3" class = "hidden2">
+<hr class="style1">
 <select name='l' class="select1">
 <optgroup label="Title">
   <option value="issue__edition__title__title__icontains">title</option>
@@ -255,19 +281,21 @@ p.title {
 </optgroup>
 </select>
 <br>
-<input type = 'text' name = 'c' style="height: 50px; width: 200px; font-size:30px; position:relative; left:38.5%"/>
+<input type = 'text' name = 'c' style="height: 50px; width: 200px; font-size:30px; position:relative; left:40.6%"/>
 </div>
 <div id = "hide4" class = "hidden2">
+<hr class="style1">
+
 <select name='z' class="select1">
 <option value="issue__edition__title__title__icontains">title</option>
 <option value="issue__edition__year">year</option>
 <option value="issue__STC_Wing">stc wing</option>
 </select>
 <br>
-<input type = 'text' name = 'd' style="height: 50px; width: 200px; font-size:30px; position:relative; left:38.5%"/>
+<input type = 'text' name = 'd' style="height: 50px; width: 200px; font-size:30px; position:relative; left:40.6%"/>
 </div>
 <br>
-<input type = 'submit' id="search" value = 'search' class = "Submission2"/>
+<input type = 'submit' id="search" value = 'search' class = "Submission"/>
 <input type='button' class = "addfields" value='more' id="unhidebutton2" />
 
 </form>

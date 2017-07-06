@@ -1,7 +1,19 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<style>
+.Submission2 {
+  border : none;
+  padding: 10px 30px;
+  position:relative;
+  width:300px;
+  height:50px;
+  color: #FFFFFF;
+  background: #8FBC8F;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+}
 
+</style>
 <div class="wrapper">
 	<p class="sansserifgrey">
 	<font size = "6"> <light>Edition</light> </font></br>1. Input your edition. </br> 2. Click "Submit".
@@ -14,7 +26,7 @@
 			{% csrf_token %}
 			{{ edition_form.as_p }}
 		<div class="my-button">
-    		<input type="submit" name="submit" value="Submit" class="django-submit"/>
+    		<input type="submit" name="submit" value="Submit" class="Submission2"/>
 		</div>
 
 		</form>

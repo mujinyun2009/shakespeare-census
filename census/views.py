@@ -14,7 +14,6 @@ from django.views.generic import ListView
 from django.forms import formset_factory
 from django.db.models import Q
 from django.contrib import admin
-from django.core.paginator import Paginator, PageNotAnInteger
 from itertools import chain
 from django.core import serializers
 from django.forms.models import model_to_dict
@@ -74,23 +73,8 @@ def search(request):
 		print('Whoops!')
 
 def homepage(request):
-    template=loader.get_template('frontpage.html')
-    queryset_list = Title.objects.all()
-    query = request.GET.get('q')
-    if query:
-    	queryset_list = queryset_list.filter(title__icontains=query)
-
-    paginator= Paginator(queryset_list, 10)
-    page_request_var = "page"
-    page = request.GET.get(page_request_var)
-    try:
-    	queryset = paginator.page(page)
-    except PageNotAnInteger:
-    	queryset = paginator.page(1)
+	template=loader.get_template('frontpage.html')
 	context = {
-		"object_list": queryset,
-		"title": "List",
-		"page_request_var": page_request_var,
 	}
 	return HttpResponse(template.render(context, request))
 

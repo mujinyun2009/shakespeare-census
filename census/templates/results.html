@@ -10,6 +10,15 @@
 	background:#A7C87B;
 
 }
+hr.style14 { 
+  border: 0; 
+  height: 1px; 
+  background-image: -webkit-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
+  background-image: -moz-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
+  background-image: -ms-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
+  background-image: -o-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0); 
+
+}
 
 </style>
 <head>
@@ -19,37 +28,26 @@
 <div class="wrapper">
 
 <ul>
+<li><a class="not.active" href="http://localhost:8000/"><p class="sansserif">
+Home</p></a></li>
 <li><a class="not.active" href="http://localhost:8000/titles"><p class="sansserif">
 Titles</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/editions"><p class="sansserif">
-Editions</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/provenance"><p class="sansserif">
-Provenance</p></a></li>
 <li><a class="not.active" href="http://localhost:8000/census/copy"><p class="sansserif">
 Copy</p></a></li>
-
-
-<li class="dropdown">
+<li>
     <a class="not.active" href="http://localhost:8000/census/submission" class="dropbtn"><p class="sansserif">Submission</p></a>
-    <div class="dropdown-content">
-        <a href="http://localhost:8000/census/submission" class="not.active"><p class="sansserif">Titles</p></a>
-        <a href="http://localhost:8000/census/submissionedition"><p class="sansserif">Editions</p></a>
-        <a href="http://localhost:8000/census/submissioncopy"><p class="sansserif">Copies</p></a>
-    </div>
 </li>
 
 <li><a class="not.active" href="http://localhost:8000/census/register"><p class="sansserif">Register</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/login"><p class="sansserif">Login</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/logout"><p class="sansserif">Logout</p></a></li>
 
 </ul>
 {%if result_list%}
-<hr width = "30%"></hr>
+<hr class="style14" width = "50%"></hr>
 	<p class="sansserifgrey">
 	Find searches below.
 	</p>
 </div>
-<hr width = "30%"></hr>
+<hr class = "style14" width = "50%"></hr>
 
 </br>
 <center>
@@ -72,11 +70,11 @@ Copy</p></a></li>
 {% endfor %}
 </table>
 {%else%}
-<hr width = "30%"></hr>
+<hr class="style14" width = "50%"></hr>
 	<p class="sansserifgrey">
 	No matches were found.<br> Did you misspell your query?
 	</p>
-<hr width = "30%"></hr>
+<hr class="style14" width = "50%"></hr>
 </div>
 {% endif %}
 </center>
