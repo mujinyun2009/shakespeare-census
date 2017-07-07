@@ -1,6 +1,32 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<style>
+a.editbutton:visited {
+    color: white;
+    text-decoration:none;
+}
+a.editbutton:link {
+    color: white;
+    text-decoration:none;
+}
+
+.submitted_line {
+  font-size:25px;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  text-align: center;
+  margin-top:10%;
+}
+.newcopy {
+  font-size:15px;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  padding: 10px;
+  width:20%;
+  margin:auto;  
+  background-color:#a7c87b;
+}
+
+</style>
 <div class="wrapper">
 
 <ul>
@@ -28,7 +54,11 @@ Copy</p></a></li>
 
 </ul>
 
-<p>Congratulations, the copy has been saved!</p>
-<a href="{% url 'submission' %}" class="btn btn-info" role="button">Submit another copy</a>
+<div class="submitted_line">Congratulations, the copy has been saved!</div>
+<br>
+<br>
+<div class="newcopy">
+<a href="{% url 'submission' %}" class="editbutton" role="button">submit another copy</a>
+</div>
 
 {% endblock content %}

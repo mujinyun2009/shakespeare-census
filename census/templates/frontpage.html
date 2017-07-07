@@ -6,10 +6,7 @@
 
 
 <meta charset="utf-7">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-			<link rel="shortcut icon" href="http://s3.amazonaws.com/libapps/customers/220/images/favicon.ico" type="image/png">
 			<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
-			<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 			<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 			<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -40,26 +37,24 @@ li {
     float: left;
 }
 li a, .dropbtn {
-    display: inline-block;
+    display: block;
     color: black;
     text-align: center;
-    padding: 0px;
     text-decoration: none;
+
 }
 
 
 
-li.dropdown {
-    display: inline-block;
-}
 
 .dropdown-content {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 160px;
+	min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+	z-index: 1;
+
 }
 
 .dropdown-content a {
@@ -76,21 +71,23 @@ li.dropdown {
     display: block;
 }
 
-li {
-	float: left;
-    display: block;
+li.test{
+	display: block;
 	color: black;
 	text-align: center;
+	text-decoration: none;
 	padding: 40px 16px;
-}
 
+}
 li a {
 	display: block;
 	color: black;
 	text-align: center;
-	padding: 0px;
 	text-decoration: none;
+	padding: 40px 16px;
+
 }
+
 
 li:hover:not(.active) {
 	background-color: #F2E8CE;
@@ -232,18 +229,17 @@ p.title {
 <body>
 <div class = "wrapper">
 <ul>
-<li><div id = "unhidebutton"><p class = sansserif>search</div></p></li>
+<li class = "test"><div id = "unhidebutton"><p class = sansserif>search</div></p></li>
 <li><a class="not.active" href="http://localhost:8000/census/submission"><p class = sansserif>submit</p></a></li>
 <li class="dropdown">
 <a href="" class="dropbtn" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
 account</p></a>
 <div class="dropdown-content">
-	<a href="http://localhost:8000/census/profile">My profile</a>
-	<a href="http://localhost:8000/census/user_history">My history</a>
+	<a href="http://localhost:8000/census/profile"><p class = sansserif>my profile</p></a>
+	<a href="http://localhost:8000/census/user_history"><p class = sansserif>my history</p></a>
 </div>
 </li>
 </ul>
-
 
 
 
@@ -332,7 +328,7 @@ account</p></a>
 </div>
 </div>
 </span>
-
+</div>
 </body>
 </tr>
 <script>
