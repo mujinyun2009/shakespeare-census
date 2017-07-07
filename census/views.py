@@ -157,7 +157,6 @@ def login_user(request):
 	else:
 		return HttpResponse(template.render({'next': request.GET.get('next', '/census')}, request))
 
-@login_required
 def logout_user(request):
 	template = loader.get_template('census/logout.html')
 	logout(request)
