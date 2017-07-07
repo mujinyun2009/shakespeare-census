@@ -43,13 +43,14 @@ $(document).ready(function() {
   });
 
 	$("select#issue").change(function(vent) {
-		if ($(this).val() == 'Z') {
+    var copy_submit=document.getElementById('copy_submit');
+    if ($(this).val() == 'Z') {
 			$('.copy_section').attr('style', 'display:none');
+  		copy_submit.style.display="none";
 		}
 		else {
 			$('.copy_section').attr('style', 'display:inline');
-			$('.copy_submit').attr('style', 'display:inline');
-      var new_url = "/census/"
+  		copy_submit.style.display="inline";
 		}
 	});
 });

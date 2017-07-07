@@ -197,6 +197,7 @@ def submission(request):
 				return HttpResponseRedirect(reverse('copy_info', args=(copy.id,)))
 			else:
 				copy_form=CopyForm()
+				print(copy_form.errors)
 				messages.error(request, 'The information you entered is invalid.')
 	else:
 		copy_form=CopyForm()
