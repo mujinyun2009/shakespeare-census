@@ -1,9 +1,389 @@
-{% extends "base.html" %}
 {% load static %}
 {% block content %}
-  <div class="wrapper">
-  <h3>Logged out</h3>
-  <p>Thanks for spending some quality time with the Web site today.</p>
-  <a class="not.active" href="{% url 'login_user' %}"><p class="sansserif">Login again</p></a>
-  </div>
+<link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300" rel="stylesheet">
+
+
+<meta charset="utf-7">
+			<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+			<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+			<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<style>
+hr.style1 {
+  border: 0;
+  height: 10px;
+  border-color:#6E728A;
+  padding:0px;
+  margin:0px;
+}
+
+ul {
+	list-style-type: none;
+	margin: auto;
+	padding: auto;
+	overflow: hidden;
+	background-color: #FFFFFF;
+}
+li {
+    float: left;
+}
+li a, .dropbtn {
+    display: block;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+
+}
+
+
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+	min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	z-index: 1;
+
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 2px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+li.test{
+	display: block;
+	color: black;
+	text-align: center;
+	text-decoration: none;
+	padding: 40px 16px;
+}
+li a {
+	display: block;
+	color: black;
+	text-align: center;
+	text-decoration: none;
+	padding: 40px 16px;
+
+}
+
+
+li:hover:not(.active) {
+	background-color: #F2E8CE;
+}
+li:last-child { 
+   border-left: 1px solid #000000;
+}
+li:first-child { 
+   border-right: 1px solid #000000;
+}
+p.sansserif {
+	font-family: "Century Gothic", AppleGothic, sans-serif;
+}
+p.sansserifgrey {
+	font-family: "Century Gothic", AppleGothic, sans-serif;
+	color: #808080;
+	font-weight: lighter;
+}
+
+.select1 {
+  width:215px;
+  text-align:center;
+  background-color: #FFFFFF;
+  position: relative;
+  height: 35px;
+  left:0%;
+  margin:auto;
+  border:none;
+  background:none;
+  color:#A9A9A9;
+  font-size:20px;
+  font-family:'Raleway', sans-serif;
+  font-weight:300;
+}
+select option {
+  background-color:#FFFFFF;
+  color:#FFFFFF;
+  background:none;
+}
+
+input.forminput {
+  color: #FFFFFF;
+  font-weight: lighter;
+  -webkit-transition: box-shadow 0.3s;
+  outline:none;
+  border:0px;
+  background: none;
+  box-shadow: 0px 10px 0px -9px #4D4C4A, 0px 10px 0px -9px #4D4C4A;
+  -webkit-transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s;
+
+}
+input, select, textarea{
+    color: #808080;
+    font-weight:lighter;
+    font-family:'Raleway', sans-serif;
+
+}
+
+input[type=text]:focus {
+  outline: none;
+  box-shadow: 0px 1px 0px 0px #4D4C4A , 0px 1px 0px 0px #4D4C4A;
+}
+
+
+
+.hidden {
+  display: none;
+  overflow: auto;
+}
+.hidden2 {
+  display: none;
+  overflow: auto;
+}
+
+.addfields {
+  text-decoration: none;
+  width: 100px;
+  height:50px;
+  border : none;
+  left: 0%;
+  padding: 10px 30px;
+  position:relative;
+  color: #FFFFFF;
+  background: #ff9966;
+  font-family:'Raleway', sans-serif;
+  font-weight:300;
+}
+
+
+
+
+.Submission {
+  text-decoration: none;
+  border : none;
+  padding: 10px 30px;
+  position:relative;
+  width:100px;
+  height:50px;
+  left:0%;
+  color: #FFFFFF;
+  background: #8FBC8F;
+  font-family:'Raleway', sans-serif;
+  font-weight:300;
+}
+
+
+p.title {
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  font-size: 25px;
+  font-weight: 100;
+  text-align: center;
+  margin-top:190px;
+  position:relative;
+}
+.wrapper {
+		text-align: center;
+	}
+.wrapper ul {
+		display: inline-block;
+		margin: 0;
+		padding: 0;
+		/* For IE, the outcast */
+		zoom:1;
+		*display: inline;
+	}
+.forminput {
+	height: 50px; 
+	width: 200px; 
+	font-size:30px; 
+	position:relative; 
+	left:0%;
+}
+
+.logoutnotification {
+	font-size:20px;
+	font-family: "Century Gothic", AppleGothic, sans-serif;
+	text-align:center;
+}
+.logouttext {
+	font-size:12px;
+	font-family: "Century Gothic", AppleGothic, sans-serif;
+	text-align:center;
+
+}
+.loginagain {
+	font-size:12px;
+	font-family: "Century Gothic", AppleGothic, sans-serif;
+	text-align:center;
+}
+</style> 
+
+<head>
+<p class = "title" style="text-align:center;">shakespeare census</p>
+
+</head>
+<body>
+<div class = "wrapper">
+<ul>
+<li class = "test"><div id = "unhidebutton"><p class = sansserif>search</div></p></li>
+<li><a class="not.active" href="http://localhost:8000/census/submission"><p class = sansserif>submit</p></a></li>
+<li class="dropdown">
+<a href="" class="dropbtn" data-toggle="dropdown" role="button">  <p class = sansserif>
+account</p></a>
+<div class="dropdown-content">
+	<a href="http://localhost:8000/census/profile"><p class = sansserif>my profile</p></a>
+	<a href="http://localhost:8000/census/user_history"><p class = sansserif>my history</p></a>
+	<a href="http://localhost:8000/census/login"><p class = sansserif>login</p></a>
+
+</div>
+</li>
+</ul>
+
+
+
+<span id = "myForm">
+<div id = "testing" style="overflow-y: auto;">
+&nbsp;
+<div id = "hideme" class = "hidden">
+
+<form method="GET" action="{% url 'search_for_something' %}" class="form1">
+
+
+<select name='j' class="select1">
+<option value="issue__edition__title__title__icontains">title</option>
+<option value="issue__edition__year">year</option>
+<option value="issue__STC_Wing">stc wing</option>
+</select>
+<br>
+<input type = 'text' name = 'a' class="forminput"/>
+<br>
+<div id = "hide2" class="hidden2">
+<hr class="style1">
+<select name='k' class="select1">
+<optgroup label="Title">
+  <option value="issue__edition__title__title__icontains">title</option>
+</optgroup>
+<optgroup label="Edition">
+  <option value="issue__edition__year">year</option>
+  <option value="issue__edition__Edition_number">edition number</option>
+  <option value="issue__edition__Edition_format">edition format</option>
+</optgroup>
+<optgroup label="Issue">
+  <option value="issue__STC_Wing">stc wing</option>
+  <option value="issue__DEEP">DEEP</option>
+  <option value="issue__ESTC">ESTC</option>
+</optgroup>
+<optgroup label="Copy">
+  <option value="NSC">NSC</option>
+</optgroup>
+</select>
+<br>
+<input type = 'text' name = 'b' class="forminput"/>
+</div>
+<div id = "hide3" class = "hidden2">
+<hr class="style1">
+<select name='l' class="select1">
+<optgroup label="Title">
+  <option value="issue__edition__title__title__icontains">title</option>
+</optgroup>
+<optgroup label="Edition">
+  <option value="issue__edition__Edition_number">edition number</option>
+  <option value="issue__edition__year">year</option>
+  <option value="issue__edition__Edition_format">edition format</option>
+</optgroup>
+<optgroup label="Issue">
+  <option value="issue__STC_Wing">stc wing</option>
+  <option value="issue__DEEP">DEEP</option>
+  <option value="issue__ESTC">ESTC</option>
+</optgroup>
+<optgroup label="Copy">
+  <option value="NSC">NSC</option>
+  <option value="Owner">owner</option>
+  <option value="Shelfmark">shelfmark</option>
+  <option value="Barlett1939">Barlett1939</option>
+  <option value="Barlet1916">Barlet1916</option>
+</optgroup>
+</select>
+<br>
+<input type = 'text' name = 'c' class="forminput"/>
+</div>
+<div id = "hide4" class = "hidden2">
+<hr class="style1">
+
+<select name='z' class="select1">
+<option value="issue__edition__title__title__icontains">title</option>
+<option value="issue__edition__year">year</option>
+<option value="issue__STC_Wing">stc wing</option>
+</select>
+<br>
+<input type = 'text' name = 'd' class="forminput"/>
+</div>
+<br>
+<input type = 'submit' id="search" value ='search' class = "Submission"/>
+<input type='button' class = "addfields" value='more' id="unhidebutton2" />
+
+</form>
+</div>
+</div>
+</span>
+</div>
+<div id= "logoutnotification" class = "logoutnotification">
+  Logged out</div>
+  <div id = "logouttext" class = "logouttext">
+
+  <p>Thanks for using shakespeare census.<br> You can still browse, but you cannot submit copies <br>without logging in again.</p></div>
+  <div id="loginagain" class = "loginagain">
+  <a class="not.active" href="{% url 'login_user' %}"><p class="sansserif">Login again</p></a></div>
+
+</body>
+</tr>
+<script>
+var tohide = document.getElementById('hideme');
+var logoutnotification = document.getElementById('logoutnotification');
+var logouttext = document.getElementById('logouttext');
+var loginagain = document.getElementById('loginagain');
+var unhidebutton = document.getElementById('unhidebutton');
+unhidebutton.addEventListener('click', function() {
+  tohide.classList.remove('hidden')
+  logoutnotification.classList.add('hidden')
+  logouttext.classList.add('hidden')
+  loginagain.classList.add('hidden')
+});
+
+var tohide2 = document.getElementById('hide2');
+var search = document.getElementById('search');
+var tohide3 =document.getElementById('hide3');
+var tohide4 = document.getElementById('hide4');
+var unhidebutton2 = document.getElementById('unhidebutton2');
+unhidebutton2.addEventListener('click', function() {
+  if ($(tohide2).hasClass('hidden2')){
+    tohide2.classList.remove('hidden2')
+  }
+  else {
+    if ($(tohide3).hasClass('hidden2')){
+      tohide3.classList.remove('hidden2')
+    }
+    else {
+      tohide4.classList.remove('hidden2')
+    }
+  }
+});
+</script>
+
+
 {% endblock content %}
