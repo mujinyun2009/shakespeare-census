@@ -12,6 +12,20 @@
 
 
 <style>
+
+a.editbutton:visited {
+    color: white;
+    text-decoration:none;
+}
+a.editbutton:link {
+    color: white;
+    text-decoration:none;
+}
+
+a.editbutton:hover {
+    color: #FFEBCD;
+    text-decoration:none;
+}
 hr.style1 {
   border: 0;
   height: 10px;
@@ -227,10 +241,17 @@ p.title {
 
 }
 .loginagain {
-	font-size:12px;
-	font-family: "Century Gothic", AppleGothic, sans-serif;
-	text-align:center;
+  font-size:15px;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  padding: 10px;
+  width:20%;
+  margin:auto;  
+  background-color:#a7c87b;
+  text-align:center;
 }
+
+
+
 </style> 
 
 <head>
@@ -347,8 +368,9 @@ account</p></a>
   <div id = "logouttext" class = "logouttext">
 
   <p>Thanks for using shakespeare census.<br> You can still browse, but you cannot submit copies <br>without logging in again.</p></div>
+  <br>
   <div id="loginagain" class = "loginagain">
-  <a class="not.active" href="{% url 'login_user' %}"><p class="sansserif">Login again</p></a></div>
+  <a class="editbutton" href="{% url 'login_user' %}"><p class="sansserif">login again</p></a></div>
 
 </body>
 </tr>

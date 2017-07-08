@@ -2,6 +2,8 @@
 
 <html>
 <title>Shakespeare Census</title>
+      <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300" rel="stylesheet">
       <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
@@ -109,6 +111,9 @@ input[type=password]:focus {
 input[type=submit]{
 	font-size:10px;
 	height:30px;
+}
+input[type=submit]:hover{
+  color:#FFEBCD;
 }
 input {
     border: none;
@@ -271,7 +276,7 @@ account</p></a>
 <br>
     <div class="main-content">
         {% if failed == True %}
-        <center><p class="sansserif">We could not find your account.<br> Perhaps you've mistyped your username/password?</p></center>
+        <center><p class="sansserif">We could not find your account.<br> <font size= "2">Perhaps you've mistyped your username/password?</font></p></center>
         {% endif %}
     <div class="content-form">
             <form id="login_form" method="post" action="/census/login">

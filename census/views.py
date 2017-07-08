@@ -352,7 +352,7 @@ def add_issue(request, edition_id):
 	}
 	return HttpResponse(template.render(context, request))
 
-@login_required
+@login_required()
 def display_user_profile(request):
 	template=loader.get_template('census/userProfile.html')
 	current_user=request.user
@@ -361,7 +361,7 @@ def display_user_profile(request):
 	}
 	return HttpResponse(template.render(context, request))
 
-@login_required
+@login_required()
 def edit_profile(request):
 	template=loader.get_template('census/editProfile.html')
 	current_user=request.user
@@ -381,7 +381,7 @@ def edit_profile(request):
 	}
 	return HttpResponse(template.render(context, request))
 
-@login_required
+@login_required()
 def user_history(request):
 	template=loader.get_template('census/userHistory.html')
 	current_user=request.user
