@@ -30,9 +30,26 @@ table.center {
   margin-left:-150px;
   position:relative;
   left:50%;
+  outline:none;
 }
 table td:nth-child(odd) {
   border-right:1px solid #FFFFFF;
+}
+input:focus {
+  outline: none;
+  box-shadow: 0px 1px 0px 0px #ebebeb, 0px 1px 0px 0px #ebebeb;
+}
+input {
+    border: none;
+    color: #000000;
+    background: none;
+    box-shadow: 0px 10px 0px -9px #ebebeb, 0px 10px 0px -9px #ebebeb;
+    -webkit-transition: box-shadow 0.3s;
+    transition: box-shadow 0.3s;
+    width: 100%;
+    font-size:20px;
+    font-family:'Raleway', sans-serif;
+    font-weight:300;  
 }
 
 hr.style14 { 
@@ -72,6 +89,31 @@ li a, .dropbtn {
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+.table2 {
+  background:#FFFFFF;
+  position:relative;
+  margin-left:-300px;
+  left:50%;
+  outline:none;
+
+}
+.table2 td:nth-child(odd) {
+  border-right:1px solid #f2f2f2;
+  width:50px;
+}
+.table2 td:nth-child(even) {
+  width:200px;
+}
+.table2 tr:nth-child(even) {
+  background:#f2f2f2;
+}
+.table2 tr{
+  height:40px;
+  background:#FFFFFF;
+}
+.table2 td{
+  background:#FFFFFF;
 }
 
 hr.style1 { 
@@ -113,6 +155,7 @@ hr.style1 {
   width:300px;
   height:50px;
   left:50%;
+  font-size:15px;
   margin-left:-150px;
   color: #FFFFFF;
   background: #8FBC8F;
@@ -224,11 +267,81 @@ Account</p></a>
 </div>
 <div class='copy_section' id='copy_section' style='display:none'>
   <center><p style="font-size:25; font-weight: lighter;">4. fill in the information about the copy</p></center>
-  <center>
-  <table>
-	{{ copy_form.as_p }}
+  <table class = "table2" align="center">
+    <tr>
+    <td>Thumbnail URL:</td>
+    <td> {{ copy_form.thumbnail_URL }}</td>
+    </tr>
+    <tr>
+    <td>NSC:</td>
+    <td> {{ copy_form.NSC }}</td>
+    </tr>
+    <tr>
+    <td>Owner:</td>
+    <td> {{ copy_form.Owner }}</td>
+    </tr>
+    <tr>
+    <td>Shelfmark:</td>
+    <td> {{ copy_form.Shelfmark }}</td>
+    </tr>
+    <tr>
+    <td>Height:</td>
+    <td> {{ copy_form.Height }}</td>
+    </tr>
+    <tr>
+    <td>Width:</td>
+    <td> {{ copy_form.Width }}</td>
+    </tr>
+    <tr>
+    <td>Marginalia:</td>
+    <td> {{ copy_form.Marginalia }}</td>
+    </tr>
+    <tr>
+    <td>Condition:</td>
+    <td> {{ copy_form.Marginalia }}</td>
+    </tr>
+    <tr>
+    <td>Binding:</td>
+    <td> {{ copy_form.Binding }}</td>
+    </tr>
+    <tr>
+    <td>Binder:</td>
+    <td> {{ copy_form.Binder }}</td>
+    </tr>
+    <tr>
+    <td>Bookplate:</td>
+    <td> {{ copy_form.Bookplate }}</td>
+    </tr>
+    <tr>
+    <td>Bookplate Location:</td>
+    <td> {{ copy_form.Bookplate_Location }}</td>
+    </tr>
+     <tr>
+    <td>Barlett1939:</td>
+    <td> {{ copy_form.Barlett1939 }}</td>
+    </tr>
+     <tr>
+    <td>Barlet1939 Notes:</td>
+    <td> {{ copy_form.Barlet1939_Notes }}</td>
+    </tr> 
+    <tr>
+    <td>Barlet1916:</td>
+    <td> {{ copy_form.Barlet1916 }}</td>
+    </tr>
+    <tr>
+    <td>Barlet1916 Notes:</td>
+    <td> {{ copy_form.Barlet1916_Notes }}</td>
+    </tr>
+    <tr>
+    <td>Lee Notes:</td>
+    <td> {{ copy_form.Lee_Notes }}</td>
+    </tr>
+    <tr>
+    <td>Library Notes:</td>
+    <td> {{ copy_form.Library_Notes }}</td>
+    </tr>
   </table>
-  </center>
+  <br>
 </div>
 <hr class="style1"></hr>
 <div class="my-button">
