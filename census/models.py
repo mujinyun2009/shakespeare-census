@@ -51,6 +51,7 @@ class Copy (models.Model):
 	Library_Notes=models.CharField(max_length=2000)
 	created_by=models.ForeignKey(User, related_name="submitted_copies", default=1, null=True)
 	copynote=models.CharField(max_length=5000, default=None)
+	prov_info=models.TextField(null=True, default=None)
 	def __str__(self):
 		return  "%s %s" % (self.issue, self.NSC)
 	class Meta:

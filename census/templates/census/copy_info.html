@@ -2,9 +2,71 @@
 {% load static %}
 {% block content %}
 <style>
+a.editbutton:visited {
+    color: white;
+    text-decoration:none;
+}
+a.editbutton:link {
+    color: white;
+    text-decoration:none;
+}
+
 .hidden {
   display: none;
   overflow: auto;
+}
+.submitted_line {
+  font-size:30px;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  text-align: center;
+}
+td.table2:nth-child(1){
+  background-color:#a7c87b;
+  text-align:center;
+  width:100px;
+
+}
+td.table2:nth-child(2){
+  background-color:#ff9966;
+  border-left: 1px solid #FFFFFF;
+  text-align:center;
+  width:100px
+;
+}
+td.table2:last-child{
+  background-color:#8fbc8f;
+  border-left: 1px solid #FFFFFF;
+  text-align:center;
+  width:100px;
+}
+li a, .dropbtn {
+    display: block;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+  min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+
+}
+.dropdown-content a {
+    color: black;
+    padding: 2px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 </style>
 
@@ -12,41 +74,35 @@
 
 <ul>
 <li><a class="not.active" href="http://localhost:8000/"><p class="sansserif">
+Home</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/titles"><p class="sansserif">
 Titles</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/editions"><p class="sansserif">
-Editions</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/provenance"><p class="sansserif">
-Provenance</p></a></li>
 <li><a class="active" href="http://localhost:8000/census/copy"><p class="sansserif">
 Copy</p></a></li>
-
-
-<li class="dropdown">
-    <a class="not.active" href="http://localhost:8000/census/submission" class="dropbtn"><p class="sansserif">Submission</p></a>
-    <div class="dropdown-content">
-        <a href="http://localhost:8000/census/submission" class="not.active"><p class="sansserif">Titles</p></a>
-        <a href="http://localhost:8000/census/submissionedition"><p class="sansserif">Editions</p></a>
-        <a href="http://localhost:8000/census/submissioncopy"><p class="sansserif">Copies</p></a>
-    </div>
-</li>
-
 <li><a class="not.active" href="http://localhost:8000/census/register"><p class="sansserif">Register</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/login"><p class="sansserif">Login</p></a></li>
+<li class="dropdown">
+<a href="" class="dropbtn" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
+Account</p></a>
+<div class="dropdown-content">
+  <a href="http://localhost:8000/census/profile"><p class = sansserif>my profile</p></a>
+  <a href="http://localhost:8000/census/user_history"><p class = sansserif>my history</p></a>
+  <a href="http://localhost:8000/census/login"><p class = sansserif>login</p></a>
+  <a href="http://localhost:8000/census/logout"><p class = sansserif>logout</p></a>
 
+</div>
+</li>
 </ul>
-<div id="submitted_line">
-<h2>You have submitted the following copy: </h2>
+</div>
+<div id="submitted_line" class = "submitted_line">
+<p>You have submitted the following copy: </p>
 </div>
 
 <div id="editted_line">
 <h2>You have editted the following copy: </h2>
 </div>
 
-<br>
-<br>
-<div class="newspaper">
     <p class="sansserif">
-    	<table class = "center">
+    	<table align = "center">
     		<tr>
     			<th> Info type </th>
     			<th> Book info </th>
@@ -108,9 +164,19 @@ Copy</p></a></li>
 </div>
 
 <div>
-  <a href="{% url 'edit_copy_submission' selected_copy.id %}" class="btn btn-info" role="button">Edit</a>
-  <a href="{% url 'copy_success' %}" class="btn btn-info" role="button">Confirm</a>
-  <a href="{% url 'cancel_copy_submission' selected_copy.id %}" class="btn btn-info" id="delete">Delete</a>
+<table align="center">
+<tr>
+<td class = "table2">
+  <a href="{% url 'edit_copy_submission' selected_copy.id %}" class="editbutton" role="button">Edit</a>
+</td>
+<td class = "table2">
+  <a href="{% url 'copy_success' %}" class="editbutton" role="button">Confirm</a>
+ </td>
+ <td class="table2">
+  <a href="{% url 'cancel_copy_submission' selected_copy.id %}" class="editbutton" id="delete">Delete</a>
+</td>
+</tr>
+</table>
 </div>
 
 <script>

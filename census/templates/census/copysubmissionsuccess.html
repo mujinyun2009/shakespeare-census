@@ -1,34 +1,88 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<style>
+a.editbutton:visited {
+    color: white;
+    text-decoration:none;
+}
+a.editbutton:link {
+    color: white;
+    text-decoration:none;
+}
+
+.submitted_line {
+  font-size:25px;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  text-align: center;
+  margin-top:10%;
+}
+.newcopy {
+  font-size:15px;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  padding: 10px;
+  width:20%;
+  margin:auto;  
+  background-color:#a7c87b;
+}
+li a, .dropbtn {
+    display: block;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+  min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+
+}
+.dropdown-content a {
+    color: black;
+    padding: 2px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+</style>
 <div class="wrapper">
 
 <ul>
 <li><a class="not.active" href="http://localhost:8000/"><p class="sansserif">
+Home</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/titles"><p class="sansserif">
 Titles</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/editions"><p class="sansserif">
-Editions</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/provenance"><p class="sansserif">
-Provenance</p></a></li>
 <li><a class="active" href="http://localhost:8000/census/copy"><p class="sansserif">
 Copy</p></a></li>
-
-
-<li class="dropdown">
-    <a class="not.active" href="http://localhost:8000/census/submission" class="dropbtn"><p class="sansserif">Submission</p></a>
-    <div class="dropdown-content">
-        <a href="http://localhost:8000/census/submission" class="not.active"><p class="sansserif">Titles</p></a>
-        <a href="http://localhost:8000/census/submissionedition"><p class="sansserif">Editions</p></a>
-        <a href="http://localhost:8000/census/submissioncopy"><p class="sansserif">Copies</p></a>
-    </div>
-</li>
-
 <li><a class="not.active" href="http://localhost:8000/census/register"><p class="sansserif">Register</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/login"><p class="sansserif">Login</p></a></li>
+<li class="dropdown">
+<a href="" class="dropbtn" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
+Account</p></a>
+<div class="dropdown-content">
+  <a href="http://localhost:8000/census/profile"><p class = sansserif>my profile</p></a>
+  <a href="http://localhost:8000/census/user_history"><p class = sansserif>my history</p></a>
+  <a href="http://localhost:8000/census/login"><p class = sansserif>login</p></a>
+  <a href="http://localhost:8000/census/logout"><p class = sansserif>logout</p></a>
 
+</div>
+</li>
 </ul>
 
-<p>Congratulations, the copy has been saved!</p>
-<a href="{% url 'submission' %}" class="btn btn-info" role="button">Submit another copy</a>
+<div class="submitted_line">Congratulations, the copy has been saved!</div>
+<br>
+<br>
+<div class="newcopy">
+<a href="{% url 'submission' %}" class="editbutton" role="button">submit another copy</a>
+</div>
 
 {% endblock content %}

@@ -1,33 +1,157 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+
+<style>
+a.editbutton:visited {
+    color: green;
+}
+a.editbutton:link {
+    color: green;
+}
+
+a.editbutton:hover {
+    color: #a4b7d6;
+}
+a{text-decoration: none
+}
+
+
+a:link {
+    color: white;
+}
+
+.active2 {
+		background-color: #83cca5;
+	}
+.dropbtn {
+	background-color: #4CAF50
+}
+hr.style2 { 
+  color: #f00;
+background-color: #000000;
+height: 1px;
+  border: 0;
+  width: 80%;
+}
+
+.history {
+	font-size:40px;
+	font-family: "Century Gothic", AppleGothic, sans-serif;
+	font-weight:400;
+	text-align: center;
+}
+li a, .dropbtn {
+    display: block;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+  min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+
+}
+.dropdown-content a {
+    color: black;
+    padding: 2px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropbtn:hover {
+	background-color:#4CAF50 ;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+</style>
+
+
+<div class="wrapper">
+
+<ul>
+<li><a class="notactive" href="http://localhost:8000/"><p class="sansserif">
+Home</p></a></li>
+<li><a class="notactive" href="http://localhost:8000/titles"><p class="sansserif">
+Titles</p></a></li>
+<li><a class="notactive" href="http://localhost:8000/census/copy"><p class="sansserif">
+Copy</p></a></li>
+<li>
+    <a class="notactive" href="http://localhost:8000/census/submission" class="dropbtn"><p class="sansserif">Submission</p></a>
+</li>
+<li><a class="notactive" href="http://localhost:8000/census/register"><p class="sansserif">
+Register</p></a></li>
+<li class="dropdown">
+<a href="" class="dropbtn" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
+Account</p></a>
+<div class="dropdown-content">
+  <a href="http://localhost:8000/census/profile"><p class = sansserif>my profile</p></a>
+  <a href="http://localhost:8000/census/user_history" class="active2"><p class = sansserif>my history</p></a>
+  <a href="http://localhost:8000/census/login"><p class = sansserif>login</p></a>
+  <a href="http://localhost:8000/census/logout"><p class = sansserif>logout</p></a>
+
+</div>
+
+
+</ul>
+</div>
+
 <br>
 <br>
-<table>
+<div class = "history">
+Your contributions.</div>
+<br>
+<br>
+<table align = "center">
 	<tr>
-		<td><h3>Copies you have submitted: </h3></td>
+		<th colspan=4>Copies you have submitted</th>
 	</tr>
+	{% if submissions %}
+
 	{% for submission in submissions %}
 		<tr>
 			<td>{{ submission }}<td>
-			<td><a href="{% url 'copy_detail' submission.id %}" class="btn btn-info" role="button" onclick="return popup(this);">Details</a></td>
-			<td><a href="{% url 'edit_copy_submission' submission.id %}" class="btn btn-info" role="button" onclick="return popup(this);">Edit</a></td>
+			<td><a href="{% url 'copy_detail' submission.id %}" class="editbutton" role="button" onclick="return popup(this);">Details</a></td>
+			<td><a href="{% url 'edit_copy_submission' submission.id %}" class="editbutton" role="button" onclick="return popup(this);">Edit</a></td>
 		</tr>
 	{% endfor %}
-</table>
-<hr>
+	{% else %}
+		<tr>
+			<td>None, so far! Click <a href="http://localhost:8000/census/submission" class="editbutton" role="button">here</a> to submit some.<td>
+		</tr>
+	{% endif %}
 
-<table>
+</table>
+
+<br>
+<br>
+
+<table align="center">
 	<tr>
-		<td><h3>Copies you have editted: </h3></td>
+		<th colspan=4>Copies you have edited</th>
 	</tr>
+	{% if editted_copies %}
 	{% for copy in editted_copies %}
 		<tr>
 			<td>{{ copy }}<td>
-			<td><a href="{% url 'copy_detail' copy.id %}" class="btn btn-info" role="button" onclick="return popup(this);">Details</a></td>
-			<td><a href="{% url 'edit_copy_submission' copy.id %}" class="btn btn-info" role="button" onclick="return popup(this);">Edit</a></td>
+			<td><a href="{% url 'copy_detail' copy.id %}" class="editbutton" role="button" onclick="return popup(this);">Details</a></td>
+			<td><a href="{% url 'edit_copy_submission' copy.id %}" class="editbutton" role="button" onclick="return popup(this);">Edit</a></td>
 		</tr>
 	{% endfor %}
+	{% else %}
+		<tr>
+			<td>None, so far!<td>
+		</tr>
+	{% endif %}
+
 </table>
 
 <script>

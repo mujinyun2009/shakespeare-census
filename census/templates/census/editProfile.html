@@ -2,6 +2,194 @@
 {% load static %}
 {% block content %}
 <!-- <script type="text/javascript" src="/static/census/popup_script.js"></script> -->
+
+<style>
+hr.style1 { 
+  border: 0; 
+  height: 2px; 
+  border-color:#6E728A;
+  padding:0px;
+  margin:0px;
+}
+
+
+tr {
+  border:none;
+  font-size:20px;
+  height:60px;
+}
+td {
+  border:none;
+}
+th, td {
+  padding-top:0;
+  padding-bottom:0;
+  background:#FFFFFF;
+}
+td:nth-child(even) {
+  background-color: #ff9966;
+  width:auto;
+
+}
+
+td:nth-child(odd) {
+  border-right:1px solid #FFFFFF;
+  width:auto;
+}
+table {
+  width:500px;
+}
+
+.Submission2 {
+  border:none;
+  font-size:15px;
+  height:50px;
+  position:relative;
+  width:500px;
+  margin-left:-250px;
+  left:50%;
+  padding: 10px 30px;
+  color: #191970;
+  background:#FFFFFF;
+}
+input[type=submit]:hover{
+  color:#FFEBCD;
+}
+input[type=text]:focus {
+  outline: none;
+  box-shadow: 0px 1px 0px 0px #ebebeb, 0px 0px 0px 0px #ebebeb;
+}
+input {
+    border: none;
+    color: #000000;
+    background: none;
+    box-shadow: 0px 0px 0px 0px #ebebeb, 0px 0px 0px 0px #ebebeb;
+    -webkit-transition: box-shadow 0.3s;
+    transition: box-shadow 0.3s;
+    width: 100%;
+    font-size:20px;
+    font-family: "Century Gothic", AppleGothic, sans-serif;
+    font-weight:lighter;  
+}
+
+a.editbutton:visited {
+    color: green;
+}
+a.editbutton:link {
+    color: green;
+}
+
+a.editbutton:hover {
+    color: white;
+}
+a{text-decoration: none }
+}
+
+
+a:link {
+    color: white;
+}
+
+hr.style1 { 
+  color: #f00;
+background-color: #FFFFFF;
+height: 1px;
+  border: 0;
+  width: 80%;
+}
+
+
+.greeting {
+	font-size: 30px;
+  	font-family:'Raleway', sans-serif;
+  	font-weight:300;
+  	text-align: center;
+}
+.inform {
+	font-size: 15px;
+	color:white;  	
+	font-family: "Century Gothic", AppleGothic, sans-serif;
+  	font-weight:lighter;
+  	text-align: left;
+}
+tr.informtable :first-child{
+	background-color: #a7c87b;
+}
+li a, .dropbtn {
+    display: block;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+  min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+
+}
+.dropdown-content a {
+    color: black;
+    padding: 2px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropbtn {
+	background-color: #4CAF50
+}
+.active2 {
+    background-color: #83cca5;
+  }
+ .profileform {
+ 	text-align: left;
+ }
+ .username {
+  color:#FFFFFF;
+ }
+</style>
+
+<div class="wrapper">
+
+<ul>
+<li><a class="not.active" href="http://localhost:8000/"><p class="sansserif">
+Home</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/titles"><p class="sansserif">
+Titles</p></a></li>
+<li><a class="not.active" href="http://localhost:8000/census/copy"><p class="sansserif">
+Copy</p></a></li>
+<li>
+    <a class="not.active" href="http://localhost:8000/census/submission" class="dropbtn"><p class="sansserif">Submission</p></a>
+</li>
+<li><a class="not.active" href="http://localhost:8000/census/register"><p class="sansserif">
+Register</p></a></li>
+<li class="dropdown">
+<a href="" class="dropbtn" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
+Account</p></a>
+<div class="dropdown-content">
+  <a href="http://localhost:8000/census/profile" class="active2"><p class = sansserif>my profile</p></a>
+  <a href="http://localhost:8000/census/user_history"><p class = sansserif>my history</p></a>
+  <a href="http://localhost:8000/census/login"><p class = sansserif>login</p></a>
+  <a href="http://localhost:8000/census/logout"><p class = sansserif>logout</p></a>
+
+</div>
+</li>
+</ul>
+</div>
+<br>
+<div class ="greeting">
+What would you like to change?
+</div>
 <br>
 <br>
 {% if messages %}
@@ -12,13 +200,32 @@
 </ul>
 {% endif %}
 
-<div>
+<div class = "profileform">
 <p class="errors sansserif">
 	<form method="post" action="{% url 'edit_profile' %}">
 		{% csrf_token %}
-		{{ profile_form.as_p }}
+    <table align='center'>
+    <tr>
+    <td>Username: </td>
+    <td> {{ profile_form.username }}</td>
+    </tr>
+    <tr>
+    <td>First name: </td>
+    <td> {{ profile_form.first_name }}</td>
+    </tr>
+    <tr>
+    <td>Last name:</td>
+    <td>{{ profile_form.last_name }}</td>
+    </tr>
+    <tr>
+    <td>Email:</td>
+    <td>{{ profile_form.email }}</td>
+    </tr>
+    </table>
+
+   <hr class="style1">
 	<div class="my-button">
-			<input type="submit" name="submit" value="Submit" class="django-submit"/>
+			<input type="submit" name="submit" value="Submit" class="Submission2"/>
 	</div>
 
 	</form>
