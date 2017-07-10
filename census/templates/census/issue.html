@@ -80,37 +80,38 @@ Account</p></a>
 
 <hr class = "style14" width="50%"></hr>
 	<p class="sansserifgrey">
-	Displayed below are the editions for the selected title.
+	Displayed below are the issues for the selected edition.
 	</p>
 </div>
 <hr class = "style14" width="50%"></hr>
 <br>
 <br>
 
-{% if editions %}
+{% if issues %}
 <p class="sansserif">
   <br>
       <table class = "center" align="center" width="90%">
         <tr>
-        {% for edition in editions|slice:"1" %}
-        <td colspan="6" class = "announcer">  {{ edition.title }}: editions
-        {% endfor %}</td>
+        {% for issue in issues|slice:"1" %}
+        <td colspan="6" class = "announcer">{{ issue.edition.title }}: edition {{issue.edition.Edition_number}}: issues
+        {% endfor %}
+        </td>
         </tr>
         <tr>
-          <th> Title </th>
-          <th> Edition Number </th>
-          <th> Publication Year </th>
-          <th> Edition Format </th>
-          <th> STC </th>
+          <th> Year </th>
+          <th> STC Wing</th>
+          <th> DEEP</th>
           <th> ESTC </th>
+          <th> Notes </th>
+          <th> Variant Description </th>
         </tr>
-    {% for edition in editions %}
-   				<td>{{ edition.title }}</td>
-   				<td><a href="{% url 'issue' edition.id %}">{{ edition.Edition_number }}</td>
-       		<td>{{ edition.year }}</td>
-        	<td>{{ edition.Edition_format }}</td>
-       		<td>{{ edition.STC }}</td>
-        	<td>{{ edition.ESTC }}</td>
+    {% for issue in issues %}
+   				<td><a href="{% url 'copy' issue.id %}">{{ issue.year }}</a></td>
+       		<td>{{ issue.STC_Wing }}</td>
+        	<td>{{ issue.DEEP }}</td>
+       		<td>{{ issue.ESTC }}</td>
+        	<td>{{ issue.notes }}</td>
+          <td>{{ issue.Variant_Description }}</td>
         	</tr>
     {% endfor %}
         </table>
@@ -118,6 +119,6 @@ Account</p></a>
 </div>
 
 {% else %}
-    <p class="sansserif" align="center">Oh no! No editions are available.</p>
+    <p class="sansserif" align="center">Oh no! No issues are available.</p>
 {% endif %}
 {% endblock content %}

@@ -95,8 +95,17 @@ def detail(request, id):
 	}
 	return HttpResponse(template.render(context, request))
 
-def copy(request):
-	copies = Copy.objects.all()
+def issue(request, id):
+	selected_edition = Edition.objects.get(pk=id)
+	issues = selected_edition.issue_set.all()
+	template = loader.get_template('census/issue.html')
+	context = {
+		'issues': issues
+	}
+	return HttpResponse(template.render(context, request))
+def copy(request, id):
+	selected_issue=Issue.objects.get(pk=id)
+	copies = selected_issue.copy_set.all()
 	template = loader.get_template('census/copy.html')
 	context = {
 		'copies': copies
