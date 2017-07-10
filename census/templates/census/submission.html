@@ -53,13 +53,13 @@ input {
     font-weight:300;  
 }
 
-hr.style14 { 
-  border: 0; 
-  height: 1px; 
+hr.style14 {
+  border: 0;
+  height: 1px;
   background-image: -webkit-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
   background-image: -moz-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
   background-image: -ms-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
-  background-image: -o-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0); 
+  background-image: -o-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
 
 }
 li a, .dropbtn {
@@ -214,7 +214,7 @@ Account</p></a>
 <hr>
 {% endif %}
 
-<form action="{% url 'submission' %}" method="post" accept-charset="utf-8" style="margin-left:20px">
+<form action="{% url 'submission' %}" method="post" accept-charset="utf-8" style="margin-left:20px" novalidate>
 	{% csrf_token %}
 <div>
   <center><p style="font-size:25; font-weight: lighter;">1. select a title</p></center>
@@ -346,17 +346,8 @@ Account</p></a>
 </div>
 <hr class="style1"></hr>
 <div class="my-button">
-	<input type="submit" name="submit" value="submit" class="Submission2" id="copy_submit" display:none'/>
+	<input type="submit" name="submit" value="submit" class="Submission2" id="copy_submit" style="display:none"/>
 </div>
 </form>
-
-<script>
-if(window.location.hash === '#editCopy') {
-  $('.edition_section').attr('style', 'display:inline');
-  $('.issue_section').attr('style', 'display:inline');
-  $('.copy_section').attr('style', 'display:inline');
-  $('.copy_submit').attr('style', 'display:inline');
-}
-</script>
 
 {% endblock content %}

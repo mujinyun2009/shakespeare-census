@@ -10,13 +10,13 @@
 	background:#A7C87B;
 
 }
-hr.style14 { 
-  border: 0; 
-  height: 1px; 
+hr.style14 {
+  border: 0;
+  height: 1px;
   background-image: -webkit-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
   background-image: -moz-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
   background-image: -ms-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
-  background-image: -o-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0); 
+  background-image: -o-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
 
 }
 li a, .dropbtn {
@@ -92,12 +92,13 @@ Account</p></a>
 </br>
 <center>
 <table class = "center" align="center">
-<th colspan="4">Books found:</th>
+<th colspan="5">Books found:</th>
 <tr>
 <td class="subhead">Title</td>
 <td class="subhead">Year Published</td>
 <td class="subhead">Edition Number</td>
-<td class="subhead">Detail</td>
+<td class="subhead"></td>
+<td class="subhead"></td>
 </tr>
 <tr>
 {% for obj in result_list %}
@@ -105,6 +106,7 @@ Account</p></a>
 <td>{{ obj.issue.edition.year}}</td>
 <td>{{ obj.issue.edition.Edition_number}}</td>
 <td><a href="{% url 'copy_detail' obj.id %}" class="btn btn-info" onclick="return popup(this);">Detail</a></td>
+<td><a href="{% url 'edit_copy_submission' obj.id %}" class="btn btn-info" role="button" onclick="return popup(this);">Edit</a></td>
 </tr>
 </br>
 {% endfor %}

@@ -18,6 +18,7 @@ class EditionForm(forms.ModelForm):
 		exclude = ['title']
 
 class CopyForm(forms.ModelForm):
+	thumbnail_URL = forms.URLField(widget=forms.TextInput(attrs={'size':'80'}), error_messages={'invalid': 'Enter a valid url'})
 	class Meta:
 		model = Copy
 		exclude = ['issue', 'created_by']

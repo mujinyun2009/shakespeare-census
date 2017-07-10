@@ -6,24 +6,25 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 class Title(models.Model):
-	title = models.CharField(max_length=128, unique=False)
+	title = models.CharField(max_length=128, unique=True)
 	Apocryphal = models.BooleanField(default=False)
 	def __unicode__(self):
 		return self.title
 
 class Edition (models.Model):
 	title = models.ForeignKey(Title)
-	year = models.IntegerField(default=0)
-	Edition_number = models.IntegerField(default=0)
-	Edition_format = models.CharField(max_length=10)
+	Edition_number = models.CharField(max_length=20, unique=False)
+	Edition_format = models.CharField(max_length=10, null=True)
 	def __str__(self):
 		return "%s Edition %s" % (self.title, self.Edition_number)
 
 class Issue (models.Model):
 	edition = models.ForeignKey(Edition, unique=False)
-	STC_Wing = models.IntegerField(default=0)
+	year = models.CharField(max_length=20, default=None)
+	STC_Wing = models.CharField(max_length=20)
 	DEEP = models.IntegerField(default=0)
-	ESTC = models.IntegerField(default=0)
+	ESTC = models.CharField(max_length=20)
+	notes = models.CharField(max_length=1000, default=None)
 	Variant_Description = models.CharField(max_length=1000)
 	def __str__(self):
 		return "%s Issue %s" % (self.edition, self.STC_Wing)
@@ -32,8 +33,8 @@ class Copy (models.Model):
 	issue = models.ForeignKey(Issue, unique=False)
 	thumbnail_URL = models.URLField(max_length=200)
 	NSC = models.IntegerField(default=0)
-	Owner = models.CharField(max_length=40)
-	Shelfmark = models.IntegerField(default=0)
+	Owner = models.CharField(max_length=500)
+	Shelfmark = models.CharField(max_length=100)
 	Height = models.IntegerField(default=0)
 	Width = models.IntegerField(default=0)
 	Marginalia = models.CharField(max_length=100, null=True)
@@ -49,6 +50,7 @@ class Copy (models.Model):
 	Lee_Notes = models.CharField(max_length=2000)
 	Library_Notes=models.CharField(max_length=2000)
 	created_by=models.ForeignKey(User, related_name="submitted_copies", default=1, null=True)
+	copynote=models.CharField(max_length=5000, default=None)
 	def __str__(self):
 		return  "%s %s" % (self.issue, self.NSC)
 	class Meta:
