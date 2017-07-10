@@ -4,7 +4,72 @@
 <!-- <script type="text/javascript" src="/static/census/popup_script.js"></script> -->
 
 <style>
+hr.style1 { 
+  border: 0; 
+  height: 2px; 
+  border-color:#6E728A;
+  padding:0px;
+  margin:0px;
+}
 
+
+tr {
+  border:none;
+  font-size:20px;
+  height:60px;
+}
+td {
+  border:none;
+}
+th, td {
+  padding-top:0;
+  padding-bottom:0;
+  background:#FFFFFF;
+}
+td:nth-child(even) {
+  background-color: #ff9966;
+  width:auto;
+
+}
+
+td:nth-child(odd) {
+  border-right:1px solid #FFFFFF;
+  width:auto;
+}
+table {
+  width:500px;
+}
+
+.Submission2 {
+  border:none;
+  font-size:10px;
+  height:50px;
+  position:relative;
+  width:500px;
+  margin-left:-250px;
+  left:50%;
+  padding: 10px 30px;
+  background:#a7c87b;
+}
+input[type=submit]:hover{
+  color:#FFEBCD;
+}
+input[type=text]:focus {
+  outline: none;
+  box-shadow: 0px 1px 0px 0px #ebebeb, 0px 0px 0px 0px #ebebeb;
+}
+input {
+    border: none;
+    color: #000000;
+    background: none;
+    box-shadow: 0px 0px 0px 0px #ebebeb, 0px 0px 0px 0px #ebebeb;
+    -webkit-transition: box-shadow 0.3s;
+    transition: box-shadow 0.3s;
+    width: 100%;
+    font-size:20px;
+    font-family: "Century Gothic", AppleGothic, sans-serif;
+    font-weight:lighter;  
+}
 
 a.editbutton:visited {
     color: green;
@@ -88,6 +153,9 @@ li a, .dropbtn {
  .profileform {
  	text-align: left;
  }
+ .username {
+  color:#FFFFFF;
+ }
 </style>
 
 <div class="wrapper">
@@ -135,9 +203,28 @@ What would you like to change?
 <p class="errors sansserif">
 	<form method="post" action="{% url 'edit_profile' %}">
 		{% csrf_token %}
-		{{ profile_form.as_p }}
+    <table align='center'>
+    <tr>
+    <td>Username: </td>
+    <td> {{ profile_form.username }}</td>
+    </tr>
+    <tr>
+    <td>First name: </td>
+    <td> {{ profile_form.first_name }}</td>
+    </tr>
+    <tr>
+    <td>Last name:</td>
+    <td>{{ profile_form.last_name }}</td>
+    </tr>
+    <tr>
+    <td>Email:</td>
+    <td>{{ profile_form.email }}</td>
+    </tr>
+    </table>
+
+   <hr class="style1">
 	<div class="my-button">
-			<input type="submit" name="submit" value="Submit" class="django-submit"/>
+			<input type="submit" name="submit" value="Submit" class="Submission2"/>
 	</div>
 
 	</form>

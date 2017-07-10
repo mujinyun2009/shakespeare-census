@@ -84,10 +84,11 @@ class LoginForm(forms.ModelForm):
 
 class editProfileForm(forms.ModelForm):
 	email = forms.CharField(max_length=150, required=True)
-
+	username = forms.CharField(help_text=False)
 	class Meta:
 		model = User
 		fields = ['username', 'first_name', 'last_name', 'email',]
+
 
 	def clean_email(self):
 		data = self.cleaned_data['email']
