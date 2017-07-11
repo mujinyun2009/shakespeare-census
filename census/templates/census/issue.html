@@ -46,12 +46,17 @@ tr:nth-child(odd):not(:nth-child(1)) {background-color: #f2f2f2}
     display: block;
 }
 .announcer {
+  font-size:20px;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  font-weight:normal;
+  position:relative;
+}
+.announcer2 {
   font-size:40px;
   font-family: "Century Gothic", AppleGothic, sans-serif;
   font-weight:normal;
   position:relative;
 }
-
 a.linkbutton:hover {
     color: #a4b7d6;
 }
@@ -89,8 +94,7 @@ Account</p></a>
 	</p>
 </div>
 <hr class = "style14" width="50%"></hr>
-<br>
-<br>
+
 
 {% if issues %}
 <p class="sansserif">
@@ -98,7 +102,7 @@ Account</p></a>
       <table class = "center" align="center" width="90%">
         <tr>
         {% for issue in issues|slice:"1" %}
-        <td colspan="6" class = "announcer">{{ issue.edition.title }}: edition {{issue.edition.Edition_number}}: issues
+        <td colspan="6" class = "announcer"><a href = "http://localhost:8000/titles"> {{ issue.edition.title }}</a>|<a href = "{% url 'detail' issue.edition.title.id %}"> edition {{issue.edition.Edition_number}}</a>: <div class = "announcer2"> issues</div>
         {% endfor %}
         </td>
         </tr>

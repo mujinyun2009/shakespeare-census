@@ -42,11 +42,18 @@ li a, .dropbtn {
     display: block;
 }
 .announcer {
+  font-size:20px;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  font-weight:normal;
+  position:relative;
+}
+.announcer2 {
   font-size:40px;
   font-family: "Century Gothic", AppleGothic, sans-serif;
   font-weight:normal;
   position:relative;
 }
+
 
 a.linkbutton:hover {
     color: #a4b7d6;
@@ -85,20 +92,18 @@ Account</p></a>
 	</p>
 </div>
 <hr class="style14" width = "50%"></hr>
-<br>
-<br>
+
 {% if copies %}
     <p class="sansserif">
     	<table class = "center" align="center" width="100%">
         <tr>
         {% for copy in copies|slice:"1" %}
-        <td colspan="9" class = "announcer">{{ copy.issue.edition.title }}: edition {{ copy.issue.edition.Edition_number }}: issue {{ copy.issue.year }}: copies
+        <td colspan="9" class = "announcer"><a href = "http://localhost:8000/titles"> {{ copy.issue.edition.title }}|<a href = "{% url 'detail' copy.issue.edition.title.id %}"> edition {{ copy.issue.edition.Edition_number }}</a>|<a href = "{% url 'issue' copy.issue.edition.id %}">  issue {{ copy.issue.year }}</a>: <br><div class = "announcer2"> copies</div>
         {% endfor %}
         </td>
         </tr>
 
     		<tr>
-    			<th> Title </th>
                 <th> Edition </th>
     			<th> NSC </th>
                 <th> Owner </th>
@@ -110,7 +115,6 @@ Account</p></a>
     		</tr>
     		<tr>
     		{% for copy in copies %}
-   				<td>{{ copy.issue.edition.title }}</td>
                 <td>{{ copy.issue.edition.Edition_number }}</td>
                 <td>{{ copy.NSC }}</td>
                 <td>{{ copy.Owner }}</td>
