@@ -78,18 +78,18 @@ li a, .dropbtn {
 <div class="wrapper">
 
 <ul>
-<li><a class="notactive" href="http://localhost:8000/"><p class="sansserif">
+<li><a class="not.active" href="{% url 'homepage' %}"><p class="sansserif">
 Home</p></a></li>
-<li><a class="notactive" href="http://localhost:8000/titles"><p class="sansserif">
+<li><a class="not.active" href="{% url 'index' %}"><p class="sansserif">
 Titles</p></a></li>
-<li><a class="notactive" href="http://localhost:8000/census/copy"><p class="sansserif">
+<li><a class="not.active" href="{% url 'copylist' %}"><p class="sansserif">
 Copy</p></a></li>
 <li>
-    <a class="notactive" href="http://localhost:8000/census/submission" class="dropbtn"><p class="sansserif">Submission</p></a>
+    <a class="not.active" href="{% url 'submission' %}" class="dropbtn"><p class="sansserif">Submission</p></a>
 </li>
 {% if user.is_authenticated %}
   {% else %}
-<li><a class="not.active" href="http://localhost:8000/census/register"><p class="sansserif">
+<li><a class="not.active" href="{% url 'register' %}"><p class="sansserif">
 Register</p></a></li>
    {% endif %}
 
@@ -97,18 +97,17 @@ Register</p></a></li>
 <a href="" class="dropbtn" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
 Account</p></a>
 <div class="dropdown-content">
-  <a href="http://localhost:8000/census/profile"><p class = sansserif>my profile</p></a>
-  <a href="http://localhost:8000/census/user_history" class = "active2"><p class = sansserif>my history</p></a>
+  <a href="{% url 'profile' %}"><p class = sansserif>my profile</p></a>
+  <a href="{% url 'user_history' %}" class="active2"><p class = sansserif>my history</p></a>
  {% if user.is_authenticated %}
-<a href="http://localhost:8000/census/logout"><p class = sansserif>logout</p></a>
+<a href="{% url 'logout_user' %}"><p class = sansserif>logout</p></a>
   {% else %}
-  <a href="http://localhost:8000/census/login"><p class = sansserif>login</p></a>
+  <a href="{% url 'login_user' %}"><p class = sansserif>login</p></a>
    {% endif %}
 </div>
+</li>
 
-
-</ul>
-</div>
+</ul></div>
 
 <br>
 <br>

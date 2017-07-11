@@ -7,7 +7,7 @@ $(document).ready(function() {
     else {
       $('.edition_section').attr('style', 'display:inline');
       var title = $(this).val();
-      var new_url = "/census/addEdition/" + $(this).val() + "/";
+      var new_url = "/addEdition/" + $(this).val() + "/";
       $('#add_edition').attr('href', new_url);
       var url = "/census/title/" + $(this).val() + "/";
       $.getJSON(url, function(editions) {

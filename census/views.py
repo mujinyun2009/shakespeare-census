@@ -115,6 +115,7 @@ def copy(request, id):
 def copylist(request):
 	copies = Copy.objects.all()
 	template = loader.get_template('census/copylist.html')
+	print ("helloworld")
 	context = {
 		'copies': copies
 	}
@@ -414,6 +415,7 @@ def user_history(request):
 
 def copy_detail(request, copy_id):
 	template=loader.get_template('census/copy_detail.html')
+	print (template)
 	selected_copy=get_object_or_404(Copy, pk=copy_id)
 	selected_issue=selected_copy.issue
 	selected_edition=selected_issue.edition

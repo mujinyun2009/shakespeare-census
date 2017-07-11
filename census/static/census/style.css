@@ -1,5 +1,5 @@
-<style type="text/css">a {text-decoration: none;}</style>
 <style>
+a {text-decoration: none;}
 .my-button .django-submit {
     text-decoration: none;
     border : none;
@@ -15,15 +15,22 @@ hr.style14 {
   background-image: -moz-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
   background-image: -ms-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
   background-image: -o-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0); 
+}
+.subhead {
+	font-size: 13;
+	font-weight: lighter;
+	font-family: "Century Gothic", AppleGothic, sans-serif;
+	background:#A7C87B;
 
 }
+
 
 li {
     float: left;
 }
 li a, .dropbtn {
     display: inline-block;
-    color: white;
+    color: black;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -62,9 +69,6 @@ label {
 	font-family:"Century Gothic", AppleGothic, sans-serif;
 }
 form {
-	font-family:"Century Gothic", AppleGothic, sans-serif;
-}
-input{
 	font-family:"Century Gothic", AppleGothic, sans-serif;
 }
 button {
@@ -146,5 +150,28 @@ th {
     -moz-column-count: 2; /* Firefox */
     column-count: 2;
 }
+a:-webkit-any-link{
+text-decoration:none !important;
+}
+a.resultbuttons:hover {
+  color:#a4b7d6;
+}
+a.linkbutton:hover {
+    color: #a4b7d6;
+}
+.announcer {
+  font-size:20px;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  font-weight:normal;
+  position:relative;
+}
+
+.announcer2 {
+  font-size:40px;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  font-weight:normal;
+  position:relative;
+}
+
 
 </style>
