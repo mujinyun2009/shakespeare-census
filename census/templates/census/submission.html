@@ -172,29 +172,28 @@ hr.style1 {
 <script type="text/javascript" src="/static/census/popup_script.js"></script>
 <div class="wrapper">
 
-<ul>
-<li><a class="not.active" href="http://localhost:8000/"><p class="sansserif">
-Home</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/titles"><p class="sansserif">
-Titles</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/copy"><p class="sansserif">
-Copy</p></a></li>
-<li><a class="active" href="http://localhost:8000/census/submission" class="dropbtn"><p class="sansserif">Submission</p></a><li>
-<li><a class="not.active" href="http://localhost:8000/census/register"><p class="sansserif">
-Register</p></a></li>
-<li class="dropdown">
-<a href="" class="dropbtn" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
-Account</p></a>
-<div class="dropdown-content">
-  <a href="http://localhost:8000/census/profile"><p class = sansserif>my profile</p></a>
-  <a href="http://localhost:8000/census/user_history"><p class = sansserif>my history</p></a>
-  <a href="http://localhost:8000/census/login"><p class = sansserif>login</p></a>
-  <a href="http://localhost:8000/census/logout"><p class = sansserif>logout</p></a>
+  <ul>
+  <li><a class="not.active" href="{% url 'homepage' %}"><p class="sansserif">
+  Home</p></a></li>
+  <li><a class="not.active" href="{% url 'index' %}"><p class="sansserif">
+  Titles</p></a></li>
+  <li><a class="not.active" href="{% url 'copy' %}"><p class="sansserif">
+  Copy</p></a></li>
+  <li><a class="active" href="{% url 'submission' %}" class="dropbtn"><p class="sansserif">Submission</p></a></li>
+  <li><a class="not.active" href="{% url 'register' %}"><p class="sansserif">Register</p></a></li>
+  <li class="dropdown">
+  <a href="" class="dropbtn" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
+  Account</p></a>
+  <div class="dropdown-content">
+    <a href="{% url 'profile' %}"><p class = sansserif>my profile</p></a>
+    <a href="{% url 'user_history' %}"><p class = sansserif>my history</p></a>
+    <a href="{% url 'login_user' %}"><p class = sansserif>login</p></a>
+    <a href="{% url 'logout_user' %}"><p class = sansserif>logout</p></a>
 
-</div>
-</li>
+  </div>
+  </li>
 
-</ul>
+  </ul>
 
 <hr class ="style14" width = "50%"></hr>
   <p class="sansserifgrey">
@@ -269,78 +268,12 @@ Account</p></a>
 <div class='copy_section' id='copy_section' style='display:none'>
   <center><p style="font-size:25; font-weight: lighter;">4. fill in the information about the copy</p></center>
   <table class = "table2" align="center">
+    {%for field in copy_form.visible_fields %}
     <tr>
-    <td>Thumbnail URL:</td>
-    <td> {{ copy_form.thumbnail_URL }}</td>
+    <td>{{field.label_tag}} </td>
+    <td> {{ field }}</td>
     </tr>
-    <tr>
-    <td>NSC:</td>
-    <td> {{ copy_form.NSC }}</td>
-    </tr>
-    <tr>
-    <td>Owner:</td>
-    <td> {{ copy_form.Owner }}</td>
-    </tr>
-    <tr>
-    <td>Shelfmark:</td>
-    <td> {{ copy_form.Shelfmark }}</td>
-    </tr>
-    <tr>
-    <td>Height:</td>
-    <td> {{ copy_form.Height }}</td>
-    </tr>
-    <tr>
-    <td>Width:</td>
-    <td> {{ copy_form.Width }}</td>
-    </tr>
-    <tr>
-    <td>Marginalia:</td>
-    <td> {{ copy_form.Marginalia }}</td>
-    </tr>
-    <tr>
-    <td>Condition:</td>
-    <td> {{ copy_form.Marginalia }}</td>
-    </tr>
-    <tr>
-    <td>Binding:</td>
-    <td> {{ copy_form.Binding }}</td>
-    </tr>
-    <tr>
-    <td>Binder:</td>
-    <td> {{ copy_form.Binder }}</td>
-    </tr>
-    <tr>
-    <td>Bookplate:</td>
-    <td> {{ copy_form.Bookplate }}</td>
-    </tr>
-    <tr>
-    <td>Bookplate Location:</td>
-    <td> {{ copy_form.Bookplate_Location }}</td>
-    </tr>
-     <tr>
-    <td>Barlett1939:</td>
-    <td> {{ copy_form.Barlett1939 }}</td>
-    </tr>
-     <tr>
-    <td>Barlet1939 Notes:</td>
-    <td> {{ copy_form.Barlet1939_Notes }}</td>
-    </tr>
-    <tr>
-    <td>Barlet1916:</td>
-    <td> {{ copy_form.Barlet1916 }}</td>
-    </tr>
-    <tr>
-    <td>Barlet1916 Notes:</td>
-    <td> {{ copy_form.Barlet1916_Notes }}</td>
-    </tr>
-    <tr>
-    <td>Lee Notes:</td>
-    <td> {{ copy_form.Lee_Notes }}</td>
-    </tr>
-    <tr>
-    <td>Library Notes:</td>
-    <td> {{ copy_form.Library_Notes }}</td>
-    </tr>
+    {% endfor %}
   </table>
   <br>
 </div>

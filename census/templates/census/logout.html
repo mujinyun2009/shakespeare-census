@@ -99,10 +99,10 @@ li a {
 li:hover:not(.active) {
 	background-color: #F2E8CE;
 }
-li:last-child { 
+li:last-child {
    border-left: 1px solid #000000;
 }
-li:first-child { 
+li:first-child {
    border-right: 1px solid #000000;
 }
 p.sansserif {
@@ -222,10 +222,10 @@ p.title {
 		*display: inline;
 	}
 .forminput {
-	height: 50px; 
-	width: 200px; 
-	font-size:30px; 
-	position:relative; 
+	height: 50px;
+	width: 200px;
+	font-size:30px;
+	position:relative;
 	left:0%;
 }
 
@@ -245,14 +245,14 @@ p.title {
   font-family: "Century Gothic", AppleGothic, sans-serif;
   padding: 10px;
   width:20%;
-  margin:auto;  
+  margin:auto;
   background-color:#a7c87b;
   text-align:center;
 }
 
 
 
-</style> 
+</style>
 
 <head>
 <p class = "title" style="text-align:center;">shakespeare census</p>
@@ -262,14 +262,14 @@ p.title {
 <div class = "wrapper">
 <ul>
 <li class = "test"><div id = "unhidebutton"><p class = sansserif>search</div></p></li>
-<li><a class="not.active" href="http://localhost:8000/census/submission"><p class = sansserif>submit</p></a></li>
+<li><a class="not.active" href="{% url 'submission' %}"><p class = sansserif>submit</p></a></li>
 <li class="dropdown">
 <a href="" class="dropbtn" data-toggle="dropdown" role="button">  <p class = sansserif>
 account</p></a>
 <div class="dropdown-content">
-	<a href="http://localhost:8000/census/profile"><p class = sansserif>my profile</p></a>
-	<a href="http://localhost:8000/census/user_history"><p class = sansserif>my history</p></a>
-	<a href="http://localhost:8000/census/login"><p class = sansserif>login</p></a>
+	<a href="{% url 'profile' %}"><p class = sansserif>my profile</p></a>
+	<a href="{% url 'user_history' %}"><p class = sansserif>my history</p></a>
+	<a href="{% url 'login_user' %}"><p class = sansserif>login</p></a>
 
 </div>
 </li>

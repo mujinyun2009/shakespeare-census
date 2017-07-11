@@ -2,13 +2,13 @@
 {% load static %}
 {% block content %}
 <style>
-hr.style14 { 
-  border: 0; 
-  height: 1px; 
+hr.style14 {
+  border: 0;
+  height: 1px;
   background-image: -webkit-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
   background-image: -moz-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
   background-image: -ms-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
-  background-image: -o-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0); 
+  background-image: -o-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
 
 }
 
@@ -55,26 +55,28 @@ tr:nth-child(odd):not(:nth-child(1)) {background-color: #f2f2f2}
 </style>
 <div class="wrapper">
 
-<ul>
-<li><a class="not.active" href="http://localhost:8000/"><p class="sansserif">
-Home</p></a></li>
-<li><a class="active" href="http://localhost:8000/census/titles"><p class="sansserif">
-Titles</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/copy"><p class="sansserif">
-Copy</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/register"><p class="sansserif">Register</p></a></li>
-<li class="dropdown">
-<a href="" class="dropbtn" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
-Account</p></a>
-<div class="dropdown-content">
-  <a href="http://localhost:8000/census/profile"><p class = sansserif>my profile</p></a>
-  <a href="http://localhost:8000/census/user_history"><p class = sansserif>my history</p></a>
-  <a href="http://localhost:8000/census/login"><p class = sansserif>login</p></a>
-  <a href="http://localhost:8000/census/logout"><p class = sansserif>logout</p></a>
+  <ul>
+  <li><a class="not.active" href="{% url 'homepage' %}"><p class="sansserif">
+  Home</p></a></li>
+  <li><a class="not.active" href="{% url 'index' %}"><p class="sansserif">
+  Titles</p></a></li>
+  <li><a class="active" href="{% url 'copy' %}"><p class="sansserif">
+  Copy</p></a></li>
+  <li><a class="not.active" href="{% url 'submission' %}" class="dropbtn"><p class="sansserif">Submission</p></a></li>
+  <li><a class="not.active" href="{% url 'register' %}"><p class="sansserif">Register</p></a></li>
+  <li class="dropdown">
+  <a href="" class="dropbtn" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
+  Account</p></a>
+  <div class="dropdown-content">
+    <a href="{% url 'profile' %}"><p class = sansserif>my profile</p></a>
+    <a href="{% url 'user_history' %}"><p class = sansserif>my history</p></a>
+    <a href="{% url 'login_user' %}"><p class = sansserif>login</p></a>
+    <a href="{% url 'logout_user' %}"><p class = sansserif>logout</p></a>
 
-</div>
-</li>
-</ul>
+  </div>
+  </li>
+
+  </ul>
 
 
 <hr class = "style14" width="50%"></hr>
