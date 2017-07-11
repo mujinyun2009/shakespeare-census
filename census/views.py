@@ -388,7 +388,7 @@ def edit_profile(request):
 			profile_form.save()
 			return HttpResponseRedirect(reverse('profile'))
 		else:
-			messages.error(request, 'Please correct the error below.')
+			messages.error(request, "The username you've inputted is already taken!")
 	else:
 		profile_form=editProfileForm(instance=current_user)
 

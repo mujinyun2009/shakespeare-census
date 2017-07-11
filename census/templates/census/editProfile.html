@@ -85,7 +85,18 @@ a.editbutton:hover {
 a{text-decoration: none }
 }
 
-
+li .messages {
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  font-size:20px
+  font-weight:lighter;
+}
+.messages {
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  font-size:20px
+  font-weight:lighter;
+  position:fixed;
+  left:35%;
+}
 a:link {
     color: white;
 }
@@ -195,10 +206,14 @@ What would you like to change?
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    <div class = "messages">
+    <li class = "messages">{{ message }}</li>
+    </div>
     {% endfor %}
 </ul>
 {% endif %}
+<br>
+
 
 <div class = "profileform">
 <p class="errors sansserif">

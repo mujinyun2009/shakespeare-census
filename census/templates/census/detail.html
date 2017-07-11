@@ -50,9 +50,11 @@ tr:nth-child(odd):not(:nth-child(1)) {background-color: #f2f2f2}
   font-family: "Century Gothic", AppleGothic, sans-serif;
   font-weight:normal;
   position:relative;
-
-;
 }
+a.linkbutton:hover {
+    color: #a4b7d6;
+}
+
 </style>
 <div class="wrapper">
 
@@ -108,7 +110,7 @@ Account</p></a>
         </tr>
     {% for edition in editions %}
    				<td>{{ edition.title }}</td>
-   				<td><a href="{% url 'issue' edition.id %}">{{ edition.Edition_number }}</td>
+   				<td><a href="{% url 'issue' edition.id %}" class="linkbutton">{{ edition.Edition_number }}</td>
        		<td>{{ edition.year }}</td>
         	<td>{{ edition.Edition_format }}</td>
        		<td>{{ edition.STC }}</td>

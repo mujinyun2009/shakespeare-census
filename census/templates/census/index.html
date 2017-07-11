@@ -45,6 +45,10 @@ li a, .dropbtn {
     display: block;
 }
 
+a.linkbutton:hover {
+    color: #a4b7d6;
+}
+
 </style>
 <div class="wrapper">
 
@@ -91,7 +95,7 @@ Account</p></a>
         </tr>
         <tr>
     {% for title in titles %}
-    			<td><a href="{% url 'detail' title.id %}">{{ title.title }}</a></td>
+    			<td><a href="{% url 'detail' title.id %}" class ="linkbutton">{{ title.title }}</a></td>
    				<td>{{ title.Apocryphal }}</td>
    			 </tr>
     {% endfor %}
