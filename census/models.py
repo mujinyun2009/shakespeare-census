@@ -31,7 +31,7 @@ class Issue (models.Model):
 
 class Copy (models.Model):
 	issue = models.ForeignKey(Issue, unique=False)
-	thumbnail_URL = models.URLField(max_length=200)
+	thumbnail_URL = models.URLField(max_length=500)
 	NSC = models.IntegerField(default=0)
 	Owner = models.CharField(max_length=500)
 	Shelfmark = models.CharField(max_length=100)

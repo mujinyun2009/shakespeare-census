@@ -179,7 +179,7 @@ Home</p></a></li>
 Titles</p></a></li>
 <li><a class="not.active" href="http://localhost:8000/census/copy"><p class="sansserif">
 Copy</p></a></li>
-<li><a class="active" href="http://localhost:8000/census/submission" class="dropbtn"><p class="sansserif">Submission</p></a><li>
+<li><a class="active" href="http://localhost:8000/census/submission"><p class="sansserif">Submission</p></a><li>
 <li><a class="not.active" href="http://localhost:8000/census/register"><p class="sansserif">
 Register</p></a></li>
 <li class="dropdown">
@@ -299,7 +299,7 @@ Account</p></a>
     </tr>
     <tr>
     <td>Condition:</td>
-    <td> {{ copy_form.Marginalia }}</td>
+    <td> {{ copy_form.Condition }}</td>
     </tr>
     <tr>
     <td>Binding:</td>
@@ -341,7 +341,12 @@ Account</p></a>
     <td>Library Notes:</td>
     <td> {{ copy_form.Library_Notes }}</td>
     </tr>
+    <tr>
+    <td>Copynote:</td>
+    <td> {{ copy_form.copynote }}</td>
+    </tr>
   </table>
+
   <br>
 </div>
 <hr class="style1"></hr>

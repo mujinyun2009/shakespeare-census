@@ -85,13 +85,6 @@ Account</p></a>
 {% if copies %}
     <p class="sansserif">
     	<table class = "center" align="center" width="100%">
-        <tr>
-        {% for copy in copies|slice:"1" %}
-        <td colspan="9" class = "announcer">{{ copy.issue.edition.title }}: edition {{ copy.issue.edition.Edition_number }}: issue {{ copy.issue.year }}: copies
-        {% endfor %}
-        </td>
-        </tr>
-
     		<tr>
     			<th> Title </th>
                 <th> Edition </th>

@@ -105,13 +105,20 @@ def issue(request, id):
 	return HttpResponse(template.render(context, request))
 def copy(request, id):
 	selected_issue=Issue.objects.get(pk=id)
-	copies = selected_issue.copy_set.all()
+	copies = selected_issue.copy_set.all() 
 	template = loader.get_template('census/copy.html')
 	context = {
 		'copies': copies
 	}
 	return HttpResponse(template.render(context,request))
 
+def copylist(request):
+	copies = Copy.objects.all()
+	template = loader.get_template('census/copylist.html')
+	context = {
+		'copies': copies
+	}
+	return HttpResponse(template.render(context,request))
 
 def provenance(request):
 	provenances= Provenance.objects.all()
