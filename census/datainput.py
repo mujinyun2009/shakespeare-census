@@ -35,24 +35,25 @@ def remove_all_copies():
 
 def read_issue_file(csv_file_path):
 	with open(csv_file_path, 'rU') as csvfile:
-		reader=csv.reader(csvfile, delimiter=";")
+		reader=csv.reader(csvfile)
 
 		for row in reader:
 			if row[0] =='Title':
 				continue
-			title_exists=Title.objects.filter(title=row[0])
-			if title_exists:
-				new_title=Title.objects.get(title=row[0])
+			related_title=list(Title.objects.filter(title=row[0]))
+			if related_title:
+				new_title=related_title[0]
 			else:
 				new_title=create_title(row[0])
 
-			edition_exists=Edition.objects.filter(title=new_title, Edition_number=row[1])
-			if edition_exists:
-				new_edition=Edition.objects.get(title=new_title, Edition_number=row[1])
+			related_edition=list(Edition.objects.filter(title=new_title, Edition_number=row[1]))
+			if related_edition:
+				new_edition=related_edition[0]
 			else:
 				new_edition=create_edition(new_title, row[1])
 
 			new_issue=create_issue(new_edition, row[2], row[3], row[4], row[5])
+	return "success"
 
 def read_copy_file(csv_file_path):
 	with open(csv_file_path, 'rU') as csvfile:
@@ -74,3 +75,4 @@ def read_copy_file(csv_file_path):
 				prov_info=''
 
 			create_copy(related_issue[0], library, shelfmark, copynote, prov_info)
+	return "success"
