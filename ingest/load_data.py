@@ -1,4 +1,4 @@
-from .models import *
+from census.models import *
 import csv
 
 def create_title(title_name):
@@ -63,7 +63,7 @@ def read_copy_file(csv_file_path):
 			if row[0]=='ESTC number':
 				continue;
 
-			related_issue=list(Issue.objects.filter(ESTC=row[0]))
+			related_issue=Issue.objects.get(ESTC=row[0])
 			library=row[1]
 			shelfmark=row[3]
 			copynote=row[4]
@@ -74,5 +74,5 @@ def read_copy_file(csv_file_path):
 			if prov_info=='null':
 				prov_info=''
 
-			create_copy(related_issue[0], library, shelfmark, copynote, prov_info)
+			create_copy(related_issue, library, shelfmark, copynote, prov_info)
 	return "success"
