@@ -108,7 +108,16 @@ def detail(request, id):
 	return HttpResponse(template.render(context, request))
 
 def copy(request):
-	copies = Copy.objects.all()
+	all_copies = Copy.objects.all()
+	paginator = Paginator(all_copies, 10)
+	page = request.GET.get('page')
+	try:
+		copies = paginator.page(page)
+	except PageNotAnInteger:
+		copies = paginator.page(1)
+	except EmptyPage:
+		copies = paginator.page(paginator.num_pages)
+
 	template = loader.get_template('census/copy.html')
 	context = {
 		'copies': copies
