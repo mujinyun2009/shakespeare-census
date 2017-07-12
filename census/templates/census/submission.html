@@ -16,7 +16,7 @@ Home</p></a></li>
 Titles</p></a></li>
 <li><a class="not.active" href="{% url 'copylist' %}"><p class="sansserif">
 Copy</p></a></li>
-<li><a class="active" href="{% url 'submission' %}" class="dropbtn"><p class="sansserif">Submission</p></a>
+<li><a class="active" href="{% url 'submission' %}"><p class="sansserif">Submission</p></a>
 </li>
 {% if user.is_authenticated %}
   {% else %}
@@ -25,7 +25,7 @@ Register</p></a></li>
    {% endif %}
 
 <li class="dropdown">
-<a href="" class="dropbtn" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
+<a href="" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
 Account</p></a>
 <div class="dropdown-content">
   <a href="{% url 'profile' %}"><p class = sansserif>my profile</p></a>
@@ -72,7 +72,7 @@ Account</p></a>
   </select>
   </td>
   <td>
-  <button class="copysubmission"><a href="{% url 'add_title' %}" style="color:#FFFFFF;" name="add another title" onclick="return showAddAnotherPopup(this);">add title+</a></button>
+  <a href="{% url 'add_title' %}" style="color:#FFFFFF;" name="add another title" onclick="return showAddAnotherPopup(this);" class="copysubmission">add title+</a>
   </td>
   </tr>
   </table>
@@ -88,7 +88,7 @@ Account</p></a>
   </select>
   </td>
   <td>
-  <button class = "copysubmission"><a href="#" id="add_edition" style="color:#FFFFFF;" name ="add another edition" onclick="return showAddAnotherPopup(this);">add edition+</a></button>
+  <a href="#" id="add_edition" style="color:#FFFFFF;" name ="add another edition" onclick="return showAddAnotherPopup(this);" class="copysubmission">add edition+</a>
   </td>
   </tr>
   </table>
@@ -104,7 +104,7 @@ Account</p></a>
   </select>
   </td>
   <td>
-  <button class="copysubmission"><a href="#" id="add_issue" style="color:#FFFFFF;" name ="add another issue" onclick="return showAddAnotherPopup(this);">add issue+</a></button>
+  <a href="#" id="add_issue" style="color:#FFFFFF;" name ="add another issue" onclick="return showAddAnotherPopup(this);" class="copysubmission">add issue+</a>
   </td>
   </tr>
   </table>
@@ -114,8 +114,8 @@ Account</p></a>
   <table class = "table2" align="center">
     {% for field in copy_form.visible_fields %}
     <tr>
-    <td>{{ field.label_tag }}
-    <td>{{ field }}
+    <td>{{ field.label_tag }}</td>
+    <td>{{ field }}</td>
     </tr>
     {% endfor %}
   </table>

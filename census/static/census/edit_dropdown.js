@@ -26,7 +26,7 @@ $(document).ready(function() {
       $('#add_issue').attr('href', new_url);
       var url = "/census/edition/" + $(this).val() + "/";
       $.getJSON(url, function(issues) {
-        var options = '<option value="Z">Select an issue</option>';
+        var options = '<option value="Z">select an issue</option>';
         for (var i = 0; i < issues.length; i++) {
           options += '<option value="' + issues[i]['id'] + '">Issue ' + issues[i]['STC_Wing'] + '</option>';
         }

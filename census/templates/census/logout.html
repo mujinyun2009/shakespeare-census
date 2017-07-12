@@ -262,21 +262,21 @@ p.title {
 <div class = "wrapper">
 <ul>
 <li class = "test"><div id = "unhidebutton"><p class = sansserif>search</div></p></li>
-<li><a class="not.active" href="http://localhost:8000/census/submission"><p class = sansserif>submit</p></a></li>
+<li><a class="not.active" href="{% url 'submission' %}"><p class = sansserif>submit</p></a></li>
 <li class="dropdown">
 <a href="" class="dropbtn" data-toggle="dropdown" role="button">  <p class = sansserif>
 account</p></a>
 <div class="dropdown-content">
-	<a href="http://localhost:8000/census/profile"><p class = sansserif>my profile</p></a>
-	<a href="http://localhost:8000/census/user_history"><p class = sansserif>my history</p></a>
-	<a href="http://localhost:8000/census/login"><p class = sansserif>login</p></a>
-  <a href="http://localhost:8000/census/register"><p class = sansserif>register</p></a>
+  <a href="{% url 'profile' %}"><p class = sansserif>my profile</p></a>
+  <a href="{% url 'user_history' %}"><p class = sansserif>my history</p></a>
+  <a href="{% url 'login_user' %}"><p class = sansserif>login</p></a>
+  <a href="{% url 'logout_user' %}"><p class = sansserif>logout</p></a>
+  <a href="{% url 'register' %}"><p class = sansserif>register</p></a>
+
 
 </div>
 </li>
 </ul>
-
-
 
 <span id = "myForm">
 <div id = "testing" style="overflow-y: auto;">

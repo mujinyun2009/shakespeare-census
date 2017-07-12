@@ -1,13 +1,3 @@
-{% load static %}
-
-<html>
-<title>Shakespeare Census</title>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href= "{% static 'census/frontpage.css' %}" />
-
-<style>
 hr.style1 { 
   border: 0; 
   height: 2px; 
@@ -247,57 +237,3 @@ p.title {
   margin-top:190px;
   position:relative;
 }
-</style>
-<head>
-<p class = "title" style="text-align:center; color:black;"><a href="{% url 'index' %}" class="linkbutton">shakespeare census</a></p>
-
-</head>
-
-<body>
-<div class = "wrapper">
-<ul>
-<li><div id = "unhidebutton"><p class = sansserif><a class="not.active" href="{% url 'homepage' %}">search</a></div></p></li>
-<li><a class="not.active" href="{% url 'submission' %}"><p class = sansserif>submit</p></a></li>
-<li class="dropdown">
-<a href="" class="dropbtn" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
-account</p></a>
-<div class="dropdown-content">
-  <a href="{% url 'profile' %}"><p class = sansserif>my profile</p></a>
-  <a href="{% url 'user_history' %}"><p class = sansserif>my history</p></a>
-  <a href="{% url 'login_user' %}"><p class = sansserif>login</p></a>
-  <a href="{% url 'logout_user' %}"><p class = sansserif>logout</p></a>
-  <a href="{% url 'register' %}"><p class = sansserif>register</p></a>
-
-</div>
-</li>
-</ul>
-</div>
-
-<br>
-    <div class="main-content">
-        {% if failed == True %}
-        <center><p class="sansserif">We could not find your account.<br> <font size= "2">Perhaps you've mistyped your username/password?</font></p></center>
-        {% endif %}
-    <div class="content-form">
-            <form id="login_form" method="post" action="/login">
-                {% csrf_token %}
-                <center>&nbsp;</center>
-                <table class = "center2">
-
-                    <tr height ="40">
-                    <td class = "special"><input type="text" name="username" placeholder="username" value="" size="30" style="height:40px;" /></td>
-                    </tr>
-                    <tr  height="40">
-                    <td class = "table2"><input type="password" name="password" placeholder="password" value="" size="30" style="height:40px;"/></td>
-                    </tr>
-                </table>
-               <hr class="style1"></hr>
-
-<!--                     <th><a href="\UpennWSK/user/password_reset">Password Reset?</a></th>
- -->               <center>  
-                    <input type="submit" value="login" class="login" />
-                    <input type="hidden" name="next" value={{next}}>
-                    
-            </form>
-    </div>
-    </div>

@@ -1,35 +1,29 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<style>
-.Submission2 {
-  border : none;
-  padding: 10px 30px;
-  position:relative;
-  width:300px;
-  height:50px;
-  color: #FFFFFF;
-  background: #8FBC8F;
-  font-family: "Century Gothic", AppleGothic, sans-serif;
-}
-</style>
+
 <script type="text/javascript" src="/static/census/popup_script.js"></script>
 
-<div class="wrapper">
+<div align="center">
 	<p class="sansserifgrey">
 	<font size = "6"> <light>Title</light> </font></br>1. Input your title. </br> 2. Click "Submit".
 	</p>
 </div>
-
+<div align="center">
 	<div class="wrapper">
 	<p class ="sansserif">
 		<form method="post" action="{% url 'add_title' %}">
-			{% csrf_token %}
-			{{ title_form.as_p }}
-		<div class="my-button">
-    		<input type="submit" name="submit" value="Submit" class="Submission2"/>
-		</div>
-
+		{% csrf_token %}
+		<table class = "table2" align="center">
+		{% for field in title_form.visible_fields %}
+		<tr>
+		<td> {{ field.label_tag }}</td>
+		<td> {{ field}}</td>
+		</tr>
+		{% endfor %}
+		</table>
+		<br>
+    	<input type="submit" name="submit" value="Submit" class="finalsubmit" style="position:fixed; left:50%;"/>
 		</form>
 	</p>
 </div>
