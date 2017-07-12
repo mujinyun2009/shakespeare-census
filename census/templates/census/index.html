@@ -77,8 +77,7 @@ li a, .dropbtn {
 	</p>
 </div>
 <hr class="style14" width = "50%"></hr>
-<br>
-<br>
+
 {% if titles %}
   <p class="sansserif">
   <table class = "center" align="center" width="90%">
@@ -96,6 +95,23 @@ li a, .dropbtn {
         </table>
     </p>
 </div>
+
+<div class="pagination" style="text-align:center">
+    <span class="step-links">
+      <span class="current">
+        Page {{ titles.number }} of {{ titles.paginator.num_pages }}
+      </span>
+
+      {% if titles.has_previous %}
+        <a href="?page={{ titles.previous_page_number }}">previous</a>
+      {% endif %}
+
+      {% if titles.has_next %}
+        <a href="?page={{ titles.next_page_number }}">next</a>
+      {% endif %}
+    </span>
+</div>
+
 {% else %}
     <p class="sansserif" align="center">Oh no! No books are available.</p>
 {% endif %}

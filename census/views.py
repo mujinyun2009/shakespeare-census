@@ -20,6 +20,7 @@ from django.forms.models import model_to_dict
 import json
 from django.urls import reverse
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 def search(request):
@@ -79,10 +80,21 @@ def homepage(request):
 	return HttpResponse(template.render(context, request))
 
 def index(request):
-	title = Title.objects.all()
+	all_titles = Title.objects.all().order_by('title')
+	paginator = Paginator(all_titles, 10) # Show 20 titles per page
+	page = request.GET.get('page')
+	try:
+		titles = paginator.page(page)
+	except PageNotAnInteger:
+		#If page is not an integer, deliver first page.
+		titles = paginator.page(1)
+	except EmptyPage:
+		#If page is out of range, deliver last page of results.
+		titles = paginator.page(paginator.num_pages)
+
 	template = loader.get_template('census/index.html')
 	context = {
-		'titles': title
+		'titles': titles
 	}
 	return HttpResponse(template.render(context, request))
 

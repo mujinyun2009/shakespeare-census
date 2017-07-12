@@ -92,23 +92,28 @@ Account</p></a>
 </br>
 <center>
 <table class = "center" align="center">
-<th colspan="5">Books found:</th>
+<th colspan="8">Books found:</th>
 <tr>
 <td class="subhead">Title</td>
 <td class="subhead">Year Published</td>
 <td class="subhead">Edition Number</td>
+<td class="subhead">ESTC</td>
+<td class="subhead">STC/Wing</td>
+<td class="subhead">Owner</td>
 <td class="subhead"></td>
 <td class="subhead"></td>
 </tr>
 <tr>
 {% for obj in result_list %}
 <td>{{ obj.issue.edition.title}}</td>
-<td>{{ obj.issue.edition.year}}</td>
+<td>{{ obj.issue.year }}</td>
 <td>{{ obj.issue.edition.Edition_number}}</td>
+<td>{{ obj.issue.ESTC }}</td>
+<td>{{ obj.issue.STC_Wing }}</td>
+<td>{{ obj.Owner }}</td>
 <td><a href="{% url 'copy_detail' obj.id %}" class="btn btn-info" onclick="return popup(this);">Detail</a></td>
 <td><a href="{% url 'edit_copy_submission' obj.id %}" class="btn btn-info" role="button" onclick="return popup(this);">Edit</a></td>
 </tr>
-<!-- </br> -->
 {% endfor %}
 </table>
 {%else%}

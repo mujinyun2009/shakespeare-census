@@ -39,7 +39,7 @@ urlpatterns = [
 
 	#for viewing user's profile
 	url(r'^profile$', views.display_user_profile, name='profile'),
-	
+
 	#for viewing user's history (submitted copies & editted copies)
 	url(r'^user_history$', views.user_history, name='user_history'),
 
