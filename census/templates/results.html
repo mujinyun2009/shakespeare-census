@@ -116,6 +116,24 @@ Account</p></a>
 </tr>
 {% endfor %}
 </table>
+<br>
+<div class="pagination" style="text-align:center">
+		<span class="step-links">
+			<span class="current">
+				Page {{ result_list.number }} of {{ result_list.paginator.num_pages }}
+			</span>
+
+			{% if result_list.has_previous %}
+				<a href="?a={{ query1 }}&b={{ query2 }}&c={{ query3 }}&d={{ query4 }}&j={{ category1 }}&k={{ category2 }}&l={{ category3 }}&z={{ category4 }}&page={{ result_list.previous_page_number }}">previous</a>
+			{% endif %}
+
+			{% if result_list.has_next %}
+				<a href="?a={{ query1 }}&b={{ query2 }}&c={{ query3 }}&d={{ query4 }}&j={{ category1 }}&k={{ category2 }}&l={{ category3 }}&z={{ category4 }}&page={{ result_list.next_page_number }}">next</a>
+			{% endif %}
+		</span>
+</div>
+<br>
+<br>
 {%else%}
 <hr class="style14" width = "50%"></hr>
 	<p class="sansserifgrey">

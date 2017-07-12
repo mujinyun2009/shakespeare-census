@@ -34,44 +34,49 @@ def search(request):
 	category3 = request.GET.get('l')
 	category4 = request.GET.get('z')
 	copy_list = Copy.objects.all()
+	result_list = None
 	if query1 and not query2 and not query3 and not query4:
 		results_list = copy_list.filter(Q(**{category1: query1}))
 		result_list = list(chain(results_list))
-		context = {
-		'result_list': result_list
-		}
-		return HttpResponse(template.render(context, request))
+
 	if query1 and query2 and not query3 and not query4:
 		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2}))
 		result_list = list(chain(results_list))
-		context = {
-		'result_list': result_list
-		}
-		return HttpResponse(template.render(context, request))
+
 	if query1 and query2 and query3 and not query4:
 		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category3: query3}))
 		result_list = list(chain(results_list))
-		context = {
-		'result_list': result_list
-		}
-		return HttpResponse(template.render(context, request))
+
 	if query1 and query2 and query3 and query4:
 		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category4: query4}))
 		result_list = list(chain(results_list))
-		context = {
-		'result_list': result_list
-		}
-		return HttpResponse(template.render(context, request))
+
 	if not query1 and not query2 and not query3 and not query4:
 		template=loader.get_template('frontpage.html')
 		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category4: query4}))
 		result_list = list(chain(results_list))
-		context = {
-		'result_list': result_list
+
+	paginator = Paginator(result_list, 10)
+	page = request.GET.get('page')
+	try:
+		results = paginator.page(page)
+	except PageNotAnInteger:
+		results = paginator.page(1)
+	except EmptyPage:
+		results = paginator.page(paginator.num_pages)
+
+	context = {
+			'result_list': results,
+			'query1': query1,
+			'query2': query2,
+			'query3': query3,
+			'query4': query4,
+			'category1': category1,
+			'category2': category2,
+			'category3': category3,
+			'category4': category4,
 		}
-		return HttpResponse(template.render(context, request))
-	else:
-		print('Whoops!')
+	return HttpResponse(template.render(context, request))
 
 def homepage(request):
 	template=loader.get_template('frontpage.html')
