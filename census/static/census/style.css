@@ -24,7 +24,6 @@ hr.style14 {
 
 }
 
-
 li {
     float: left;
 }
@@ -153,6 +152,9 @@ th {
 a:-webkit-any-link{
 text-decoration:none !important;
 }
+input:-webkit-appearance {
+  none !important;
+  }
 a.resultbuttons:hover {
   color:#a4b7d6;
 }
@@ -173,5 +175,118 @@ a.linkbutton:hover {
   position:relative;
 }
 
+.submissionselect {
+  text-align:center;
+  background-color: #FFFFFF;
+  position: relative;
+  height: 35px;
+  left:0%;
+  width:137px;
+  margin:auto;
+  border:none;
+  color:#FFFFFF;
+  font-size:15px;
+  -webkit-appearance:none;
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIwLjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA0LjkgMTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQuOSAxMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOiM0NDQ0NDQ7fQo8L3N0eWxlPgo8dGl0bGU+YXJyb3dzPC90aXRsZT4KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIxLjQsNC43IDIuNSwzLjIgMy41LDQuNyAiLz4KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIzLjUsNS4zIDIuNSw2LjggMS40LDUuMyAiLz4KPC9zdmc+Cg==)no-repeat 103% 50% ;
+  -moz-appearance: none; 
+  -webkit-appearance: none; 
+  appearance: none;
 
+  font-family:"Century Gothic", AppleGothic, sans-serif;
+  font-weight: lighter;
+}
+
+.finalsubmit {
+  border : none;
+  padding: 10px 30px;
+  position:relative;
+  width:300px;
+  height:50px;
+  left:50%;
+  font-size:15px;
+  margin-left:-150px;
+  color: #FFFFFF;
+  background: #8FBC8F;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+}
+hr.style1 { 
+  border: 0; 
+  height: 1px; 
+  border-color:#6E728A;
+  padding:0px;
+  margin:0;
+}
+input:not(.finalsubmit) {
+    border: none;
+    color: #000000;
+    background: none;
+    -webkit-transition: box-shadow 0.3s;
+    transition: box-shadow 0.3s;
+    box-shadow: 0px 10px 0px -9px #ebebeb, 0px 10px 0px -9px #ebebeb;
+    width: 100%;
+    font-size:20px;
+    font-family:'Raleway', sans-serif;
+    font-weight:300;  
+}
+input:focus {
+  outline: none;
+  box-shadow: 0px 1px 0px 0px #838589, 0px 1px 0px 0px #838589;
+}
+.copysubmission {
+  border : none;
+  padding: 0px 0px;
+  position:relative;
+  height:100px;
+  left:0%;
+  color: #FFFFFF;
+  background: #ff9966;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+}
+
+
+.table2 {
+  background:#FFFFFF;
+  position:relative;
+  margin-left:-300px;
+  left:50%;
+  outline:none;
+
+}
+.table2 td:nth-child(odd) {
+  border-right:1px solid #f2f2f2;
+  width:50px;
+  background:#FFFFFF;
+}
+.table2 td:nth-child(even) {
+  width:200px;
+  background:#FFFFFF;
+
+}
+.table2 tr:nth-child(even) {
+  background:#f2f2f2;
+}
+.table2 tr{
+  height:40px;
+  background:#FFFFFF;
+}
+a.editbutton:visited {
+    color: green;
+}
+a.editbutton:link {
+    color: green;
+}
+
+a.editbutton:hover {
+    color: #a4b7d6;
+}
+
+.dropbtn {
+  background-color: #4CAF50
+}
+.history {
+  font-size:40px;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  font-weight:400;
+  text-align: center;
+}
 </style>

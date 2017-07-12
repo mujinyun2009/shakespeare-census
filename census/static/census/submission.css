@@ -15,8 +15,5 @@ table.center {
 table td:nth-child(odd) {
   border-right:1px solid #FFFFFF;
 }
-input:focus {
-  outline: none;
-  box-shadow: 0px 1px 0px 0px #ebebeb, 0px 1px 0px 0px #ebebeb;
-}
+
 
