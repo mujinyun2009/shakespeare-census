@@ -108,7 +108,8 @@ def detail(request, id):
 	editions = selected_title.edition_set.all()
 	template = loader.get_template('census/detail.html')
 	context = {
-		'editions': editions
+		'editions': editions,
+		'title': selected_title
 	}
 	return HttpResponse(template.render(context, request))
 
