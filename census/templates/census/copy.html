@@ -58,35 +58,57 @@ Account</p></a>
         </tr>
 
     		<tr>
+          <th> Year published </th>
                 <th> Edition </th>
-    			<th> NSC </th>
+                <th> ESTC </th>
+                <th> STC/Wing </th>
+    			<!-- <th> NSC </th> -->
                 <th> Owner </th>
-                <th> Height </th>
-                <th> Width </th>
-                <th> Condition </th>
-                <th> Binding </th>
+                <!-- <th> Height </th> -->
+                <!-- <th> Width </th> -->
+                <!-- <th> Condition </th> -->
+                <!-- <th> Binding </th> -->
                 <th> Transactions </th>
     		</tr>
     		<tr>
     		{% for copy in copies %}
+          <td>{{ copy.issue.year }}</td>
                 <td>{{ copy.issue.edition.Edition_number }}</td>
-                <td>{{ copy.NSC }}</td>
+                <td>{{ copy.issue.ESTC }}</td>
+                <td>{{ copy.issue.STC_Wing }}</td>
+                <!-- <td>{{ copy.NSC }}</td> -->
                 <td>{{ copy.Owner }}</td>
-                <td>{{ copy.Height }}</td>
+                <!-- <td>{{ copy.Height }}</td>
                 <td>{{ copy.Width }}</td>
                 <td>{{ copy.Condition }}</td>
                 <td>{{ copy.Binding }}</td>
                 <td><a href="{% url 'transactions' copy.id %}" class="linkbutton">Available transactions</a></td>
+                <td>{{ copy.Binding }}</td> -->
+                <td><a href="{% url 'transactions' copy.id %}">Available transactions</a></td>
 
    			</tr>
 
         {% endfor %}
         </table>
-
-
     </p>
 
-</div>
+    <div class="pagination" style="text-align:center">
+        <span class="step-links">
+          <span class="current">
+            Page {{ copies.number }} of {{ copies.paginator.num_pages }}
+          </span>
+
+          {% if copies.has_previous %}
+            <a href="?page={{ copies.previous_page_number }}">previous</a>
+          {% endif %}
+
+          {% if copies.has_next %}
+            <a href="?page={{ copies.next_page_number }}">next</a>
+          {% endif %}
+        </span>
+    </div>
+
+
 {% else %}
     <p class="sansserif" align="center">Oh no! No copies are available.</p>
 {% endif %}

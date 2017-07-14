@@ -1,6 +1,6 @@
 function showAddAnotherPopup(triggeringLink) {
-	var href = triggeringLink.href
-	var name = triggeringLink.name
+	var href = triggeringLink.href;
+	var name = triggeringLink.name;
 	var win = window.open(href, name, "height=500,width=800,resizable=yes,scrollbars=yes");
 	win.focus();
 	return false;

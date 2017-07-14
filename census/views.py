@@ -20,6 +20,7 @@ from django.forms.models import model_to_dict
 import json
 from django.urls import reverse
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 def search(request):
@@ -33,44 +34,49 @@ def search(request):
 	category3 = request.GET.get('l')
 	category4 = request.GET.get('z')
 	copy_list = Copy.objects.all()
+	result_list = None
 	if query1 and not query2 and not query3 and not query4:
 		results_list = copy_list.filter(Q(**{category1: query1}))
 		result_list = list(chain(results_list))
-		context = {
-		'result_list': result_list
-		}
-		return HttpResponse(template.render(context, request))
+
 	if query1 and query2 and not query3 and not query4:
 		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2}))
 		result_list = list(chain(results_list))
-		context = {
-		'result_list': result_list
-		}
-		return HttpResponse(template.render(context, request))
+
 	if query1 and query2 and query3 and not query4:
 		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category3: query3}))
 		result_list = list(chain(results_list))
-		context = {
-		'result_list': result_list
-		}
-		return HttpResponse(template.render(context, request))
+
 	if query1 and query2 and query3 and query4:
 		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category4: query4}))
 		result_list = list(chain(results_list))
-		context = {
-		'result_list': result_list
-		}
-		return HttpResponse(template.render(context, request))
+
 	if not query1 and not query2 and not query3 and not query4:
 		template=loader.get_template('frontpage.html')
 		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category4: query4}))
 		result_list = list(chain(results_list))
-		context = {
-		'result_list': result_list
+
+	paginator = Paginator(result_list, 10)
+	page = request.GET.get('page')
+	try:
+		results = paginator.page(page)
+	except PageNotAnInteger:
+		results = paginator.page(1)
+	except EmptyPage:
+		results = paginator.page(paginator.num_pages)
+
+	context = {
+			'result_list': results,
+			'query1': query1,
+			'query2': query2,
+			'query3': query3,
+			'query4': query4,
+			'category1': category1,
+			'category2': category2,
+			'category3': category3,
+			'category4': category4,
 		}
-		return HttpResponse(template.render(context, request))
-	else:
-		print('Whoops!')
+	return HttpResponse(template.render(context, request))
 
 def homepage(request):
 	template=loader.get_template('frontpage.html')
@@ -79,10 +85,21 @@ def homepage(request):
 	return HttpResponse(template.render(context, request))
 
 def index(request):
-	title = Title.objects.all()
+	all_titles = Title.objects.all().order_by('title')
+	paginator = Paginator(all_titles, 10) # Show 10 titles per page
+	page = request.GET.get('page')
+	try:
+		titles = paginator.page(page)
+	except PageNotAnInteger:
+		#If page is not an integer, deliver first page.
+		titles = paginator.page(1)
+	except EmptyPage:
+		#If page is out of range, deliver last page of results.
+		titles = paginator.page(paginator.num_pages)
+
 	template = loader.get_template('census/index.html')
 	context = {
-		'titles': title
+		'titles': titles
 	}
 	return HttpResponse(template.render(context, request))
 
@@ -91,7 +108,8 @@ def detail(request, id):
 	editions = selected_title.edition_set.all()
 	template = loader.get_template('census/detail.html')
 	context = {
-		'editions': editions
+		'editions': editions,
+		'title': selected_title
 	}
 	return HttpResponse(template.render(context, request))
 
@@ -113,9 +131,16 @@ def copy(request, id):
 	return HttpResponse(template.render(context,request))
 
 def copylist(request):
-	copies = Copy.objects.all()
+	all_copies = Copy.objects.all()
+	paginator = Paginator(all_copies, 10)
+	page = request.GET.get('page')
+	try:
+		copies = paginator.page(page)
+	except PageNotAnInteger:
+		copies = paginator.page(1)
+	except EmptyPage:
+		copies = paginator.page(paginator.num_pages)	
 	template = loader.get_template('census/copylist.html')
-	print ("helloworld")
 	context = {
 		'copies': copies
 	}

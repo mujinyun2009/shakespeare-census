@@ -134,37 +134,35 @@ p.sansserifgrey {
 	.active2 {
 		background-color: #83cca5;
 	}
-	
+
 
 </style>
 </head>{% load staticfiles %}
 <body>
 <div class="wrapper">
 
-<ul>
-<li><a class="not.active" href="http://localhost:8000/"><p class="sansserif">
-Titles</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/editions"><p class="sansserif">
-Editions</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/provenance"><p class="sansserif">
-Provenance</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/copy"><p class="sansserif">
-Copy</p></a></li>
+  <ul>
+  <li><a class="not.active" href="{% url 'homepage' %}"><p class="sansserif">
+  Home</p></a></li>
+  <li><a class="not.active" href="{% url 'index' %}"><p class="sansserif">
+  Titles</p></a></li>
+  <li><a class="active" href="{% url 'copy' %}"><p class="sansserif">
+  Copy</p></a></li>
+  <li><a class="not.active" href="{% url 'submission' %}" class="dropbtn"><p class="sansserif">Submission</p></a></li>
+  <li><a class="not.active" href="{% url 'register' %}"><p class="sansserif">Register</p></a></li>
+  <li class="dropdown">
+  <a href="" class="dropbtn" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
+  Account</p></a>
+  <div class="dropdown-content">
+    <a href="{% url 'profile' %}"><p class = sansserif>my profile</p></a>
+    <a href="{% url 'user_history' %}"><p class = sansserif>my history</p></a>
+    <a href="{% url 'login_user' %}"><p class = sansserif>login</p></a>
+    <a href="{% url 'logout_user' %}"><p class = sansserif>logout</p></a>
 
+  </div>
+  </li>
 
-<li class="dropdown">
-	<a class="active" href="http://localhost:8000/census/submission" class="dropbtn"><p class="sansserif">Submission</p></a>
-	<div class="dropdown-content">
-    	<a href="http://localhost:8000/census/submission"><p class="sansserif">Titles</p></a>
-    	<a href="http://localhost:8000/census/submissionedition" class="active2"><p class="sansserif">Editions</p></a>
-    	<a href="http://localhost:8000/census/submissioncopy"><p class="sansserif">Copies</p></a>
-  	</div>
-</li>
-
-<li><a class="not.active" href="http://localhost:8000/census/register"><p class="sansserif">Register</p></a></li>
-<li><a class="not.active" href="http://localhost:8000/census/login"><p class="sansserif">Login</p></a></li>
-
-</ul>
+  </ul>
 
 <hr width = "30%"></hr>
 	<p class="sansserifgrey">
@@ -183,7 +181,7 @@ Copy</p></a></li>
 		</div>
 		</form>
 	</div>
-		
+
 {% endblock content %}
 </body>
 </html>

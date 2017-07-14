@@ -58,7 +58,7 @@ input, select, textarea{
   color: #FFFFFF;
   background: #D19B1E;
   font-family: "Century Gothic", AppleGothic, sans-serif;
- 
+
 }
 
 
@@ -156,12 +156,12 @@ p.title {
 </td>
 <td>
 <p class = sansserif>
-<a class="not.active" href="http://localhost:8000/census/submission">submit</a>
+<a class="not.active" href="{% url 'submission' %}">submit</a>
 </p>
 </td>
 <td>
 <p class = sansserif>
-<a class="not.active" href="http://localhost:8000/census/login">account</a>
+<a class="not.active" href="{% url 'login_user' %}">account</a>
 </p>
 </td>
 </tr>
@@ -191,7 +191,7 @@ p.title {
 <optgroup label="Title">
   <option value="issue__edition__title__title__icontains">title</option>
 </optgroup>
-<optgroup label="Edition"> 
+<optgroup label="Edition">
   <option value="issue__edition__year">year</option>
   <option value="issue__edition__Edition_number">edition number</option>
   <option value="issue__edition__Edition_format">edition format</option>
@@ -200,7 +200,7 @@ p.title {
   <option value="issue__STC_Wing">stc wing</option>
   <option value="issue__DEEP">DEEP</option>
   <option value="issue__ESTC">ESTC</option>
-</optgroup>  
+</optgroup>
 <optgroup label="Copy">
   <option value="NSC">NSC</option>
 </optgroup>
@@ -210,20 +210,20 @@ p.title {
 </div>
 <div id = "hide3" class = "hidden2">
 <select name='l' class="select1">
-<optgroup label="Title"> 
+<optgroup label="Title">
   <option value="issue__edition__title__title__icontains">title</option>
 </optgroup>
-<optgroup label="Edition"> 
+<optgroup label="Edition">
   <option value="issue__edition__Edition_number">edition number</option>
   <option value="issue__edition__year">year</option>
   <option value="issue__edition__Edition_format">edition format</option>
 </optgroup>
-<optgroup label="Issue"> 
+<optgroup label="Issue">
   <option value="issue__STC_Wing">stc wing</option>
   <option value="issue__DEEP">DEEP</option>
   <option value="issue__ESTC">ESTC</option>
 </optgroup>
-<optgroup label="Copy"> 
+<optgroup label="Copy">
   <option value="NSC">NSC</option>
   <option value="Owner">owner</option>
   <option value="Shelfmark">shelfmark</option>
@@ -284,4 +284,3 @@ unhidebutton2.addEventListener('click', function() {
 
 
 </html>
-

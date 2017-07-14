@@ -27,14 +27,14 @@ class Issue (models.Model):
 	notes = models.CharField(max_length=1000, default=None)
 	Variant_Description = models.CharField(max_length=1000)
 	def __str__(self):
-		return "%s Issue %s" % (self.edition, self.STC_Wing)
+		return "%s Issue %s" % (self.edition, self.ESTC)
 
 class Copy (models.Model):
 	issue = models.ForeignKey(Issue, unique=False)
 	thumbnail_URL = models.URLField(max_length=500)
 	NSC = models.IntegerField(default=0)
 	Owner = models.CharField(max_length=500)
-	Shelfmark = models.CharField(max_length=100)
+	Shelfmark = models.CharField(max_length=500)
 	Height = models.IntegerField(default=0)
 	Width = models.IntegerField(default=0)
 	Marginalia = models.CharField(max_length=100, null=True)
@@ -51,6 +51,7 @@ class Copy (models.Model):
 	Library_Notes=models.CharField(max_length=2000)
 	created_by=models.ForeignKey(User, related_name="submitted_copies", default=1, null=True)
 	copynote=models.CharField(max_length=5000, default=None)
+	prov_info=models.TextField(null=True, default=None)
 	def __str__(self):
 		return  "%s %s" % (self.issue, self.NSC)
 	class Meta:

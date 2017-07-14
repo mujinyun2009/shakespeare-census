@@ -22,7 +22,6 @@ Copy</p></a></li>
 <li><a class="not.active" href="{% url 'register' %}"><p class="sansserif">
 Register</p></a></li>
    {% endif %}
-
 <li class="dropdown">
 <a href="" class="dropbtn" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
 Account</p></a>
@@ -50,25 +49,48 @@ Account</p></a>
 </br>
 <center>
 <table class = "center" align="center">
-<th colspan="5">Books found:</th>
+<th colspan="8">Books found:</th>
 <tr>
 <td class="subhead">Title</td>
 <td class="subhead">Year Published</td>
 <td class="subhead">Edition Number</td>
+<td class="subhead">ESTC</td>
+<td class="subhead">STC/Wing</td>
+<td class="subhead">Owner</td>
 <td class="subhead"></td>
 <td class="subhead"></td>
 </tr>
 <tr>
 {% for obj in result_list %}
 <td>{{ obj.issue.edition.title}}</td>
-<td>{{ obj.issue.year}}</td>
+<td>{{ obj.issue.year }}</td>
 <td>{{ obj.issue.edition.Edition_number}}</td>
-<td><a href="{% url 'copy_detail' obj.id %}" class = "resultbuttons" onclick="return popup(this);">Detail</a></td>
-<td><a href="{% url 'edit_copy_submission' obj.id %}" role="button" class="resultbuttons" onclick="return popup(this);">Edit</a></td>
+<td>{{ obj.issue.ESTC }}</td>
+<td>{{ obj.issue.STC_Wing }}</td>
+<td>{{ obj.Owner }}</td>
+<td><a href="{% url 'copy_detail' obj.id %}" class="resultbuttons" onclick="return popup(this);">Detail</a></td>
+<td><a href="{% url 'edit_copy_submission' obj.id %}" class="resultbuttons" role="button" onclick="return popup(this);">Edit</a></td>
 </tr>
-</br>
 {% endfor %}
 </table>
+<br>
+<div class="pagination" style="text-align:center">
+		<span class="step-links">
+			<span class="current">
+				Page {{ result_list.number }} of {{ result_list.paginator.num_pages }}
+			</span>
+
+			{% if result_list.has_previous %}
+				<a href="?a={{ query1 }}&b={{ query2 }}&c={{ query3 }}&d={{ query4 }}&j={{ category1 }}&k={{ category2 }}&l={{ category3 }}&z={{ category4 }}&page={{ result_list.previous_page_number }}">previous</a>
+			{% endif %}
+
+			{% if result_list.has_next %}
+				<a href="?a={{ query1 }}&b={{ query2 }}&c={{ query3 }}&d={{ query4 }}&j={{ category1 }}&k={{ category2 }}&l={{ category3 }}&z={{ category4 }}&page={{ result_list.next_page_number }}">next</a>
+			{% endif %}
+		</span>
+</div>
+<br>
+<br>
 {%else%}
 <hr class="style14" width = "50%"></hr>
 	<p class="sansserifgrey">
@@ -81,8 +103,8 @@ Account</p></a>
 
 <script>
 function popup(triggeringLink) {
-	var href = triggeringLink.href
-	var name = triggeringLink.name
+	var href = triggeringLink.href;
+	var name = triggeringLink.name;
 	var win = window.open(href, name, "height=800,width=1000,resizable=yes,scrollbars=yes");
 	win.focus();
 	return false;
