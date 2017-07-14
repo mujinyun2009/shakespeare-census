@@ -177,7 +177,7 @@ a.linkbutton:hover {
 *:focus {
   outline:0;
 }
-.submissionselect:focus{
+.submissionselect:hover{
   text-align:center;
   outline:none;
   background-color: #FFFFFF;
@@ -186,15 +186,13 @@ a.linkbutton:hover {
   left:0%;
   width:137px;
   margin:auto;
-  border:none;
-  color:#FFFFFF;
+  color:#000000;
   font-size:15px;
   -webkit-appearance:none;
   background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIwLjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA0LjkgMTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQuOSAxMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOiM0NDQ0NDQ7fQo8L3N0eWxlPgo8dGl0bGU+YXJyb3dzPC90aXRsZT4KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIxLjQsNC43IDIuNSwzLjIgMy41LDQuNyAiLz4KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIzLjUsNS4zIDIuNSw2LjggMS40LDUuMyAiLz4KPC9zdmc+Cg==)no-repeat 103% 50% ;
   -moz-appearance: none; 
   -webkit-appearance: none; 
   appearance: none;
-
   font-family:"Century Gothic", AppleGothic, sans-serif;
   font-weight: lighter;
 
@@ -208,6 +206,8 @@ a.linkbutton:hover {
   left:0%;
   width:137px;
   margin:auto;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
   border:none;
   color:#FFFFFF;
   font-size:15px;
@@ -257,6 +257,8 @@ input:focus {
   outline: none;
   box-shadow: 0px 1px 0px 0px #838589, 0px 1px 0px 0px #838589;
 }
+
+
 .copysubmission {
   font-size:12px;
   border : none;
