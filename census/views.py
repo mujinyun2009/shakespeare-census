@@ -86,7 +86,7 @@ def homepage(request):
 
 def index(request):
 	all_titles = Title.objects.all().order_by('title')
-	paginator = Paginator(all_titles, 10) # Show 20 titles per page
+	paginator = Paginator(all_titles, 10) # Show 10 titles per page
 	page = request.GET.get('page')
 	try:
 		titles = paginator.page(page)

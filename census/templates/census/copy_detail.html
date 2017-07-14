@@ -182,4 +182,11 @@ Copy details:
         </p>
 </div>
 
+<script>
+window.onbeforeunload = function() {
+  var doc = window.opener.document;
+  doc.getElementById("layer").style.display="none";
+};
+</script>
+
 {% endblock content %}

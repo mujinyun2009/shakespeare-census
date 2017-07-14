@@ -72,8 +72,22 @@ li a, .dropbtn {
     display: block;
 }
 
-</style>
+.layer
+{
+    position: fixed;
+    opacity: 0.7;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+    background-color: #BEBEBE;
+    display: none;
+    cursor: not-allowed;
+}
 
+</style>
+<div class="layer" id="layer" style="display:none"></div>
 
 <div class="wrapper">
 
@@ -122,7 +136,7 @@ Your contributions.</div>
 	{% endfor %}
 	{% else %}
 		<tr>
-			<td>None, so far! Click <a href="http://localhost:8000/census/submission" class="editbutton" role="button">here</a> to submit some.<td>
+			<td>None, so far! Click <a href="{% url 'submission' %}" class="editbutton" role="button">here</a> to submit some.<td>
 		</tr>
 	{% endif %}
 
@@ -139,7 +153,7 @@ Your contributions.</div>
 	{% for copy in editted_copies %}
 		<tr>
 			<td>{{ copy }}<td>
-			<td><a href="{% url 'copy_detail' copy.id %}" class="editbutton" role="button" onclick="return popup(this);">Details</a></td>
+			<td><a href="{% url 'copy_detail' copy.id %}" class="editbutton" role="button" onfocus="parent_disable();" onclick="return popup(this);">Details</a></td>
 			<td><a href="{% url 'edit_copy_submission' copy.id %}" class="editbutton" role="button" onclick="return popup(this);">Edit</a></td>
 		</tr>
 	{% endfor %}
@@ -152,13 +166,33 @@ Your contributions.</div>
 </table>
 
 <script>
+var layer = document.getElementById('layer');
+var new_win;
+
 function popup(triggeringLink) {
-	var href = triggeringLink.href
-	var name = triggeringLink.name
-	var win = window.open(href, name, "height=800,width=1000,resizable=yes,scrollbars=yes");
-	win.focus();
-	return false;
+  layer.style.display = "block";
+  var href = triggeringLink.href;
+  var name = triggeringLink.name;
+  new_win = window.open(href, name, "height=800,width=1000,left=300,top=200,resizable=yes,scrollbars=yes");
+  new_win.focus();
+  if(!new_win.closed) {
+    new_win.focus();
+  }
+  return false;
 }
+
+// function parent_disable() {
+//   if(new_win && !new_win.closed) {
+//     new_win.focus();
+//   }
+// }
+
+$(document).ready(function(){
+  $(".layer").click(function(e) {
+    new_win.focus();
+  });
+});
+
 </script>
 
 {% endblock content %}
