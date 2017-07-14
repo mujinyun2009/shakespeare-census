@@ -168,6 +168,8 @@ def login_user(request):
 		if user_account is not None:
 			login(request, user_account)
 			next_url = request.POST.get('next',default=request.GET.get('next', 'login.html'))
+			if request.GET.get('next') is None:
+				next_url = "homepage"
 			return HttpResponseRedirect(next_url)
 		else:
 			return HttpResponse(template.render({'failed': True}, request))
