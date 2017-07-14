@@ -129,6 +129,22 @@ Account</p></a>
 
 
     </p>
+    <div class="pagination" style="text-align:center">
+        <span class="step-links">
+          <span class="current">
+            Page {{ copies.number }} of {{ copies.paginator.num_pages }}
+          </span>
+
+          {% if copies.has_previous %}
+            <a href="?page={{ copies.previous_page_number }}">previous</a>
+          {% endif %}
+
+          {% if copies.has_next %}
+            <a href="?page={{ copies.next_page_number }}">next</a>
+          {% endif %}
+        </span>
+    </div>
+
 
 </div>
 {% else %}
