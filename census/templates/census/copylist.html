@@ -3,13 +3,13 @@
 {% block content %}
 <style>
 a {text-decoration: none}
-hr.style14 { 
-  border: 0; 
-  height: 1px; 
+hr.style14 {
+  border: 0;
+  height: 1px;
   background-image: -webkit-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
   background-image: -moz-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
   background-image: -ms-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
-  background-image: -o-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0); 
+  background-image: -o-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
 
 }
 li a, .dropbtn {
@@ -102,24 +102,28 @@ Account</p></a>
     		<tr>
     			<th> Title </th>
                 <th> Edition </th>
-    			<th> NSC </th>
+                <th> ESTC </th>
+                <th>STC/Wing</th>
+    			      <!-- <th> NSC </th> -->
                 <th> Owner </th>
-                <th> Height </th>
+                <!-- <th> Height </th>
                 <th> Width </th>
                 <th> Condition </th>
-                <th> Binding </th>
+                <th> Binding </th> -->
                 <th> Transactions </th>
     		</tr>
     		<tr>
     		{% for copy in copies %}
    				<td>{{ copy.issue.edition.title }}</td>
                 <td>{{ copy.issue.edition.Edition_number }}</td>
-                <td>{{ copy.NSC }}</td>
+                <td>{{ copy.issue.ESTC }}</td>
+                <td>{{ copy.issue.STC_Wing}}</td>
+                <!-- <td>{{ copy.NSC }}</td> -->
                 <td>{{ copy.Owner }}</td>
-                <td>{{ copy.Height }}</td>
+                <!-- <td>{{ copy.Height }}</td>
                 <td>{{ copy.Width }}</td>
                 <td>{{ copy.Condition }}</td>
-                <td>{{ copy.Binding }}</td>
+                <td>{{ copy.Binding }}</td> -->
                 <td><a href="{% url 'transactions' copy.id %}" class="linkbutton">Available transactions</a></td>
 
    			</tr>
