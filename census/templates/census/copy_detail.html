@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 
+
 <style>
 .heading {
     font-family: "Century Gothic", AppleGothic, sans-serif;
@@ -118,6 +119,7 @@ Account</p></a>
 <div class = "heading">
 Copy details:
 </div>
+<div id="detailModal">
 <br>
     <p class="sansserif">
     	<table align = "center">
@@ -180,12 +182,6 @@ Copy details:
         </table>
         </p>
 </div>
-
-<script>
-window.onbeforeunload = function() {
-  var doc = window.opener.document;
-  doc.getElementById("layer").style.display="none";
-};
-</script>
+</div>
 
 {% endblock content %}

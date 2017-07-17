@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<div class="wrapper">
 
+<div class="wrapper">
 <ul>
 <li><a class="not.active" href="{% url 'homepage' %}"><p class="sansserif">
 Home</p></a></li>
@@ -33,43 +33,60 @@ Account</p></a>
 </div>
 </li>
 
-</ul></div>
-
-<style>
-
-/*.layer
-{
-    position: fixed;
-    opacity: 0.7;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: 999999;
-    background-color: #BEBEBE;
-    display: none;
-    cursor: not-allowed;
-}*/
-
-</style>
-<div class="layer" id="layer" style="display:none"></div>
+</ul>
+</div>
 
 <br>
 <br>
-<div class = "history">
-Your contributions.</div>
+<div>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<div class = "history">Your contributions: </div>
 <br>
 <br>
-<table align = "center">
-	<tr>
-		<th colspan=4>Copies you have submitted</th>
-	</tr>
+<div class="container">
+<table class="table table-striped" align="center" style="width:70%">
+	<thead>
+    <tr>
+		 <th colspan=4>Copies you have submitted</th>
+	  </tr>
+  <tbody>
 	{% if submissions %}
-
 	{% for submission in submissions %}
 		<tr>
 			<td>{{ submission }}<td>
-			<td><a href="{% url 'copy_detail' submission.id %}" class="editbutton" role="button" onclick="return popup(this);">Details</a></td>
+        <td> <a href="#submissionModal" role="button" class="editbutton" data-toggle="modal">Details</td>
+          <div id="submissionModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">Copy Details:</h4>
+                </div>
+                <div class="modal-body">
+              			<p>Title: {{ submission.issue.edition.title }}</p>
+             			  <p>Edition: {{ submission.issue.edition }}</p>
+             			  <p>Issue: {{ submission.issue }}</p>
+             			  <p>Thumbnail URL: {{ submission.thumbnail_URL }}</p>
+             			  <p> NSC: {{ submission.NSC }}</p>
+             			  <p> Owner: {{ submission.Owner }}</p>
+                    <p>Shelfmark: {{ submission.Shelfmark }}</p>
+                    <p>Height: {{ submission.Height }}</p>
+                    <p>Width: {{ submission.Width }}</p>
+                    <p> Marginalia: {{ submission.Marginalia }}</p>
+                    <p>Condition: {{ submission.Condition }}</p>
+                    <p>Binding: {{ submission.Binding }}</p>
+                    <p>Submitted by: {{ submission.created_by }}</p>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+			<!-- <td><a href="{% url 'copy_detail' submission.id %}" class="editbutton" role="button" onclick="return popup(this);">Detail</a></td> -->
 			<td><a href="{% url 'edit_copy_submission' submission.id %}" class="editbutton" role="button" onclick="return popup(this);">Edit</a></td>
 		</tr>
 	{% endfor %}
@@ -78,60 +95,77 @@ Your contributions.</div>
 			<td>None, so far! Click <a href="{% url 'submission' %}" class="editbutton" role="button">here</a> to submit some.<td>
 		</tr>
 	{% endif %}
-
+  </tbody>
 </table>
+</div>
 
 <br>
 <br>
 
-<table align="center">
-	<tr>
+<div class="container">
+<table class="table table-striped" align="center" style="width:70%">
+  <thead>
+  <tr class="spaceUnder">
 		<th colspan=4>Copies you have edited</th>
 	</tr>
+</thead>
+<tbody>
 	{% if editted_copies %}
 	{% for copy in editted_copies %}
-		<tr>
+		<tr class="spacer">
 			<td>{{ copy }}<td>
-			<td><a href="{% url 'copy_detail' copy.id %}" class="editbutton" role="button" onfocus="parent_disable();" onclick="return popup(this);">Details</a></td>
-			<td><a href="{% url 'edit_copy_submission' copy.id %}" class="editbutton" role="button" onclick="return popup(this);">Edit</a></td>
-		</tr>
+        <td> <a href="#detailModal" role="button" class="editbutton" data-toggle="modal">Details</td>
+          <div id="detailModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">Copy Details:</h4>
+                </div>
+                <div class="modal-body">
+              			<p>Title: {{ copy.issue.edition.title }}</p>
+             			  <p>Edition: {{ copy.issue.edition }}</p>
+             			  <p>Issue: {{ copy.issue }}</p>
+             			  <p>Thumbnail URL: {{ copy.thumbnail_URL }}</p>
+             			  <p> NSC: {{ copy.NSC }}</p>
+             			  <p> Owner: {{ copy.Owner }}</p>
+                    <p>Shelfmark: {{ copy.Shelfmark }}</p>
+                    <p>Height: {{ copy.Height }}</p>
+                    <p>Width: {{ copy.Width }}</p>
+                    <p> Marginalia: {{ copy.Marginalia }}</p>
+                    <p>Condition: {{ copy.Condition }}</p>
+                    <p>Binding: {{ copy.Binding }}</p>
+                    <p>Submitted by: {{ copy.created_by }}</p>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+			<!-- <td><a href="{% url 'copy_detail' copy.id %}" class="editbutton" role="button" onfocus="parent_disable();" onclick="return popup(this);">Details</a></td> -->
+          <td><a href="{% url 'edit_copy_submission' copy.id %}" class="editbutton" role="button" onclick="return popup(this);">Edit</a></td>
+
+    </tr>
 	{% endfor %}
 	{% else %}
-		<tr>
+		<tr class="spaceUnder">
 			<td>None, so far!<td>
 		</tr>
 	{% endif %}
-
+</tbody>
 </table>
+</div>
+</div>
 
 <script>
-var layer = document.getElementById('layer');
-var new_win;
-
 function popup(triggeringLink) {
-  layer.style.display = "block";
   var href = triggeringLink.href;
   var name = triggeringLink.name;
   new_win = window.open(href, name, "height=800,width=1000,left=300,top=200,resizable=yes,scrollbars=yes");
   new_win.focus();
-  if(!new_win.closed) {
-    new_win.focus();
-  }
   return false;
 }
-
-// function parent_disable() {
-//   if(new_win && !new_win.closed) {
-//     new_win.focus();
-//   }
-// }
-
-$(document).ready(function(){
-  $(".layer").click(function(e) {
-    new_win.focus();
-  });
-});
-
 </script>
-
 {% endblock content %}
