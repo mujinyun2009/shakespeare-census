@@ -3,9 +3,9 @@ $(document).ready(function() {
   $("select#title").change(function() {
     if ($(this).val() != 'Z') {
       var title = $(this).val();
-      var new_url = "/census/addEdition/" + $(this).val() + "/";
+      var new_url = "/addEdition/" + $(this).val() + "/";
       $('#add_edition').attr('href', new_url);
-      var url = "/census/title/" + $(this).val() + "/";
+      var url = "/title/" + $(this).val() + "/";
       $.getJSON(url, function(editions) {
         var options = '<option value="Z">select an edition</option>';
         for (var i = 0; i < editions.length; i++) {
@@ -22,9 +22,9 @@ $(document).ready(function() {
   $("select#edition").change(function(vent) {
     if ($(this).val() != 'Z') {
       var edition = $(this).val();
-      var new_url = "/census/addIssue/" + $(this).val() + "/";
+      var new_url = "/addIssue/" + $(this).val() + "/";
       $('#add_issue').attr('href', new_url);
-      var url = "/census/edition/" + $(this).val() + "/";
+      var url = "/edition/" + $(this).val() + "/";
       $.getJSON(url, function(issues) {
         var options = '<option value="Z">select an issue</option>';
         for (var i = 0; i < issues.length; i++) {

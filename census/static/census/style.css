@@ -6,15 +6,15 @@ a {text-decoration: none;}
     padding: 10px 30px;
     color: #FFFFFF;
     background: #8FBC8F;
-    
+
 }
-hr.style14 { 
-  border: 0; 
-  height: 1px; 
+hr.style14 {
+  border: 0;
+  height: 1px;
   background-image: -webkit-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
   background-image: -moz-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
   background-image: -ms-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
-  background-image: -o-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0); 
+  background-image: -o-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
 }
 .subhead {
 	font-size: 13;
@@ -190,8 +190,8 @@ a.linkbutton:hover {
   font-size:15px;
   -webkit-appearance:none;
   background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIwLjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA0LjkgMTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQuOSAxMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOiM0NDQ0NDQ7fQo8L3N0eWxlPgo8dGl0bGU+YXJyb3dzPC90aXRsZT4KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIxLjQsNC43IDIuNSwzLjIgMy41LDQuNyAiLz4KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIzLjUsNS4zIDIuNSw2LjggMS40LDUuMyAiLz4KPC9zdmc+Cg==)no-repeat 103% 50% ;
-  -moz-appearance: none; 
-  -webkit-appearance: none; 
+  -moz-appearance: none;
+  -webkit-appearance: none;
   appearance: none;
   font-family:"Century Gothic", AppleGothic, sans-serif;
   font-weight: lighter;
@@ -213,8 +213,8 @@ a.linkbutton:hover {
   font-size:15px;
   -webkit-appearance:none;
   background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIwLjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA0LjkgMTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQuOSAxMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOiM0NDQ0NDQ7fQo8L3N0eWxlPgo8dGl0bGU+YXJyb3dzPC90aXRsZT4KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIxLjQsNC43IDIuNSwzLjIgMy41LDQuNyAiLz4KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIzLjUsNS4zIDIuNSw2LjggMS40LDUuMyAiLz4KPC9zdmc+Cg==)no-repeat 103% 50% ;
-  -moz-appearance: none; 
-  -webkit-appearance: none; 
+  -moz-appearance: none;
+  -webkit-appearance: none;
   appearance: none;
 
   font-family:"Century Gothic", AppleGothic, sans-serif;
@@ -250,9 +250,9 @@ a.linkbutton:hover {
   background: #8FBC8F;
   font-family: "Century Gothic", AppleGothic, sans-serif;
 }
-hr.style1 { 
-  border: 0; 
-  height: 1px; 
+hr.style1 {
+  border: 0;
+  height: 1px;
   border-color:#6E728A;
   padding:0px;
   margin:0;
@@ -267,7 +267,7 @@ input:not(.finalsubmit) {
     width: 100%;
     font-size:20px;
     font-family:'Raleway', sans-serif;
-    font-weight:300;  
+    font-weight:300;
 }
 input:focus {
   outline: none;
@@ -341,7 +341,7 @@ a.editbutton:hover {
 }
 .inform {
   font-size: 15px;
-  color:white;    
+  color:white;
   font-family: "Century Gothic", AppleGothic, sans-serif;
     font-weight:lighter;
     text-align: left;

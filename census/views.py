@@ -123,7 +123,7 @@ def issue(request, id):
 	return HttpResponse(template.render(context, request))
 def copy(request, id):
 	selected_issue=Issue.objects.get(pk=id)
-	all_copies = selected_issue.copy_set.all() 
+	all_copies = selected_issue.copy_set.all()
 	paginator = Paginator(all_copies, 10)
 	page = request.GET.get('page')
 	try:
@@ -131,7 +131,7 @@ def copy(request, id):
 	except PageNotAnInteger:
 		copies = paginator.page(1)
 	except EmptyPage:
-		copies = paginator.page(paginator.num_pages)	
+		copies = paginator.page(paginator.num_pages)
 	template = loader.get_template('census/copy.html')
 	context = {
 		'copies': copies
@@ -147,7 +147,7 @@ def copylist(request):
 	except PageNotAnInteger:
 		copies = paginator.page(1)
 	except EmptyPage:
-		copies = paginator.page(paginator.num_pages)	
+		copies = paginator.page(paginator.num_pages)
 	template = loader.get_template('census/copylist.html')
 	context = {
 		'copies': copies
