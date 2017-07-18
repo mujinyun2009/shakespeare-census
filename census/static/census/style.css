@@ -39,6 +39,7 @@ li a, .dropbtn {
 
 li.dropdown {
     display: inline-block;
+    border:0px;
 }
 
 .dropdown-content {
@@ -52,10 +53,12 @@ li.dropdown {
 
 .dropdown-content a {
     color: black;
+    border: 0px;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
     text-align: left;
+    margin-left:0px;
 }
 
 .dropdown-content a:hover {background-color: #f1f1f1}
@@ -112,6 +115,7 @@ p.sansserifgrey {
 	li a {
 		display: block;
 		color: black;
+    margin-left:1px;
 		text-align: center;
 		padding: 14px 16px;
 		text-decoration: none;
@@ -270,7 +274,7 @@ input:not(.finalsubmit) {
     font-family:'Raleway', sans-serif;
     font-weight:300;  
 }
-input:focus {
+input:focus:not(.finalsubmit) {
   outline: none;
   box-shadow: 0px 1px 0px 0px #838589, 0px 1px 0px 0px #838589;
 }
@@ -356,7 +360,7 @@ a.linkbutton:visited {
     color: #000000;
 }
 a.linkbutton:hover {
-    color: #a4b7dx6;
+    color: #a4b7d6;
 }
 .pagination {
   font-family: "Century Gothic", AppleGothic, sans-serif;
@@ -392,77 +396,97 @@ td.hoverspecial:hover {
   transform:scale(1.5);
   transition-duration: 0.3s;
 }
-.center-con {
-    display: flex;
-    height: 100vh;
-    align-items: center;
-    justify-content: center;
+
+.fade-in {
+ animation: showme 5s;
+  -moz-animation: showme 5s; /* Firefox < 16 */
+        -ms-animation: showme 5s; /* Internet Explorer */
+         -o-animation: showme 5s; /* Opera < 12.1 */
+            animation: showme 5s;
 }
 
-.round {
-    position: relative;
-    border: 3px solid #fff;
-    width: 100px;
-    height: 100px;
-    border-radius: 100%;
+.welcome {
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  font-weight: lighter;
+  position:relative;
+  top:20%;
+  font-size:20px;
+  --webkit-animation: fadein 5s;
+  -moz-animation: fadein 5s; /* Firefox < 16 */
+        -ms-animation: fadein 5s; /* Internet Explorer */
+         -o-animation: fadein 5s; /* Opera < 12.1 */
+            animation: fadein 5s;
+}
+.welcome2 {
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  text-align:center;
+  position:relative;
+  top:20%;
+  font-weight: lighter;
+  font-size:12px;
+  --webkit-animation: showmee 3s;
+  -moz-animation: showmee 3s; /* Firefox < 16 */
+        -ms-animation: showmee 3s; /* Internet Explorer */
+         -o-animation: showmee 3s; /* Opera < 12.1 */
+            animation: showmee 3s;
 }
 
-span {
-    z-index: 999;
-    height: 3px;
-    margin:1px;
-    width: 30px;
-    background: #fff;
-    transition: 0.4s ease;
+@keyframes showme {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
-span:first-child {
-    display: block;
-    position: absolute;
-    transform: rotate(45deg);
-    left: 25%;
-    bottom: 35%;
+@keyframes showmee {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
-span:nth-child(2) {
-    display: block;
-    position: absolute;
-    transform: rotate(-45deg);
-    left: 45%;
-    bottom: 35%;
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
-span:nth-child(3) {
-    display: block;
-    position: absolute;
-    transform: rotate(45deg);
-    left: 25%;
-    bottom: 54%;
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
-span:nth-child(4) {
-    display: block;
-    position: absolute;
-    transform: rotate(-45deg);
-    left: 45%;
-    bottom: 54%;
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
-.round:hover span:nth-child(1) {
-    transform: rotate(-135deg);
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
-
-.round:hover span:nth-child(2) {
-    transform: rotate(135deg);
-}
-
-.round:hover span:nth-child(3) {
-    transform: rotate(225deg);
-}
-
-.round:hover span:nth-child(4) {
-    transform: rotate(-225deg);
-}
-
 
 </style>

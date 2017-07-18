@@ -41,9 +41,9 @@ Account</p></a>
 <hr class="style14" width = "50%"></hr>
 
 		<div id="bodycontent">
-		<form id="user_form" method="post" action="/census/register">
+		<form id="user_form" method="post" action="/register">
 				{% csrf_token %}
-			{% if user_form.errors %} <p class= "sansserif"> Please correct the error{{ user_form.errors|pluralize }} below. </p> {% endif %}
+			{% if user_form.errors %} <p class= "sansserif" align="center"> Please correct the error{{ user_form.errors|pluralize }} below. </p> {% endif %}
 				<table class="registertable" align='center'>
 				    <tr>
 				    <td>Username: </td>

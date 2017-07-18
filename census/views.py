@@ -52,7 +52,6 @@ def search(request):
 		result_list = list(chain(results_list))
 
 	if not query1 and not query2 and not query3 and not query4:
-		template=loader.get_template('frontpage.html')
 		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category4: query4}))
 		result_list = list(chain(results_list))
 
@@ -184,7 +183,7 @@ def register(request):
 				password=user_form.cleaned_data['password1'],
 				)
 			new_user.save()
-			return HttpResponseRedirect("/census/")
+			return HttpResponseRedirect("welcome")
 		else:
 			print(user_form.errors)
 	else:
@@ -437,10 +436,17 @@ def edit_profile(request):
 def user_history(request):
 	template=loader.get_template('census/userHistory.html')
 	current_user=request.user
-	submissions=current_user.submitted_copies.all()
+	all_submissions=current_user.submitted_copies.all()
+	paginator=Paginator(all_submissions, 10)
+	page = request.GET.get('page')
+	try:
+		submissions = paginator.page(page)
+	except PageNotAnInteger:
+		submissions = paginator.page(1)
+	except EmptyPage:
+		copies = paginator.page(paginator.num_pages)
 	cur_user_history=UserHistory.objects.get(user=current_user)
 	editted_copies=cur_user_history.editted_copies.all()
-
 	context={
 		'submissions': submissions,
 		'editted_copies': editted_copies,
@@ -449,12 +455,18 @@ def user_history(request):
 
 def copy_detail(request, copy_id):
 	template=loader.get_template('census/copy_detail.html')
-	print (template)
 	selected_copy=get_object_or_404(Copy, pk=copy_id)
 	selected_issue=selected_copy.issue
 	selected_edition=selected_issue.edition
 	context={
 		'selected_edition': selected_edition,
 		'selected_copy': selected_copy,
+	}
+	return HttpResponse(template.render(context,request))
+def welcome(request):
+	template=loader.get_template('census/welcome.html')
+	hello = 3
+	context={
+		'hello': hello,
 	}
 	return HttpResponse(template.render(context,request))

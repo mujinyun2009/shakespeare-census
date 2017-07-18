@@ -69,21 +69,21 @@ Account</p></a>
         <tr class ="pagenavigator">
       
       {% if titles.has_previous %}
-      <td class = "hoverspecial"> <a href="?page={{ titles.previous_page_number }}"><</a></td>
+      <td class = "hoverspecial"> <a href="?page={{ titles.previous_page_number }}" class="paginator"><</a></td>
       {% endif %}
       {% for page in titles.paginator.page_range %}
 
             {% if page == titles.number %}
             <td class = "currentpage" width="20px">  {{ page }} </td>
             {% else %}
-            <td class="pagenavigator" width="20px"> <a href = "?page={{page }}">{{ page }}  </td> 
+            <td class="pagenavigator" width="20px"> <a href = "?page={{page }}" class="paginator">{{ page }}  </td> 
             {% endif %}
       {% endfor %}
           
     
 
       {% if titles.has_next %}
-     <td class = "hoverspecial"> <a href="?page={{ titles.next_page_number }}">></a></td>
+     <td class = "hoverspecial"> <a href="?page={{ titles.next_page_number }}" class="paginator">></a></td>
       {% endif %}
         </tr>
       </table>
