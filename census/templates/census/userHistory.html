@@ -57,7 +57,7 @@ Account</p></a>
 		<tr>
 			<td>{{ copy }}<td>
         <td> <a data-toggle="modal" data-target="#copyModal" role="button" class="editbutton">Details</td>
-          {% include "census/modal.html" %}
+          {% include "census/copy_modal.html" %}
 
 			<td><a href="{% url 'edit_copy_submission' copy.id %}" class="editbutton" role="button" onclick="return popup(this);">Edit</a></td>
 		</tr>
@@ -87,8 +87,8 @@ Account</p></a>
 		<tr>
 			<td>{{ copy }}<td>
         <td> <a data-target="#copyModal" role="button" class="editbutton" data-toggle="modal">Details</td>
-          {% include "census/modal.html" %}
-          
+          {% include "census/copy_modal.html" %}
+
           <td><a href="{% url 'edit_copy_submission' copy.id %}" class="editbutton" role="button" onclick="return popup(this);">Edit</a></td>
 
     </tr>
