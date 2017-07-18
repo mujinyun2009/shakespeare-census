@@ -10,7 +10,6 @@ a.editbutton:link {
     color: white;
     text-decoration:none;
 }
-
 .submitted_line {
   font-size:25px;
   font-family: "Century Gothic", AppleGothic, sans-serif;
@@ -24,13 +23,13 @@ a.editbutton:link {
   width:20%;
   margin:auto;
   background-color:#a7c87b;
+  text-align: center;
 }
 li a, .dropbtn {
     display: block;
     color: black;
     text-align: center;
     text-decoration: none;
-
 }
 .dropdown-content {
     display: none;
@@ -39,7 +38,6 @@ li a, .dropbtn {
   min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
-
 }
 .dropdown-content a {
     color: black;
@@ -48,46 +46,13 @@ li a, .dropbtn {
     display: block;
     text-align: left;
 }
-
 .dropdown-content a:hover {background-color: #f1f1f1}
-
 .dropdown:hover .dropdown-content {
     display: block;
 }
 </style>
-<div class="wrapper">
-<ul>
-  <li><a class="not.active" href="{% url 'homepage' %}"><p class="sansserif">
-  Home</p></a></li>
-  <li><a class="not.active" href="{% url 'index' %}"><p class="sansserif">
-  Titles</p></a></li>
-  <li><a class="active" href="{% url 'copylist' %}"><p class="sansserif">
-  Copy</p></a></li>
-  <li><a class="not.active" href="{% url 'submission' %}" class="dropbtn"><p class="sansserif">Submission</p></a></li>
-  {% if user.is_authenticated %}
-  {% else %}
-
-  <li><a class="not.active" href="{% url 'register' %}"><p class="sansserif">Register</p></a></li>
-  <li class="dropdown">
-     {% endif %}
-
-  <a href="" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>Account</p></a>
-  <div class="dropdown-content">
-    <a href="{% url 'profile' %}"><p class = sansserif>my profile</p></a>
-    <a href="{% url 'user_history' %}"><p class = sansserif>my history</p></a>
-     {% if user.is_authenticated %}
-    <a href="{% url 'logout_user' %}"><p class = sansserif>logout</p></a>
-  {% else %}
-    <a href="{% url 'login_user' %}"><p class = sansserif>login</p></a>
-   {% endif %}
-
-  </div>
-  </li>
-
-  </ul>
 
 <div class="submitted_line">Congratulations, the copy has been saved!</div>
-<br>
 <br>
 <div class="newcopy">
 <a href="{% url 'submission' %}" class="editbutton" role="button">submit another copy</a>

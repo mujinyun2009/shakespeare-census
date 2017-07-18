@@ -1,50 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-
 <head>
 <title>Shakespeare Census</title>
 </head>
-<div class="wrapper">
-
-<ul>
-<li><a class="not.active" href="{% url 'homepage' %}"><p class="sansserif">
-Home</p></a></li>
-<li><a class="not.active" href="{% url 'index' %}"><p class="sansserif">
-Titles</p></a></li>
-<li><a class="active" href="{% url 'copylist' %}"><p class="sansserif">
-Copy</p></a></li>
-<li>
-    <a class="not.active" href="{% url 'submission' %}" class="dropbtn"><p class="sansserif">Submission</p></a>
-</li>
-{% if user.is_authenticated %}
-  {% else %}
-<li><a class="not.active" href="{% url 'register' %}"><p class="sansserif">
-Register</p></a></li>
-   {% endif %}
-<li class="dropdown">
-<a href="" class="dropbtn" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
-Account</p></a>
-<div class="dropdown-content">
-  <a href="{% url 'profile' %}"><p class = sansserif>my profile</p></a>
-  <a href="{% url 'user_history' %}"><p class = sansserif>my history</p></a>
- {% if user.is_authenticated %}
-<a href="{% url 'logout_user' %}"><p class = sansserif>logout</p></a>
-  {% else %}
-  <a href="{% url 'login_user' %}"><p class = sansserif>login</p></a>
-   {% endif %}
-</div>
-</li>
-
-</ul>
-
-
-<div>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 {%if result_list%}
 <hr class="style14" width = "50%"></hr>
-	<p class="sansserifgrey">
+	<p class="sansserifgrey" align="center">
 	Find searches below.
 	</p>
 
@@ -79,13 +43,15 @@ Account</p></a>
 <td> <a data-target="#copyModal" role="button" class="editbutton" data-toggle="modal">Details</td>
   {% include "census/copy_modal.html" %}
 
+{% if user.is_authenticated %}
 <td><a href="{% url 'edit_copy_submission' copy.id %}" class="resultbuttons" role="button" onclick="return popup(this);">Edit</a></td>
+{% endif %}
 </tr>
 {% endfor %}
 </tbody>
 </table>
 
-<div class="pagination" style="text-align:center">
+<div class="pagination; text-center">
 		<span class="step-links">
 			<span class="current">
 				Page {{ result_list.number }} of {{ result_list.paginator.num_pages }}

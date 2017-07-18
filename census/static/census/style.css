@@ -359,5 +359,9 @@ a.linkbutton:hover {
     color: #a4b7d6;
 }
 
+.hidden {
+  display: none;
+  overflow: auto;
+}
 
 </style>

@@ -185,7 +185,7 @@ def register(request):
 				password=user_form.cleaned_data['password1'],
 				)
 			new_user.save()
-			return HttpResponseRedirect("/census/")
+			return HttpResponseRedirect(reverse('homepage'))
 		else:
 			print(user_form.errors)
 	else:
