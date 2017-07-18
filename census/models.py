@@ -21,6 +21,8 @@ class Edition (models.Model):
 class Issue (models.Model):
 	edition = models.ForeignKey(Edition, unique=False)
 	year = models.CharField(max_length=20, default=None)
+	start_date = models.IntegerField(default=0)
+	end_date = models.IntegerField(default=0)
 	STC_Wing = models.CharField(max_length=20)
 	DEEP = models.IntegerField(default=0)
 	ESTC = models.CharField(max_length=20)
