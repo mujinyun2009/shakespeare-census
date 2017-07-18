@@ -53,41 +53,13 @@ Account</p></a>
 	  </tr>
   <tbody>
 	{% if submissions %}
-	{% for submission in submissions %}
+	{% for copy in submissions %}
 		<tr>
-			<td>{{ submission }}<td>
-        <td> <a href="#submissionModal" role="button" class="editbutton" data-toggle="modal">Details</td>
-          <div id="submissionModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title">Copy Details:</h4>
-                </div>
-                <div class="modal-body">
-              			<p>Title: {{ submission.issue.edition.title }}</p>
-             			  <p>Edition: {{ submission.issue.edition }}</p>
-             			  <p>Issue: {{ submission.issue }}</p>
-             			  <p>Thumbnail URL: {{ submission.thumbnail_URL }}</p>
-             			  <p> NSC: {{ submission.NSC }}</p>
-             			  <p> Owner: {{ submission.Owner }}</p>
-                    <p>Shelfmark: {{ submission.Shelfmark }}</p>
-                    <p>Height: {{ submission.Height }}</p>
-                    <p>Width: {{ submission.Width }}</p>
-                    <p> Marginalia: {{ submission.Marginalia }}</p>
-                    <p>Condition: {{ submission.Condition }}</p>
-                    <p>Binding: {{ submission.Binding }}</p>
-                    <p>Submitted by: {{ submission.created_by }}</p>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+			<td>{{ copy }}<td>
+        <td> <a data-toggle="modal" data-target="#copyModal" role="button" class="editbutton">Details</td>
+          {% include "census/modal.html" %}
 
-			<!-- <td><a href="{% url 'copy_detail' submission.id %}" class="editbutton" role="button" onclick="return popup(this);">Detail</a></td> -->
-			<td><a href="{% url 'edit_copy_submission' submission.id %}" class="editbutton" role="button" onclick="return popup(this);">Edit</a></td>
+			<td><a href="{% url 'edit_copy_submission' copy.id %}" class="editbutton" role="button" onclick="return popup(this);">Edit</a></td>
 		</tr>
 	{% endfor %}
 	{% else %}
@@ -112,39 +84,11 @@ Account</p></a>
 <tbody>
 	{% if editted_copies %}
 	{% for copy in editted_copies %}
-		<tr class="spacer">
+		<tr>
 			<td>{{ copy }}<td>
-        <td> <a href="#detailModal" role="button" class="editbutton" data-toggle="modal">Details</td>
-          <div id="detailModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title">Copy Details:</h4>
-                </div>
-                <div class="modal-body">
-              			<p>Title: {{ copy.issue.edition.title }}</p>
-             			  <p>Edition: {{ copy.issue.edition }}</p>
-             			  <p>Issue: {{ copy.issue }}</p>
-             			  <p>Thumbnail URL: {{ copy.thumbnail_URL }}</p>
-             			  <p> NSC: {{ copy.NSC }}</p>
-             			  <p> Owner: {{ copy.Owner }}</p>
-                    <p>Shelfmark: {{ copy.Shelfmark }}</p>
-                    <p>Height: {{ copy.Height }}</p>
-                    <p>Width: {{ copy.Width }}</p>
-                    <p> Marginalia: {{ copy.Marginalia }}</p>
-                    <p>Condition: {{ copy.Condition }}</p>
-                    <p>Binding: {{ copy.Binding }}</p>
-                    <p>Submitted by: {{ copy.created_by }}</p>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-			<!-- <td><a href="{% url 'copy_detail' copy.id %}" class="editbutton" role="button" onfocus="parent_disable();" onclick="return popup(this);">Details</a></td> -->
+        <td> <a data-target="#copyModal" role="button" class="editbutton" data-toggle="modal">Details</td>
+          {% include "census/modal.html" %}
+          
           <td><a href="{% url 'edit_copy_submission' copy.id %}" class="editbutton" role="button" onclick="return popup(this);">Edit</a></td>
 
     </tr>
@@ -167,5 +111,6 @@ function popup(triggeringLink) {
   new_win.focus();
   return false;
 }
+
 </script>
 {% endblock content %}

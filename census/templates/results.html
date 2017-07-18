@@ -68,46 +68,18 @@ Account</p></a>
 <td class="subhead"></td>
 </tr>
 <tr>
-{% for obj in result_list %}
-<td>{{ obj.issue.edition.title}}</td>
-<td>{{ obj.issue.year }}</td>
-<td>{{ obj.issue.edition.Edition_number}}</td>
-<td>{{ obj.issue.ESTC }}</td>
-<td>{{ obj.issue.STC_Wing }}</td>
-<td>{{ obj.Owner }}</td>
+{% for copy in result_list %}
+<td>{{ copy.issue.edition.title}}</td>
+<td>{{ copy.issue.year }}</td>
+<td>{{ copy.issue.edition.Edition_number}}</td>
+<td>{{ copy.issue.ESTC }}</td>
+<td>{{ copy.issue.STC_Wing }}</td>
+<td>{{ copy.Owner }}</td>
 
-<td> <a href="#detailModal" role="button" class="editbutton" data-toggle="modal">Details</td>
-  <div id="detailModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 align="left" class="modal-title">Copy Details:</h4>
-        </div>
-        <div class="modal-body">
-            <p align="left">Title: {{ obj.issue.edition.title }}</p>
-            <p align="left">Edition: {{ obj.issue.edition }}</p>
-            <p align="left">Issue: {{ obj.issue }}</p>
-            <p align="left">Thumbnail URL: {{ obj.thumbnail_URL }}</p>
-            <p align="left"> NSC: {{ obj.NSC }}</p>
-            <p align="left"> Owner: {{ obj.Owner }}</p>
-            <p align="left">Shelfmark: {{ obj.Shelfmark }}</p>
-            <p align="left">Height: {{ obj.Height }}</p>
-            <p align="left">Width: {{ obj.Width }}</p>
-            <p align="left"> Marginalia: {{ obj.Marginalia }}</p>
-            <p align="left">Condition: {{ obj.Condition }}</p>
-            <p align="left">Binding: {{ obj.Binding }}</p>
-            <p align="left">Submitted by: {{ obj.created_by }}</p>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<td> <a data-target="#copyModal" role="button" class="editbutton" data-toggle="modal">Details</td>
+  {% include "census/modal.html" %}
 
-<!-- <td><a href="{% url 'copy_detail' obj.id %}" class="resultbuttons" onclick="return popup(this);">Detail</a></td> -->
-<td><a href="{% url 'edit_copy_submission' obj.id %}" class="resultbuttons" role="button" onclick="return popup(this);">Edit</a></td>
+<td><a href="{% url 'edit_copy_submission' copy.id %}" class="resultbuttons" role="button" onclick="return popup(this);">Edit</a></td>
 </tr>
 {% endfor %}
 </tbody>
