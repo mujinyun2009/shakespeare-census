@@ -26,9 +26,10 @@ Register</p></a></li>
 <a href = "" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
 Account</p></a>
 <div class="dropdown-content">
+ {% if user.is_authenticated %}
+
   <a href="{% url 'profile' %}"><p class = sansserif>my profile</p></a>
   <a href="{% url 'user_history' %}"><p class = sansserif>my history</p></a>
- {% if user.is_authenticated %}
 <a href="{% url 'logout_user' %}"><p class = sansserif>logout</p></a>
   {% else %}
   <a href="{% url 'login_user' %}"><p class = sansserif>login</p></a>

@@ -356,7 +356,7 @@ a.linkbutton:visited {
     color: #000000;
 }
 a.linkbutton:hover {
-    color: #a4b7d6;
+    color: #a4b7dx6;
 }
 .pagination {
   font-family: "Century Gothic", AppleGothic, sans-serif;
@@ -366,12 +366,6 @@ table.pagenavigator {
   width:400px;
 }
 
-a:visited {
-  color:black;
-}
-a {
-  color:black;
-}
 td.currentpage {
   background-color: #4DAD16;
   text-align:center;

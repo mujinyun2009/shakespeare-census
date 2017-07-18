@@ -1,9 +1,12 @@
 .pagination {
   font-family: "Century Gothic", AppleGothic, sans-serif;
+  text-align:center;
 }
 table.pagenavigator {
   height:0%;
-  width:400px;
+  width:40%;
+  margin: auto;
+  padding: auto;
 }
 
 a:visited {
