@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
 
 <head>
 <title>Shakespeare Census</title>
@@ -15,7 +16,7 @@ Titles</p></a></li>
 <li><a class="not.active" href="{% url 'copylist' %}"><p class="sansserif">
 Copy</p></a></li>
 <li>
-    <a class="not.active" href="{% url 'submission' %}" class="dropbtn"><p class="sansserif">Submission</p></a>
+	<a class="not.active" href="{% url 'submission' %}" class="dropbtn"><p class="sansserif">Submission</p></a>
 </li>
 {% if user.is_authenticated %}
   {% else %}
@@ -23,7 +24,7 @@ Copy</p></a></li>
 Register</p></a></li>
    {% endif %}
 <li class="dropdown">
-<a href="" class="dropbtn" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
+<a href="" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
 Account</p></a>
 <div class="dropdown-content">
   <a href="{% url 'profile' %}"><p class = sansserif>my profile</p></a>
@@ -74,20 +75,58 @@ Account</p></a>
 {% endfor %}
 </table>
 <br>
-<div class="pagination" style="text-align:center">
-		<span class="step-links">
-			<span class="current">
-				Page {{ result_list.number }} of {{ result_list.paginator.num_pages }}
-			</span>
+<div class="pagination">
+	  <table class = "pagenavigator" align="center">
+		<tr class ="pagenavigator">
+	  
+	  {% if titles.has_previous %}
+	  <td class = "hoverspecial"> <a href="?page={{ titles.previous_page_number }}"><</a></td>
+	  {% endif %}
+	  {% for page in titles.paginator.page_range %}
+	  
+		  {% if page == titles.number %}
+		  <td class = "currentpage" width="20px">  {{ page }} </td>
+		  {% else %}
+		  <td class="pagenavigator" width="20px"> <a href = "?page={{page }}">{{ page }}  </td> 
+		  {% endif %}
+	   
+	  {% endfor %}
+		  
+	
 
+	  {% if titles.has_next %}
+	 <td class = "hoverspecial"> <a href="?page={{ titles.next_page_number }}">></a></td>
+	  {% endif %}
+		</tr>
+	  </table>
+</div>
+
+<div class="pagination">
+	  <table class = "pagenavigator" align="center">
+		<tr class ="pagenavigator">
 			{% if result_list.has_previous %}
-				<a href="?a={{ query1 }}&b={{ query2 }}&c={{ query3 }}&d={{ query4 }}&j={{ category1 }}&k={{ category2 }}&l={{ category3 }}&z={{ category4 }}&page={{ result_list.previous_page_number }}">previous</a>
+			<td class = "hoverspecial"> <a href="?a={{ query1 }}&b={{ query2 }}&c={{ query3 }}&d={{ query4 }}&j={{ category1 }}&k={{ category2 }}&l={{ category3 }}&z={{ category4 }}&page={{ result_list.previous_page_number }}"><</a></td>
 			{% endif %}
+
+		{% for page in result_list.paginator.page_range %}
+			{% if page <= result_list.number|add:"3" %}
+				{% if page >= result_list.number|add:"-3" %}
+				{% if page == result_list.number %}
+					<td class = "currentpage" width="20px">{{ page }}</td>
+				{% else %}
+					<td class="pagenavigator" width="20px"> <a href = "?a={{ query1 }}&b={{ query2 }}&c={{ query3 }}&d={{ query4 }}&j={{ category1 }}&k={{ category2 }}&l={{ category3 }}&z={{ category4 }}&page={{ page }}"">{{ page }}</td> 
+				{% endif %}
+				{% endif %}
+			
+			{% endif %}
+		{% endfor %}
 
 			{% if result_list.has_next %}
-				<a href="?a={{ query1 }}&b={{ query2 }}&c={{ query3 }}&d={{ query4 }}&j={{ category1 }}&k={{ category2 }}&l={{ category3 }}&z={{ category4 }}&page={{ result_list.next_page_number }}">next</a>
+			 <td class = "hoverspecial">	<a href="?a={{ query1 }}&b={{ query2 }}&c={{ query3 }}&d={{ query4 }}&j={{ category1 }}&k={{ category2 }}&l={{ category3 }}&z={{ category4 }}&page={{ result_list.next_page_number }}">></a></td>
 			{% endif %}
-		</span>
+		</tr>
+	</table>
+	Pages generated: {{ result_list.paginator.num_pages }}
 </div>
 <br>
 <br>

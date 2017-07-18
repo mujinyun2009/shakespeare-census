@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+
+
 <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
+
 <div class="wrapper">
 
 <ul>
@@ -60,21 +64,31 @@ Account</p></a>
     </p>
 </div>
 
-<div class="pagination" style="text-align:center">
-    <span class="step-links">
-      <span class="current">
-        Page {{ titles.number }} of {{ titles.paginator.num_pages }}
-      </span>
-
+<div class="pagination">
+      <table class = "pagenavigator" align="center">
+        <tr class ="pagenavigator">
+      
       {% if titles.has_previous %}
-        <a href="?page={{ titles.previous_page_number }}">previous</a>
+      <td class = "hoverspecial"> <a href="?page={{ titles.previous_page_number }}"><</a></td>
       {% endif %}
+      {% for page in titles.paginator.page_range %}
+
+            {% if page == titles.number %}
+            <td class = "currentpage" width="20px">  {{ page }} </td>
+            {% else %}
+            <td class="pagenavigator" width="20px"> <a href = "?page={{page }}">{{ page }}  </td> 
+            {% endif %}
+      {% endfor %}
+          
+    
 
       {% if titles.has_next %}
-        <a href="?page={{ titles.next_page_number }}">next</a>
+     <td class = "hoverspecial"> <a href="?page={{ titles.next_page_number }}">></a></td>
       {% endif %}
-    </span>
+        </tr>
+      </table>
 </div>
+
 
 {% else %}
     <p class="sansserif" align="center">Oh no! No books are available.</p>

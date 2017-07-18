@@ -77,7 +77,6 @@ def search(request):
 			'category4': category4,
 		}
 	return HttpResponse(template.render(context, request))
-
 def homepage(request):
 	template=loader.get_template('frontpage.html')
 	context = {
