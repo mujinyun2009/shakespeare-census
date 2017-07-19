@@ -22,10 +22,13 @@
 	{% for copy in submissions %}
 		<tr>
 			<td>{{ copy }}<td>
-        <td> <a data-toggle="modal" data-target="#copyModal" role="button" class="editbutton">Details</td>
+        <td> <a data-toggle="modal" data-target="#copyModal" role="button" class="editbutton">Details</a></td>
           {% include "census/copy_modal.html" %}
 
-			<td><a href="{% url 'edit_copy_submission' copy.id %}" class="editbutton" role="button" onclick="return popup(this);">Edit</a></td>
+        <td> <a data-target="#editModal" role="button" class="editbutton" data-toggle="modal">Edit</a></td>
+          {% include 'census/edit_modal.html' %}
+
+			<!-- <td><a href="{% url 'edit_copy_submission' copy.id %}" class="editbutton" role="button" onclick="return popup(this);">Edit</a></td> -->
 		</tr>
 	{% endfor %}
 	{% else %}
@@ -98,6 +101,22 @@
 </div>
 
 <script>
+$(function(){
+       $('#myForm').on('submit', function(e){
+            e.preventDefault();
+            $.ajax({
+                url: $(this).action,
+                type: "POST",
+                datatype: "json",
+                data: $("#myForm").serialize(),
+                success: function(data){
+                  $('#myModal').modal('hide');
+                  alert("success");
+                }
+            });
+       });
+    });
+
 function popup(triggeringLink) {
   var href = triggeringLink.href;
   var name = triggeringLink.name;

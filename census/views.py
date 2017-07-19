@@ -481,6 +481,8 @@ def edit_profile(request):
 def user_history(request):
 	template=loader.get_template('census/userHistory.html')
 	current_user=request.user
+	copy_form=CopyForm()
+	all_titles=Title.objects.all()
 	all_submissions=current_user.submitted_copies.all()
 	paginator=Paginator(all_submissions, 10)
 	page = request.GET.get('page')
@@ -495,6 +497,8 @@ def user_history(request):
 	context={
 		'submissions': submissions,
 		'editted_copies': editted_copies,
+		'all_titles': all_titles,
+		'copy_form': copy_form,
 	}
 	return HttpResponse(template.render(context, request))
 
