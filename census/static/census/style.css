@@ -442,7 +442,7 @@ td.hoverspecial:hover {
 .hidden {
   display: none;
   overflow: auto;
-
+}
 .welcome {
   font-family: "Century Gothic", AppleGothic, sans-serif;
   font-weight: lighter;
