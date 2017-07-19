@@ -16,30 +16,25 @@
 
 <input type='submit' value='search' class="finalsubmit"/>
 </form>
+<br>
 {% if query %}
     <p class="sansserif">
       <table class = "center" align="center" width="100%">
         <tr>
           <th> Title </th>
                 <th> Edition </th>
-          <th> NSC </th>
+                <th> ESTC </th>
+                <th> STC/Wing </th>
                 <th> Owner </th>
-                <th> Height </th>
-                <th> Width </th>
-                <th> Condition </th>
-                <th> Binding </th>
                 <th> Transactions </th>
         </tr>
         <tr>
         {% for obj in object_list %}
           <td>{{ obj.issue.edition.title }}</td>
                 <td>{{ obj.issue.edition.Edition_number }}</td>
-                <td>{{ obj.NSC }}</td>
+                <td>{{ obj.issue.ESTC }}</td>
+                <td>{{ obj.issue.STC_Wing}}</td>
                 <td>{{ obj.Owner }}</td>
-                <td>{{ obj.Height }}</td>
-                <td>{{ obj.Width }}</td>
-                <td>{{ obj.Condition }}</td>
-                <td>{{ obj.Binding }}</td>
                 <td><a href="{% url 'transactions' obj.id %}" class="linkbutton">Available transactions</a></td>
 
         </tr>
@@ -76,7 +71,6 @@
 </div>
 
 {% else %}
-<br>
 <br>
 {% if copies %}
     <p class="sansserif">
