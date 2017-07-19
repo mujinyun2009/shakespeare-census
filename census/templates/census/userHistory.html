@@ -4,6 +4,7 @@
 <br>
 <br>
 <div>
+  <link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
   <script type="text/javascript" src="/static/census/bootstrap-modal.js"></script>
   <link rel="stylesheet" type="text/css" href="{% static 'census/modal.css' %}" />
 
@@ -34,6 +35,34 @@
 	{% endif %}
   </tbody>
 </table>
+
+<div class="pagination">
+    <table class = "pagenavigator" align="center">
+    <tr class ="pagenavigator">
+      {% if submissions.has_previous %}
+      <td class = "hoverspecial"> <a href="?page={{ submissions.previous_page_number }}"><</a></td>
+      {% endif %}
+
+    {% for page in submissions.paginator.page_range %}
+      {% if page <= submissions.number|add:"3" %}
+        {% if page >= submissions.number|add:"-3" %}
+        {% if page == submissions.number %}
+          <td class = "currentpage" width="20px">{{ page }}</td>
+        {% else %}
+          <td class="pagenavigator" width="20px"> <a href = "?page={{ page }}">{{ page }}</td>
+        {% endif %}
+        {% endif %}
+
+      {% endif %}
+    {% endfor %}
+
+      {% if submissions.has_next %}
+       <td class = "hoverspecial">  <a href="?page={{ submissions.next_page_number }}">></a></td>
+      {% endif %}
+    </tr>
+  </table>
+  Pages generated: {{ submissions.paginator.num_pages }}
+
 </div>
 
 <br>

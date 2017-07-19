@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
 
 <link rel="stylesheet" type="text/css" href= "{% static 'census/detail.css' %}" />
 
@@ -57,21 +58,33 @@
         </table>
     </p>
 
-    <div class="pagination" style="text-align:center">
-        <span class="step-links">
-          <span class="current">
-            Page {{ copies.number }} of {{ copies.paginator.num_pages }}
-          </span>
+<div class="pagination">
+    <table class = "pagenavigator" align="center">
+    <tr class ="pagenavigator">
+      {% if copies.has_previous %}
+      <td class = "hoverspecial"> <a href="?page={{ copies.previous_page_number }}" class="paginator"><</a></td>
+      {% endif %}
 
-          {% if copies.has_previous %}
-            <a href="?page={{ copies.previous_page_number }}">previous</a>
-          {% endif %}
+    {% for page in copies.paginator.page_range %}
+      {% if page <= copies.number|add:"3" %}
+        {% if page >= copies.number|add:"-3" %}
+        {% if page == copies.number %}
+          <td class = "currentpage" width="20px">{{ page }}</td>
+        {% else %}
+          <td class="pagenavigator" width="20px"> <a href = "?page={{ page }}" class="paginator">{{ page }}</td>
+        {% endif %}
+        {% endif %}
 
-          {% if copies.has_next %}
-            <a href="?page={{ copies.next_page_number }}">next</a>
-          {% endif %}
-        </span>
-    </div>
+      {% endif %}
+    {% endfor %}
+
+      {% if copies.has_next %}
+       <td class = "hoverspecial">  <a href="?page={{ copies.next_page_number }}" class="paginator">></a></td>
+      {% endif %}
+    </tr>
+  </table>
+  Pages generated: {{ copies.paginator.num_pages }}
+</div>
 
 
 {% else %}

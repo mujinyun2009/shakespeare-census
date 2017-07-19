@@ -213,6 +213,9 @@ table.center2 {
   background: #8FBC8F;
   font-family: "Century Gothic", AppleGothic, sans-serif;
 }
+a.linkbutton:hover {
+    color: #a4b7d6;
+}
 
 table td {
 border-left: 1px solid #000;

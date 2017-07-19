@@ -51,21 +51,34 @@
 {% endfor %}
 </tbody>
 </table>
+<br>
 
-<div class="pagination" style="text-align:center">
-		<span class="step-links">
-			<span class="current">
-				Page {{ result_list.number }} of {{ result_list.paginator.num_pages }}
-			</span>
-
+<div class="pagination">
+	  <table class = "pagenavigator" align="center">
+		<tr class ="pagenavigator">
 			{% if result_list.has_previous %}
-				<a href="?a={{ query1 }}&b={{ query2 }}&c={{ query3 }}&d={{ query4 }}&j={{ category1 }}&k={{ category2 }}&l={{ category3 }}&z={{ category4 }}&page={{ result_list.previous_page_number }}">previous</a>
+			<td class = "hoverspecial"> <a href="?a={{ query1 }}&b={{ query2 }}&c={{ query3 }}&d={{ query4 }}&j={{ category1 }}&k={{ category2 }}&l={{ category3 }}&z={{ category4 }}&page={{ result_list.previous_page_number }}" class="paginator"><</a></td>
 			{% endif %}
+
+		{% for page in result_list.paginator.page_range %}
+			{% if page <= result_list.number|add:"3" %}
+				{% if page >= result_list.number|add:"-3" %}
+				{% if page == result_list.number %}
+					<td class = "currentpage" width="20px">{{ page }}</td>
+				{% else %}
+					<td class="pagenavigator" width="20px"> <a href = "?a={{ query1 }}&b={{ query2 }}&c={{ query3 }}&d={{ query4 }}&j={{ category1 }}&k={{ category2 }}&l={{ category3 }}&z={{ category4 }}&page={{ page }}" class="paginator">{{ page }}</td>
+				{% endif %}
+				{% endif %}
+
+			{% endif %}
+		{% endfor %}
 
 			{% if result_list.has_next %}
-				<a href="?a={{ query1 }}&b={{ query2 }}&c={{ query3 }}&d={{ query4 }}&j={{ category1 }}&k={{ category2 }}&l={{ category3 }}&z={{ category4 }}&page={{ result_list.next_page_number }}">next</a>
+			 <td class = "hoverspecial">	<a href="?a={{ query1 }}&b={{ query2 }}&c={{ query3 }}&d={{ query4 }}&j={{ category1 }}&k={{ category2 }}&l={{ category3 }}&z={{ category4 }}&page={{ result_list.next_page_number }}" class="paginator">></a></td>
 			{% endif %}
-		</span>
+		</tr>
+	</table>
+	Pages generated: {{ result_list.paginator.num_pages }}
 </div>
 <br>
 <br>

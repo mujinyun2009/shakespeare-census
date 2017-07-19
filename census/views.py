@@ -52,7 +52,6 @@ def search(request):
 		result_list = list(chain(results_list))
 
 	if not query1 and not query2 and not query3 and not query4:
-		template=loader.get_template('frontpage.html')
 		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category4: query4}))
 		result_list = list(chain(results_list))
 
@@ -77,7 +76,6 @@ def search(request):
 			'category4': category4,
 		}
 	return HttpResponse(template.render(context, request))
-
 def homepage(request):
 	template=loader.get_template('frontpage.html')
 	context = {
@@ -86,21 +84,42 @@ def homepage(request):
 
 def index(request):
 	all_titles = Title.objects.all().order_by('title')
-	paginator = Paginator(all_titles, 10) # Show 10 titles per page
-	page = request.GET.get('page')
-	try:
-		titles = paginator.page(page)
-	except PageNotAnInteger:
-		#If page is not an integer, deliver first page.
-		titles = paginator.page(1)
-	except EmptyPage:
-		#If page is out of range, deliver last page of results.
-		titles = paginator.page(paginator.num_pages)
-
 	template = loader.get_template('census/index.html')
-	context = {
-		'titles': titles
-	}
+	queryset_list = Title.objects.all()
+	query = request.GET.get("q")
+	if query:
+		queryset_list = queryset_list.filter(Q(title__icontains=query))
+		paginator = Paginator(queryset_list, 10) # Show 10 titles per page
+		page = request.GET.get('page')
+		try:
+			queryset_list = paginator.page(page)
+		except PageNotAnInteger:
+			#If page is not an integer, deliver first page.
+			queryset_list = paginator.page(1)
+		except EmptyPage:
+			#If page is out of range, deliver last page of results.
+			queryset_list = paginator.page(paginator.num_pages)
+		context = {
+			'query': query,
+			'object_list': queryset_list,
+		}
+
+	else:
+		paginator = Paginator(all_titles, 10) # Show 10 titles per page
+		page = request.GET.get('page')
+		try:
+			titles = paginator.page(page)
+		except PageNotAnInteger:
+			#If page is not an integer, deliver first page.
+			titles = paginator.page(1)
+		except EmptyPage:
+			#If page is out of range, deliver last page of results.
+			titles = paginator.page(paginator.num_pages)
+
+		context = {
+			'object_list': queryset_list,
+			'titles': titles,
+		}
 	return HttpResponse(template.render(context, request))
 
 def detail(request, id):
@@ -140,18 +159,41 @@ def copy(request, id):
 
 def copylist(request):
 	all_copies = Copy.objects.all()
-	paginator = Paginator(all_copies, 10)
-	page = request.GET.get('page')
-	try:
-		copies = paginator.page(page)
-	except PageNotAnInteger:
-		copies = paginator.page(1)
-	except EmptyPage:
-		copies = paginator.page(paginator.num_pages)
 	template = loader.get_template('census/copylist.html')
-	context = {
-		'copies': copies
-	}
+	queryset_list = Copy.objects.all()
+	query = request.GET.get("q")
+	if query:
+		if query.isdigit() == False:
+			queryset_list = queryset_list.filter(Q(issue__edition__title__title__icontains=query)|Q(Owner__icontains=query)|Q(Bookplate__icontains=query))
+		elif query.isdigit() == True:
+			queryset_list = queryset_list.filter(Q(NSC=query)|Q(issue=query)|Q(Barlett1939=query)|Q(issue__edition__Edition_number=query))
+
+		paginator = Paginator(queryset_list, 10)
+		page = request.GET.get('page')
+		try:
+			queryset_list = paginator.page(page)
+		except PageNotAnInteger:
+			queryset_list = paginator.page(1)
+		except EmptyPage:
+			queryset_list = paginator.page(paginator.num_pages)
+		context = {
+			'query': query,
+			'object_list': queryset_list,
+		}
+
+	else:
+		paginator = Paginator(all_copies, 10)
+		page = request.GET.get('page')
+		try:
+			copies = paginator.page(page)
+		except PageNotAnInteger:
+			copies = paginator.page(1)
+		except EmptyPage:
+			copies = paginator.page(paginator.num_pages)
+		context = {
+			'object_list': queryset_list,
+			'copies': copies,
+		}
 	return HttpResponse(template.render(context,request))
 
 def provenance(request):
@@ -185,7 +227,7 @@ def register(request):
 				password=user_form.cleaned_data['password1'],
 				)
 			new_user.save()
-			return HttpResponseRedirect(reverse('homepage'))
+			return HttpResponseRedirect("welcome")
 		else:
 			print(user_form.errors)
 	else:
@@ -439,10 +481,17 @@ def edit_profile(request):
 def user_history(request):
 	template=loader.get_template('census/userHistory.html')
 	current_user=request.user
-	submissions=current_user.submitted_copies.all()
+	all_submissions=current_user.submitted_copies.all()
+	paginator=Paginator(all_submissions, 10)
+	page = request.GET.get('page')
+	try:
+		submissions = paginator.page(page)
+	except PageNotAnInteger:
+		submissions = paginator.page(1)
+	except EmptyPage:
+		copies = paginator.page(paginator.num_pages)
 	cur_user_history=UserHistory.objects.get(user=current_user)
 	editted_copies=cur_user_history.editted_copies.all()
-
 	context={
 		'submissions': submissions,
 		'editted_copies': editted_copies,
@@ -460,10 +509,11 @@ def copy_detail(request, copy_id):
 	}
 	return HttpResponse(template.render(context,request))
 
-def test_modal(request):
-	template=loader.get_template('census/test.html')
-	title_form = TitleForm()
-	context = {
-	'title_form': title_form,
+@login_required()
+def welcome(request):
+	template=loader.get_template('census/welcome.html')
+	hello = 3
+	context={
+		'hello': hello,
 	}
 	return HttpResponse(template.render(context,request))
