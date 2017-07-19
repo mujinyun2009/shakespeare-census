@@ -179,6 +179,8 @@ textarea {
   width:100%;
   border: 1px solid #ebebeb;
   transition-duration: 0.3s;
+  font-family:"Century Gothic", AppleGothic, sans-serif;
+  font-size:12px;
 }
 textarea:focus {
   border: 1px solid #000000;
