@@ -4,22 +4,8 @@
 <br>
 <br>
 <div>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-  <div class="dropdown">
-    <a role="button" href="#" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
-
-  <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-   <a class="dropdown-item" href="{% url 'profile' %}" id="profilelink"><p class = sansserif>my profile</p></a>
-   <a class="dropdown-item" href="{% url 'user_history' %}" id="historylink"><p class = sansserif>my history</p></a>
-   {% if user.is_authenticated %}
-  <a class="dropdown-item" href="{% url 'logout_user' %}" id="logoutlink"><p class = sansserif>logout</p></a>
-    {% else %}
-    <a class="dropdown-item" href="{% url 'login_user' %}" id="loginlink"><p class = sansserif>login</p></a>
-     {% endif %}
-  </div>
-</div>
+  <script type="text/javascript" src="/static/census/bootstrap-modal.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'census/modal.css' %}" />
 
 <div class = "history">Your contributions: </div>
 <br>

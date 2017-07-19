@@ -4,8 +4,9 @@
 <head>
 <title>Shakespeare Census</title>
 </head>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script type="text/javascript" src="/static/census/bootstrap-modal.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'census/modal.css' %}" />
+
 {%if result_list%}
 <hr class="style14" width = "50%"></hr>
 	<p class="sansserifgrey" align="center">
@@ -51,7 +52,7 @@
 </tbody>
 </table>
 
-<div class="pagination; text-center">
+<div class="pagination" style="text-align:center">
 		<span class="step-links">
 			<span class="current">
 				Page {{ result_list.number }} of {{ result_list.paginator.num_pages }}
