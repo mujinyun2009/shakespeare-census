@@ -363,7 +363,7 @@ def copy_submission_success(request):
 def cancel_copy_submission(request, copy_id):
 	copy_to_delete=Copy.objects.get(pk=copy_id)
 	copy_to_delete.delete()
-	return HttpResponseRedirect(reverse('homepage'))
+	return HttpResponseRedirect(reverse('submission'))
 
 def json_editions(request, id):
 	current_title = Title.objects.get(pk=id)

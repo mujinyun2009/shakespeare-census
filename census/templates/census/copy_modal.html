@@ -1,3 +1,26 @@
+<style>
+.modal-title {
+  font-weight: lighter;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+}
+p.sansserif {
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+}
+.closebutton {
+  border:none;
+  background:none;
+  font-size:15px;
+  font-weight: lighter;
+}
+.closebutton:hover {
+  border:none;
+  background:none;
+  font-size:15px;
+  font-weight: lighter;
+  color:#a4b7d6;
+}
+
+</style>
 <div id="copyModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -6,21 +29,21 @@
         <h4 align="left" class="modal-title">Copy Details:</h4>
       </div>
       <div class="modal-body">
-          <p align="left">Title: {{ copy.issue.edition.title }}</p>
-          <p align="left">Edition: {{ copy.issue.edition }}</p>
-          <p align="left">Issue: {{ copy.issue }}</p>
-          <p align="left">Thumbnail URL: {{ copy.thumbnail_URL }}</p>
-          <p align="left"> NSC: {{ copy.NSC }}</p>
-          <p align="left"> Owner: {{ copy.Owner }}</p>
-          <p align="left">Shelfmark: {{ copy.Shelfmark }}</p>
-          <p align="left">Height: {{ copy.Height }}</p>
-          <p align="left">Width: {{ copy.Width }}</p>
-          <p align="left"> Marginalia: {{ copy.Marginalia }}</p>
-          <p align="left">Condition: {{ copy.Condition }}</p>
-          <p align="left">Binding: {{ copy.Binding }}</p>
-          <p align="left">Submitted by: {{ copy.created_by }}</p>
+          <p align="left" class = "sansserif">Title: {{ copy.issue.edition.title }}
+          <p align="left" class = "sansserif">Edition: {{ copy.issue.edition }}</p>
+          <p align="left" class = "sansserif">Issue: {{ copy.issue }}</p>
+          <p align="left" class = "sansserif">Thumbnail URL: {{ copy.thumbnail_URL }}</p>
+          <p align="left" class = "sansserif">NSC: {{ copy.NSC }}</p>
+          <p align="left" class = "sansserif">Owner: {{ copy.Owner }}</p>
+          <p align="left" class = "sansserif">Shelfmark: {{ copy.Shelfmark }}</p>
+          <p align="left" class = "sansserif">Height: {{ copy.Height }}</p>
+          <p align="left" class = "sansserif">Width: {{ copy.Width }}</p>
+          <p align="left" class = "sansserif">Marginalia: {{ copy.Marginalia }}</p>
+          <p align="left" class = "sansserif">Condition: {{ copy.Condition }}</p>
+          <p align="left" class = "sansserif">Binding: {{ copy.Binding }}</p>
+          <p align="left" class = "sansserif">Submitted by: {{ copy.created_by }}</p>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="closebutton" data-dismiss="modal">close</button>
         </div>
       </div>
     </div>
