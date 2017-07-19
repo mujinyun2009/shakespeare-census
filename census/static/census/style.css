@@ -267,6 +267,8 @@ textarea:focus {
   border : none;
   padding: 10px 30px;
   position:relative;
+  transition: background 0.3s;
+  -webkit-transition: background 0.3s;
   width:300px;
   height:50px;
   left:50%;
