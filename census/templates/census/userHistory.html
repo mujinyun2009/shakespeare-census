@@ -72,10 +72,9 @@
 function popup(triggeringLink) {
   var href = triggeringLink.href;
   var name = triggeringLink.name;
-  new_win = window.open(href, name, "height=800,width=1000,left=300,top=200,resizable=yes,scrollbars=yes");
+  var new_win = window.open(href, name, "height=800,width=1000,left=300,top=200,resizable=yes,scrollbars=yes");
   new_win.focus();
   return false;
 }
-
 </script>
 {% endblock content %}

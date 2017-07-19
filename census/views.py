@@ -348,6 +348,7 @@ def add_title(request):
 			title = title_form.save(commit=True)
 			myScript = '<script type="text/javascript">opener.dismissAddAnotherTitle(window, "%s", "%s");</script>' % (title.id, title.title)
 			return HttpResponse(myScript)
+			# return HttpResponseRedirect(reverse('test_modal'))
 		else:
 			print(title_form.errors)
 	else:
@@ -456,5 +457,13 @@ def copy_detail(request, copy_id):
 	context={
 		'selected_edition': selected_edition,
 		'selected_copy': selected_copy,
+	}
+	return HttpResponse(template.render(context,request))
+
+def test_modal(request):
+	template=loader.get_template('census/test.html')
+	title_form = TitleForm()
+	context = {
+	'title_form': title_form,
 	}
 	return HttpResponse(template.render(context,request))
