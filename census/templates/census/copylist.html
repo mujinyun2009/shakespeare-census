@@ -3,42 +3,6 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
 
-<div class="wrapper">
-
-<ul>
-<li><a class="not.active" href="{% url 'homepage' %}"><p class="sansserif">
-Home</p></a></li>
-<li><a class="not.active" href="{% url 'index' %}"><p class="sansserif">
-Titles</p></a></li>
-<li><a class="active" href="{% url 'copylist' %}"><p class="sansserif">
-Copy</p></a></li>
-<li>
-    <a class="not.active" href="{% url 'submission' %}" class="dropbtn"><p class="sansserif">Submission</p></a>
-</li>
-{% if user.is_authenticated %}
-  {% else %}
-<li><a class="not.active" href="{% url 'register' %}"><p class="sansserif">
-Register</p></a></li>
-   {% endif %}
-
-<li class="dropdown">
-<a href="" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
-Account</p></a>
-<div class="dropdown-content">
- {% if user.is_authenticated %}
-
-  <a href="{% url 'profile' %}"><p class = sansserif>my profile</p></a>
-  <a href="{% url 'user_history' %}"><p class = sansserif>my history</p></a>
-<a href="{% url 'logout_user' %}"><p class = sansserif>logout</p></a>
-  {% else %}
-  <a href="{% url 'login_user' %}"><p class = sansserif>login</p></a>
-   {% endif %}
-</div>
-</li>
-
-</ul>
-
-
 <hr class = "style14" width = "50%"></hr>
 	<p class="sansserifgrey">
 	See all entries in the database below.
@@ -120,24 +84,28 @@ Account</p></a>
     		<tr>
     			<th> Title </th>
                 <th> Edition </th>
-    			<th> NSC </th>
+                <th> ESTC </th>
+                <th>STC/Wing</th>
+    			      <!-- <th> NSC </th> -->
                 <th> Owner </th>
-                <th> Height </th>
+                <!-- <th> Height </th>
                 <th> Width </th>
                 <th> Condition </th>
-                <th> Binding </th>
+                <th> Binding </th> -->
                 <th> Transactions </th>
     		</tr>
     		<tr>
     		{% for copy in copies %}
    				<td>{{ copy.issue.edition.title }}</td>
                 <td>{{ copy.issue.edition.Edition_number }}</td>
-                <td>{{ copy.NSC }}</td>
+                <td>{{ copy.issue.ESTC }}</td>
+                <td>{{ copy.issue.STC_Wing}}</td>
+                <!-- <td>{{ copy.NSC }}</td> -->
                 <td>{{ copy.Owner }}</td>
-                <td>{{ copy.Height }}</td>
+                <!-- <td>{{ copy.Height }}</td>
                 <td>{{ copy.Width }}</td>
                 <td>{{ copy.Condition }}</td>
-                <td>{{ copy.Binding }}</td>
+                <td>{{ copy.Binding }}</td> -->
                 <td><a href="{% url 'transactions' copy.id %}" class="linkbutton">Available transactions</a></td>
 
    			</tr>

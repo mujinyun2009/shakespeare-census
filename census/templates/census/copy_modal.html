@@ -1,0 +1,28 @@
+<div id="copyModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 align="left" class="modal-title">Copy Details:</h4>
+      </div>
+      <div class="modal-body">
+          <p align="left">Title: {{ copy.issue.edition.title }}</p>
+          <p align="left">Edition: {{ copy.issue.edition }}</p>
+          <p align="left">Issue: {{ copy.issue }}</p>
+          <p align="left">Thumbnail URL: {{ copy.thumbnail_URL }}</p>
+          <p align="left"> NSC: {{ copy.NSC }}</p>
+          <p align="left"> Owner: {{ copy.Owner }}</p>
+          <p align="left">Shelfmark: {{ copy.Shelfmark }}</p>
+          <p align="left">Height: {{ copy.Height }}</p>
+          <p align="left">Width: {{ copy.Width }}</p>
+          <p align="left"> Marginalia: {{ copy.Marginalia }}</p>
+          <p align="left">Condition: {{ copy.Condition }}</p>
+          <p align="left">Binding: {{ copy.Binding }}</p>
+          <p align="left">Submitted by: {{ copy.created_by }}</p>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

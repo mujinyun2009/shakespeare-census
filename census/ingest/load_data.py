@@ -1,5 +1,6 @@
 from census.models import *
 import csv
+import re
 
 def create_title(title_name):
 	return Title.objects.create(title=title_name)
@@ -7,8 +8,8 @@ def create_title(title_name):
 def create_edition(new_title, number):
 	return Edition.objects.create(title=new_title, Edition_number=number)
 
-def create_issue(new_edition, new_date, new_STC_Wing, new_ESTC, new_notes):
-	return Issue.objects.create(edition=new_edition, year=new_date, STC_Wing=new_STC_Wing, ESTC=new_ESTC, notes=new_notes)
+def create_issue(new_edition, new_date, new_start_date, new_end_date, new_STC_Wing, new_ESTC, new_notes):
+	return Issue.objects.create(edition=new_edition, year=new_date, start_date=new_start_date, end_date=new_end_date, STC_Wing=new_STC_Wing, ESTC=new_ESTC, notes=new_notes)
 
 def create_copy(new_issue, library, shelfmark, copy_note, provinfo):
 	return Copy.objects.create(issue=new_issue, Owner=library, Shelfmark=shelfmark, copynote=copy_note, prov_info=provinfo)
@@ -40,6 +41,7 @@ def read_issue_file(csv_file_path):
 		for row in reader:
 			if row[0] =='Title':
 				continue
+
 			related_title=list(Title.objects.filter(title=row[0]))
 			if related_title:
 				new_title=related_title[0]
@@ -52,7 +54,22 @@ def read_issue_file(csv_file_path):
 			else:
 				new_edition=create_edition(new_title, row[1])
 
-			new_issue=create_issue(new_edition, row[2], row[3], row[4], row[5])
+			start_date = 0
+			end_date = 0
+			raw_nums = re.findall('\d+', row[2])
+			start_date = int(raw_nums[0])
+
+			if len(raw_nums) == 1:
+				end_date = start_date
+			elif len(raw_nums) == 2:
+				if int(raw_nums[1]) > 1500:
+					end_date = int(raw_nums[1])
+				elif int(raw_nums[1]) < 10:
+					end_date = (start_date / 10) * 10 + int(raw_nums[1])
+				elif int(raw_nums[1]) < 100:
+					end_date = (start_date / 100) * 100 + int(raw_nums[1])
+
+			new_issue=create_issue(new_edition, row[2], start_date, end_date, row[3], row[4], row[5])
 	return "success"
 
 def read_copy_file(csv_file_path):

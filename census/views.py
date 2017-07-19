@@ -142,7 +142,7 @@ def issue(request, id):
 	return HttpResponse(template.render(context, request))
 def copy(request, id):
 	selected_issue=Issue.objects.get(pk=id)
-	all_copies = selected_issue.copy_set.all() 
+	all_copies = selected_issue.copy_set.all().order_by('id')
 	paginator = Paginator(all_copies, 10)
 	page = request.GET.get('page')
 	try:
@@ -150,7 +150,7 @@ def copy(request, id):
 	except PageNotAnInteger:
 		copies = paginator.page(1)
 	except EmptyPage:
-		copies = paginator.page(paginator.num_pages)	
+		copies = paginator.page(paginator.num_pages)
 	template = loader.get_template('census/copy.html')
 	context = {
 		'copies': copies
@@ -390,6 +390,7 @@ def add_title(request):
 			title = title_form.save(commit=True)
 			myScript = '<script type="text/javascript">opener.dismissAddAnotherTitle(window, "%s", "%s");</script>' % (title.id, title.title)
 			return HttpResponse(myScript)
+			# return HttpResponseRedirect(reverse('test_modal'))
 		else:
 			print(title_form.errors)
 	else:

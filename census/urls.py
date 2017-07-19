@@ -47,4 +47,3 @@ urlpatterns = [
 
 	url(r'^editProfile$', views.edit_profile, name='edit_profile'),
 	url(r'^welcome$', views.welcome, name='welcome'),
-]

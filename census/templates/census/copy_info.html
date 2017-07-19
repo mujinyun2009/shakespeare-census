@@ -10,7 +10,6 @@ a.editbutton:link {
     color: white;
     text-decoration:none;
 }
-
 .hidden {
   display: none;
   overflow: auto;
@@ -24,7 +23,6 @@ td.table2:nth-child(1){
   background-color:#a7c87b;
   text-align:center;
   width:100px;
-
 }
 td.table2:nth-child(2){
   background-color:#ff9966;
@@ -44,7 +42,6 @@ li a, .dropbtn {
     color: black;
     text-align: center;
     text-decoration: none;
-
 }
 .dropdown-content {
     display: none;
@@ -53,7 +50,6 @@ li a, .dropbtn {
   min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
-
 }
 .dropdown-content a {
     color: black;
@@ -62,58 +58,12 @@ li a, .dropbtn {
     display: block;
     text-align: left;
 }
-
 .dropdown-content a:hover {background-color: #f1f1f1}
-
 .dropdown:hover .dropdown-content {
     display: block;
 }
 </style>
 
-<div class="wrapper">
-
-<ul>
-<li><a class="not.active" href="{% url 'homepage' %}"><p class="sansserif">
-Home</p></a></li>
-<li><a class="not.active" href="{% url 'index' %}"><p class="sansserif">
-Titles</p></a></li>
-<<<<<<< HEAD
-<li><a class="not.active" href="http://localhost:8000/census/copy"><p class="sansserif">
-Copy</p></a></li>
-{% if user.is_authenticated %}
-  {% else %}
-<li><a class="not.active" href="http://localhost:8000/census/register"><p class="sansserif">
-Register</p></a></li>
-   {% endif %}
-
-=======
-<li><a class="active" href="{% url 'copy' %}"><p class="sansserif">
-Copy</p></a></li>
-<li><a class="not.active" href="{% url 'register' %}"><p class="sansserif">Register</p></a></li>
->>>>>>> origin/mergejinyun7-14
-<li class="dropdown">
-<a href="" class="dropbtn" data-toggle="dropdown" role="button" aria-expanded="false">  <p class = sansserif>
-Account</p></a>
-<div class="dropdown-content">
-<<<<<<< HEAD
-  <a href="http://localhost:8000/census/profile"><p class = sansserif>my profile</p></a>
-  <a href="http://localhost:8000/census/user_history"><p class = sansserif>my history</p></a>
- {% if user.is_authenticated %}
-<a href="http://localhost:8000/census/logout"><p class = sansserif>logout</p></a>
-  {% else %}
-  <a href="http://localhost:8000/census/login"><p class = sansserif>login</p></a>
-   {% endif %}
-=======
-  <a href="{% url 'profile' %}"><p class = sansserif>my profile</p></a>
-  <a href="{% url 'user_history' %}"><p class = sansserif>my history</p></a>
-  <a href="{% url 'login_user' %}"><p class = sansserif>login</p></a>
-  <a href="{% url 'logout_user' %}"><p class = sansserif>logout</p></a>
-
->>>>>>> origin/mergejinyun7-14
-</div>
-</li>
-</ul>
-</div>
 <div id="submitted_line" class = "submitted_line">
 <p>You have submitted the following copy: </p>
 </div>
