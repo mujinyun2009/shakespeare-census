@@ -522,6 +522,12 @@ def welcome(request):
 	}
 	return HttpResponse(template.render(context,request))
 
+def copy_data(request, copy_id):
+	template = loader.get_template('census/copy_modal.html')
+	selected_copy=Copy.objects.get(pk=copy_id)
+	context={"copy": selected_copy,}
+	return HttpResponse(template.render(context, request))
+
 @login_required()
 def update_copy(request, copy_id):
 	template = loader.get_template('census/edit_modal.html')
@@ -532,6 +538,7 @@ def update_copy(request, copy_id):
 	old_title=old_edition.title
 
 	if request.method=='POST':
+		data=[]
 		if request.POST.get('cancel', None):
 			return HttpResponseRedirect(reverse('user_history'))
 
@@ -560,14 +567,16 @@ def update_copy(request, copy_id):
 				current_userHistory=UserHistory.objects.get(user=current_user)
 				current_userHistory.editted_copies.add(new_copy)
 				data=[]
+				data.append(model_to_dict(new_copy.issue.edition.title))
+				data.append(model_to_dict(new_copy.issue.edition))
+				data.append(model_to_dict(new_copy.issue))
 				data.append(model_to_dict(new_copy))
-				return HttpResponse(json.dumps(data), content_type='application/json')
-				# return HttpResponseRedirect(reverse('user_history'))
 
 			else:
 				messages.error(request, 'The information you entered is invalid.')
 				copy_form=CopyForm(instance=copy_to_edit)
 
+			return HttpResponse(json.dumps(data), content_type='application/json')
 	else:
 		copy_form=CopyForm(instance=copy_to_edit)
 

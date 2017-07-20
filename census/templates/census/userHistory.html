@@ -22,12 +22,11 @@
 	{% for copy in submissions %}
 		<tr>
 			<td>{{ copy }}<td>
-        <td> <a data-toggle="modal" data-target="#copyModal" role="button" class="editbutton">Details</a></td>
-          {% include "census/copy_modal.html" %}
+        <td><a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">Details</a></td>
+        <div id="copyModal" class="modal fade" role="dialog"></div>
 
-          <td><a class="update_copy" href="#" data-form="{% url 'update_copy' copy.id %}" title="Edit">Edit</a></td>
-
-          <div id="editModal" class="modal fade" role="dialog"></div>
+        <td><a class="update_copy" href="#" data-form="{% url 'update_copy' copy.id %}" title="Edit">Edit</a></td>
+        <div id="editModal" class="modal fade" role="dialog"></div>
 		</tr>
 	{% endfor %}
 	{% else %}
@@ -82,11 +81,8 @@
 	{% for copy in editted_copies %}
 		<tr>
 			<td>{{ copy }}<td>
-        <td> <a data-target="#copyModal" role="button" class="editbutton" data-toggle="modal">Details</td>
-          {% include "census/copy_modal.html" %}
-
-          <td><a href="{% url 'edit_copy_submission' copy.id %}" class="editbutton" role="button" onclick="return popup(this);">Edit</a></td>
-
+        <td><a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">Details</a></td>
+        <td><a class="update_copy" href="#" data-form="{% url 'update_copy' copy.id %}" title="Edit">Edit</a></td>
     </tr>
 	{% endfor %}
 	{% else %}
@@ -100,28 +96,51 @@
 </div>
 
 <script>
-$(".update_copy").click(function(ev) {
-  ev.preventDefault();
-  var url=$(this).data("form");
-  $("#editModal").load(url, function() {
-    $("#editModal").modal('show');
+$(document).ready(function() {
+  $(".copy_data").unbind('click');
+  $(".copy_data").click(function(ev) {
+    ev.preventDefault();
+    var url=$(this).data("form");
+    $("#copyModal").load(url, function() {
+      $("#copyModal").modal('show');
+    });
+    return false;
   });
-  return false;
+
+  $(".update_copy").unbind('click');
+
+  $(".update_copy").click(function(ev) {
+    ev.preventDefault();
+    var url=$(this).data("form");
+    $("#editModal").load(url, function() {
+      $("#editModal").modal('show');
+    });
+    return false;
+  });
 });
 
-$(function(){
-       $('.editForm').on('submit', function(e){
-            e.preventDefault();
-            $.ajax({
-                url: $('.editForm').action,
-                type: "POST",
-                datatype: "json",
-                success: function(data){
-                  alert("success");
-                }
-            });
-       });
+function generateDialog(copy_id) {
+  $.ajax({
+    url: $('.editForm').attr('action'),
+    type: "POST",
+    datatype: "json",
+    data: $('.editForm').serialize(),
+    success: function(data) {
+      if(Object.keys(data).length === 0) {
+        alert('Invalid! Please make sure there is no missing information!');
+        $("#editModal").modal('show');
+      } else {
+        alert('saved');
+        $("#editModal").modal('hide');
+      }
+      // var url = "copydata/" + copy_id + "/";
+      // $("#copyModal").load(url, function() {
+      //   $("#copyModal").modal('show');
+      // });
+      }
     });
+  return false;
+}
 
 function popup(triggeringLink) {
   var href = triggeringLink.href;

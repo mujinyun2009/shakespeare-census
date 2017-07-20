@@ -64,10 +64,18 @@
           </div>
 
         <div class="modal-footer">
-          <input class="btn btn-primary" type="submit" value="Save" />
-          <input name="cancel" class="btn" type="submit" value="Cancel" />
+          <a href="#" data-toggle="modal" class="btn btn-primary" onclick="generateDialog({{copy_id}});">Save</a>
+          <a href="#" class="btn" data-dismiss="modal">Cancel</a>
         </div>
 </form>
+
+{% if copy_form.errors %}
+    <script>
+    $(function() {
+      $('#editModal').modal('show');
+    });
+    </script>
+{% endif %}
 </div>
 </div>
 </div>

@@ -41,7 +41,7 @@
 <td>{{ copy.issue.STC_Wing }}</td>
 <td>{{ copy.Owner }}</td>
 
-<td> <a data-target="#copyModal" role="button" class="editbutton" data-toggle="modal">Details</td>
+<td> <a data-target="#copyModal{{copy.id}}" role="button" class="editbutton" data-toggle="modal">Details</td>
   {% include "census/copy_modal.html" %}
 
 {% if user.is_authenticated %}

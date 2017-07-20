@@ -49,5 +49,7 @@ urlpatterns = [
 
 	url(r'^welcome$', views.welcome, name='welcome'),
 
+	url(r'^copydata/(?P<copy_id>[0-9]+)/$', views.copy_data, name='copy_data'),
+
 	url(r'^updatecopy/(?P<copy_id>[0-9]+)/$', views.update_copy, name='update_copy'),
 ]
