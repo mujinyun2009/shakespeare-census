@@ -217,6 +217,7 @@ def register(request):
 	template = loader.get_template('census/register.html')
 	if request.method == 'POST':
 		user_form = LoginForm(data=request.POST)
+
 		if user_form.is_valid():
 			# save the new user
 			new_user = User.objects.create_user(
@@ -227,6 +228,7 @@ def register(request):
 				password=user_form.cleaned_data['password1'],
 				)
 			new_user.save()
+			login(request, new_user)
 			return HttpResponseRedirect("welcome")
 		else:
 			context = {
