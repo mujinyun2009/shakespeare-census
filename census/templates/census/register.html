@@ -16,7 +16,7 @@
 		<form id="user_form" method="post" action="{% url 'register' %}">
 				{% csrf_token %}
 			{% if user_form.errors %} 
-			<p class= "sansserif" align="center"> <b>There were some errors in your registration information.<br> Please correct the following:<b></p>
+			<p class= "sansserif" align="center"> <b>Please correct the following:<b></p>
 			<hr class = "style14" width="20%">
 			<table class="errors" align="center">
 			{% for field in user_form %}
