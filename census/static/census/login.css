@@ -80,6 +80,7 @@ a {text-decoration: None}
 a:visited {color:#000000;}
 .login {
   border : none;
+  outline:none;
   position:relative;
   font-family:'Raleway', sans-serif;
   font-weight:300;  

@@ -22,6 +22,7 @@ from django.urls import reverse
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+
 # Create your views here.
 def search(request):
 	template=loader.get_template('results.html')
