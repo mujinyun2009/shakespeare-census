@@ -1,20 +1,25 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+  <link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/css/semantic.min.css'>
+  
+  
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
 
 
 <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
+<i class="large link help icon" style="position:relative; left:90%; top:5%;"></i>
 
 <div class="wrapper">
 <hr class="style14" width = "50%"></hr>
-	<p class="sansserifgrey">
+	<p class="sansserifgrey" style="font-size:12px">
 	Find all of the titles in the database below. <br>To access the editions for a particular entry, click its title.
 	</p>
 </div>
 <hr class="style14" width = "50%"></hr>
 <form method='GET' action=''>
-<input type='text' name ='q' placeholder='Refine your search.' value ='{{ request.GET.q }}' class="refinesearch">
+<input type='text' name ='q' placeholder='Refine your search.' value ='{{ request.GET.q }}' class="refinesearch" style="placeholder{ font-size:10px">
 <br>
 <br>
 
