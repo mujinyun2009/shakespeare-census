@@ -46,6 +46,8 @@ urlpatterns = [
 	url(r'^user_history$', views.user_history, name='user_history'),
 
 	url(r'^editProfile$', views.edit_profile, name='edit_profile'),
-	
+
 	url(r'^welcome$', views.welcome, name='welcome'),
+
+	url(r'^updatecopy/(?P<copy_id>[0-9]+)/$', views.update_copy, name='update_copy'),
 ]

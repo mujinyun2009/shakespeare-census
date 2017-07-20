@@ -521,3 +521,64 @@ def welcome(request):
 		'hello': hello,
 	}
 	return HttpResponse(template.render(context,request))
+
+@login_required()
+def update_copy(request, copy_id):
+	template = loader.get_template('census/edit_modal.html')
+	all_titles = Title.objects.all()
+	copy_to_edit=Copy.objects.get(pk=copy_id)
+	old_issue=copy_to_edit.issue
+	old_edition=old_issue.edition
+	old_title=old_edition.title
+
+	if request.method=='POST':
+		if request.POST.get('cancel', None):
+			return HttpResponseRedirect(reverse('user_history'))
+
+		issue_id=request.POST.get('issue')
+		edition_id=request.POST.get('edition')
+		title_id=request.POST.get('title')
+		if not issue_id or issue_id == 'Z':
+			copy_form=CopyForm(instance=copy_to_edit)
+			messages.error(request, 'Please choose or add an issue.')
+		elif not edition_id or edition_id == 'Z':
+			copy_form=CopyForm(instance=copy_to_edit)
+			messages.error(request, 'Please choose or add an edition.')
+		elif not title_id or title_id == 'Z':
+			copy_form=CopyForm(instance=copy_to_edit)
+			messages.error(request, 'Please choose or add a title.')
+
+		else:
+			selected_issue=Issue.objects.get(pk=issue_id)
+			copy_form=CopyForm(request.POST, instance=copy_to_edit)
+
+			if copy_form.is_valid():
+				new_copy=copy_form.save()
+				new_copy.issue = selected_issue
+				new_copy.save(force_update=True)
+				current_user = request.user
+				current_userHistory=UserHistory.objects.get(user=current_user)
+				current_userHistory.editted_copies.add(new_copy)
+				data=[]
+				data.append(model_to_dict(new_copy))
+				return HttpResponse(json.dumps(data), content_type='application/json')
+				# return HttpResponseRedirect(reverse('user_history'))
+
+			else:
+				messages.error(request, 'The information you entered is invalid.')
+				copy_form=CopyForm(instance=copy_to_edit)
+
+	else:
+		copy_form=CopyForm(instance=copy_to_edit)
+
+	context = {
+	'all_titles': all_titles,
+	'copy_form': copy_form,
+	'copy_id': copy_id,
+	'old_title_id': old_title.id,
+	'old_edition_set': old_title.edition_set.all(),
+	'old_edition_id': old_edition.id,
+	'old_issue_set': old_edition.issue_set.all(),
+	'old_issue_id': old_issue.id,
+	}
+	return HttpResponse(template.render(context, request))
