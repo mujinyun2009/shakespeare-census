@@ -54,7 +54,7 @@ urlpatterns = [
 	url(r'^welcome$', views.welcome, name='welcome'),
     url(r'^password_reset/$', password_reset,
         {'template_name': 'census/password_reset_form.html',
-         'email_template_name': 'WSKsearch/password_reset_email.html',
+         'email_template_name': 'census/password_reset_email.html',
          'subject_template_name': 'WSKsearch/password_reset_subject.txt'},
         name='password_reset'),
     url(r'^user/password_reset_done/$', password_reset_done,
