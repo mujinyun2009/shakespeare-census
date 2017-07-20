@@ -142,7 +142,7 @@ th, td {
     text-align: left;
 
 }
-tr:nth-child(even) {background-color: #f2f2f2}
+tr:nth-child(even):not(.errors) {background-color: #f2f2f2}
 
 th {
     background-color: #ff9966;
@@ -529,5 +529,7 @@ td.hoverspecial:hover {
   display: none;
   overflow: auto;
 }
-
+tr.errors {
+  background-color: none;
+}
 </style>

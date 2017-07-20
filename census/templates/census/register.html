@@ -15,7 +15,16 @@
 		<div id="bodycontent">
 		<form id="user_form" method="post" action="{% url 'register' %}">
 				{% csrf_token %}
-			{% if user_form.errors %} <p class= "sansserif" align="center"> Please correct the error{{ user_form.errors|pluralize }} below. </p> {% endif %}
+			{% if user_form.errors %} 
+			<p class= "sansserif" align="center"> <b>There were some errors in your registration information.<br> Please correct the following:<b></p>
+			<hr class = "style14" width="20%">
+			<table class="errors" align="center">
+			{% for field in user_form %}
+			{% if field.errors %}<tr class="errors"><td> <b><center>{{ field.label }}:</b> {{ field.errors|striptags }}</center></td> </tr> {% endif %}
+			{% endfor %}
+			</table>
+			<hr class = "style14" width="20%">
+			{% endif %}
 				<table class="registertable" align='center'>
 				    <tr>
 				    <td>Username: </td>
@@ -42,6 +51,8 @@
 				    <td>{{ user_form.password2 }}</td>
 				    </tr>
 				    </table>
+			
+			
 <br>
 				<input type="submit" class = "finalsubmit" name="submit" value="Register"/>
 			</p>

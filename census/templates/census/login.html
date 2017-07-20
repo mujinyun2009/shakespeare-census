@@ -44,7 +44,11 @@ account</p></a>
         <center><p class="sansserif">We could not find your account.<br> <font size= "2">Perhaps you've mistyped your username/password?</font></p></center>
         {% endif %}
     <div class="content-form">
-            <form id="login_form" method="post" action="/login">
+        {% if next %}
+          <form id="login_form" method="post" action="/login/?next={{next}}">
+        {% else %}
+          <form id="login_form" method="post" action="/login">
+        {% endif %}
                 {% csrf_token %}
                 <center>&nbsp;</center>
                 <table class = "center2">

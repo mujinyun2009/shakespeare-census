@@ -18,7 +18,7 @@ class EditionForm(forms.ModelForm):
 		exclude = ['title']
 
 class CopyForm(forms.ModelForm):
-	thumbnail_URL = forms.URLField(widget=forms.TextInput(attrs={'size':'80'}), error_messages={'invalid': 'Enter a valid url'})
+	thumbnail_URL = forms.URLField(widget=forms.TextInput(attrs={'size':'80'}), error_messages={'invalid': 'Enter a valid url.'})
 	class Meta:
 		model = Copy
 		exclude = ['issue', 'created_by']
@@ -35,7 +35,7 @@ class ProvenanceForm(forms.ModelForm):
 
 class LoginForm(forms.ModelForm):
 	error_messages = {'password_mismatch': "The two password fields didn't "
-					  "match. Please enter both fields again",
+					  "match. Please enter both fields again.",
 					  }
 	password1 = forms.CharField(widget=forms.PasswordInput,
 				max_length=50,
@@ -78,9 +78,9 @@ class LoginForm(forms.ModelForm):
 		data = self.cleaned_data['email']
 		if data.endswith("upenn.edu"):
 			if User.objects.filter(email=data).exists():
-				raise forms.ValidationError("This email is already used")
+				raise forms.ValidationError("This email is already used.")
 		else:
-			raise forms.ValidationError("Must be a Penn email address")
+			raise forms.ValidationError("Must be a Penn email address.")
 		return data
 
 class editProfileForm(forms.ModelForm):
@@ -95,7 +95,7 @@ class editProfileForm(forms.ModelForm):
 		data = self.cleaned_data['email']
 		if data.endswith("upenn.edu"):
 			if not data == self.instance.email and User.objects.filter(email=data).exists():
-				raise forms.ValidationError("This email is already used")
+				raise forms.ValidationError("This email is already used.")
 		else:
-			raise forms.ValidationError("Must be a Penn email address")
+			raise forms.ValidationError("Must be a Penn email address.")
 		return data

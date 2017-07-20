@@ -46,9 +46,8 @@
 <td> <a data-target="#copyModal" role="button" class="editbutton" data-toggle="modal">Details</td>
   {% include "census/copy_modal.html" %}
 
-{% if user.is_authenticated %}
-<td><a href="{% url 'edit_copy_submission' copy.id %}" class="resultbuttons" role="button" onclick="return popup(this);">Edit</a></td>
-{% endif %}
+<td>{% if user.is_authenticated %}
+<a href="{% url 'edit_copy_submission' copy.id %}" class="resultbuttons" role="button" onclick="return popup(this);">Edit</a>{% endif %}</td>
 </tr>
 {% endfor %}
 </tbody>

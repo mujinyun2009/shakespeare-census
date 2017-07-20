@@ -229,10 +229,15 @@ def register(request):
 			new_user.save()
 			return HttpResponseRedirect("welcome")
 		else:
+			context = {
+			'user_form.errors': user_form.errors,
+			'user_form': user_form,
+			}
 			print(user_form.errors)
 	else:
 		user_form = LoginForm()
 	return HttpResponse(template.render({'user_form': user_form}, request))
+
 
 def login_user(request):
 	template = loader.get_template('census/login.html')
@@ -245,6 +250,7 @@ def login_user(request):
 			next_url = request.POST.get('next',default=request.GET.get('next', 'login.html'))
 			if request.GET.get('next') is None:
 				next_url = "homepage"
+				print(request.GET.get('next'))
 			return HttpResponseRedirect(next_url)
 		else:
 			return HttpResponse(template.render({'failed': True}, request))
