@@ -4,7 +4,7 @@ from .models import *
 from django.forms import inlineformset_factory, TextInput, formset_factory
 import datetime
 
-class TitleForm(forms.ModelForm):
+class TitleForm(forms.ModelForm):	
 	class Meta:
 		model = Title
 		fields = '__all__'

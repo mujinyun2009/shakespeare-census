@@ -390,15 +390,15 @@ def add_title(request):
 			title = title_form.save(commit=True)
 			myScript = '<script type="text/javascript">opener.dismissAddAnotherTitle(window, "%s", "%s");</script>' % (title.id, title.title)
 			return HttpResponse(myScript)
-			# return HttpResponseRedirect(reverse('test_modal'))
 		else:
 			print(title_form.errors)
 	else:
 		title_form=TitleForm()
 
 	context = {
-	   'title_form': title_form
+	   'title_form': title_form,
 	}
+	
 	return HttpResponse(template.render(context, request))
 
 @login_required()

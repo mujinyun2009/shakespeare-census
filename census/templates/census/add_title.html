@@ -17,8 +17,15 @@
 		<table class = "table2" align="center">
 		{% for field in title_form.visible_fields %}
 		<tr>
+			{% if field.errors %}
+				{% for error in field.errors %}
+	            <div class="alert alert-danger">
+	                <strong>{{ error|escape }}</strong>
+	            </div>
+	        {% endfor %}
+			{% endif %}
 		<td> {{ field.label_tag }}</td>
-		<td> {{ field}}</td>
+		<td> {{ field }}</td>
 		</tr>
 		{% endfor %}
 		</table>
