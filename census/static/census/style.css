@@ -240,7 +240,7 @@ textarea:focus {
   height: 35px;
   left:0%;
   padding:0px;
-  width:auto;
+  width:200px;
   margin:auto;
   border:none;
   color:#000000;
@@ -250,10 +250,32 @@ textarea:focus {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-
   font-family:"Century Gothic", AppleGothic, sans-serif;
   font-weight: lighter;
 }
+.submissionselect3 {
+  text-align:center;
+  outline:none;
+  background-color: #FFFFFF;
+  position: relative;
+  height: 35px;
+  left:0%;
+  padding:0px;
+  width:150px;
+  margin:auto;
+  border:none;
+  color:#000000;
+  font-size:15px;
+  -webkit-appearance:none;
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIwLjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA0LjkgMTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQuOSAxMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOiM0NDQ0NDQ7fQo8L3N0eWxlPgo8dGl0bGU+YXJyb3dzPC90aXRsZT4KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIxLjQsNC43IDIuNSwzLjIgMy41LDQuNyAiLz4KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIzLjUsNS4zIDIuNSw2LjggMS40LDUuMyAiLz4KPC9zdmc+Cg==)no-repeat 103% 50% ;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  font-family:"Century Gothic", AppleGothic, sans-serif;
+  font-weight: lighter;
+}
+
+
 
 .finalsubmit:hover {
   border : none;
@@ -334,6 +356,16 @@ input:focus:not(.finalsubmit) {
   left:0%;
   color: #FFFFFF;
   background: #ff9966;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+}
+.editmodalsubmission {
+  font-size:12px;
+  border : none;
+  padding: 0px 0px;
+  position:relative;
+  left:0%;
+  color: #FFFFFF;
+  background: #FFFFFF;
   font-family: "Century Gothic", AppleGothic, sans-serif;
 }
 

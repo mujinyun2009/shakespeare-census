@@ -2,7 +2,7 @@
   <div class="modal-content">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 align="left" class="modal-title">Edit copy</h4>
+        <p class="sansserif" align="left" class="modal-title" style="font-weight:bolder;">Edit copy</p>
     </div>
     <div class="modal-body">
         <script type="text/javascript" src="/static/census/edit_dropdown.js"></script>
@@ -11,7 +11,7 @@
         	{% csrf_token %}
           <div>
             <p>Select a title</p>
-            <select name="title" id="title" class = "submissionselect2">
+            <select name="title" id="title" class="submissionselect2">
           		<option value="Z">Select a title</option>
             {% for title in all_titles %}
           		{% if title.id == old_title_id %}
@@ -22,13 +22,13 @@
             {% endfor %}
             </select>
 
-            <button class="btn btn-info"><a href="{% url 'add_title' %}" name="add another title" onclick="return showAddAnotherPopup(this);">Add title+</a></button>
+            <button class="editmodalsubmission"><a href="{% url 'add_title' %}" name="add another title" onclick="return showAddAnotherPopup(this);">Add title+</a></button>
 
           </div>
 
           <div class='edition_section' id ='edition_section'>
             <p>Select an edition</p>
-            <select name="edition" id="edition">
+            <select name="edition" id="edition" class="submissionselect3">
           		<option value="Z">Select an edition</option>
           	  {% for edition in old_edition_set %}
           			{% if edition.id == old_edition_id %}
@@ -43,7 +43,7 @@
 
           <div class='issue_section' id='issue_section'>
             <p>Select an issue</p>
-            <select name="issue" id="issue">
+            <select name="issue" id="issue" class="submissionselect3">
           		<option value="Z">Select an issue</option>
           		{% for issue in old_issue_set %}
           			{% if issue.id == old_issue_id %}
