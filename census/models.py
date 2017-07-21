@@ -45,10 +45,10 @@ class Copy (models.Model):
 	Binder = models.CharField(max_length=40)
 	Bookplate = models.CharField(max_length=40)
 	Bookplate_Location = models.CharField(max_length=100)
-	Barlett1939 = models.IntegerField(default=0)
-	Barlet1939_Notes = models.CharField(max_length=1000)
-	Barlet1916 = models.IntegerField(default=0)
-	Barlet1916_Notes = models.CharField(max_length=1000)
+	Bartlett1939 = models.IntegerField(default=0)
+	Bartlett1939_Notes = models.CharField(max_length=1000)
+	Bartlett1916 = models.IntegerField(default=0)
+	Bartlett1916_Notes = models.CharField(max_length=1000)
 	Lee_Notes = models.CharField(max_length=2000)
 	Library_Notes=models.CharField(max_length=2000)
 	created_by=models.ForeignKey(User, related_name="submitted_copies", default=1, null=True)
@@ -86,7 +86,7 @@ class Transaction(models.Model):
 
 class UserHistory(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	editted_copies = models.ManyToManyField(Copy, null=True, blank=True)
+	edited_copies = models.ManyToManyField(Copy, null=True, blank=True)
 
 	def __str__(self):
 		return self.user.username

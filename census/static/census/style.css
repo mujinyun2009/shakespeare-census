@@ -204,23 +204,7 @@ textarea:focus {
   outline:0;
 }
 .submissionselect:hover{
-  text-align:center;
-  outline:none;
-  background-color: #FFFFFF;
-  position: relative;
-  height: 35px;
-  left:0%;
-  width:137px;
-  margin:auto;
   color:#000000;
-  font-size:15px;
-  -webkit-appearance:none;
-  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIwLjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA0LjkgMTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQuOSAxMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOiM0NDQ0NDQ7fQo8L3N0eWxlPgo8dGl0bGU+YXJyb3dzPC90aXRsZT4KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIxLjQsNC43IDIuNSwzLjIgMy41LDQuNyAiLz4KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIzLjUsNS4zIDIuNSw2LjggMS40LDUuMyAiLz4KPC9zdmc+Cg==)no-repeat 103% 50% ;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
-  font-family:"Century Gothic", AppleGothic, sans-serif;
-  font-weight: lighter;
 
 }
 .submissionselect {
@@ -569,6 +553,81 @@ tr.errors {
     animation-timing-function: ease-in-out;
   }
 }
+.submitted_line {
+  font-size:25px;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  text-align: center;
+  margin-top:10%;
+}
+.newcopy {
+  font-size:15px;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  padding: 10px;
+  width:20%;
+  margin:auto;
+  background-color:#a7c87b;
+  text-align: center;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
 
+}
+.newcopy:hover {
+  background-color:#9eb245;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+
+}
+
+.forgotpassannouncer {
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  position:relative;
+  margin-top:100px;
+  font-size:40px;
+  font-weight:bolder;
+  text-align:center;
+}
+.forgotpassannouncer2 {
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  font-size:15px;
+  font-weight:lighter;
+  text-align:center;
+}
+
+.forgotpassannouncer3 {
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  position:relative;
+  margin-top:100px;
+  font-size:30px;
+  font-weight:bolder;
+  text-align:center;
+}
+.newpasswordform{
+    position:relative;
+    width:auto;
+    margin:0 auto;
+    left:25%;
+}
+.newlogin:hover {
+  -webkit-transition: background 0.3s;
+  transition: background 0.3s;
+  background: #a7c87b;
+}
+
+.newlogin {
+  border : none;
+  position:relative;
+  display:block;
+  text-align:center;
+  transition: background 0.3s;
+  -webkit-transition: background 0.3s;
+  margin:0 auto;
+  width:300px;
+  padding:10px 30px;
+  height:20px;
+  font-size:15px;
+  color: #FFFFFF;
+  background: #8FBC8F;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+}
 
 </style>
