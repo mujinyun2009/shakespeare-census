@@ -383,7 +383,7 @@ def json_issues(request, id):
 
 @login_required()
 def add_title(request):
-	template=loader.get_template('census/addTitle.html')
+	template=loader.get_template('census/add_title.html')
 	if request.method == 'POST':
 		title_form= TitleForm(data=request.POST)
 		if title_form.is_valid():
@@ -403,7 +403,7 @@ def add_title(request):
 
 @login_required()
 def add_edition(request, title_id):
-	template=loader.get_template('census/addEdition.html')
+	template=loader.get_template('census/add_edition.html')
 	selected_title =Title.objects.get(pk=title_id)
 	if request.method=='POST':
 		edition_form=EditionForm(data=request.POST)
@@ -426,7 +426,7 @@ def add_edition(request, title_id):
 
 @login_required()
 def add_issue(request, edition_id):
-	template=loader.get_template('census/addIssue.html')
+	template=loader.get_template('census/add_issue.html')
 	selected_edition =Edition.objects.get(pk=edition_id)
 
 	if request.method=='POST':
@@ -450,7 +450,7 @@ def add_issue(request, edition_id):
 
 @login_required()
 def display_user_profile(request):
-	template=loader.get_template('census/userProfile.html')
+	template=loader.get_template('census/user_profile.html')
 	current_user=request.user
 	context={
 		'user': current_user,
@@ -459,7 +459,7 @@ def display_user_profile(request):
 
 @login_required()
 def edit_profile(request):
-	template=loader.get_template('census/editProfile.html')
+	template=loader.get_template('census/edit_profile.html')
 	current_user=request.user
 	if request.method=='POST':
 		profile_form = editProfileForm(request.POST, instance=current_user)
@@ -479,7 +479,7 @@ def edit_profile(request):
 
 @login_required()
 def user_history(request):
-	template=loader.get_template('census/userHistory.html')
+	template=loader.get_template('census/user_history.html')
 	current_user=request.user
 	copy_form=CopyForm()
 	all_titles=Title.objects.all()
