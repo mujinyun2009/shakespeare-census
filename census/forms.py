@@ -20,13 +20,13 @@ class EditionForm(forms.ModelForm):
 		exclude = ['title']
 
 class CopyForm(forms.ModelForm):
-	thumbnail_URL = forms.URLField(widget=forms.TextInput(attrs={'size':'80'}), error_messages={'invalid': 'Enter a valid url.'})
+	thumbnail_URL = forms.URLField(widget=forms.TextInput(attrs={'size':'80'}), error_messages={'invalid': 'Enter a valid url.'}, required=False)
 	class Meta:
 		model = Copy
 		exclude = ['issue', 'created_by']
 
 class IssueForm(forms.ModelForm):
-	error_messages={"Incorrect year format": "Invalid published year! Please follow the examples to enter correct information."}
+	error_messages={"Incorrect year format": "Invalid published year. Please follow the examples to enter correct information."}
 
 	DEEP=forms.IntegerField(required=False, initial=0)
 	year=forms.CharField(label="Year published", help_text="Examples: 1600, 1600?, 1650-1700, 1650-1700?",required=True)

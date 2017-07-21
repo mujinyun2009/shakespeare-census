@@ -11,7 +11,7 @@
         	{% csrf_token %}
           <div>
             <p>Select a title</p>
-            <select name="title" id="title">
+            <select name="title" id="title" class = "submissionselect2">
           		<option value="Z">Select a title</option>
             {% for title in all_titles %}
           		{% if title.id == old_title_id %}
