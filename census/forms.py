@@ -5,6 +5,7 @@ from django.forms import inlineformset_factory, TextInput, formset_factory
 import datetime
 
 class TitleForm(forms.ModelForm):
+	title=forms.CharField(required=True)
 	class Meta:
 		model = Title
 		fields = '__all__'
@@ -25,13 +26,35 @@ class CopyForm(forms.ModelForm):
 		exclude = ['issue', 'created_by']
 
 class IssueForm(forms.ModelForm):
-	DEEP=forms.IntegerField(required=False)
-	year=forms.CharField(help_text="Examples: 1600, 1600?, 1650-1700, 1650-1700?",required=True)
+	error_messages={"Incorrect year format": "Invalid published year! Please follow the examples to enter correct information."}
+
+	DEEP=forms.IntegerField(required=False, initial=0)
+	year=forms.CharField(label="Year published", help_text="Examples: 1600, 1600?, 1650-1700, 1650-1700?",required=True)
 	notes=forms.CharField(label="Notes about the issue", required=False)
 	Variant_Description=forms.CharField(required=False)
 	class Meta:
 		model = Issue
 		exclude = ['edition', 'start_date', 'end_date']
+
+	def clean_year(self):
+		entered_year=self.cleaned_data['year']
+		length = len(entered_year)
+		if entered_year.endswith('?'):
+			entered_year=entered_year[:length-1]
+		hyphen = entered_year.find('-')
+		if hyphen > -1:
+			if hyphen==0 or hyphen == length - 1:
+				raise forms.ValidationError(self.error_messages['Incorrect year format'])
+			else:
+				start_date=entered_year[:hyphen]
+				end_date=entered_year[hyphen+1:]
+				if not start_date.isdigit() or not end_date.isdigit():
+					raise forms.ValidationError(self.error_messages['Incorrect year format'])
+		else:
+			if not entered_year.isdigit():
+				raise forms.ValidationError(self.error_messages['Incorrect year format'])
+		return entered_year
+
 
 class ProvenanceForm(forms.ModelForm):
 	class Meta:

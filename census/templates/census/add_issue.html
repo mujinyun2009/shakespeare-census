@@ -19,8 +19,9 @@
 		</tr>
 		<tr>
 		<td> {{ field.label_tag }}{% if field.field.required %}*{% endif %}</td>
-		<td> {{ field}}</td>
+		<td> {{ field}} {% if field.help_text %} ({{ field.help_text|safe}}) {% endif %}</td>
 		</tr>
+
 		{% endfor %}
 		</table>
 		<br>

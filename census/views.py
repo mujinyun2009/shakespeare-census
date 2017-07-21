@@ -21,6 +21,7 @@ import json
 from django.urls import reverse
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import re
 
 # Create your views here.
 def search(request):
@@ -434,6 +435,15 @@ def add_issue(request, edition_id):
 		issue_form=IssueForm(data=request.POST)
 		if issue_form.is_valid():
 			issue=issue_form.save(commit=False)
+			year_published=issue_form.cleaned_data['year']
+			raw_nums = re.findall('\d+', year_published)
+			issue.start_date = int(raw_nums[0])
+
+			if len(raw_nums) == 1:
+				issue.end_date = issue.start_date
+			else:
+				issue.end_date = raw_nums[1]
+
 			issue.edition=selected_edition
 			issue.save()
 			myScript = '<script type="text/javascript">opener.dismissAddAnotherIssue(window, "%s", "%s");</script>' % (issue.id, issue.STC_Wing)
