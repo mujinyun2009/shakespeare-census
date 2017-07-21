@@ -7,17 +7,105 @@
       </div>
       <div class="modal-body">
           <p align="left">Title: {{ copy.issue.edition.title }}</p>
-          <p align="left">Edition: {{ copy.issue.edition }}</p>
-          <p align="left">Issue: {{ copy.issue }}</p>
-          <p align="left">Thumbnail URL: {{ copy.thumbnail_URL }}</p>
-          <p align="left"> NSC: {{ copy.NSC }}</p>
-          <p align="left"> Owner: {{ copy.Owner }}</p>
-          <p align="left">Shelfmark: {{ copy.Shelfmark }}</p>
-          <p align="left">Height: {{ copy.Height }}</p>
-          <p align="left">Width: {{ copy.Width }}</p>
-          <p align="left"> Marginalia: {{ copy.Marginalia }}</p>
+          <p align="left">Apocryphal: {{ copy.issue.edition.title.Apocryphal }}</p>
+          <p align="left">Edition number: {{ copy.issue.edition.Edition_number }}</p>
+
+          {% if copy.issue.edition.Edition_format %}
+            <p align="left">Edition format: {{ copy.issue.edition.Edition_format }}</p>
+          {% endif %}
+
+          <p align="left">Year published: {{ copy.issue.year }}</p>
+          <p align="left">STC/Wing: {{ copy.issue.STC_Wing }}</p>
+          <p align="left">ESTC: {{ copy.issue.ESTC }}</p>
+
+          {% if copy.issue.DEEP %}
+            <p align="left">DEEP: {{ copy.issue.DEEP }}</p>
+          {% endif %}
+
+          {% if copy.issue.notes %}
+            <p align="left">Notes about issue: {{ copy.issue.notes }}</p>
+          {% endif %}
+
+          {% if copy.issue.Variant_Description %}
+            <p align="left">Variant description: {{ copy.issue.Variant_Description }}</p>
+          {% endif %}
+
+          {% if copy.thumbnail_URL %}
+            <p align="left">Thumbnail URL: {{ copy.thumbnail_URL }}</p>
+          {% endif %}
+
+          {% if copy.NSC %}
+          <p align="left">NSC: {{ copy.NSC }}</p>
+          {% endif %}
+
+          {% if copy.Owner %}
+          <p align="left">Owner: {{ copy.Owner }}</p>
+          {% endif %}
+
+          {% if copy.Shelfmark %}
+            <p align="left">Shelfmark: {{ copy.Shelfmark }}</p>
+          {% endif %}
+
+          {% if copy.Height %}
+            <p align="left">Height: {{ copy.Height }}</p>
+          {% endif %}
+
+          {% if copy.Width %}
+            <p align="left">Width: {{ copy.Width }}</p>
+          {% endif %}
+
+          {% if copy.Marginalia %}
+          <p align="left">Marginalia: {{ copy.Marginalia }}</p>
+          {% endif %}
+
+          {% if copy.Condition %}
           <p align="left">Condition: {{ copy.Condition }}</p>
+          {% endif %}
+
+          {% if copy.Binding %}
           <p align="left">Binding: {{ copy.Binding }}</p>
+          {% endif %}
+
+          {% if copy.Binder %}
+            <p align="left">Binder: {{ copy.Binder }}</p>
+          {% endif %}
+
+          {% if copy.Bookplate %}
+          <p align="left">Bookplate: {{ copy.Bookplate }}</p>
+          {% endif %}
+
+          {% if copy.Bookplate_Location %}
+          <p align="left">Bookplate location: {{ copy.Bookplate_Location }}</p>
+          {% endif %}
+
+          {% if copy.Barlett1939 %}
+            <p align="left">Barlett 1939: {{ copy.Barlett1939 }}</p>
+          {% endif %}
+
+          {% if copy.Barlet1939_Notes %}
+            <p align="left">Barlett 1939 notes: {{ copy.Barlet1939_Notes }}</p>
+          {% endif %}
+
+          {% if copy.Barlet1916 %}
+            <p align="left">Barlett 1916: {{ copy.Barlet1916 }}</p>
+          {% endif %}
+
+          {% if copy.Barlet1916_Notes %}
+            <p align="left">Barlett 1916 notes: {{ copy.Barlet1916_Notes }}</p>
+          {% endif %}
+
+          {% if copy.Lee_Notes %}
+            <p align="left">Lee notes: {{ copy.Lee_Notes }}</p>
+          {% endif %}
+
+          {% if copy.Library_Notes %}
+            <p align="left">Library notes: {{ copy.Library_Notes }}</p>
+          {% endif %}
+
+          {% if copy.copynote %}
+            <p align="left">Other notes: {{ copy.copynote }}</p>
+          {% endif %}
+
           <p align="left">Submitted by: {{ copy.created_by }}</p>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

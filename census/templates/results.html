@@ -6,6 +6,7 @@
 </head>
 <script type="text/javascript" src="/static/census/bootstrap-modal.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'census/modal.css' %}" />
+<script type="text/javascript" src="/static/census/copy_detail_edit_modal.js"></script>
 
 {%if result_list%}
 <hr class="style14" width = "50%"></hr>
@@ -16,7 +17,6 @@
 <hr class = "style14" width = "50%"></hr>
 
 </br>
-<!-- <center> -->
 <table class="table table-striped" align="center" style="width:70%">
   <thead>
 <th colspan="8">Books found:</th>
@@ -41,11 +41,12 @@
 <td>{{ copy.issue.STC_Wing }}</td>
 <td>{{ copy.Owner }}</td>
 
-<td> <a data-target="#copyModal{{copy.id}}" role="button" class="editbutton" data-toggle="modal">Details</td>
-  {% include "census/copy_modal.html" %}
+<td><a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">Details</a></td>
+<div id="copyModal" class="modal fade" role="dialog"></div>
 
 {% if user.is_authenticated %}
-<td><a href="{% url 'edit_copy_submission' copy.id %}" class="resultbuttons" role="button" onclick="return popup(this);">Edit</a></td>
+<td><a class="update_copy" href="#" data-form="{% url 'update_copy' copy.id %}" title="Edit">Edit</a></td>
+<div id="editModal" class="modal fade" role="dialog"></div>
 {% endif %}
 </tr>
 {% endfor %}
@@ -78,7 +79,7 @@
 			{% endif %}
 		</tr>
 	</table>
-	Pages generated: {{ result_list.paginator.num_pages }}
+	<p align="center">Pages generated: {{ result_list.paginator.num_pages }}</p>
 </div>
 <br>
 <br>
@@ -90,16 +91,5 @@
 <hr class="style14" width = "50%"></hr>
 </div>
 {% endif %}
-<!-- </center> -->
-
-<script>
-function popup(triggeringLink) {
-	var href = triggeringLink.href;
-	var name = triggeringLink.name;
-	var win = window.open(href, name, "height=800,width=1000,resizable=yes,scrollbars=yes");
-	win.focus();
-	return false;
-}
-</script>
 </div>
 {% endblock content %}

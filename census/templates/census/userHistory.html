@@ -7,6 +7,7 @@
   <link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
   <script type="text/javascript" src="/static/census/bootstrap-modal.js"></script>
   <link rel="stylesheet" type="text/css" href="{% static 'census/modal.css' %}" />
+  <script type="text/javascript" src="/static/census/copy_detail_edit_modal.js"></script>
 
 <div class = "history">Your contributions: </div>
 <br>
@@ -95,59 +96,4 @@
 </div>
 </div>
 
-<script>
-$(document).ready(function() {
-  $(".copy_data").unbind('click');
-  $(".copy_data").click(function(ev) {
-    ev.preventDefault();
-    var url=$(this).data("form");
-    $("#copyModal").load(url, function() {
-      $("#copyModal").modal('show');
-    });
-    return false;
-  });
-
-  $(".update_copy").unbind('click');
-
-  $(".update_copy").click(function(ev) {
-    ev.preventDefault();
-    var url=$(this).data("form");
-    $("#editModal").load(url, function() {
-      $("#editModal").modal('show');
-    });
-    return false;
-  });
-});
-
-function generateDialog(copy_id) {
-  $.ajax({
-    url: $('.editForm').attr('action'),
-    type: "POST",
-    datatype: "json",
-    data: $('.editForm').serialize(),
-    success: function(data) {
-      if(Object.keys(data).length === 0) {
-        alert('Invalid! Please make sure there is no missing information!');
-        $("#editModal").modal('show');
-      } else {
-        alert('saved');
-        $("#editModal").modal('hide');
-      }
-      // var url = "copydata/" + copy_id + "/";
-      // $("#copyModal").load(url, function() {
-      //   $("#copyModal").modal('show');
-      // });
-      }
-    });
-  return false;
-}
-
-function popup(triggeringLink) {
-  var href = triggeringLink.href;
-  var name = triggeringLink.name;
-  var new_win = window.open(href, name, "height=800,width=1000,left=300,top=200,resizable=yes,scrollbars=yes");
-  new_win.focus();
-  return false;
-}
-</script>
 {% endblock content %}
