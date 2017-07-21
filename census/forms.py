@@ -4,7 +4,7 @@ from .models import *
 from django.forms import inlineformset_factory, TextInput, formset_factory
 import datetime
 
-class TitleForm(forms.ModelForm):	
+class TitleForm(forms.ModelForm):
 	class Meta:
 		model = Title
 		fields = '__all__'
@@ -13,6 +13,7 @@ class SearchForm(forms.Form):
     search = forms.CharField()
 
 class EditionForm(forms.ModelForm):
+	Edition_format=forms.CharField(required=False)
 	class Meta:
 		model = Edition
 		exclude = ['title']
@@ -24,9 +25,13 @@ class CopyForm(forms.ModelForm):
 		exclude = ['issue', 'created_by']
 
 class IssueForm(forms.ModelForm):
+	DEEP=forms.IntegerField(required=False)
+	year=forms.CharField(help_text="Examples: 1600, 1600?, 1650-1700, 1650-1700?",required=True)
+	notes=forms.CharField(label="Notes about the issue", required=False)
+	Variant_Description=forms.CharField(required=False)
 	class Meta:
 		model = Issue
-		exclude = ['edition']
+		exclude = ['edition', 'start_date', 'end_date']
 
 class ProvenanceForm(forms.ModelForm):
 	class Meta:

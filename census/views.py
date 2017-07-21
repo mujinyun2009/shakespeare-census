@@ -227,6 +227,7 @@ def register(request):
 				password=user_form.cleaned_data['password1'],
 				)
 			new_user.save()
+			login(request, new_user)
 			return HttpResponseRedirect("welcome")
 		else:
 			print(user_form.errors)
@@ -398,7 +399,7 @@ def add_title(request):
 	context = {
 	   'title_form': title_form,
 	}
-	
+
 	return HttpResponse(template.render(context, request))
 
 @login_required()

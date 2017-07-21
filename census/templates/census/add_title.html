@@ -1,12 +1,43 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<style>
+ul.errorlist {
+    margin: 0 0 4px;
+    padding: 0;
+    color: #ba2121;
+    background: #fff;
+}
 
+ul.errorlist li {
+    font-size: 13px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+ul.errorlist li:first-child {
+    margin-top: 0;
+}
+
+ul.errorlist li a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+td ul.errorlist {
+    margin: 0;
+    padding: 0;
+}
+
+td ul.errorlist li {
+    margin: 0;
+}
+</style>
 <script type="text/javascript" src="/static/census/popup_script.js"></script>
 
 <div align="center">
 	<p class="sansserifgrey">
-	<font size = "6"> <light>Title</light> </font></br>1. Input your title. </br> 2. Click "Submit".
+	<font size = "6"> <light>Title</light> </font></br>1. Input your title. Fields with * are required.</br> 2. Click "Submit".
 	</p>
 </div>
 <div align="center">
@@ -16,17 +47,15 @@
 		{% csrf_token %}
 		<table class = "table2" align="center">
 		{% for field in title_form.visible_fields %}
-		<tr>
+			<tr>
+			<td> {{ field.label_tag }}{% if field.field.required %}*{% endif %}</td>
+			<td> {{ field }}</td>
+			</tr>
+			<tr>
 			{% if field.errors %}
-				{% for error in field.errors %}
-	            <div class="alert alert-danger">
-	                <strong>{{ error|escape }}</strong>
-	            </div>
-	        {% endfor %}
+				<ul class="errorlist">{% for error in field.errors %}<li>{{error}}</li>{% endfor %}</ul>
 			{% endif %}
-		<td> {{ field.label_tag }}</td>
-		<td> {{ field }}</td>
-		</tr>
+			</tr>
 		{% endfor %}
 		</table>
 		<br>
