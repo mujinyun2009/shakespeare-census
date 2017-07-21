@@ -80,6 +80,7 @@ a {text-decoration: None}
 a:visited {color:#000000;}
 .login {
   border : none;
+  outline:none;
   position:relative;
   font-family:'Raleway', sans-serif;
   font-weight:300;  
@@ -101,9 +102,48 @@ input[type=submit]{
 	font-size:10px;
 	height:30px;
 }
+
+#submitz .reset {
+  color:#000000;
+  visibility: hidden;
+  background: transparent;
+  overflow: hidden;
+  transform-origin: 50% 0%;
+
+}
 input[type=submit]:hover{
   color:#FFEBCD;
 }
+
+#submitz:hover .reset {
+  visibility: visible;
+  animation-name: swingdown;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes swingdown {
+  0% {
+    opacity: .99999;
+    transform: rotateX(90deg);
+  }
+
+  30% {     
+    transform: rotateX(-20deg) rotateY(5deg);
+    animation-timing-function: ease-in-out;
+  }
+
+  65% {
+    transform: rotateX(20deg) rotateY(-3deg);
+    animation-timing-function: ease-in-out;
+  }
+
+  100% {
+    transform: rotateX(0);
+    animation-timing-function: ease-in-out;
+  }
+}
+
 input {
     border: none;
     color: #FFFFFF;

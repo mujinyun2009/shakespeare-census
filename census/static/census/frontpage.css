@@ -142,6 +142,8 @@ input[type=text]:focus {
   width: 100px;
   height:50px;
   border : none;
+  -webkit-transition: background 0.3s;
+  transition: background 0.3s;
   left: 0%;
   padding: 10px 30px;
   position:relative;
@@ -150,6 +152,11 @@ input[type=text]:focus {
   font-family:'Raleway', sans-serif;
   font-weight:300;
 }
+.addfields:hover {
+   -webkit-transition: background 0.3s;
+  transition: background 0.3s;
+  background: #ffb25b;
+}
 .Submission {
   text-decoration: none;
   border : none;
@@ -157,11 +164,18 @@ input[type=text]:focus {
   position:relative;
   width:100px;
   height:50px;
+  -webkit-transition: background 0.3s;
+  transition: background 0.3s;
   left:0%;
   color: #FFFFFF;
   background: #8FBC8F;
   font-family:'Raleway', sans-serif;
   font-weight:300;
+}
+.Submission:hover {
+  -webkit-transition: background 0.3s;
+  transition: background 0.3s;
+  background: #a7c87b;
 }
 p.title {
   font-family: "Century Gothic", AppleGothic, sans-serif;

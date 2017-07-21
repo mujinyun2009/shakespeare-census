@@ -1,4 +1,32 @@
+<style>
+.modal-title {
+  font-weight: lighter;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+}
+p.sansserifbold {
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  font-weight:bolder;
+}
+p.sansserif {
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  font-weight:lighter;
+}
+.closebutton {
+  border:none;
+  background:none;
+  font-size:15px;
+  font-weight: lighter;
+}
+.closebutton:hover {
+  border:none;
+  background:none;
+  font-size:15px;
+  font-weight: lighter;
+  color:#a4b7d6;
+}
 
+</style>
+<div id="copyModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -108,7 +136,7 @@
 
           <p align="left">Submitted by: {{ copy.created_by }}</p>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="closebutton" data-dismiss="modal">close</button>
         </div>
       </div>
     </div>

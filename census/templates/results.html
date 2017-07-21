@@ -1,14 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<head>
-<title>Shakespeare Census</title>
-</head>
+<link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
 <script type="text/javascript" src="/static/census/bootstrap-modal.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'census/modal.css' %}" />
 <script type="text/javascript" src="/static/census/copy_detail_edit_modal.js"></script>
 
-{%if result_list%}
+{% if result_list %}
 <hr class="style14" width = "50%"></hr>
 	<p class="sansserifgrey" align="center">
 	Find searches below.
@@ -79,13 +77,13 @@
 			{% endif %}
 		</tr>
 	</table>
-	<p align="center">Pages generated: {{ result_list.paginator.num_pages }}</p>
+	<p align="center"> Pages generated: {{ result_list.paginator.num_pages }} </p>
 </div>
 <br>
 <br>
 {%else%}
 <hr class="style14" width = "50%"></hr>
-	<p class="sansserifgrey">
+	<p class="sansserifgrey" align="center">
 	No matches were found.<br> Did you misspell your query?
 	</p>
 <hr class="style14" width = "50%"></hr>

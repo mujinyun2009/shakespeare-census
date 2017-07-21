@@ -23,6 +23,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import re
 
+
 # Create your views here.
 def search(request):
 	template=loader.get_template('results.html')
@@ -218,6 +219,7 @@ def register(request):
 	template = loader.get_template('census/register.html')
 	if request.method == 'POST':
 		user_form = LoginForm(data=request.POST)
+
 		if user_form.is_valid():
 			# save the new user
 			new_user = User.objects.create_user(
@@ -231,10 +233,15 @@ def register(request):
 			login(request, new_user)
 			return HttpResponseRedirect("welcome")
 		else:
+			context = {
+			'user_form.errors': user_form.errors,
+			'user_form': user_form,
+			}
 			print(user_form.errors)
 	else:
 		user_form = LoginForm()
 	return HttpResponse(template.render({'user_form': user_form}, request))
+
 
 def login_user(request):
 	template = loader.get_template('census/login.html')
@@ -247,6 +254,7 @@ def login_user(request):
 			next_url = request.POST.get('next',default=request.GET.get('next', 'login.html'))
 			if request.GET.get('next') is None:
 				next_url = "homepage"
+				print(request.GET.get('next'))
 			return HttpResponseRedirect(next_url)
 		else:
 			return HttpResponse(template.render({'failed': True}, request))
@@ -337,7 +345,7 @@ def edit_copy_submission(request, copy_id):
 				new_copy.save(force_update=True)
 				current_user = request.user
 				current_userHistory=UserHistory.objects.get(user=current_user)
-				current_userHistory.editted_copies.add(new_copy)
+				current_userHistory.edited_copies.add(new_copy)
 				return HttpResponseRedirect(reverse('copy_info', args=(new_copy.id,)))
 			else:
 				messages.error(request, 'The information you entered is invalid.')
@@ -365,7 +373,7 @@ def copy_submission_success(request):
 def cancel_copy_submission(request, copy_id):
 	copy_to_delete=Copy.objects.get(pk=copy_id)
 	copy_to_delete.delete()
-	return HttpResponseRedirect(reverse('homepage'))
+	return HttpResponseRedirect(reverse('submission'))
 
 def json_editions(request, id):
 	current_title = Title.objects.get(pk=id)
@@ -504,10 +512,10 @@ def user_history(request):
 	except EmptyPage:
 		copies = paginator.page(paginator.num_pages)
 	cur_user_history=UserHistory.objects.get(user=current_user)
-	editted_copies=cur_user_history.editted_copies.all()
+	edited_copies=cur_user_history.edited_copies.all()
 	context={
 		'submissions': submissions,
-		'editted_copies': editted_copies,
+		'edited_copies': edited_copies,
 		'all_titles': all_titles,
 		'copy_form': copy_form,
 	}
@@ -523,7 +531,6 @@ def copy_detail(request, copy_id):
 		'selected_copy': selected_copy,
 	}
 	return HttpResponse(template.render(context,request))
-
 @login_required()
 def welcome(request):
 	template=loader.get_template('census/welcome.html')
@@ -576,7 +583,7 @@ def update_copy(request, copy_id):
 				new_copy.save(force_update=True)
 				current_user = request.user
 				current_userHistory=UserHistory.objects.get(user=current_user)
-				current_userHistory.editted_copies.add(new_copy)
+				current_userHistory.edited_copies.add(new_copy)
 				data=[]
 				data.append(model_to_dict(new_copy.issue.edition.title))
 				data.append(model_to_dict(new_copy.issue.edition))
