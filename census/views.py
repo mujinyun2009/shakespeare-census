@@ -21,6 +21,7 @@ import json
 from django.urls import reverse
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import re
 
 
 # Create your views here.
@@ -105,7 +106,7 @@ def index(request):
 			'object_list': queryset_list,
 		}
 
-	else:			
+	else:
 		paginator = Paginator(all_titles, 10) # Show 10 titles per page
 		page = request.GET.get('page')
 		try:
@@ -168,7 +169,7 @@ def copylist(request):
 			queryset_list = queryset_list.filter(Q(issue__edition__title__title__icontains=query)|Q(Owner__icontains=query)|Q(Bookplate__icontains=query))
 		elif query.isdigit() == True:
 			queryset_list = queryset_list.filter(Q(NSC=query)|Q(issue=query)|Q(Barlett1939=query)|Q(issue__edition__Edition_number=query))
-	
+
 		paginator = Paginator(queryset_list, 10)
 		page = request.GET.get('page')
 		try:
@@ -190,7 +191,7 @@ def copylist(request):
 		except PageNotAnInteger:
 			copies = paginator.page(1)
 		except EmptyPage:
-			copies = paginator.page(paginator.num_pages)	
+			copies = paginator.page(paginator.num_pages)
 		context = {
 			'object_list': queryset_list,
 			'copies': copies,
@@ -344,7 +345,7 @@ def edit_copy_submission(request, copy_id):
 				new_copy.save(force_update=True)
 				current_user = request.user
 				current_userHistory=UserHistory.objects.get(user=current_user)
-				current_userHistory.editted_copies.add(new_copy)
+				current_userHistory.edited_copies.add(new_copy)
 				return HttpResponseRedirect(reverse('copy_info', args=(new_copy.id,)))
 			else:
 				messages.error(request, 'The information you entered is invalid.')
@@ -392,27 +393,27 @@ def json_issues(request, id):
 
 @login_required()
 def add_title(request):
-	template=loader.get_template('census/addTitle.html')
+	template=loader.get_template('census/add_title.html')
 	if request.method == 'POST':
 		title_form= TitleForm(data=request.POST)
 		if title_form.is_valid():
 			title = title_form.save(commit=True)
 			myScript = '<script type="text/javascript">opener.dismissAddAnotherTitle(window, "%s", "%s");</script>' % (title.id, title.title)
 			return HttpResponse(myScript)
-			# return HttpResponseRedirect(reverse('test_modal'))
 		else:
 			print(title_form.errors)
 	else:
 		title_form=TitleForm()
 
 	context = {
-	   'title_form': title_form
+	   'title_form': title_form,
 	}
+
 	return HttpResponse(template.render(context, request))
 
 @login_required()
 def add_edition(request, title_id):
-	template=loader.get_template('census/addEdition.html')
+	template=loader.get_template('census/add_edition.html')
 	selected_title =Title.objects.get(pk=title_id)
 	if request.method=='POST':
 		edition_form=EditionForm(data=request.POST)
@@ -435,13 +436,22 @@ def add_edition(request, title_id):
 
 @login_required()
 def add_issue(request, edition_id):
-	template=loader.get_template('census/addIssue.html')
+	template=loader.get_template('census/add_issue.html')
 	selected_edition =Edition.objects.get(pk=edition_id)
 
 	if request.method=='POST':
 		issue_form=IssueForm(data=request.POST)
 		if issue_form.is_valid():
 			issue=issue_form.save(commit=False)
+			year_published=issue_form.cleaned_data['year']
+			raw_nums = re.findall('\d+', year_published)
+			issue.start_date = int(raw_nums[0])
+
+			if len(raw_nums) == 1:
+				issue.end_date = issue.start_date
+			else:
+				issue.end_date = raw_nums[1]
+
 			issue.edition=selected_edition
 			issue.save()
 			myScript = '<script type="text/javascript">opener.dismissAddAnotherIssue(window, "%s", "%s");</script>' % (issue.id, issue.STC_Wing)
@@ -459,7 +469,7 @@ def add_issue(request, edition_id):
 
 @login_required()
 def display_user_profile(request):
-	template=loader.get_template('census/userProfile.html')
+	template=loader.get_template('census/user_profile.html')
 	current_user=request.user
 	context={
 		'user': current_user,
@@ -468,7 +478,7 @@ def display_user_profile(request):
 
 @login_required()
 def edit_profile(request):
-	template=loader.get_template('census/editProfile.html')
+	template=loader.get_template('census/edit_profile.html')
 	current_user=request.user
 	if request.method=='POST':
 		profile_form = editProfileForm(request.POST, instance=current_user)
@@ -488,8 +498,10 @@ def edit_profile(request):
 
 @login_required()
 def user_history(request):
-	template=loader.get_template('census/userHistory.html')
+	template=loader.get_template('census/user_history.html')
 	current_user=request.user
+	copy_form=CopyForm()
+	all_titles=Title.objects.all()
 	all_submissions=current_user.submitted_copies.all()
 	paginator=Paginator(all_submissions, 10)
 	page = request.GET.get('page')
@@ -500,10 +512,12 @@ def user_history(request):
 	except EmptyPage:
 		copies = paginator.page(paginator.num_pages)
 	cur_user_history=UserHistory.objects.get(user=current_user)
-	editted_copies=cur_user_history.editted_copies.all()
+	edited_copies=cur_user_history.edited_copies.all()
 	context={
 		'submissions': submissions,
-		'editted_copies': editted_copies,
+		'edited_copies': edited_copies,
+		'all_titles': all_titles,
+		'copy_form': copy_form,
 	}
 	return HttpResponse(template.render(context, request))
 
@@ -525,3 +539,73 @@ def welcome(request):
 		'hello': hello,
 	}
 	return HttpResponse(template.render(context,request))
+
+def copy_data(request, copy_id):
+	template = loader.get_template('census/copy_modal.html')
+	selected_copy=Copy.objects.get(pk=copy_id)
+	context={"copy": selected_copy,}
+	return HttpResponse(template.render(context, request))
+
+@login_required()
+def update_copy(request, copy_id):
+	template = loader.get_template('census/edit_modal.html')
+	all_titles = Title.objects.all()
+	copy_to_edit=Copy.objects.get(pk=copy_id)
+	old_issue=copy_to_edit.issue
+	old_edition=old_issue.edition
+	old_title=old_edition.title
+
+	if request.method=='POST':
+		data=[]
+		if request.POST.get('cancel', None):
+			return HttpResponseRedirect(reverse('user_history'))
+
+		issue_id=request.POST.get('issue')
+		edition_id=request.POST.get('edition')
+		title_id=request.POST.get('title')
+		if not issue_id or issue_id == 'Z':
+			copy_form=CopyForm(instance=copy_to_edit)
+			messages.error(request, 'Please choose or add an issue.')
+		elif not edition_id or edition_id == 'Z':
+			copy_form=CopyForm(instance=copy_to_edit)
+			messages.error(request, 'Please choose or add an edition.')
+		elif not title_id or title_id == 'Z':
+			copy_form=CopyForm(instance=copy_to_edit)
+			messages.error(request, 'Please choose or add a title.')
+
+		else:
+			selected_issue=Issue.objects.get(pk=issue_id)
+			copy_form=CopyForm(request.POST, instance=copy_to_edit)
+
+			if copy_form.is_valid():
+				new_copy=copy_form.save()
+				new_copy.issue = selected_issue
+				new_copy.save(force_update=True)
+				current_user = request.user
+				current_userHistory=UserHistory.objects.get(user=current_user)
+				current_userHistory.edited_copies.add(new_copy)
+				data=[]
+				data.append(model_to_dict(new_copy.issue.edition.title))
+				data.append(model_to_dict(new_copy.issue.edition))
+				data.append(model_to_dict(new_copy.issue))
+				data.append(model_to_dict(new_copy))
+
+			else:
+				messages.error(request, 'The information you entered is invalid.')
+				copy_form=CopyForm(instance=copy_to_edit)
+
+			return HttpResponse(json.dumps(data), content_type='application/json')
+	else:
+		copy_form=CopyForm(instance=copy_to_edit)
+
+	context = {
+	'all_titles': all_titles,
+	'copy_form': copy_form,
+	'copy_id': copy_id,
+	'old_title_id': old_title.id,
+	'old_edition_set': old_title.edition_set.all(),
+	'old_edition_id': old_edition.id,
+	'old_issue_set': old_edition.issue_set.all(),
+	'old_issue_id': old_issue.id,
+	}
+	return HttpResponse(template.render(context, request))

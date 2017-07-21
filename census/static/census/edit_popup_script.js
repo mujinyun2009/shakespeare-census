@@ -50,8 +50,5 @@ function dismissAddAnotherIssue(win, newId, newIssue) {
 		option.value = newId;
 		option.selected = true;
 		x.add(option);
-
-		var copy_submit=document.getElementById('copy_submit');
-		copy_submit.style.display="inline";
 		win.close();
 }

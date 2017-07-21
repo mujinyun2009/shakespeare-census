@@ -280,7 +280,7 @@ input.refinesearch {
     height:40px;
     font-size:20px;
     font-family:'Raleway', sans-serif;
-    font-weight:300;  
+    font-weight:300;
 }
 input:not(.finalsubmit) {
     border: none;
@@ -426,6 +426,10 @@ td.hoverspecial:hover {
             animation: showme 5s;
 }
 
+.hidden {
+  display: none;
+  overflow: auto;
+}
 .welcome {
   font-family: "Century Gothic", AppleGothic, sans-serif;
   font-weight: lighter;
@@ -628,6 +632,38 @@ tr.errors {
   color: #FFFFFF;
   background: #8FBC8F;
   font-family: "Century Gothic", AppleGothic, sans-serif;
+
+}
+
+ul.errorlist {
+    margin: 0 0 4px;
+    padding: 0;
+    color: #ba2121;
+    background: #fff;
+}
+
+ul.errorlist li {
+    font-size: 13px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+ul.errorlist li:first-child {
+    margin-top: 0;
+}
+
+ul.errorlist li a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+td ul.errorlist {
+    margin: 0;
+    padding: 0;
+}
+
+td ul.errorlist li {
+    margin: 0;
 }
 
 </style>

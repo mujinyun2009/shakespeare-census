@@ -1,12 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-
 <script type="text/javascript" src="/static/census/popup_script.js"></script>
 
 <div align="center">
 	<p class="sansserifgrey">
-	<font size = "6"> <light>Title</light> </font></br>1. Input your title. </br> 2. Click "Submit".
+	<font size = "6"> <light>Title</light> </font></br>1. Input your title. Fields with * are required.</br> 2. Click "Submit".
 	</p>
 </div>
 <div align="center">
@@ -16,10 +15,15 @@
 		{% csrf_token %}
 		<table class = "table2" align="center">
 		{% for field in title_form.visible_fields %}
-		<tr>
-		<td> {{ field.label_tag }}</td>
-		<td> {{ field}}</td>
-		</tr>
+			<tr>
+			<td> {{ field.label_tag }}{% if field.field.required %}*{% endif %}</td>
+			<td> {{ field }}</td>
+			</tr>
+			<tr>
+			{% if field.errors %}
+				<ul class="errorlist">{% for error in field.errors %}<li>{{error}}</li>{% endfor %}</ul>
+			{% endif %}
+			</tr>
 		{% endfor %}
 		</table>
 		<br>
