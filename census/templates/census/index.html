@@ -2,8 +2,8 @@
 {% load static %}
 {% block content %}
   <link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/css/semantic.min.css'>
-  
-  
+
+
   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
 
 
@@ -37,7 +37,7 @@
         <tr>
         {% for obj in object_list %}
         <td><a href="{% url 'detail' obj.id %}" class ="linkbutton">{{ obj.title }}</a></td>
-        <td>{{ obj.Apocryphal }}</a></td>
+        <!-- <td>{{ obj.Apocryphal }}</a></td> -->
         </tr>
         {% endfor %}
 
@@ -55,10 +55,10 @@
         {% if page == object_list.number %}
           <td class = "currentpage" width="20px">{{ page }}</td>
         {% else %}
-          <td class="pagenavigator" width="20px"> <a href = "?page={{ page }}&q={{ request.GET.q }}" class="paginator">{{ page }}</td> 
+          <td class="pagenavigator" width="20px"> <a href = "?page={{ page }}&q={{ request.GET.q }}" class="paginator">{{ page }}</td>
         {% endif %}
         {% endif %}
-      
+
       {% endif %}
     {% endfor %}
 
@@ -92,7 +92,7 @@
 <div class="pagination">
       <table class = "pagenavigator" align="center">
         <tr class ="pagenavigator">
-      
+
       {% if titles.has_previous %}
       <td class = "hoverspecial"> <a href="?page={{ titles.previous_page_number }}" class="paginator"><</a></td>
       {% endif %}
@@ -102,14 +102,14 @@
         {% if page == titles.number %}
             <td class = "currentpage" width="20px">  {{ page }} </td>
             {% else %}
-            <td class="pagenavigator" width="20px"> <a href = "?page={{page }}" class="paginator">{{ page }}  </td> 
+            <td class="pagenavigator" width="20px"> <a href = "?page={{page }}" class="paginator">{{ page }}  </td>
             {% endif %}
             {% endif %}
         {% endif %}
 
       {% endfor %}
-          
-    
+
+
 
       {% if titles.has_next %}
      <td class = "hoverspecial"> <a href="?page={{ titles.next_page_number }}" class="paginator">></a></td>
