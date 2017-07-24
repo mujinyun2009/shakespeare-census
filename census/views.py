@@ -78,6 +78,7 @@ def search(request):
 			'category4': category4,
 		}
 	return HttpResponse(template.render(context, request))
+
 def homepage(request):
 	template=loader.get_template('frontpage.html')
 	context = {
@@ -299,9 +300,9 @@ def submission(request):
 				copy.save()
 				return HttpResponseRedirect(reverse('copy_info', args=(copy.id,)))
 			else:
+				messages.error(request, 'Error: invalid copy information!')
 				copy_form=CopyForm()
-				print(copy_form.errors)
-				messages.error(request, 'The information you entered is invalid.')
+
 	else:
 		copy_form=CopyForm()
 
