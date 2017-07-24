@@ -18,7 +18,7 @@
     	<table class = "center" align="center" width="100%">
         <tr>
         {% for copy in copies|slice:"1" %}
-        <td colspan="9" class = "announcer"><a href = "{% url 'index' %}"> {{ copy.issue.edition.title }}|<a href = "{% url 'detail' copy.issue.edition.title.id %}"> edition {{ copy.issue.edition.Edition_number }}</a>|<a href = "{% url 'issue' copy.issue.edition.id %}">  issue {{ copy.issue.year }}</a>: <br><div class = "announcer2"> copies</div>
+        <td colspan="9" class = "announcer"><a href = "{% url 'index' %}" class="linkbutton"> {{ copy.issue.edition.title }}|<a href = "{% url 'detail' copy.issue.edition.title.id %}" class="linkbutton"> edition {{ copy.issue.edition.Edition_number }}</a>|<a href = "{% url 'issue' copy.issue.edition.id %}" class="linkbutton">  issue {{ copy.issue.year }}</a>: <br><div class = "announcer2"> copies</div>
         {% endfor %}
         </td>
         </tr>

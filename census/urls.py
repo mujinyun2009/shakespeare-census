@@ -15,7 +15,7 @@ urlpatterns = [
 	url(r'^copies', views.copylist, name='copylist'),
 	url(r'^issue/(?P<id>[0-9]+)/$', views.issue, name='issue'),
  	url(r'^provenance$', views.provenance, name='provenance'),
- 	url(r'^register$', views.register, name='register'),
+ 	# url(r'^register$', views.register, name='register'),
 
 	# Jinyun-urls for submission forms
 	url(r'^submission$', views.submission, name='submission'),

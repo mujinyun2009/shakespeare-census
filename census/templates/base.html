@@ -29,19 +29,19 @@
       <li>
           <a id="submissionlink" class="not.active" href="{% url 'submission' %}" class="dropbtn"><p class="sansserif">Submission</p></a>
       </li>
-      {% if user.is_authenticated %}
+     <!--  {% if user.is_authenticated %}
         {% else %}
       <li><a id="registerlink" class="not.active" href="{% url 'register' %}"><p class="sansserif">
       Register</p></a></li>
-         {% endif %}
+         {% endif %} -->
 
          <li class="dropdown">
          <a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false" id="dropdownMenu">  <p class = sansserif>
          Account</p></a>
          <div class="dropdown-content">
+        {% if user.is_authenticated %}
           <a href="{% url 'profile' %}" id="profilelink"><p class = sansserif>my profile</p></a>
           <a href="{% url 'user_history' %}" id="historylink"><p class = sansserif>my history</p></a>
-          {% if user.is_authenticated %}
           <a href="{% url 'logout_user' %}" id="logoutlink"><p class = sansserif>logout</p></a>
            {% else %}
           <a href="{% url 'login_user' %}" id="loginlink"><p class = sansserif>login</p></a>

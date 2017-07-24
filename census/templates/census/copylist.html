@@ -131,6 +131,8 @@
 
       {% if copies.has_next %}
        <td class = "hoverspecial">  <a href="?page={{ copies.next_page_number }}" class="paginator">></a></td>
+      <td class = "hoverspecial">  <a href="?page={{ copies.paginator }}" class="paginator">>></a></td>
+
       {% endif %}
     </tr>
   </table>

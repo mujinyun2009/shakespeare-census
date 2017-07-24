@@ -2,7 +2,7 @@
   <div class="modal-content">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <p class="sansserif" align="left" class="modal-title" style="font-weight:bolder;">Edit copy</p>
+        <p class="sansserif" align="left" class="modal-title">Edit Copy:</p>
     </div>
     <div class="modal-body">
         <script type="text/javascript" src="/static/census/edit_dropdown.js"></script>
@@ -20,9 +20,8 @@
               	<option value="{{ title.id }}">{{ title.title }}</option>
           		{% endif %}
             {% endfor %}
-            </select>
-
-            <button class="editmodalsubmission"><a href="{% url 'add_title' %}" name="add another title" onclick="return showAddAnotherPopup(this);">Add title+</a></button>
+            </select> 
+            <button class="editmodalsubmission"><a href="{% url 'add_title' %}" style="z-index:-1;" name="add another title" onclick="return showAddAnotherPopup(this);">Add title+</a></button>
 
           </div>
 
@@ -38,7 +37,7 @@
           			{% endif %}
           	  {% endfor %}
             </select>
-            <button class="btn btn-info"><a href="{% url 'add_edition' old_title_id %}" id="add_edition" name ="add another edition" onclick="return showAddAnotherPopup(this);">Add edition+</a></button>
+            <button class="editmodalsubmission"><a href="{% url 'add_edition' old_title_id %}" id="add_edition" name ="add another edition" onclick="return showAddAnotherPopup(this);">Add edition+</a></button>
           </div>
 
           <div class='issue_section' id='issue_section'>
@@ -54,7 +53,7 @@
           		{% endfor %}
           	</select>
             </select>
-            <button class="btn btn-info"><a href="{% url 'add_issue' old_edition_id %}" id="add_issue" name ="add another issue" onclick="return showAddAnotherPopup(this);">Add issue+</a></button>
+            <button class="editmodalsubmission"><a href="{% url 'add_issue' old_edition_id %}" id="add_issue" name ="add another issue" onclick="return showAddAnotherPopup(this);">Add issue+</a></button>
 
           </div>
 

@@ -26,7 +26,7 @@ import re
 
 # Create your views here.
 def search(request):
-	template=loader.get_template('results.html')
+	template=loader.get_template('census/results.html')
 	query1 = request.GET.get('a')
 	query2 = request.GET.get('b')
 	query3 = request.GET.get('c')
@@ -42,19 +42,19 @@ def search(request):
 		result_list = list(chain(results_list))
 
 	if query1 and query2 and not query3 and not query4:
-		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2}))
+		results_list = copy_list.filter(Q(**{category1: query1})&Q(**{category2: query2}))
 		result_list = list(chain(results_list))
 
 	if query1 and query2 and query3 and not query4:
-		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category3: query3}))
+		results_list = copy_list.filter(Q(**{category1: query1})&Q(**{category2: query2})&Q(**{category3: query3}))
 		result_list = list(chain(results_list))
 
 	if query1 and query2 and query3 and query4:
-		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category4: query4}))
+		results_list = copy_list.filter(Q(**{category1: query1})&Q(**{category2: query2})&Q(**{category4: query4}))
 		result_list = list(chain(results_list))
 
 	if not query1 and not query2 and not query3 and not query4:
-		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category4: query4}))
+		results_list = copy_list.filter(Q(**{category1: query1})&Q(**{category2: query2})&Q(**{category4: query4}))
 		result_list = list(chain(results_list))
 
 	paginator = Paginator(result_list, 10)
@@ -79,7 +79,7 @@ def search(request):
 		}
 	return HttpResponse(template.render(context, request))
 def homepage(request):
-	template=loader.get_template('frontpage.html')
+	template=loader.get_template('census/frontpage.html')
 	context = {
 	}
 	return HttpResponse(template.render(context, request))

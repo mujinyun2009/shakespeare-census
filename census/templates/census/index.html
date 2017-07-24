@@ -76,12 +76,10 @@
   <table class = "center" align="center" width="90%">
         <tr>
           <th> Title </th>
-          <th> Apocryphal? </th>
         </tr>
         <tr>
     {% for title in titles %}
     			<td><a href="{% url 'detail' title.id %}" class ="linkbutton">{{ title.title }}</a></td>
-   				<td>{{ title.Apocryphal }}</td>
    			 </tr>
     {% endfor %}
 
