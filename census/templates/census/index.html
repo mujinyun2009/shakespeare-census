@@ -92,6 +92,7 @@
         <tr class ="pagenavigator">
       
       {% if titles.has_previous %}
+      <td class = "hoverspecial">  <a href="?page={{ titles.paginator.1 }}" class="paginator"><<</a></td>
       <td class = "hoverspecial"> <a href="?page={{ titles.previous_page_number }}" class="paginator"><</a></td>
       {% endif %}
     {% for page in titles.paginator.page_range %}
@@ -111,6 +112,8 @@
 
       {% if titles.has_next %}
      <td class = "hoverspecial"> <a href="?page={{ titles.next_page_number }}" class="paginator">></a></td>
+           <td class = "hoverspecial">  <a href="?page={{ titles.paginator.num_pages }}" class="paginator">>></a></td>
+
       {% endif %}
         </tr>
       </table>

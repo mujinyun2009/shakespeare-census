@@ -113,6 +113,8 @@
     <table class = "pagenavigator" align="center">
     <tr class ="pagenavigator">
       {% if copies.has_previous %}
+      <td class = "hoverspecial">  <a href="?page={{ copies.paginator.1 }}" class="paginator"><<</a></td>
+
       <td class = "hoverspecial"> <a href="?page={{ copies.previous_page_number }}" class="paginator"><</a></td>
       {% endif %}
 
@@ -131,7 +133,7 @@
 
       {% if copies.has_next %}
        <td class = "hoverspecial">  <a href="?page={{ copies.next_page_number }}" class="paginator">></a></td>
-      <td class = "hoverspecial">  <a href="?page={{ copies.paginator }}" class="paginator">>></a></td>
+      <td class = "hoverspecial">  <a href="?page={{ copies.paginator.num_pages }}" class="paginator">>></a></td>
 
       {% endif %}
     </tr>
