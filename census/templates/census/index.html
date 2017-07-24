@@ -13,7 +13,7 @@
 <div class="wrapper">
 <hr class="style14" width = "50%"></hr>
 	<p class="sansserifgrey" style="font-size:12px">
-	Find all of the titles in the database below. <br>To access the editions for a particular entry, click its title.
+	Find all of the titles in the database below. <br>Click the edition for all copy information of that edition.
 	</p>
   <hr class="style14" width = "50%"></hr>
 
@@ -32,10 +32,28 @@
   <table class = "center" align="center" width="90%">
         <tr>
           <th> Title </th>
+          <th> Editions </th>
         </tr>
         <tr>
         {% for obj in object_list %}
-        <td><a href="{% url 'detail' obj.id %}" class ="linkbutton">{{ obj.title }}</a></td>
+        <td>{{ obj.title }}</td>
+        <td>
+          {% for edition in obj.edition_set.all %}
+            <a href="{% url 'copy' edition.id %}" class ="linkbutton">
+              {% if edition.Edition_number %}
+                {% if edition.Edition_number == 'Anr. ed.' %}
+                  Anr. ed.
+                {% else %}
+                  Edition {{ edition.Edition_number }}
+                {% endif %}
+              {%else %}
+                Unknown edition
+              {% endif %}
+            </a>
+            {% endfor %}
+          </td>
+
+        </td>
         </tr>
         {% endfor %}
 
@@ -81,9 +99,9 @@
     			<td>{{ title.title }}</td>
           <td>
             {% for edition in title.edition_set.all %}
-              <a href="{% url 'issue' edition.id %}" class ="linkbutton">
+              <a href="{% url 'copy' edition.id %}" class ="linkbutton">
                 {% if edition.Edition_number %}
-                  {% if edition.Edition_number == '"anr.ed."' %}
+                  {% if edition.Edition_number == 'Anr. ed.' %}
                     Anr. ed.
                   {% else %}
                     Edition {{ edition.Edition_number }}

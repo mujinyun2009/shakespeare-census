@@ -2,92 +2,48 @@
 {% load static %}
 {% block content %}
 <link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
-
 <link rel="stylesheet" type="text/css" href= "{% static 'census/detail.css' %}" />
 
 <div class="wrapper">
 <hr class = "style14" width = "50%"></hr>
 	<p class="sansserifgrey">
-	Displayed is the list of copies for the selected issue.
+	Displayed is the list of copies for the selected edition.
 	</p>
 </div>
 <hr class="style14" width = "50%"></hr>
 
-{% if copies %}
-    <p class="sansserif">
-    	<table class = "center" align="center" width="100%">
-        <tr>
-        {% for copy in copies|slice:"1" %}
-        <td colspan="9" class = "announcer"><a href = "{% url 'index' %}"> {{ copy.issue.edition.title }}|<a href = "{% url 'detail' copy.issue.edition.title.id %}"> edition {{ copy.issue.edition.Edition_number }}</a>|<a href = "{% url 'issue' copy.issue.edition.id %}">  issue {{ copy.issue.year }}</a>: <br><div class = "announcer2"> copies</div>
-        {% endfor %}
-        </td>
-        </tr>
+<a href= "{% url 'index' %}" class="linkbutton">All titles</a> | <a href = "{% url 'index' %}?q={{ selected_edition.title }}" class="linkbutton">{{selected_edition.title}}</a> | Edition {{ selected_edition.Edition_number }}
 
-    		<tr>
-          <th> Year published </th>
-                <th> Edition </th>
-                <th> ESTC </th>
-                <th> STC/Wing </th>
-    			<!-- <th> NSC </th> -->
-                <th> Owner </th>
-                <!-- <th> Height </th> -->
-                <!-- <th> Width </th> -->
-                <!-- <th> Condition </th> -->
-                <!-- <th> Binding </th> -->
-                <th> Transactions </th>
-    		</tr>
-    		<tr>
-    		{% for copy in copies %}
-          <td>{{ copy.issue.year }}</td>
-                <td>{{ copy.issue.edition.Edition_number }}</td>
-                <td>{{ copy.issue.ESTC }}</td>
-                <td>{{ copy.issue.STC_Wing }}</td>
-                <!-- <td>{{ copy.NSC }}</td> -->
-                <td>{{ copy.Owner }}</td>
-                <!-- <td>{{ copy.Height }}</td>
-                <td>{{ copy.Width }}</td>
-                <td>{{ copy.Condition }}</td>
-                <td>{{ copy.Binding }}</td>
-                <td><a href="{% url 'transactions' copy.id %}" class="linkbutton">Available transactions</a></td>
-                <td>{{ copy.Binding }}</td> -->
-                <td><a href="{% url 'transactions' copy.id %}">Available transactions</a></td>
+{% for issue in all_issues %}
+	<p> Issue ESTC {{ issue.ESTC }} | STC/Wing {{ issue.STC_Wing}} ({{ issue.year }})
+{% if issue.copy_set.all %}
+<p>Copy information: </p>
+	<table class = "center" align="center" width="90%">
+		<tr>
+				<th> NSC </th>
+				<th> Owner </th>
+				<th> Height </th>
+				<th> Width </th>
+				<th> Condition </th>
+				<th> Binding </th>
+				<th> Transactions </th>
+		</tr>
 
-   			</tr>
-
-        {% endfor %}
-        </table>
-    </p>
-
-<div class="pagination">
-    <table class = "pagenavigator" align="center">
-    <tr class ="pagenavigator">
-      {% if copies.has_previous %}
-      <td class = "hoverspecial"> <a href="?page={{ copies.previous_page_number }}" class="paginator"><</a></td>
-      {% endif %}
-
-    {% for page in copies.paginator.page_range %}
-      {% if page <= copies.number|add:"3" %}
-        {% if page >= copies.number|add:"-3" %}
-        {% if page == copies.number %}
-          <td class = "currentpage" width="20px">{{ page }}</td>
-        {% else %}
-          <td class="pagenavigator" width="20px"> <a href = "?page={{ page }}" class="paginator">{{ page }}</td>
-        {% endif %}
-        {% endif %}
-
-      {% endif %}
-    {% endfor %}
-
-      {% if copies.has_next %}
-       <td class = "hoverspecial">  <a href="?page={{ copies.next_page_number }}" class="paginator">></a></td>
-      {% endif %}
-    </tr>
-  </table>
-  Pages generated: {{ copies.paginator.num_pages }}
-</div>
-
-
+	{% for copy in issue.copy_set.all %}
+	<tr>
+		<td>{{copy.NSC}}</td>
+		<td>{{copy.Owner}}</td>
+		<td>{{copy.Height}}</td>
+		<td>{{copy.Width}}</td>
+		<td>{{copy.Condition}}</td>
+		<td>{{copy.Binding}}</td>
+		<td><a href="{% url 'transactions' copy.id %}">Available transactions</a></td>
+	</tr>
+	{% endfor %}
+</table>
 {% else %}
-    <p class="sansserif" align="center">Oh no! No copies are available.</p>
+	<p>There are no copies for this issue right now!</p>
 {% endif %}
+{% endfor %}
+
 {% endblock content %}

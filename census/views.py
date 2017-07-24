@@ -140,23 +140,26 @@ def issue(request, id):
 	issues = selected_edition.issue_set.all()
 	template = loader.get_template('census/issue.html')
 	context = {
-		'issues': issues
+		'issues': issues,
+		'selected_edition': selected_edition,
 	}
 	return HttpResponse(template.render(context, request))
 def copy(request, id):
-	selected_issue=Issue.objects.get(pk=id)
-	all_copies = selected_issue.copy_set.all().order_by('id')
-	paginator = Paginator(all_copies, 10)
-	page = request.GET.get('page')
-	try:
-		copies = paginator.page(page)
-	except PageNotAnInteger:
-		copies = paginator.page(1)
-	except EmptyPage:
-		copies = paginator.page(paginator.num_pages)
+	selected_edition=Edition.objects.get(pk=id)
+	all_issues = selected_edition.issue_set.all().order_by('start_date')
+	# all_copies = selected_issue.copy_set.all().order_by('id')
+	# paginator = Paginator(all_copies, 10)
+	# page = request.GET.get('page')
+	# try:
+	# 	copies = paginator.page(page)
+	# except PageNotAnInteger:
+	# 	copies = paginator.page(1)
+	# except EmptyPage:
+	# 	copies = paginator.page(paginator.num_pages)
 	template = loader.get_template('census/copy.html')
 	context = {
-		'copies': copies
+		'all_issues': all_issues,
+		'selected_edition': selected_edition,
 	}
 	return HttpResponse(template.render(context,request))
 

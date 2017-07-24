@@ -68,10 +68,6 @@ li a, .dropbtn {
 <p>You have submitted the following copy: </p>
 </div>
 
-<div id="editted_line">
-<h2>You have edited the following copy: </h2>
-</div>
-
     <p class="sansserif">
     	<table align = "center">
     		<tr>
@@ -149,18 +145,5 @@ li a, .dropbtn {
 </tr>
 </table>
 </div>
-
-<script>
-var opener_url = document.referrer;
-var delete_button = document.getElementById("delete");
-var submitted_line=document.getElementById("submitted_line");
-var editted_line=document.getElementById("editted_line");
-
-if(opener_url.indexOf('editcopysubmission') > -1) {
-  submitted_line.classList.add("hidden");
-} else {
-  editted_line.classList.add("hidden");
-}
-</script>
 
 {% endblock content %}

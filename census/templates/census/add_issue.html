@@ -12,19 +12,17 @@
 			{% csrf_token %}
 		<table class = "table2" align="center">
 		{% for field in issue_form.visible_fields %}
-
 		<tr>
 		<td> {{ field.label_tag }}{% if field.field.required %}*{% endif %}</td>
 		<td> {{ field}} {% if field.help_text %} ({{ field.help_text|safe}}) {% endif %}</td>
+		</tr>
 		{% if field.errors %}
 		<tr>
 			<td></td>
 			<td><ul class="errorlist">{% for error in field.errors %}<li>{{error}}</li>{% endfor %}</ul></td>
-
 		</tr>
 		{% endif %}
-		</tr>
-
+		
 		{% endfor %}
 		</table>
 		<br>
