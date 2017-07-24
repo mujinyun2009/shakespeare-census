@@ -32,12 +32,10 @@
   <table class = "center" align="center" width="90%">
         <tr>
           <th> Title </th>
-          <th> Apocryphal? </th>
         </tr>
         <tr>
         {% for obj in object_list %}
         <td><a href="{% url 'detail' obj.id %}" class ="linkbutton">{{ obj.title }}</a></td>
-        <!-- <td>{{ obj.Apocryphal }}</a></td> -->
         </tr>
         {% endfor %}
 
@@ -76,12 +74,26 @@
   <table class = "center" align="center" width="90%">
         <tr>
           <th> Title </th>
-          <th> Apocryphal? </th>
+          <th> Editions </th>
         </tr>
         <tr>
     {% for title in titles %}
-    			<td><a href="{% url 'detail' title.id %}" class ="linkbutton">{{ title.title }}</a></td>
-   				<td>{{ title.Apocryphal }}</td>
+    			<td>{{ title.title }}</td>
+          <td>
+            {% for edition in title.edition_set.all %}
+              <a href="{% url 'issue' edition.id %}" class ="linkbutton">
+                {% if edition.Edition_number %}
+                  {% if edition.Edition_number == '"anr.ed."' %}
+                    Anr. ed.
+                  {% else %}
+                    Edition {{ edition.Edition_number }}
+                  {% endif %}
+                {%else %}
+                  Unknown edition
+                {% endif %}
+              </a>
+            {% endfor %}
+          </td>
    			 </tr>
     {% endfor %}
 
@@ -108,8 +120,6 @@
         {% endif %}
 
       {% endfor %}
-
-
 
       {% if titles.has_next %}
      <td class = "hoverspecial"> <a href="?page={{ titles.next_page_number }}" class="paginator">></a></td>

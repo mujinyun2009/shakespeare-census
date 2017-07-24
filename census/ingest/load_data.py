@@ -48,11 +48,15 @@ def read_issue_file(csv_file_path):
 			else:
 				new_title=create_title(row[0])
 
-			related_edition=list(Edition.objects.filter(title=new_title, Edition_number=row[1]))
+			edition_number=row[1]
+			if edition_number.find('"') != -1:
+				edition_number="Anr. ed."
+
+			related_edition=list(Edition.objects.filter(title=new_title, Edition_number=edition_number))
 			if related_edition:
 				new_edition=related_edition[0]
 			else:
-				new_edition=create_edition(new_title, row[1])
+				new_edition=create_edition(new_title, edition_number)
 
 			start_date = 0
 			end_date = 0
