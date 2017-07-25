@@ -22,40 +22,59 @@
 	<p class="sansserifgrey">
 	Displayed is the list of issues for the selected edition.
 	</p>
-	<p class="sansserifgrey">Click an issue to get all copy information.</p>
+	<p class="sansserifgrey">Click an issue to get the copy information.</p>
 </div>
 <hr class="style14" width = "50%"></hr>
 
 {% for issue in all_issues %}
-	<p> Issue ESTC {{ issue.ESTC }} | STC/Wing {{ issue.STC_Wing}} ({{ issue.year }})
+<div class="container">
+	<h3 class = "center" align="left" style="margin-left:300px"><a href="#copy_info{{issue.id}}" onclick="show_copy_info({{issue.id}});"> Issue ESTC {{ issue.ESTC }} |
+		STC/Wing {{ issue.STC_Wing}} ({{ issue.year }})</a></h3>
+
+		<div id="copy_info{{issue.id}}" style="display:none">
 {% if issue.copy_set.all %}
 <h3 class = "center" align="left" style="margin-left:300px">Copy information: </h3>
 	<table class = "center" align="center" width="90%">
 		<tr>
-				<th> NSC </th>
-				<th> Owner </th>
-				<th> Height </th>
-				<th> Width </th>
-				<th> Condition </th>
-				<th> Binding </th>
-				<th> Transactions </th>
+			<th> Title </th>
+			<th> Year published </th>
+			<th> Edition </th>
+			<th> ESTC </th>
+			<th> STC/Wing </th>
+			<th> Owner </th>
+			<th> Transactions </th>
 		</tr>
 
 	{% for copy in issue.copy_set.all %}
 	<tr>
-		<td>{{copy.NSC}}</td>
+		<td>{{copy.issue.edition.title.title}}</td>
+		<td>{{copy.issue.year}}</td>
+		<td>Edition {{selected_edition.Edition_number}}</td>
+		<td>{{copy.issue.ESTC}}</td>
+		<td>{{copy.issue.STC_Wing}}</td>
 		<td>{{copy.Owner}}</td>
-		<td>{{copy.Height}}</td>
-		<td>{{copy.Width}}</td>
-		<td>{{copy.Condition}}</td>
-		<td>{{copy.Binding}}</td>
 		<td><a href="{% url 'transactions' copy.id %}">Available transactions</a></td>
 	</tr>
 	{% endfor %}
 </table>
 {% else %}
-	<p>There are no copies for this issue right now!</p>
+	<p class = "center" align="left" style="margin-left:300px">There are no copies for this issue right now!</p>
 {% endif %}
+</div>
+</div>
 {% endfor %}
+<script>
+function show_copy_info(issue_id) {
+
+	var div_id = "copy_info"+issue_id;
+	var copy_div=document.getElementById(div_id);
+	if(copy_div.style.display==="none") {
+		copy_div.style.display = "block";
+	} else {
+		copy_div.style.display = "none";
+	}
+
+}
+</script>
 
 {% endblock content %}

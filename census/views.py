@@ -150,15 +150,7 @@ def issue(request, id):
 def copy(request, id):
 	selected_edition=Edition.objects.get(pk=id)
 	all_issues = selected_edition.issue_set.all().order_by('start_date')
-	# all_copies = selected_issue.copy_set.all().order_by('id')
-	# paginator = Paginator(all_copies, 10)
-	# page = request.GET.get('page')
-	# try:
-	# 	copies = paginator.page(page)
-	# except PageNotAnInteger:
-	# 	copies = paginator.page(1)
-	# except EmptyPage:
-	# 	copies = paginator.page(paginator.num_pages)
+
 	template = loader.get_template('census/copy.html')
 	context = {
 		'all_issues': all_issues,
