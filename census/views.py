@@ -125,6 +125,7 @@ def index(request):
 		}
 	return HttpResponse(template.render(context, request))
 
+#Showing editions related to a certain title; not using right now
 def detail(request, id):
 	selected_title=Title.objects.get(pk=id)
 	editions = selected_title.edition_set.all()
@@ -135,6 +136,7 @@ def detail(request, id):
 	}
 	return HttpResponse(template.render(context, request))
 
+#Showing issues related to a certain edition; not using right now
 def issue(request, id):
 	selected_edition = Edition.objects.get(pk=id)
 	issues = selected_edition.issue_set.all()
@@ -144,6 +146,7 @@ def issue(request, id):
 		'selected_edition': selected_edition,
 	}
 	return HttpResponse(template.render(context, request))
+
 def copy(request, id):
 	selected_edition=Edition.objects.get(pk=id)
 	all_issues = selected_edition.issue_set.all().order_by('start_date')

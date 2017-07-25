@@ -5,19 +5,31 @@
 <link rel="stylesheet" type="text/css" href= "{% static 'census/detail.css' %}" />
 
 <div class="wrapper">
+<h3 align="center" width="90%">
+	<a href= "{% url 'index' %}" >All titles</a> |
+	<a href = "{% url 'index' %}?q={{ selected_edition.title }}" >{{selected_edition.title}}</a> |
+	{% if selected_edition.Edition_number == "Anr. ed." %}
+		{{ selected_edition.Edition_number }}
+	{% else %}
+		Edition {{ selected_edition.Edition_number }}
+	{% endif %}
+</h3>
+<br>
+</div>
+
+<div class="wrapper">
 <hr class = "style14" width = "50%"></hr>
 	<p class="sansserifgrey">
-	Displayed is the list of copies for the selected edition.
+	Displayed is the list of issues for the selected edition.
 	</p>
+	<p class="sansserifgrey">Click an issue to get all copy information.</p>
 </div>
 <hr class="style14" width = "50%"></hr>
-
-<a href= "{% url 'index' %}" class="linkbutton">All titles</a> | <a href = "{% url 'index' %}?q={{ selected_edition.title }}" class="linkbutton">{{selected_edition.title}}</a> | Edition {{ selected_edition.Edition_number }}
 
 {% for issue in all_issues %}
 	<p> Issue ESTC {{ issue.ESTC }} | STC/Wing {{ issue.STC_Wing}} ({{ issue.year }})
 {% if issue.copy_set.all %}
-<p>Copy information: </p>
+<h3 class = "center" align="left" style="margin-left:300px">Copy information: </h3>
 	<table class = "center" align="center" width="90%">
 		<tr>
 				<th> NSC </th>

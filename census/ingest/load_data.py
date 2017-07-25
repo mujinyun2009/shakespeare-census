@@ -50,7 +50,7 @@ def read_issue_file(csv_file_path):
 
 			edition_number=row[1]
 			if edition_number.find('"') != -1:
-				edition_number="Anr. ed."
+				edition_number="anr. ed."
 
 			related_edition=list(Edition.objects.filter(title=new_title, Edition_number=edition_number))
 			if related_edition:

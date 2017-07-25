@@ -22,7 +22,7 @@
             {% endfor %}
             </select>
 
-            <button class="btn btn-info"><a href="{% url 'add_title' %}" name="add another title" onclick="return showAddAnotherPopup(this);">Add title+</a></button>
+            <a href="{% url 'add_title' %}" name="add another title" type="button" onclick="return showAddAnotherPopup(this);">Add title+</a>
 
           </div>
 
@@ -38,7 +38,7 @@
           			{% endif %}
           	  {% endfor %}
             </select>
-            <button class="btn btn-info"><a href="{% url 'add_edition' old_title_id %}" id="add_edition" name ="add another edition" onclick="return showAddAnotherPopup(this);">Add edition+</a></button>
+            <a href="{% url 'add_edition' old_title_id %}" id="add_edition" name ="add another edition" onclick="return showAddAnotherPopup(this);">Add edition+</a>
           </div>
 
           <div class='issue_section' id='issue_section'>
@@ -54,7 +54,7 @@
           		{% endfor %}
           	</select>
             </select>
-            <button class="btn btn-info"><a href="{% url 'add_issue' old_edition_id %}" id="add_issue" name ="add another issue" onclick="return showAddAnotherPopup(this);">Add issue+</a></button>
+            <a href="{% url 'add_issue' old_edition_id %}" id="add_issue" name ="add another issue" onclick="return showAddAnotherPopup(this);">Add issue+</a>
 
           </div>
 

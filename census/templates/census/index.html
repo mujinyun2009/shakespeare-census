@@ -2,13 +2,9 @@
 {% load static %}
 {% block content %}
   <link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/css/semantic.min.css'>
-
-
   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
-
-
-<link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
+  <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
 
 <div class="wrapper">
 <hr class="style14" width = "50%"></hr>
@@ -101,12 +97,12 @@
             {% for edition in title.edition_set.all %}
               <a href="{% url 'copy' edition.id %}" class ="linkbutton">
                 {% if edition.Edition_number %}
-                  {% if edition.Edition_number == 'Anr. ed.' %}
-                    Anr. ed.
+                  {% if edition.Edition_number == 'anr. ed.' %}
+                    anr. ed.
                   {% else %}
                     Edition {{ edition.Edition_number }}
                   {% endif %}
-                {%else %}
+                {% else %}
                   Unknown edition
                 {% endif %}
               </a>
