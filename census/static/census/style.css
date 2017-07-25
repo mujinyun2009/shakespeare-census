@@ -228,7 +228,6 @@ textarea:focus {
   position: relative;
   height: 35px;
   left:0%;
-  width:137px;
   margin:auto;
   -webkit-transition: color 0.3s;
   transition: color 0.3s;

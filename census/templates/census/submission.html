@@ -1,7 +1,16 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-
+<style>
+#title {
+ width: 137px;
+ margin:10px, 10px;
+} 
+ 
+#width_tmp_select{
+ display : none;
+} 
+</style>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'census/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'census/submission.css' %}" />
@@ -18,14 +27,10 @@
 
 
 {% if messages %}
-<ul class="messages">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    <p class="sansserif" style="position:relative; color:#b91f44; text-align:center;">{{ message }}</p>
     {% endfor %}
-</ul>
-<hr>
 {% endif %}
-
 <form action="{% url 'submission' %}" method="post" accept-charset="utf-8" style="margin-left:20px" novalidate>
 	{% csrf_token %}
 <div>
@@ -39,6 +44,9 @@
     <option value="{{ title.id }}">{{ title.title }}</option>
   {% endfor %}
   </select>
+  <select id="width_tmp_select">
+ <option id="width_tmp_option"></option>
+</select>
   </td>
   <td>
   <a href="{% url 'add_title' %}" style="color:#FFFFFF;" name="add another title" onclick="return showAddAnotherPopup(this);" class="copysubmission">add title+</a>
@@ -94,5 +102,14 @@
 <hr class="style1"></hr>
 	<input type="submit" name="submit" value="submit" class="finalsubmit" id="copy_submit" style="display:none"/>
 </form>
+
+    <script type="text/javascript">
+$(document).ready(function() {
+  $('#title').change(function(){
+    $("#width_tmp_option").html($('#title option:selected').text()); 
+    $(this).width($("#width_tmp_select").width());  
+  });
+});
+    </script>
 
 {% endblock content %}
