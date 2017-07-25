@@ -16,6 +16,11 @@ hr.style14 {
   background-image: -ms-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
   background-image: -o-linear-gradient(left, #f0f0f0, #d3d1d1, #f0f0f0);
 }
+hr.style3 {
+  border: 0;
+  height: 1px;
+  background-color:#000000;
+}
 .subhead {
 	font-size: 13;
 	font-weight: lighter;
@@ -200,6 +205,12 @@ textarea:focus {
   font-weight:normal;
   position:relative;
 }
+.announcer3 {
+  font-size:25px;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  font-weight:normal;
+  position:relative;
+}
 *:focus {
   outline:0;
 }
@@ -315,6 +326,7 @@ hr.style1 {
   padding:0px;
   margin:0;
 }
+
 input.refinesearch {
     border: none;
     color: #000000;
@@ -363,9 +375,8 @@ input:focus:not(.finalsubmit) {
   border:none;
   border-left: 1px solid #000000;
   padding: 10px 10px;
-  position:relative;
   left:0%;
-  color: #FFFFFF;
+  color: #000000;
   background: #FFFFFF;
   font-family: "Century Gothic", AppleGothic, sans-serif;
 }

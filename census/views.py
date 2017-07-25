@@ -143,9 +143,9 @@ def issue(request, id):
 	}
 	return HttpResponse(template.render(context, request))
 def copy(request, id):
-	selected_issue=Issue.objects.get(pk=id)
-	all_copies = selected_issue.copy_set.all().order_by('id')
-	paginator = Paginator(all_copies, 10)
+	selected_edition = Edition.objects.get(pk=id)
+	all_issues=selected_edition.issue_set.all().order_by('start_date')
+	paginator = Paginator(all_issues, 10)
 	page = request.GET.get('page')
 	try:
 		copies = paginator.page(page)
@@ -155,7 +155,8 @@ def copy(request, id):
 		copies = paginator.page(paginator.num_pages)
 	template = loader.get_template('census/copy.html')
 	context = {
-		'copies': copies
+		'all_issues': all_issues,
+		'selected_edition': selected_edition,
 	}
 	return HttpResponse(template.render(context,request))
 
@@ -168,7 +169,7 @@ def copylist(request):
 		if query.isdigit() == False:
 			queryset_list = queryset_list.filter(Q(issue__edition__title__title__icontains=query)|Q(Owner__icontains=query)|Q(Bookplate__icontains=query))
 		elif query.isdigit() == True:
-			queryset_list = queryset_list.filter(Q(NSC=query)|Q(issue=query)|Q(Barlett1939=query)|Q(issue__edition__Edition_number=query))
+			queryset_list = queryset_list.filter(Q(NSC=query)|Q(issue=query)|Q(Bartlett1939=query)|Q(issue__edition__Edition_number=query))
 
 		paginator = Paginator(queryset_list, 10)
 		page = request.GET.get('page')
