@@ -37,6 +37,7 @@
 	<table class = "center" align="center" width="90%">
 		<tr>
 			<th> Owner </th>
+			<th> Shelfmark </th>
 			<th> Copy notes </th>
 			<th> Provenance information </th>
 		</tr>
@@ -44,6 +45,13 @@
 	{% for copy in issue.copy_set.all %}
 	<tr>
 		<td>{{copy.Owner}}</td>
+		<td>
+			{% if copy.Shelfmark %}
+			{{ copy.Shelfmark }}
+			{% else %}
+			None
+			{% endif %}
+		</td>
 		<td>
 			{% if copy.copynote %}
 				{{ copy.copynote }}
@@ -69,7 +77,6 @@
 {% endfor %}
 <script>
 function show_copy_info(issue_id) {
-
 	var div_id = "copy_info"+issue_id;
 	var copy_div=document.getElementById(div_id);
 	if(copy_div.style.display==="none") {
@@ -77,7 +84,6 @@ function show_copy_info(issue_id) {
 	} else {
 		copy_div.style.display = "none";
 	}
-
 }
 </script>
 

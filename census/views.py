@@ -85,6 +85,7 @@ def homepage(request):
 	}
 	return HttpResponse(template.render(context, request))
 
+#showing all titles in the database
 def index(request):
 	all_titles = Title.objects.all().order_by('title')
 	template = loader.get_template('census/index.html')
@@ -125,28 +126,7 @@ def index(request):
 		}
 	return HttpResponse(template.render(context, request))
 
-#Showing editions related to a certain title; not using right now
-def detail(request, id):
-	selected_title=Title.objects.get(pk=id)
-	editions = selected_title.edition_set.all()
-	template = loader.get_template('census/detail.html')
-	context = {
-		'editions': editions,
-		'title': selected_title
-	}
-	return HttpResponse(template.render(context, request))
-
-#Showing issues related to a certain edition; not using right now
-def issue(request, id):
-	selected_edition = Edition.objects.get(pk=id)
-	issues = selected_edition.issue_set.all()
-	template = loader.get_template('census/issue.html')
-	context = {
-		'issues': issues,
-		'selected_edition': selected_edition,
-	}
-	return HttpResponse(template.render(context, request))
-
+#showing all issues and copies for a certain edition; id is edtion id
 def copy(request, id):
 	selected_edition=Edition.objects.get(pk=id)
 	all_issues = selected_edition.issue_set.all().order_by('start_date')
@@ -158,6 +138,7 @@ def copy(request, id):
 	}
 	return HttpResponse(template.render(context,request))
 
+#showing all copies in the database
 def copylist(request):
 	all_copies = Copy.objects.all().order_by('id')
 	template = loader.get_template('census/copylist.html')
@@ -196,43 +177,6 @@ def copylist(request):
 			'copies': copies,
 		}
 	return HttpResponse(template.render(context,request))
-
-def transactions(request, copy_id):
-	selected_copy = Copy.objects.get(pk=copy_id)
-	transactions= selected_copy.transaction_set.all()
-	template = loader.get_template('census/transactions.html')
-	context = {
-		'transactions': transactions
-	}
-	return HttpResponse(template.render(context,request))
-
-def register(request):
-	template = loader.get_template('census/register.html')
-	if request.method == 'POST':
-		user_form = LoginForm(data=request.POST)
-
-		if user_form.is_valid():
-			# save the new user
-			new_user = User.objects.create_user(
-				username=user_form.cleaned_data['username'],
-				first_name=user_form.cleaned_data['first_name'],
-				last_name=user_form.cleaned_data['last_name'],
-				email=user_form.cleaned_data['email'],
-				password=user_form.cleaned_data['password1'],
-				)
-			new_user.save()
-			login(request, new_user)
-			return HttpResponseRedirect("welcome")
-		else:
-			context = {
-			'user_form.errors': user_form.errors,
-			'user_form': user_form,
-			}
-			print(user_form.errors)
-	else:
-		user_form = LoginForm()
-	return HttpResponse(template.render({'user_form': user_form}, request))
-
 
 def login_user(request):
 	template = loader.get_template('census/login.html')
@@ -275,11 +219,12 @@ def submission(request):
 	template = loader.get_template('census/submission.html')
 	all_titles = Title.objects.all()
 	copy_form = CopyForm()
+
 	if request.method=='POST':
 		issue_id=request.POST.get('issue')
 		if not issue_id or issue_id == 'Z':
 			copy_form=CopyForm()
-			messages.error(request, 'Please choose or add an issue.')
+			messages.error(request, 'Error: Please choose or add an issue.')
 		else:
 			selected_issue=Issue.objects.get(pk=issue_id)
 			copy_form=CopyForm(data=request.POST)
@@ -290,8 +235,8 @@ def submission(request):
 				copy.save()
 				return HttpResponseRedirect(reverse('copy_info', args=(copy.id,)))
 			else:
+				copy_form=CopyForm(data=request.POST)
 				messages.error(request, 'Error: invalid copy information!')
-				copy_form=CopyForm()
 
 	else:
 		copy_form=CopyForm()
@@ -341,6 +286,7 @@ def edit_copy_submission(request, copy_id):
 			else:
 				messages.error(request, 'The information you entered is invalid.')
 				copy_form=CopyForm(instance=copy_to_edit)
+
 	else:
 		copy_form=CopyForm(instance=copy_to_edit)
 
@@ -601,6 +547,36 @@ def update_copy(request, copy_id):
 	}
 	return HttpResponse(template.render(context, request))
 
+#The functions below are not used right now.
+
+#not used right now
+def register(request):
+	template = loader.get_template('census/register.html')
+	if request.method == 'POST':
+		user_form = LoginForm(data=request.POST)
+
+		if user_form.is_valid():
+			# save the new user
+			new_user = User.objects.create_user(
+				username=user_form.cleaned_data['username'],
+				first_name=user_form.cleaned_data['first_name'],
+				last_name=user_form.cleaned_data['last_name'],
+				email=user_form.cleaned_data['email'],
+				password=user_form.cleaned_data['password1'],
+				)
+			new_user.save()
+			login(request, new_user)
+			return HttpResponseRedirect("welcome")
+		else:
+			context = {
+			'user_form.errors': user_form.errors,
+			'user_form': user_form,
+			}
+			print(user_form.errors)
+	else:
+		user_form = LoginForm()
+	return HttpResponse(template.render({'user_form': user_form}, request))
+
 #need more infor for requirements; not used right now
 def provenance(request):
 	provenances= Provenance.objects.all()
@@ -609,3 +585,35 @@ def provenance(request):
 		'provenances': provenances
 	}
 	return HttpResponse(template.render(context,request))
+
+#need more infor for requirements; not used right now
+def transactions(request, copy_id):
+	selected_copy = Copy.objects.get(pk=copy_id)
+	transactions= selected_copy.transaction_set.all()
+	template = loader.get_template('census/transactions.html')
+	context = {
+		'transactions': transactions
+	}
+	return HttpResponse(template.render(context,request))
+
+#Showing editions related to a certain title; not using right now
+def detail(request, id):
+	selected_title=Title.objects.get(pk=id)
+	editions = selected_title.edition_set.all()
+	template = loader.get_template('census/detail.html')
+	context = {
+		'editions': editions,
+		'title': selected_title
+	}
+	return HttpResponse(template.render(context, request))
+
+#Showing issues related to a certain edition; not using right now
+def issue(request, id):
+	selected_edition = Edition.objects.get(pk=id)
+	issues = selected_edition.issue_set.all()
+	template = loader.get_template('census/issue.html')
+	context = {
+		'issues': issues,
+		'selected_edition': selected_edition,
+	}
+	return HttpResponse(template.render(context, request))
