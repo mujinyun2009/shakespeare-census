@@ -32,12 +32,36 @@
   <table class = "center" align="center" width="90%">
         <tr>
           <th> Title </th>
-          <th> Apocryphal? </th>
+          <th> Editions </th>
         </tr>
         <tr>
         {% for obj in object_list %}
-        <td><a href="{% url 'detail' obj.id %}" class ="linkbutton">{{ obj.title }}</a></td>
-        <td>{{ obj.Apocryphal }}</a></td>
+        <td>{{ obj.title }}</a></td>
+          <td>
+            {% for edition in obj.edition_set.all %}
+                {% if edition.Edition_number %}
+                  {% if edition.Edition_number == 'anr. ed.' %}
+                <a href="{% url 'copy' edition.id %}" class ="linkbutton"> anr. ed.</a>
+                  {% else %}
+                  {% if forloop.counter < obj.edition_set.all|length %}
+                  
+                <a href="{% url 'copy' edition.id %}" class ="linkbutton"> {{ edition.Edition_number }}</a> |
+                  {% else %}
+                 <a href="{% url 'copy' edition.id %}" class ="linkbutton"> {{ edition.Edition_number }}</a>
+                  {% endif %}
+                  {% endif %}
+                  
+                {% else %}
+                {% if forloop.counter < obj.edition_set.all|length %}
+                <a href="{% url 'copy' edition.id %}" class ="linkbutton">Unknown edition</a> |
+                {% else %}
+                 <a href="{% url 'copy' edition.id %}" class ="linkbutton">Unknown edition</a>
+                 {% endif %}
+
+                {% endif %}
+              </a>
+            {% endfor %}
+          </td>
         </tr>
         {% endfor %}
 
@@ -80,12 +104,16 @@
         </tr>
         <tr>
     {% for title in titles %}
-    			<td><a href="{% url 'detail' title.id %}" class ="linkbutton">{{ title.title }}</a></td>
+    			<td>{{ title.title }}</a></td>
           <td>
             {% for edition in title.edition_set.all %}
                 {% if edition.Edition_number %}
                   {% if edition.Edition_number == 'anr. ed.' %}
+                  {% if forloop.counter < title.edition_set.all|length %}
+                <a href="{% url 'copy' edition.id %}" class ="linkbutton"> anr. ed.</a> |
+                {% else %}
                 <a href="{% url 'copy' edition.id %}" class ="linkbutton"> anr. ed.</a>
+                {% endif %}
                   {% else %}
                   {% if forloop.counter < title.edition_set.all|length %}
                   

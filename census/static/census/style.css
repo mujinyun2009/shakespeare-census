@@ -168,6 +168,9 @@ input:-webkit-appearance {
 a.resultbuttons:hover {
   color:#a4b7d6;
 }
+a.linkbutton {
+    color: #000000;
+}
 a.linkbutton:hover {
     color: #a4b7d6;
 }
