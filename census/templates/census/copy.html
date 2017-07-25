@@ -36,24 +36,28 @@
 <h3 class = "center" align="left" style="margin-left:300px">Copy information: </h3>
 	<table class = "center" align="center" width="90%">
 		<tr>
-			<th> Title </th>
-			<th> Year published </th>
-			<th> Edition </th>
-			<th> ESTC </th>
-			<th> STC/Wing </th>
 			<th> Owner </th>
-			<th> Transactions </th>
+			<th> Copy notes </th>
+			<th> Provenance information </th>
 		</tr>
 
 	{% for copy in issue.copy_set.all %}
 	<tr>
-		<td>{{copy.issue.edition.title.title}}</td>
-		<td>{{copy.issue.year}}</td>
-		<td>Edition {{selected_edition.Edition_number}}</td>
-		<td>{{copy.issue.ESTC}}</td>
-		<td>{{copy.issue.STC_Wing}}</td>
 		<td>{{copy.Owner}}</td>
-		<td><a href="{% url 'transactions' copy.id %}">Available transactions</a></td>
+		<td>
+			{% if copy.copynote %}
+				{{ copy.copynote }}
+			{% else %}
+				None
+			{% endif %}
+		</td>
+		<td>
+			{% if copy.prov_info %}
+				{{ copy.prov_info }}
+			{% else %}
+				None
+			{% endif %}
+		</td>
 	</tr>
 	{% endfor %}
 </table>

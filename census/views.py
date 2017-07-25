@@ -159,7 +159,7 @@ def copy(request, id):
 	return HttpResponse(template.render(context,request))
 
 def copylist(request):
-	all_copies = Copy.objects.all()
+	all_copies = Copy.objects.all().order_by('id')
 	template = loader.get_template('census/copylist.html')
 	queryset_list = Copy.objects.all()
 	query = request.GET.get("q")
@@ -195,14 +195,6 @@ def copylist(request):
 			'object_list': queryset_list,
 			'copies': copies,
 		}
-	return HttpResponse(template.render(context,request))
-
-def provenance(request):
-	provenances= Provenance.objects.all()
-	template = loader.get_template('census/provenance.html')
-	context = {
-		'provenances': provenances
-	}
 	return HttpResponse(template.render(context,request))
 
 def transactions(request, copy_id):
@@ -608,3 +600,12 @@ def update_copy(request, copy_id):
 	'old_issue_id': old_issue.id,
 	}
 	return HttpResponse(template.render(context, request))
+
+#need more infor for requirements; not used right now
+def provenance(request):
+	provenances= Provenance.objects.all()
+	template = loader.get_template('census/provenance.html')
+	context = {
+		'provenances': provenances
+	}
+	return HttpResponse(template.render(context,request))

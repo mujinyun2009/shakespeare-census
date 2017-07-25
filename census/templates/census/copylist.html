@@ -27,7 +27,8 @@
                 <th> ESTC </th>
                 <th> STC/Wing </th>
                 <th> Owner </th>
-                <th> Transactions </th>
+								<th> Copy notes </th>
+								<th> Provenance information </th>
         </tr>
         <tr>
         {% for obj in object_list %}
@@ -37,7 +38,20 @@
                 <td>{{ obj.issue.ESTC }}</td>
                 <td>{{ obj.issue.STC_Wing}}</td>
                 <td>{{ obj.Owner }}</td>
-                <td><a href="{% url 'transactions' obj.id %}" class="linkbutton">Available transactions</a></td>
+								<td>
+									{% if copy.copynote %}
+										{{ copy.copynote }}
+									{% else %}
+										None
+									{% endif %}
+								</td>
+								<td>
+									{% if copy.prov_info %}
+										{{ copy.prov_info }}
+									{% else %}
+										None
+									{% endif %}
+								</td>
 
         </tr>
 
@@ -79,11 +93,12 @@
     		<tr>
     			<th> Title </th>'
 					<th> Year published </th>
-                <th> Edition </th>
+                <th>Edition #</th>
                 <th> ESTC </th>
                 <th>STC/Wing</th>
                 <th> Owner </th>
-                <th> Transactions </th>
+								<th> Copy notes </th>
+								<th> Provenance information </th>
     		</tr>
     		<tr>
     		{% for copy in copies %}
@@ -93,7 +108,20 @@
                 <td>{{ copy.issue.ESTC }}</td>
                 <td>{{ copy.issue.STC_Wing}}</td>
                 <td>{{ copy.Owner }}</td>
-                <td><a href="{% url 'transactions' copy.id %}" class="linkbutton">Available transactions</a></td>
+								<td>
+									{% if copy.copynote %}
+										{{ copy.copynote }}
+									{% else %}
+										None
+									{% endif %}
+								</td>
+								<td>
+									{% if copy.prov_info %}
+										{{ copy.prov_info }}
+									{% else %}
+										None
+									{% endif %}
+								</td>
 
    			</tr>
 

@@ -134,6 +134,10 @@ p.sansserif {
             <p align="left">Other notes: {{ copy.copynote }}</p>
           {% endif %}
 
+          {% if copy.prov_info %}
+          <p align="left">Provenance information: {{ copy.prov_info }}</p>
+          {% endif %}
+
           <p align="left">Submitted by: {{ copy.created_by }}</p>
         <div class="modal-footer">
           <button type="button" class="closebutton" data-dismiss="modal">close</button>
