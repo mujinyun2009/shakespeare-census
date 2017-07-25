@@ -30,17 +30,13 @@ function generateDialog(copy_id) {
     datatype: "json",
     data: $('.editForm').serialize(),
     success: function(data) {
-      if(Object.keys(data).length === 0) {
-        alert('Invalid! Please make sure there is no missing information!');
-        $("#editModal").modal('show');
-      } else {
+      if(data['stat'] === "ok") {
         alert('saved');
         $("#editModal").modal('hide');
+      } else {        
+        alert(data['stat']);
+        $("#editModal").modal('show');
       }
-      // var url = "copydata/" + copy_id + "/";
-      // $("#copyModal").load(url, function() {
-      //   $("#copyModal").modal('show');
-      // });
       }
     });
   return false;

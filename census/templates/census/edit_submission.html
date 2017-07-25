@@ -9,12 +9,11 @@
 <link rel="stylesheet" type="text/css" href="{% static 'census/submission.css' %}" />
 
 {% if messages %}
-<ul class="messages">
+<ul class="errorlist" style="margin-left:300px">
     {% for message in messages %}
     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
     {% endfor %}
 </ul>
-<hr>
 {% endif %}
 
 <form action="{% url 'edit_copy_submission' copy_id %}" method="post" accept-charset="utf-8" style="margin-left:20px">
@@ -94,9 +93,17 @@
 <center><p style="font-size:25; font-weight: lighter;">4. fill in the information about the copy</p></center>	  <table class = "table2" align="center">
     {% for field in copy_form.visible_fields %}
     <tr>
-    <td>{{ field.label_tag }}</td>
+    <td>{{ field.label_tag }}{% if field.field.required %}*{% endif %}</td>
     <td>{{ field }}</td>
     </tr>
+    <tr>
+      <td></td>
+      <td>
+		{% if field.errors %}
+			<ul class="errorlist">{% for error in field.errors %}<li>{{error}}</li>{% endfor %}</ul>
+		{% endif %}
+    </td>
+    <tr>
     {% endfor %}
 </table>
 </div>

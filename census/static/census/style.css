@@ -426,11 +426,6 @@ td.hoverspecial:hover {
             animation: showme 5s;
 }
 
-
-.hidden {
-  display: none;
-  overflow: auto;
-}
 .welcome {
   font-family: "Century Gothic", AppleGothic, sans-serif;
   font-weight: lighter;
@@ -513,6 +508,128 @@ td.hoverspecial:hover {
 @-o-keyframes fadein {
     from { opacity: 0; }
     to   { opacity: 1; }
+
+}
+
+.hidden {
+  display: none;
+  overflow: auto;
+}
+tr.errors {
+  background-color: none;
+}
+
+#help .wrapper {
+  color:#000000;
+  visibility: hidden;
+  background: transparent;
+  overflow: hidden;
+  transform-origin: 50% 0%;
+
+}
+#help:hover .wrapper {
+  visibility: visible;
+  animation-name: swingdown;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes swingdown {
+  0% {
+    opacity: .99999;
+    transform: rotateX(90deg);
+  }
+
+  30% {
+    transform: rotateX(-20deg) rotateY(5deg);
+    animation-timing-function: ease-in-out;
+  }
+
+  65% {
+    transform: rotateX(20deg) rotateY(-3deg);
+    animation-timing-function: ease-in-out;
+  }
+
+  100% {
+    transform: rotateX(0);
+    animation-timing-function: ease-in-out;
+  }
+}
+.submitted_line {
+  font-size:25px;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  text-align: center;
+  margin-top:10%;
+}
+.newcopy {
+  font-size:15px;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  padding: 10px;
+  width:20%;
+  margin:auto;
+  background-color:#a7c87b;
+  text-align: center;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+
+}
+.newcopy:hover {
+  background-color:#9eb245;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+
+}
+
+.forgotpassannouncer {
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  position:relative;
+  margin-top:100px;
+  font-size:40px;
+  font-weight:bolder;
+  text-align:center;
+}
+.forgotpassannouncer2 {
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  font-size:15px;
+  font-weight:lighter;
+  text-align:center;
+}
+
+.forgotpassannouncer3 {
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+  position:relative;
+  margin-top:100px;
+  font-size:30px;
+  font-weight:bolder;
+  text-align:center;
+}
+.newpasswordform{
+    position:relative;
+    width:auto;
+    margin:0 auto;
+    left:25%;
+}
+.newlogin:hover {
+  -webkit-transition: background 0.3s;
+  transition: background 0.3s;
+  background: #a7c87b;
+}
+
+.newlogin {
+  border : none;
+  position:relative;
+  display:block;
+  text-align:center;
+  transition: background 0.3s;
+  -webkit-transition: background 0.3s;
+  margin:0 auto;
+  width:300px;
+  padding:10px 30px;
+  height:20px;
+  font-size:15px;
+  color: #FFFFFF;
+  background: #8FBC8F;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
 
 }
 

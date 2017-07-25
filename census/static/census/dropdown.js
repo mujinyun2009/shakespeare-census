@@ -1,8 +1,13 @@
 jQuery(function($) {
 $(document).ready(function() {
+  var copy_submit=document.getElementById('copy_submit');
+
   $("select#title").change(function() {
     if ($(this).val() == 'Z') {
       $('.edition_section').attr('style', 'display:none');
+      $('.issue_section').attr('style', 'display:none');
+      $('.copy_section').attr('style', 'display:none');
+      copy_submit.style.display="none";
     }
     else {
       $('.edition_section').attr('style', 'display:inline');
@@ -24,6 +29,8 @@ $(document).ready(function() {
   $("select#edition").change(function(vent) {
     if ($(this).val() == 'Z') {
       $('.issue_section').attr('style', 'display:none');
+      $('.copy_section').attr('style', 'display:none');
+      copy_submit.style.display="none";
     }
     else {
       $('.issue_section').attr('style', 'display:inline');
@@ -43,7 +50,7 @@ $(document).ready(function() {
   });
 
 	$("select#issue").change(function(vent) {
-    var copy_submit=document.getElementById('copy_submit');
+
     if ($(this).val() == 'Z') {
 			$('.copy_section').attr('style', 'display:none');
   		copy_submit.style.display="none";

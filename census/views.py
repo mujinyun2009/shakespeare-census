@@ -263,13 +263,13 @@ def edit_copy_submission(request, copy_id):
 		title_id=request.POST.get('title')
 		if not issue_id or issue_id == 'Z':
 			copy_form=CopyForm(instance=copy_to_edit)
-			messages.error(request, 'Please choose or add an issue.')
+			messages.error(request, 'Error: Please choose or add an issue.')
 		elif not edition_id or edition_id == 'Z':
 			copy_form=CopyForm(instance=copy_to_edit)
-			messages.error(request, 'Please choose or add an edition.')
+			messages.error(request, 'Error: Please choose or add an edition.')
 		elif not title_id or title_id == 'Z':
 			copy_form=CopyForm(instance=copy_to_edit)
-			messages.error(request, 'Please choose or add a title.')
+			messages.error(request, 'Error: Please choose or add a title.')
 
 		else:
 			selected_issue=Issue.objects.get(pk=issue_id)
@@ -284,8 +284,8 @@ def edit_copy_submission(request, copy_id):
 				current_userHistory.edited_copies.add(new_copy)
 				return HttpResponseRedirect(reverse('copy_info', args=(new_copy.id,)))
 			else:
-				messages.error(request, 'The information you entered is invalid.')
-				copy_form=CopyForm(instance=copy_to_edit)
+				messages.error(request, 'Error: invalid copy information!')
+				copy_form=CopyForm(data=request.POST)
 
 	else:
 		copy_form=CopyForm(instance=copy_to_edit)
@@ -493,7 +493,7 @@ def update_copy(request, copy_id):
 	old_title=old_edition.title
 
 	if request.method=='POST':
-		data=[]
+		data={}
 		if request.POST.get('cancel', None):
 			return HttpResponseRedirect(reverse('user_history'))
 
@@ -502,13 +502,13 @@ def update_copy(request, copy_id):
 		title_id=request.POST.get('title')
 		if not issue_id or issue_id == 'Z':
 			copy_form=CopyForm(instance=copy_to_edit)
-			messages.error(request, 'Please choose or add an issue.')
+			data['stat'] = 'Error: Please choose or add an issue!'
 		elif not edition_id or edition_id == 'Z':
 			copy_form=CopyForm(instance=copy_to_edit)
-			messages.error(request, 'Please choose or add an edition.')
+			data['stat'] = 'Error: Please choose or add an edition!'
 		elif not title_id or title_id == 'Z':
 			copy_form=CopyForm(instance=copy_to_edit)
-			messages.error(request, 'Please choose or add a title.')
+			data['stat'] = 'Error: Please choose or add a title!'
 
 		else:
 			selected_issue=Issue.objects.get(pk=issue_id)
@@ -521,17 +521,19 @@ def update_copy(request, copy_id):
 				current_user = request.user
 				current_userHistory=UserHistory.objects.get(user=current_user)
 				current_userHistory.edited_copies.add(new_copy)
-				data=[]
-				data.append(model_to_dict(new_copy.issue.edition.title))
-				data.append(model_to_dict(new_copy.issue.edition))
-				data.append(model_to_dict(new_copy.issue))
-				data.append(model_to_dict(new_copy))
+				data['stat']="ok"
 
 			else:
 				messages.error(request, 'The information you entered is invalid.')
-				copy_form=CopyForm(instance=copy_to_edit)
+				copy_form=CopyForm(data=request.POST)
+				errors=""
+				for error in copy_form.errors:
+					errors = errors + " " + error + copy_form.errors[error]
+					
+				data['stat'] = errors
 
-			return HttpResponse(json.dumps(data), content_type='application/json')
+		return HttpResponse(json.dumps(data), content_type='application/json')
+
 	else:
 		copy_form=CopyForm(instance=copy_to_edit)
 

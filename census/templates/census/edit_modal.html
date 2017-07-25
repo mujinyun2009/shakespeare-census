@@ -23,7 +23,7 @@
             </select>
 
             <a href="{% url 'add_title' %}" name="add another title" type="button" onclick="return showAddAnotherPopup(this);">Add title+</a>
-
+            
           </div>
 
           <div class='edition_section' id ='edition_section'>
@@ -39,6 +39,7 @@
           	  {% endfor %}
             </select>
             <a href="{% url 'add_edition' old_title_id %}" id="add_edition" name ="add another edition" onclick="return showAddAnotherPopup(this);">Add edition+</a>
+
           </div>
 
           <div class='issue_section' id='issue_section'>
@@ -53,14 +54,19 @@
           			{% endif %}
           		{% endfor %}
           	</select>
-            </select>
+
             <a href="{% url 'add_issue' old_edition_id %}" id="add_issue" name ="add another issue" onclick="return showAddAnotherPopup(this);">Add issue+</a>
 
           </div>
 
           <div class='copy_section' id='copy_section'>
-          	<p>Fill in the information about the copy</p>
-          	{{ copy_form.as_p }}
+
+              {% for field in copy_form.visible_fields %}
+
+              <p>{{ field.label_tag }}{% if field.field.required %}*{% endif %} {{ field }}</p>
+
+              {% endfor %}
+
           </div>
 
         <div class="modal-footer">

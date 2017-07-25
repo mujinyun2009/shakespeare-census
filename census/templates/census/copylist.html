@@ -32,6 +32,9 @@
                 <th> Owner </th>
 								<th> Shelfmark </th>
 								<th>  </th>
+								{% if user.is_authenticated %}
+								<th> </th>
+								{% endif %}
 
         </tr>
         <tr>
@@ -51,6 +54,11 @@
 								</td>
 								<td><a class="copy_data" id="data{{obj.id}}" href="#" data-form="{% url 'copy_data' obj.id %}" title="Details">Details</a></td>
 				        <div id="copyModal" class="modal fade" role="dialog"></div>
+
+								{% if user.is_authenticated %}
+								<td><a class="update_copy" href="#" data-form="{% url 'update_copy' obj.id %}" title="Edit">Edit</a></td>
+								<div id="editModal" class="modal fade" role="dialog"></div>
+								{% endif %}
 
 
         </tr>
@@ -99,6 +107,9 @@
                 <th> Owner </th>
 								<th> Shelfmark</th>
 								<th>  </th>
+								{% if user.is_authenticated %}
+								<th> </th>
+								{% endif %}
 
     		</tr>
     		<tr>
@@ -118,6 +129,11 @@
 								</td>
 								<td><a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">Details</a></td>
 				        <div id="copyModal" class="modal fade" role="dialog"></div>
+
+								{% if user.is_authenticated %}
+								<td><a class="update_copy" href="#" data-form="{% url 'update_copy' copy.id %}" title="Edit">Edit</a></td>
+								<div id="editModal" class="modal fade" role="dialog"></div>
+								{% endif %}
 
    			</tr>
 
