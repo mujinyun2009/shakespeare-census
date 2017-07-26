@@ -26,7 +26,7 @@ import re
 
 # Create your views here.
 def search(request):
-	template=loader.get_template('results.html')
+	template=loader.get_template('census/results.html')
 	query1 = request.GET.get('a')
 	query2 = request.GET.get('b')
 	query3 = request.GET.get('c')
@@ -42,19 +42,19 @@ def search(request):
 		result_list = list(chain(results_list))
 
 	if query1 and query2 and not query3 and not query4:
-		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2}))
+		results_list = copy_list.filter(Q(**{category1: query1})&Q(**{category2: query2}))
 		result_list = list(chain(results_list))
 
 	if query1 and query2 and query3 and not query4:
-		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category3: query3}))
+		results_list = copy_list.filter(Q(**{category1: query1})&Q(**{category2: query2})&Q(**{category3: query3}))
 		result_list = list(chain(results_list))
 
 	if query1 and query2 and query3 and query4:
-		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category4: query4}))
+		results_list = copy_list.filter(Q(**{category1: query1})&Q(**{category2: query2})&Q(**{category4: query4}))
 		result_list = list(chain(results_list))
 
 	if not query1 and not query2 and not query3 and not query4:
-		results_list = copy_list.filter(Q(**{category1: query1})|Q(**{category2: query2})|Q(**{category4: query4}))
+		results_list = copy_list.filter(Q(**{category1: query1})&Q(**{category2: query2})&Q(**{category4: query4}))
 		result_list = list(chain(results_list))
 
 	paginator = Paginator(result_list, 10)
@@ -80,7 +80,7 @@ def search(request):
 	return HttpResponse(template.render(context, request))
 
 def homepage(request):
-	template=loader.get_template('frontpage.html')
+	template=loader.get_template('census/frontpage.html')
 	context = {
 	}
 	return HttpResponse(template.render(context, request))
@@ -128,9 +128,16 @@ def index(request):
 
 #showing all issues and copies for a certain edition; id is edtion id
 def copy(request, id):
-	selected_edition=Edition.objects.get(pk=id)
-	all_issues = selected_edition.issue_set.all().order_by('start_date')
-
+	selected_edition = Edition.objects.get(pk=id)
+	all_issues=selected_edition.issue_set.all().order_by('start_date')
+	paginator = Paginator(all_issues, 10)
+	page = request.GET.get('page')
+	try:
+		copies = paginator.page(page)
+	except PageNotAnInteger:
+		copies = paginator.page(1)
+	except EmptyPage:
+		copies = paginator.page(paginator.num_pages)
 	template = loader.get_template('census/copy.html')
 	context = {
 		'all_issues': all_issues,
@@ -148,7 +155,7 @@ def copylist(request):
 		if query.isdigit() == False:
 			queryset_list = queryset_list.filter(Q(issue__edition__title__title__icontains=query)|Q(Owner__icontains=query)|Q(Bookplate__icontains=query))
 		elif query.isdigit() == True:
-			queryset_list = queryset_list.filter(Q(NSC=query)|Q(issue=query)|Q(Barlett1939=query)|Q(issue__edition__Edition_number=query))
+			queryset_list = queryset_list.filter(Q(NSC=query)|Q(issue=query)|Q(Bartlett1939=query)|Q(issue__edition__Edition_number=query))
 
 		paginator = Paginator(queryset_list, 10)
 		page = request.GET.get('page')

@@ -32,24 +32,32 @@
         </tr>
         <tr>
         {% for obj in object_list %}
-        <td>{{ obj.title }}</td>
-        <td>
-          {% for edition in obj.edition_set.all %}
-            <a href="{% url 'copy' edition.id %}" class ="linkbutton">
-              {% if edition.Edition_number %}
-                {% if edition.Edition_number == 'Anr. ed.' %}
-                  Anr. ed.
+        <td>{{ obj.title }}</a></td>
+          <td>
+            {% for edition in obj.edition_set.all %}
+                {% if edition.Edition_number %}
+                  {% if edition.Edition_number == 'anr. ed.' %}
+                <a href="{% url 'copy' edition.id %}" class ="linkbutton"> anr. ed.</a>
+                  {% else %}
+                  {% if forloop.counter < obj.edition_set.all|length %}
+
+                <a href="{% url 'copy' edition.id %}" class ="linkbutton"> {{ edition.Edition_number }}</a> |
+                  {% else %}
+                 <a href="{% url 'copy' edition.id %}" class ="linkbutton"> {{ edition.Edition_number }}</a>
+                  {% endif %}
+                  {% endif %}
+
                 {% else %}
-                  Edition {{ edition.Edition_number }}
+                {% if forloop.counter < obj.edition_set.all|length %}
+                <a href="{% url 'copy' edition.id %}" class ="linkbutton">Unknown edition</a> |
+                {% else %}
+                 <a href="{% url 'copy' edition.id %}" class ="linkbutton">Unknown edition</a>
+                 {% endif %}
+
                 {% endif %}
-              {%else %}
-                Unknown edition
-              {% endif %}
-            </a>
+              </a>
             {% endfor %}
           </td>
-
-        </td>
         </tr>
         {% endfor %}
 
@@ -88,6 +96,7 @@
   <table class = "center" align="center" width="90%">
         <tr>
           <th> Title </th>
+<<<<<<< HEAD
           <th> Editions </th>
         </tr>
         <tr>
@@ -104,10 +113,46 @@
                   {% endif %}
                 {% else %}
                   Unknown edition
+=======
+          <th> Editions</th>
+        </tr>
+        <tr>
+    {% for title in titles %}
+    			<td>{{ title.title }}</a></td>
+          <td>
+            {% for edition in title.edition_set.all %}
+                {% if edition.Edition_number %}
+                  {% if edition.Edition_number == 'anr. ed.' %}
+                  {% if forloop.counter < title.edition_set.all|length %}
+                <a href="{% url 'copy' edition.id %}" class ="linkbutton"> anr. ed.</a> |
+                {% else %}
+                <a href="{% url 'copy' edition.id %}" class ="linkbutton"> anr. ed.</a>
+                {% endif %}
+                  {% else %}
+                  {% if forloop.counter < title.edition_set.all|length %}
+
+                <a href="{% url 'copy' edition.id %}" class ="linkbutton"> {{ edition.Edition_number }}</a> |
+                  {% else %}
+                 <a href="{% url 'copy' edition.id %}" class ="linkbutton"> {{ edition.Edition_number }}</a>
+                  {% endif %}
+                  {% endif %}
+
+                {% else %}
+                {% if forloop.counter < title.edition_set.all|length %}
+                <a href="{% url 'copy' edition.id %}" class ="linkbutton">Unknown edition</a> |
+                {% else %}
+                 <a href="{% url 'copy' edition.id %}" class ="linkbutton">Unknown edition</a>
+                 {% endif %}
+
+>>>>>>> origin/mergeroshan7/26
                 {% endif %}
               </a>
             {% endfor %}
           </td>
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/mergeroshan7/26
    			 </tr>
     {% endfor %}
 
@@ -120,6 +165,7 @@
         <tr class ="pagenavigator">
 
       {% if titles.has_previous %}
+      <td class = "hoverspecial">  <a href="?page={{ titles.paginator.1 }}" class="paginator"><<</a></td>
       <td class = "hoverspecial"> <a href="?page={{ titles.previous_page_number }}" class="paginator"><</a></td>
       {% endif %}
     {% for page in titles.paginator.page_range %}
@@ -137,6 +183,8 @@
 
       {% if titles.has_next %}
      <td class = "hoverspecial"> <a href="?page={{ titles.next_page_number }}" class="paginator">></a></td>
+           <td class = "hoverspecial">  <a href="?page={{ titles.paginator.num_pages }}" class="paginator">>></a></td>
+
       {% endif %}
         </tr>
       </table>

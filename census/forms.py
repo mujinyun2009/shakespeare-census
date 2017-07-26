@@ -53,7 +53,7 @@ class CopyForm(forms.ModelForm):
 		return cleaned_data
 
 class IssueForm(forms.ModelForm):
-	error_messages={"Incorrect year format": "Invalid published year! Please follow the examples to enter correct information."}
+	error_messages={"Incorrect year format": "Invalid published year. Please follow the examples to enter correct information."}
 
 	DEEP=forms.IntegerField(required=False, initial=0)
 	year=forms.CharField(label="Year published", help_text="Examples: 1600, 1600?, 1650-1700, 1650-1700?",required=True)

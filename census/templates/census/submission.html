@@ -1,7 +1,24 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<style>
+#title {
+ width: 200px;
+ margin:0px, 0px;
+}
+#edition {
+ width: 200px;
+ margin:0px, 0px;
+}
 
+ #issue {
+ width: 200px;
+ margin:0px, 0px;
+}
+#width_tmp_select{
+ display : none;
+}
+</style>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'census/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'census/submission.css' %}" />
@@ -19,12 +36,10 @@
 {% if messages %}
 <ul class="errorlist" style="margin-left:300px">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    <p class="sansserif" style="position:relative; color:#b91f44; text-align:center;">{{ message }}</p>
     {% endfor %}
 </ul>
 {% endif %}
-
-<script> {{script}} </script>
 
 <form action="{% url 'submission' %}" method="post" accept-charset="utf-8" style="margin-left:20px" novalidate>
 	{% csrf_token %}
@@ -32,13 +47,16 @@
   <center><p style="font-size:25; font-weight: lighter;">1. select a title</p></center>
   <table class = 'center'>
   <tr>
-  <td>
+  <td id ="width_tmp_td">
   <select name="title" id="title" class ="submissionselect">
   <option value="Z">select a title</option>
   {% for title in all_titles %}
     <option value="{{ title.id }}">{{ title.title }}</option>
   {% endfor %}
   </select>
+  <select id="width_tmp_select">
+ <option id="width_tmp_option"></option>
+</select>
   </td>
   <td>
   <a href="{% url 'add_title' %}" style="color:#FFFFFF;" name="add another title" onclick="return showAddAnotherPopup(this);" class="copysubmission">add title+</a>
@@ -51,10 +69,13 @@
   <center><p style="font-size:25; font-weight: lighter;">2. select an edition</p></center>
   <table class = 'center'>
   <tr>
-  <td>
+  <td id ="width_tmp_td">
   <select name="edition" id="edition" class = "submissionselect">
   <option>select an edition</option>
   </select>
+  <select id="width_tmp_select">
+ <option id="width_tmp_option"></option>
+</select>
   </td>
   <td>
   <a href="#" id="add_edition" style="color:#FFFFFF;" name ="add another edition" onclick="return showAddAnotherPopup(this);" class="copysubmission">add edition+</a>
@@ -67,10 +88,13 @@
   <center><p style="font-size:25; font-weight: lighter;">3. select an issue</p></center>
   <table class = 'center'>
   <tr>
-  <td>
+  <td id ="width_tmp_td">
   <select name="issue" id="issue" class="submissionselect">
   <option>select an issue</option>
   </select>
+  <select id="width_tmp_select">
+ <option id="width_tmp_option"></option>
+</select>
   </td>
   <td>
   <a href="#" id="add_issue" style="color:#FFFFFF;" name ="add another issue" onclick="return showAddAnotherPopup(this);" class="copysubmission">add issue+</a>
@@ -101,5 +125,30 @@
 <hr class="style1"></hr>
 	<input type="submit" name="submit" value="submit" class="finalsubmit" id="copy_submit" style="display:none" />
 </form>
+
+  <script type="text/javascript">
+$(document).ready(function() {
+  $('#title').change(function(){
+    $("#width_tmp_option").html($('#title option:selected').text());
+    $(this).width($("#width_tmp_select").width()+60);
+    $("#width_tmp_td").width($("#width_tmp_select").width());
+  });
+});
+
+$(document).ready(function() {
+  $('#edition').change(function(){
+    $("#width_tmp_option").html($('#edition option:selected').text());
+    $(this).width($("#width_tmp_select").width()+100);
+    $("#width_tmp_td").width($("#width_tmp_select").width());
+  });
+});
+$(document).ready(function() {
+  $('#issue').change(function(){
+    $("#width_tmp_option").html($('#issue option:selected').text());
+    $(this).width($("#width_tmp_select").width()+100);
+    $("#width_tmp_td").width($("#width_tmp_select").width());
+  });
+});
+    </script>
 
 {% endblock content %}

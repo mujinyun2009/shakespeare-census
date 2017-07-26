@@ -37,11 +37,12 @@
 	{% endif %}
   </tbody>
 </table>
-
+<br>
 <div class="pagination">
     <table class = "pagenavigator" align="center">
     <tr class ="pagenavigator">
       {% if submissions.has_previous %}
+      <td class = "hoverspecial">  <a href="?page={{ submissions.paginator.1 }}" class="paginator"><<</a></td>
       <td class = "hoverspecial"> <a href="?page={{ submissions.previous_page_number }}"><</a></td>
       {% endif %}
 
@@ -59,7 +60,8 @@
     {% endfor %}
 
       {% if submissions.has_next %}
-       <td class = "hoverspecial">  <a href="?page={{ submissions.next_page_number }}">></a></td>
+      <td class = "hoverspecial">  <a href="?page={{ submissions.next_page_number }}">></a></td>
+      <td class = "hoverspecial">  <a href="?page={{ submissions.paginator.num_pages }}" class="paginator">>></a></td>
       {% endif %}
     </tr>
   </table>

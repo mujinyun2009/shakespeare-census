@@ -3,6 +3,7 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
 <link rel="stylesheet" type="text/css" href= "{% static 'census/detail.css' %}" />
+  <link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/css/semantic.min.css'>
 
 <div class="wrapper">
 <h3 align="center" width="90%">
@@ -20,70 +21,102 @@
 <div class="wrapper">
 <hr class = "style14" width = "50%"></hr>
 	<p class="sansserifgrey">
-	Displayed is the list of issues for the selected edition.
+	Displayed is the list of issues and respective copies for the selected edition.
 	</p>
 	<p class="sansserifgrey">Click an issue to get the copy information.</p>
 </div>
 <hr class="style14" width = "50%"></hr>
 
+<div class="wrapper">
+<p class = "sansserif">
+<table class="center" align="center" width="90%">
+<tr>
+<td colspan="6" class="announcer">
+  <a href= "{% url 'index' %}" class="linkbutton">all titles</a> |
+  <a href = "{% url 'index' %}?q={{ selected_edition.title }}" class="linkbutton">{{selected_edition.title}}</a> |
+  {% if selected_edition.Edition_number == "Anr. ed." %}
+    {{ selected_edition.Edition_number }}
+  {% else %}
+    edition {{ selected_edition.Edition_number }}:
+  {% endif %}
+  <div class = "announcer2"> issues</div>
+</td>
+</tr>
+</table>
+</div>
+<hr class="style3" width="60%">
+
 {% for issue in all_issues %}
 <div class="container">
-	<h3 class = "center" align="left" style="margin-left:300px"><a href="#copy_info{{issue.id}}" onclick="show_copy_info({{issue.id}});"> Issue ESTC {{ issue.ESTC }} |
-		STC/Wing {{ issue.STC_Wing}} ({{ issue.year }})</a></h3>
+<div class = "ui list">
+<div class="item">
+<i class="chevron circle down icon" style="position:relative; margin-left:300px"></i>
+<div class="announcer" style="font-size:15px"><a href="#copy_info{{issue.id}}" class="linkbutton" onclick="show_copy_info({{issue.id}});"> issue ESTC {{ issue.ESTC }} |
+    STC/Wing {{ issue.STC_Wing}} ({{ issue.year }})</a></div>
+</div>
+</div>
 
-		<div id="copy_info{{issue.id}}" style="display:none">
+    <div id="copy_info{{issue.id}}" style="display:none">
 {% if issue.copy_set.all %}
-<h3 class = "center" align="left" style="margin-left:300px">Copy information: </h3>
-	<table class = "center" align="center" width="90%">
-		<tr>
-			<th> Owner </th>
-			<th> Shelfmark </th>
-			<th> Copy notes </th>
-			<th> Provenance information </th>
-		</tr>
+  <table class = "center" align="center" width="90%">
+    <tr>
+    <td colspan = "6" class="announcer" style="background-color:#ff9966; color:white"><div class="annoucner3">Copies:</div></td>
+    </tr>
+  </table>
+  <table class = "center" align="center" width="90%">
+  <hr class="style1" width="60%" style="height:2px;">
 
-	{% for copy in issue.copy_set.all %}
-	<tr>
-		<td>{{copy.Owner}}</td>
-		<td>
-			{% if copy.Shelfmark %}
-			{{ copy.Shelfmark }}
-			{% else %}
-			None
-			{% endif %}
-		</td>
-		<td>
-			{% if copy.copynote %}
-				{{ copy.copynote }}
-			{% else %}
-				None
-			{% endif %}
-		</td>
-		<td>
-			{% if copy.prov_info %}
-				{{ copy.prov_info }}
-			{% else %}
-				None
-			{% endif %}
-		</td>
-	</tr>
-	{% endfor %}
+    <tr>
+      <th> Owner </th>
+      <th> Shelfmark </th>
+      <th> Copy notes </th>
+      <th> Provenance information </th>
+    </tr>
+
+  {% for copy in issue.copy_set.all %}
+  <tr>
+    <td>{{copy.Owner}}</td>
+    <td>
+      {% if copy.Shelfmark %}
+      {{ copy.Shelfmark }}
+      {% else %}
+      None
+      {% endif %}
+    </td>
+    <td>
+      {% if copy.copynote %}
+        {{ copy.copynote }}
+      {% else %}
+        None
+      {% endif %}
+    </td>
+    <td>
+      {% if copy.prov_info %}
+        {{ copy.prov_info }}
+      {% else %}
+        None
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
 </table>
 {% else %}
-	<p class = "center" align="left" style="margin-left:300px">There are no copies for this issue right now!</p>
+  <p class = "sansserifgrey" align="center">There are no copies for this issue right now.</p>
 {% endif %}
 </div>
 </div>
+<br>
+
 {% endfor %}
 <script>
 function show_copy_info(issue_id) {
-	var div_id = "copy_info"+issue_id;
-	var copy_div=document.getElementById(div_id);
-	if(copy_div.style.display==="none") {
-		copy_div.style.display = "block";
-	} else {
-		copy_div.style.display = "none";
-	}
+  var div_id = "copy_info"+issue_id;
+  var copy_div=document.getElementById(div_id);
+  if(copy_div.style.display==="none") {
+    copy_div.style.display = "block";
+  } else {
+    copy_div.style.display = "none";
+  }
 }
 </script>
 
