@@ -34,7 +34,7 @@ p.sansserif {
       </div>
       <div class="modal-body">
           <p align="left" class = "sansserif"><b>Title:</b> {{ copy.issue.edition.title }}</p>
-          <p align="left" class = "sansserif"><b>Apocryphal:</b> {{ copy.issue.edition.title.Apocryphal }}</p>
+          <!-- <p align="left" class = "sansserif"><b>Apocryphal:</b> {{ copy.issue.edition.title.Apocryphal }}</p> -->
           <p align="left" class = "sansserif"><b>Edition number:</b> {{ copy.issue.edition.Edition_number }}</p>
 
           {% if copy.issue.edition.Edition_format %}
@@ -130,17 +130,11 @@ p.sansserif {
           {% endif %}
 
           {% if copy.copynote %}
-            <p align="left" class = "sansserif"><b>Other notes:</b>{{ copy.copynote }}</p>
+            <p align="left" class = "sansserif"><b>Other notes:</b> {{ copy.copynote }}</p>
           {% endif %}
 
-          <p align="left" class = "sansserif"><b>Submitted by:</b> {{ copy.created_by }}</p>
           {% if copy.prov_info %}
-          <p align="left" class="sansserif"><b>Provenance information:</b> {{ copy.prov_info }}</p>
-          {% endif %}
-
-          <p align="left" class="sansserif"><b>Submitted by:</b> {{ copy.created_by }}</p>          
-          {% if copy.prov_info %}
-          <p align="left" class = "sansserif"><b>Provenance information:</b>{{ copy.prov_info }}</p>
+          <p align="left" class = "sansserif"><b>Provenance information:</b> {{ copy.prov_info }}</p>
           {% endif %}
 
           <p align="left" class = "sansserif"><b>Submitted by:</b> {{ copy.created_by }}</p>

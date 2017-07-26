@@ -27,10 +27,10 @@ What would you like to change?
 	<form method="post" action="{% url 'edit_profile' %}">
 		{% csrf_token %}
     <table align='center'>
-    <tr>
+    <!-- <tr>
     <td>Username: </td>
     <td> {{ profile_form.username }}</td>
-    </tr>
+    </tr> -->
     <tr>
     <td>First name: </td>
     <td> {{ profile_form.first_name }}</td>
