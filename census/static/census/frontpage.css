@@ -1,4 +1,8 @@
 a{text-decoration: none}
+a.linkbutton: {
+    color: #000000;
+}
+
 a.linkbutton:visited {
     color: #000000;
 }

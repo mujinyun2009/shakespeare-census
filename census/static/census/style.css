@@ -278,19 +278,9 @@ textarea:focus {
 
 
 .finalsubmit:hover {
-  border : none;
-  padding: 10px 30px;
-  position:relative;
-  width:300px;
-  height:50px;
   -webkit-transition: background 0.3s;
   transition: background 0.3s;
-  left:50%;
-  font-size:15px;
-  margin-left:-150px;
-  color: #FFFFFF;
   background: #a7c87b;
-  font-family: "Century Gothic", AppleGothic, sans-serif;
 }
 
 .finalsubmit {
@@ -329,7 +319,7 @@ input.refinesearch {
     font-family:'Raleway', sans-serif;
     font-weight:300;
 }
-input:not(.finalsubmit) {
+input:not(.finalsubmit):not(.editprofilesubmit):not(.editprofilesubmit2){
     border: none;
     color: #000000;
     background: none;
@@ -342,7 +332,7 @@ input:not(.finalsubmit) {
     font-family:'Raleway', sans-serif;
     font-weight:300;
 }
-input:focus:not(.finalsubmit) {
+input:focus:not(.finalsubmit):not(.editprofilesubmit):not(.editprofilesubmit2){
   outline: none;
   box-shadow: 0px 1px 0px 0px #838589, 0px 1px 0px 0px #838589;
 }
