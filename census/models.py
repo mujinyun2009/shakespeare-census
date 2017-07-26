@@ -29,7 +29,7 @@ class Issue (models.Model):
 	notes = models.CharField(max_length=1000, default=None)
 	Variant_Description = models.CharField(max_length=1000)
 	def __str__(self):
-		return "%s Issue %s" % (self.edition, self.ESTC)
+		return "%s ESTC %s" % (self.edition, self.ESTC)
 
 class Copy (models.Model):
 	Owner = models.CharField(max_length=500)
@@ -55,7 +55,7 @@ class Copy (models.Model):
 	copynote=models.CharField(max_length=5000, default=None, null=True)
 	prov_info=models.TextField(null=True, default=None)
 	def __str__(self):
-		return  "%s %s" % (self.issue, self.NSC)
+		return  "%s (%s)" % (self.issue, self.issue.year)
 	class Meta:
 		verbose_name_plural = "copies"
 

@@ -526,11 +526,7 @@ def update_copy(request, copy_id):
 			else:
 				messages.error(request, 'The information you entered is invalid.')
 				copy_form=CopyForm(data=request.POST)
-				errors=""
-				for error in copy_form.errors:
-					errors = errors + " " + error + copy_form.errors[error]
-					
-				data['stat'] = errors
+				data['stat'] = "Error: Invalid copy information."
 
 		return HttpResponse(json.dumps(data), content_type='application/json')
 

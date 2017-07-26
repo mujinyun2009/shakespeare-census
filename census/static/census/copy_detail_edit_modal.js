@@ -33,7 +33,7 @@ function generateDialog(copy_id) {
       if(data['stat'] === "ok") {
         alert('saved');
         $("#editModal").modal('hide');
-      } else {        
+      } else {
         alert(data['stat']);
         $("#editModal").modal('show');
       }
