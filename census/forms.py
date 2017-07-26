@@ -20,10 +20,7 @@ class EditionForm(forms.ModelForm):
 		exclude = ['title']
 
 class CopyForm(forms.ModelForm):
-<<<<<<< HEAD
 	thumbnail_URL = forms.URLField(widget=forms.TextInput(attrs={'size':'80'}), error_messages={'invalid': 'Enter a valid url.'}, required=False)
-=======
->>>>>>> origin/mergejinyun7-26
 	Owner=forms.CharField(required=True)
 	thumbnail_URL = forms.URLField(widget=forms.TextInput(attrs={'size':'80'}), error_messages={'invalid': 'Enter a valid url.'}, required=False)
 	NSC=forms.IntegerField(label="NSC", initial=0, required=False)
@@ -44,10 +41,6 @@ class CopyForm(forms.ModelForm):
 	Library_Notes=forms.CharField(required=False)
 	copynote=forms.CharField(required=False)
 	prov_info=forms.CharField(widget=forms.Textarea, required=False)
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/mergejinyun7-26
 	class Meta:
 		model = Copy
 		exclude = ['issue', 'created_by']

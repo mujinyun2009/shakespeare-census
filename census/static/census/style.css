@@ -583,13 +583,9 @@ td.hoverspecial:hover {
 @-o-keyframes fadein {
     from { opacity: 0; }
     to   { opacity: 1; }
-<<<<<<< HEAD
 
 }
 
-=======
-  }
->>>>>>> origin/mergejinyun7-26
 .hidden {
   display: none;
   overflow: auto;

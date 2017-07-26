@@ -73,9 +73,4 @@ urlpatterns = [
     url(r'^user/password_reset/complete/$', password_reset_complete,
         {'template_name': 'census/password_reset_complete.html'},
         name='password_reset_complete'),
-<<<<<<< HEAD
 ]
-=======
-
-	]
->>>>>>> origin/mergejinyun7-26
