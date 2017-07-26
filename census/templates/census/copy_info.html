@@ -1,70 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<style>
-a.editbutton:visited {
-    color: white;
-    text-decoration:none;
-}
-a.editbutton:link {
-    color: white;
-    text-decoration:none;
-}
-
-.hidden {
-  display: none;
-  overflow: auto;
-}
-.submitted_line {
-  font-size:30px;
-  font-family: "Century Gothic", AppleGothic, sans-serif;
-  text-align: center;
-}
-td.table2:nth-child(1){
-  background-color:#a7c87b;
-  text-align:center;
-  width:100px;
-}
-td.table2:nth-child(2){
-  background-color:#ff9966;
-  border-left: 1px solid #FFFFFF;
-  text-align:center;
-  width:100px
-;
-}
-td.table2:last-child{
-  background-color:#8fbc8f;
-  border-left: 1px solid #FFFFFF;
-  text-align:center;
-  width:100px;
-}
-li a, .dropbtn {
-    display: block;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-}
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-  min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-.dropdown-content a {
-    color: black;
-    padding: 2px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-}
-.dropdown-content a:hover {background-color: #f1f1f1}
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-</style>
-
 <div id="submitted_line" class = "submitted_line">
 <p>You have submitted the following copy: </p>
 </div>
@@ -138,14 +74,14 @@ li a, .dropbtn {
 <div>
 <table>
 <tr>
-<td class = "table2">
-  <a href="{% url 'edit_copy_submission' selected_copy.id %}" class="editbutton" role="button">Edit</a>
+<td class = "table3">
+  <a href="{% url 'edit_copy_submission' selected_copy.id %}" class="editbutton2" role="button">Edit</a>
 </td>
-<td class = "table2">
-  <a href="{% url 'copy_success' %}" class="editbutton" role="button">Confirm</a>
+<td class = "table3">
+  <a href="{% url 'copy_success' %}" class="editbutton2" role="button">Confirm</a>
  </td>
- <td class="table2">
-  <a href="{% url 'cancel_copy_submission' selected_copy.id %}" class="editbutton" id="delete">Delete</a>
+ <td class="table3">
+  <a href="{% url 'cancel_copy_submission' selected_copy.id %}" class="editbutton2" id="delete">Delete</a>
 </td>
 </tr>
 </table>

@@ -3,13 +3,21 @@
 {% block content %}
 <style>
 #title {
- width: 137px;
- margin:10px, 10px;
+ width: 200px;
+ margin:0px, 0px;
 } 
- 
+#edition {
+ width: 200px;
+ margin:0px, 0px;
+} 
+
+ #issue {
+ width: 200px;
+ margin:0px, 0px;
+} 
 #width_tmp_select{
  display : none;
-} 
+}
 </style>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'census/style.css' %}" />
@@ -37,7 +45,7 @@
   <center><p style="font-size:25; font-weight: lighter;">1. select a title</p></center>
   <table class = 'center'>
   <tr>
-  <td>
+  <td id ="width_tmp_td">
   <select name="title" id="title" class ="submissionselect">
   <option value="Z">select a title</option>
   {% for title in all_titles %}
@@ -59,10 +67,13 @@
   <center><p style="font-size:25; font-weight: lighter;">2. select an edition</p></center>
   <table class = 'center'>
   <tr>
-  <td>
+  <td id ="width_tmp_td">
   <select name="edition" id="edition" class = "submissionselect">
   <option>select an edition</option>
   </select>
+  <select id="width_tmp_select">
+ <option id="width_tmp_option"></option>
+</select>
   </td>
   <td>
   <a href="#" id="add_edition" style="color:#FFFFFF;" name ="add another edition" onclick="return showAddAnotherPopup(this);" class="copysubmission">add edition+</a>
@@ -75,10 +86,13 @@
   <center><p style="font-size:25; font-weight: lighter;">3. select an issue</p></center>
   <table class = 'center'>
   <tr>
-  <td>
+  <td id ="width_tmp_td">
   <select name="issue" id="issue" class="submissionselect">
   <option>select an issue</option>
   </select>
+  <select id="width_tmp_select">
+ <option id="width_tmp_option"></option>
+</select>
   </td>
   <td>
   <a href="#" id="add_issue" style="color:#FFFFFF;" name ="add another issue" onclick="return showAddAnotherPopup(this);" class="copysubmission">add issue+</a>
@@ -103,11 +117,27 @@
 	<input type="submit" name="submit" value="submit" class="finalsubmit" id="copy_submit" style="display:none"/>
 </form>
 
-    <script type="text/javascript">
+  <script type="text/javascript">
 $(document).ready(function() {
   $('#title').change(function(){
     $("#width_tmp_option").html($('#title option:selected').text()); 
-    $(this).width($("#width_tmp_select").width());  
+    $(this).width($("#width_tmp_select").width()+60); 
+    $("#width_tmp_td").width($("#width_tmp_select").width()); 
+  });
+});
+
+$(document).ready(function() {
+  $('#edition').change(function(){
+    $("#width_tmp_option").html($('#edition option:selected').text()); 
+    $(this).width($("#width_tmp_select").width()+100); 
+    $("#width_tmp_td").width($("#width_tmp_select").width()); 
+  });
+});
+$(document).ready(function() {
+  $('#issue').change(function(){
+    $("#width_tmp_option").html($('#issue option:selected').text()); 
+    $(this).width($("#width_tmp_select").width()+100); 
+    $("#width_tmp_td").width($("#width_tmp_select").width()); 
   });
 });
     </script>
