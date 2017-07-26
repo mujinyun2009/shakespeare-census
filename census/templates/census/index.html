@@ -40,13 +40,13 @@
                 <a href="{% url 'copy' edition.id %}" class ="linkbutton"> anr. ed.</a>
                   {% else %}
                   {% if forloop.counter < obj.edition_set.all|length %}
-                  
+
                 <a href="{% url 'copy' edition.id %}" class ="linkbutton"> {{ edition.Edition_number }}</a> |
                   {% else %}
                  <a href="{% url 'copy' edition.id %}" class ="linkbutton"> {{ edition.Edition_number }}</a>
                   {% endif %}
                   {% endif %}
-                  
+
                 {% else %}
                 {% if forloop.counter < obj.edition_set.all|length %}
                 <a href="{% url 'copy' edition.id %}" class ="linkbutton">Unknown edition</a> |
@@ -96,6 +96,27 @@
   <table class = "center" align="center" width="90%">
         <tr>
           <th> Title </th>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+          <th> Editions </th>
+        </tr>
+        <tr>
+    {% for title in titles %}
+    			<td>{{ title.title }}</td>
+          <td>
+            {% for edition in title.edition_set.all %}
+              <a href="{% url 'copy' edition.id %}" class ="linkbutton">
+                {% if edition.Edition_number %}
+                  {% if edition.Edition_number == 'anr. ed.' %}
+                    anr. ed.
+                  {% else %}
+                    Edition {{ edition.Edition_number }}
+                  {% endif %}
+                {% else %}
+                  Unknown edition
+=======
+>>>>>>> origin/mergejinyun7-26
           <th> Editions</th>
         </tr>
         <tr>
@@ -112,13 +133,13 @@
                 {% endif %}
                   {% else %}
                   {% if forloop.counter < title.edition_set.all|length %}
-                  
+
                 <a href="{% url 'copy' edition.id %}" class ="linkbutton"> {{ edition.Edition_number }}</a> |
                   {% else %}
                  <a href="{% url 'copy' edition.id %}" class ="linkbutton"> {{ edition.Edition_number }}</a>
                   {% endif %}
                   {% endif %}
-                  
+
                 {% else %}
                 {% if forloop.counter < title.edition_set.all|length %}
                 <a href="{% url 'copy' edition.id %}" class ="linkbutton">Unknown edition</a> |
@@ -126,10 +147,21 @@
                  <a href="{% url 'copy' edition.id %}" class ="linkbutton">Unknown edition</a>
                  {% endif %}
 
+<<<<<<< HEAD
+=======
+>>>>>>> origin/mergeroshan7/26
+>>>>>>> origin/mergejinyun7-26
                 {% endif %}
               </a>
             {% endfor %}
           </td>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/mergeroshan7/26
+>>>>>>> origin/mergejinyun7-26
    			 </tr>
     {% endfor %}
 

@@ -225,7 +225,7 @@ textarea:focus {
   text-align:center;
   outline:none;
   background-color: #FFFFFF;
-  
+
   height: 55px;
   -webkit-transition: color 0.3s;
   transition: color 0.3s;
@@ -583,9 +583,13 @@ td.hoverspecial:hover {
 @-o-keyframes fadein {
     from { opacity: 0; }
     to   { opacity: 1; }
+<<<<<<< HEAD
 
 }
 
+=======
+  }
+>>>>>>> origin/mergejinyun7-26
 .hidden {
   display: none;
   overflow: auto;
