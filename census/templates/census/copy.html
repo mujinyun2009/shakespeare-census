@@ -46,19 +46,16 @@
     <div id="copy_info{{issue.id}}" style="display:none">
 {% if issue.copy_set.all %}
   <table class = "center" align="center" width="90%">
-    <tr>
-    <td colspan = "6" class="announcer" style="background-color:#ff9966; color:white"><div class="annoucner3">Copies:</div></td>
-    </tr>
-  </table>
-  <table class = "center" align="center" width="90%">
-  <hr class="style1" width="60%" style="height:2px;">
-
-    <tr>
-      <th> Owner </th>
-      <th> Shelfmark </th>
-      <th> Copy notes </th>
-      <th> Provenance information </th>
-    </tr>
+  <thead>
+<th colspan="6">Copies:</th>
+</thead>
+<tbody>
+<tr>
+<td class="subhead">Owner</td>
+<td class="subhead">Shelfmark</td>
+<td class="subhead">Copy notes</td>
+<td class="subhead">Provenance information</td>
+</tr>
 
   {% for copy in issue.copy_set.all %}
   <tr>
