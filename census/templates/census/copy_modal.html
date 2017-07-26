@@ -119,8 +119,6 @@ p.sansserif {
 
           {% if copy.Barlett1916_Notes %}
             <p align="left" class = "sansserif"><b>Bartlett 1916 notes:</b>{{ copy.Bartlett1916_Notes }}</p>
-          {% endif %}
-
           {% if copy.Lee_Notes %}
             <p align="left" class = "sansserif"><b>Lee notes:</b> {{ copy.Lee_Notes }}</p>
           {% endif %}
@@ -134,6 +132,11 @@ p.sansserif {
           {% endif %}
 
           <p align="left" class = "sansserif"><b>Submitted by:</b> {{ copy.created_by }}</p>
+          {% if copy.prov_info %}
+          <p align="left" class="sansserif"><b>Provenance information:</b> {{ copy.prov_info }}</p>
+          {% endif %}
+
+          <p align="left" class="sansserif"><b>Submitted by:</b> {{ copy.created_by }}</p>
         <div class="modal-footer">
           <button type="button" class="closebutton" data-dismiss="modal">close</button>
         </div>

@@ -52,6 +52,11 @@ urlpatterns = [
 
 	url(r'^editProfile$', views.edit_profile, name='edit_profile'),
 	url(r'^welcome$', views.welcome, name='welcome'),
+
+	url(r'^copydata/(?P<copy_id>[0-9]+)/$', views.copy_data, name='copy_data'),
+
+	url(r'^updatecopy/(?P<copy_id>[0-9]+)/$', views.update_copy, name='update_copy'),
+
     url(r'^password_reset/$', password_reset,
         {'template_name': 'census/password_reset_form.html',
          'email_template_name': 'census/password_reset_email.html',
@@ -68,7 +73,4 @@ urlpatterns = [
     url(r'^user/password_reset/complete/$', password_reset_complete,
         {'template_name': 'census/password_reset_complete.html'},
         name='password_reset_complete'),
-	url(r'^copydata/(?P<copy_id>[0-9]+)/$', views.copy_data, name='copy_data'),
-
-	url(r'^updatecopy/(?P<copy_id>[0-9]+)/$', views.update_copy, name='update_copy'),
 ]

@@ -15,30 +15,42 @@
 <p class="sansserif">
   <br>
       <table class = "center" align="center" width="90%">
-        <tr>
         {% for issue in issues|slice:"1" %}
-        <td colspan="6" class = "announcer"><a href = "{% url 'index' %}" class="linkbutton"> {{ issue.edition.title }}</a>|<a href = "{% url 'detail' issue.edition.title.id %}" class="linkbutton"> edition {{issue.edition.Edition_number}}</a>: <div class = "announcer2"> issues</div>
-        {% endfor %}
-        </td>
-        </tr>
+				<tr>
+        <td colspan="6" class = "announcer"> Title: {{ issue.edition.title }}| Edition: {{ issue.edition.Edition_number }} <div class = "announcer2">Available issues</div>
+				</tr>
+
+				{% endfor %}
         <tr>
           <th> Year </th>
           <th> STC Wing</th>
-          <th> DEEP</th>
           <th> ESTC </th>
           <th> Notes </th>
-          <th> Variant Description </th>
+          <th>  </th>
         </tr>
     {% for issue in issues %}
-   				<td><a href="{% url 'copy' issue.id %}" class="linkbutton">{{ issue.year }}</a></td>
+   				<td>{{ issue.year }}</td>
        		<td>{{ issue.STC_Wing }}</td>
-        	<td>{{ issue.DEEP }}</td>
        		<td>{{ issue.ESTC }}</td>
-        	<td>{{ issue.notes }}</td>
-          <td>{{ issue.Variant_Description }}</td>
+
+        	<td>
+						{% if issue.notes %}
+							{{ issue.notes }}
+						{% else %}
+							None
+						{% endif %}
+					</td>
+          <td><a href="{% url 'copy' issue.id %}" class="linkbutton">Available copies</a></td>
         	</tr>
     {% endfor %}
         </table>
+				<table class = "center" align="right" width="90%">
+					<tr>
+					<td>
+					<a href = "{% url 'index' %}" class="linkbutton"> See all titles </a> | <a href = "{% url 'index' %}?q={{ selected_edition.title }}" class="linkbutton"> See all editions for this title</a>
+	        </td>
+	        </tr>
+				</table>
     </p>
 </div>
 

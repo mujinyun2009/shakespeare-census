@@ -30,7 +30,6 @@ account</p></a>
   {% if user.is_authenticated %}
   <a href="{% url 'logout_user' %}"><p class = sansserif>logout</p></a>
   {% endif %}
-
 </div>
 </li>
 </ul>
@@ -63,13 +62,12 @@ account</p></a>
 <!--                     <th><a href="\UpennWSK/user/password_reset">Password Reset?</a></th>
  -->               <center>
                     <div id = "submitz"><input type="submit" value="login" class="login" />
-                           <div class="reset">  
+                           <!-- <div class="reset">
                            <p class="sansserif" align="center"><a href="{% url 'password_reset' %}" class="linkbutton">reset password</p>
-                           </div>
+                           </div> -->
                     </div>
                     <input type="hidden" name="next" value={{next}}>
 
             </form>
     </div>
     </div>
-

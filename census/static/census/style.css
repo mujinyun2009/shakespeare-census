@@ -501,10 +501,6 @@ td.hoverspecial:hover {
             animation: showme 5s;
 }
 
-.hidden {
-  display: none;
-  overflow: auto;
-}
 .welcome {
   font-family: "Century Gothic", AppleGothic, sans-serif;
   font-weight: lighter;
@@ -587,7 +583,9 @@ td.hoverspecial:hover {
 @-o-keyframes fadein {
     from { opacity: 0; }
     to   { opacity: 1; }
-  }
+
+}
+
 .hidden {
   display: none;
   overflow: auto;
@@ -617,7 +615,7 @@ tr.errors {
     transform: rotateX(90deg);
   }
 
-  30% {     
+  30% {
     transform: rotateX(-20deg) rotateY(5deg);
     animation-timing-function: ease-in-out;
   }

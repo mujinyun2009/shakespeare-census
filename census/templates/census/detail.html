@@ -21,11 +21,9 @@
         </tr>
         <tr>
           <th> Edition Number </th>
-          <th> Edition Format </th>
         </tr>
     {% for edition in editions %}
    				<td><a href="{% url 'issue' edition.id %}" class ="linkbutton">{{ edition.Edition_number }}</a></td>
-        	<td>{{ edition.Edition_format }}</td>
         	</tr>
     {% endfor %}
         </table>

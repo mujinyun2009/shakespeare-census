@@ -5,9 +5,6 @@
 <p>You have submitted the following copy: </p>
 </div>
 
-<div id="editted_line">
-<p class="sansserif" align="center">You have edited the following copy: </p>
-</div>
 
     <p class="sansserif">
     	<table align = "center">
@@ -28,6 +25,10 @@
    				<td>{{ selected_copy.issue }}</td>
    			</tr>
         <tr>
+            <td> Owner </td>
+            <td>{{ selected_copy.Owner }}</td>
+        </tr>
+        <tr>
     			<td>Thumbnail URL</td>
    				<td>{{ selected_copy.thumbnail_URL }}</td>
    			</tr>
@@ -35,10 +36,6 @@
    				<td> NSC </td>
    				<td>{{ selected_copy.NSC }}</td>
    			</tr>
-            <tr>
-                <td> Owner </td>
-                <td>{{ selected_copy.Owner }}</td>
-            </tr>
             <tr>
                 <td> Shelfmark </td>
                 <td>{{ selected_copy.Shelfmark }}</td>
@@ -64,6 +61,50 @@
                 <td>{{ selected_copy.Binding }}</td>
             </tr>
             <tr>
+                <td> Binder </td>
+                <td>{{ selected_copy.Binder }}</td>
+            </tr>
+            <tr>
+                <td> Bookplate </td>
+                <td>{{ selected_copy.Bookplate }}</td>
+            </tr>
+            <tr>
+                <td> Bookplate location </td>
+                <td>{{ selected_copy.Bookplate_Location }}</td>
+            </tr>
+            <tr>
+                <td> Bartlett1939 </td>
+                <td>{{ selected_copy.Bartlett1939 }}</td>
+            </tr>
+            <tr>
+                <td> Bartlett1939 Notes </td>
+                <td>{{ selected_copy.Bartlett1939_Notes }}</td>
+            </tr>
+            <tr>
+                <td> Bartlett1916 </td>
+                <td>{{ selected_copy.Bartlett1916 }}</td>
+            </tr>
+            <tr>
+                <td> Bartlett1916_Notes </td>
+                <td>{{ selected_copy.Bartlett1916_Notes }}</td>
+            </tr>
+            <tr>
+                <td> Lee Notes </td>
+                <td>{{ selected_copy.Lee_Notes }}</td>
+            </tr>
+            <tr>
+                <td> Library Notes </td>
+                <td>{{ selected_copy.Library_Notes }}</td>
+            </tr>
+            <tr>
+                <td> Other notes </td>
+                <td>{{ selected_copy.copynote }}</td>
+            </tr>
+            <tr>
+                <td> Provenance information </td>
+                <td>{{ selected_copy.prov_info }}</td>
+            </tr>
+            <tr>
                 <td> Submitted by: </td>
                 <td>{{ selected_copy.created_by }}</td>
             </tr>
@@ -86,19 +127,5 @@
 </tr>
 </table>
 </div>
-
-<script>
-var opener_url = document.referrer;
-var delete_button = document.getElementById("delete");
-var submitted_line=document.getElementById("submitted_line");
-var editted_line=document.getElementById("editted_line");
-
-if(opener_url.indexOf('editcopysubmission') > -1) {
-  delete_button.classList.add("hidden");
-  submitted_line.classList.add("hidden");
-} else {
-  editted_line.classList.add("hidden");
-}
-</script>
 
 {% endblock content %}

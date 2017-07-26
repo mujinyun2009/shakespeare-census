@@ -21,9 +21,36 @@ class EditionForm(forms.ModelForm):
 
 class CopyForm(forms.ModelForm):
 	thumbnail_URL = forms.URLField(widget=forms.TextInput(attrs={'size':'80'}), error_messages={'invalid': 'Enter a valid url.'}, required=False)
+	Owner=forms.CharField(required=True)
+	thumbnail_URL = forms.URLField(widget=forms.TextInput(attrs={'size':'80'}), error_messages={'invalid': 'Enter a valid url.'}, required=False)
+	NSC=forms.IntegerField(label="NSC", initial=0, required=False)
+	Shelfmark=forms.CharField(required=False)
+	Height=forms.IntegerField(initial=0, required=False)
+	Width=forms.IntegerField(initial=0, required=False)
+	Marginalia=forms.CharField(required=False)
+	Condition=forms.CharField(required=False)
+	Binding=forms.CharField(required=False)
+	Binder=forms.CharField(required=False)
+	Bookplate=forms.CharField(required=False)
+	Bookplate_Location=forms.CharField(required=False)
+	Bartlett1939=forms.IntegerField(initial=0, required=False)
+	Bartlett1939_Notes=forms.CharField(required=False)
+	Bartlett1916=forms.IntegerField(initial=0, required=False)
+	Bartlett1916_Notes=forms.CharField(required=False)
+	Lee_Notes=forms.CharField(required=False)
+	Library_Notes=forms.CharField(required=False)
+	copynote=forms.CharField(required=False)
+	prov_info=forms.CharField(widget=forms.Textarea, required=False)
 	class Meta:
 		model = Copy
 		exclude = ['issue', 'created_by']
+
+	def clean_url(self):
+		entered_URL=self.cleaned_data['thumbnail_URL']
+		if entered_URL and not entered_URL.startswith('http://'):
+			entered_URL='http://'+entered_URL
+			cleaned_data['thumbnail_URL']=entered_URL
+		return cleaned_data
 
 class IssueForm(forms.ModelForm):
 	error_messages={"Incorrect year format": "Invalid published year. Please follow the examples to enter correct information."}

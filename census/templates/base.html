@@ -3,12 +3,13 @@
     <head>
         <title>Shakespeare Census</title>
 	<meta charset="utf-7">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-        <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    	<link rel="stylesheet" type="text/css" href="{% static 'census/style.css' %}" />
-      <style>
+  <link rel="shortcut icon" href="http://s3.amazonaws.com/libapps/customers/220/images/favicon.ico" type="image/png">
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+   <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+   <link rel="stylesheet" type="text/css" href="{% static 'census/style.css' %}" />
 
+      <style>
         .user-tools {
           float: right;
           margin: 25px 25px 0px 0px;
@@ -17,7 +18,6 @@
     </head>
 
     <body>
-
       <div class="wrapper" id="links">
       <ul>
       <li><a id="homelink" class="not.active" href="{% url 'homepage' %}"><p class="sansserif">
@@ -38,6 +38,7 @@
           <a href="{% url 'profile' %}" id="profilelink"><p class = sansserif>my profile</p></a>
           <a href="{% url 'user_history' %}" id="historylink"><p class = sansserif>my history</p></a>
           <a href="{% url 'logout_user' %}" id="logoutlink"><p class = sansserif>logout</p></a>
+
            {% else %}
           <a href="{% url 'login_user' %}" id="loginlink"><p class = sansserif>login</p></a>
             {% endif %}
@@ -50,59 +51,6 @@
 
       {% block content %}{% endblock content %}
 
-      <script>
-        var links = document.getElementById('links');
-        var home_link = document.getElementById('homelink');
-        var titles_link = document.getElementById('titleslink');
-        var copy_link = document.getElementById('copylistlink');
-        var submission_link = document.getElementById('submissionlink');
-        var register_link = document.getElementById('registerlink');
-        var profile_link = document.getElementById('profilelink');
-        var history_link = document.getElementById('historylink');
-        var logout_link = document.getElementById('logoutlink');
-        var login_link = document.getElementById('loginlink');
-        var account = document.getElementById('dropdownMenu');
-
-        var url = window.location.href;
-
-        if(url.indexOf('register') > -1) {
-          register_link.classList.remove('not.active');
-          register_link.classList.add('active');
-
-        } else if (url.indexOf('search') > -1) {
-          copy_link.classList.remove('not.active');
-          copy_link.classList.add('active');
-
-        } else if (url.indexOf('titles') > -1 || url.indexOf('editions') > -1 || url.indexOf('issue') > -1) {
-          titles_link.classList.remove('not.active');
-          titles_link.classList.add('active');
-
-        } else if (url.indexOf('editcopysubmission') > -1 || url.indexOf('addTitle') > -1
-                  || url.indexOf('addEdition') > -1 || url.indexOf('addIssue') > -1
-                  || url.indexOf('welcome') > -1) {
-          links.classList.add('hidden');
-
-        } else if (url.indexOf('submission') > -1) {
-          submission_link.classList.remove('not.active');
-          submission_link.classList.add('active');
-
-        } else if (url.indexOf('copy') > -1 || url.indexOf('copies') > -1
-                  ||url.indexOf('transactions') > -1 ||url.indexOf('search') > -1) {
-          copy_link.classList.remove('not.active');
-          copy_link.classList.add('active');
-
-        } else {
-          account.classList.add('active');
-          if (url.indexOf('profile') > -1 || url.indexOf('Profile') > -1) {
-            profile_link.classList.add('active2');
-          } else if (url.indexOf('history') > -1) {
-            history_link.classList.add('active2');
-          } else if (url.indexOf('login') > -1) {
-            login_link.classList.add('active2');
-          } else if (url.indexOf('logout') > -1) {
-            logout_link.classList.add('active2');
-          }
-        }
-      </script>
+      <script type="text/javascript" src="/static/census/baselinks.js"></script>
     </body>
 </html>
