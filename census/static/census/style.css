@@ -225,7 +225,6 @@ textarea:focus {
   text-align:center;
   outline:none;
   background-color: #FFFFFF;
-
   height: 55px;
   -webkit-transition: color 0.3s;
   transition: color 0.3s;
@@ -246,12 +245,7 @@ textarea:focus {
   text-align:center;
   outline:none;
   background-color: #FFFFFF;
-  position: relative;
-  height: 35px;
-  left:0%;
-  padding:0px;
-  width:200px;
-  margin:auto;
+  height: 55px;
   border:none;
   color:#000000;
   font-size:15px;
@@ -267,11 +261,7 @@ textarea:focus {
   text-align:center;
   outline:none;
   background-color: #FFFFFF;
-  position: relative;
-  height: 35px;
-  left:0%;
-  padding:0px;
-  width:150px;
+  height: 55px;
   margin:auto;
   border:none;
   color:#000000;
@@ -768,4 +758,6 @@ td.table3:last-child{
   margin-left:-300px;
 
 }
+
+
 </style>

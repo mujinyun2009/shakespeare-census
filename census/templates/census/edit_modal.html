@@ -1,3 +1,22 @@
+<style>
+#title {
+ width: 200px;
+ margin:0px, 0px;
+}
+#edition {
+ width: 200px;
+ margin:0px, 0px;
+}
+
+ #issue {
+ width: 200px;
+ margin:0px, 0px;
+}
+#width_tmp_select{
+ display : none;
+}
+</style>
+
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-header">
@@ -20,7 +39,10 @@
               	<option value="{{ title.id }}">{{ title.title }}</option>
           		{% endif %}
             {% endfor %}
-            </select> 
+            </select>
+            <select id="width_tmp_select">
+            <option id="width_tmp_option"></option>
+            </select>
           <a href="{% url 'add_title' %}" style="z-index:-1;" name="add another title" type="btn" class="editmodalsubmission" onclick="return showAddAnotherPopup(this);">Add title+</a>
 
           </div>
@@ -37,6 +59,9 @@
           			{% endif %}
           	  {% endfor %}
             </select>
+            <select id="width_tmp_select">
+            <option id="width_tmp_option"></option>
+            </select>
            <a href="{% url 'add_edition' old_title_id %}" id="add_edition" name ="add another edition" class="editmodalsubmission" onclick="return showAddAnotherPopup(this);">Add edition+</a>
           </div>
 
@@ -52,6 +77,9 @@
           			{% endif %}
           		{% endfor %}
           	</select>
+            <select id="width_tmp_select">
+            <option id="width_tmp_option"></option>
+            </select>
           <a href="{% url 'add_issue' old_edition_id %}" id="add_issue" name ="add another issue" class="editmodalsubmission" onclick="return showAddAnotherPopup(this);">Add issue+</a>
 
           </div>
@@ -76,9 +104,33 @@
     <script>
     $(function() {
       $('#editModal').modal('show');
-    });
+          });
     </script>
 {% endif %}
+<script>
+
+      $(document).ready(function() {
+        $('#title').change(function(){
+          $("#width_tmp_option").html($('#title option:selected').text());
+          $(this).width($("#width_tmp_select").width()+50);
+          $("#width_tmp_td").width($("#width_tmp_select").width());
+        });
+      });
+
+      $(document).ready(function() {
+        $('#edition').change(function(){
+          $("#width_tmp_option").html($('#edition option:selected').text());
+          $(this).width($("#width_tmp_select").width()+100);
+          $("#width_tmp_td").width($("#width_tmp_select").width());
+        });
+      });
+      $(document).ready(function() {
+        $('#issue').change(function(){
+          $("#width_tmp_option").html($('#issue option:selected').text());
+          $(this).width($("#width_tmp_select").width()+100);
+        });
+      });
+</script>
 </div>
 </div>
 </div>
