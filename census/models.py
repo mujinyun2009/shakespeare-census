@@ -13,7 +13,7 @@ class Title(models.Model):
 
 class Edition (models.Model):
 	title = models.ForeignKey(Title)
-	Edition_number = models.CharField(max_length=20, unique=False)
+	Edition_number = models.CharField(max_length=20, unique=False, null=True)
 	Edition_format = models.CharField(max_length=10, null=True)
 	def __str__(self):
 		return "%s Edition %s" % (self.title, self.Edition_number)
@@ -25,20 +25,20 @@ class Issue (models.Model):
 	year = models.CharField(max_length=20, default=None)
 	start_date = models.IntegerField(default=0)
 	end_date = models.IntegerField(default=0)
-	DEEP = models.IntegerField(default=0)
-	notes = models.CharField(max_length=1000, default=None)
-	Variant_Description = models.CharField(max_length=1000)
+	DEEP = models.IntegerField(default=0, null=True)
+	notes = models.CharField(max_length=1000, default=None, null=True)
+	Variant_Description = models.CharField(max_length=1000, null=True)
 	def __str__(self):
 		return "%s ESTC %s" % (self.edition, self.ESTC)
 
 class Copy (models.Model):
 	Owner = models.CharField(max_length=500)
 	issue = models.ForeignKey(Issue, unique=False)
-	thumbnail_URL = models.URLField(max_length=500)
-	NSC = models.IntegerField(default=0)
+	thumbnail_URL = models.URLField(max_length=500, null=True)
+	NSC = models.IntegerField(default=0, null=True)
 	Shelfmark = models.CharField(max_length=500, default=None, null=True)
-	Height = models.IntegerField(default=0)
-	Width = models.IntegerField(default=0)
+	Height = models.IntegerField(default=0, null=True)
+	Width = models.IntegerField(default=0, null=True)
 	Marginalia = models.CharField(max_length=100, null=True)
 	Condition = models.CharField(max_length=200, default=None, null=True)
 	Binding = models.CharField(max_length=200, default=None, null=True)
