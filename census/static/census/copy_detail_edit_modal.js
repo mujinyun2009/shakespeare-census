@@ -24,6 +24,18 @@ $(document).ready(function() {
 });
 
 function generateDialog(copy_id) {
+  // var postUrl = $('.editForm').attr('action');
+  // var postData = $('.editForm').serialize();
+  // $.post(postUrl, postData).done(function(data){
+  //   if(data['stat'] === "ok") {
+  //     alert('Success! Your changes have been saved.');
+  //     $("#editModal").modal('hide');
+  //     } else {
+  //       alert(data['stat']);
+  //       $("#editModal").modal('show');
+  //     }
+  // });
+  // e.preventDefault();
   $.ajax({
     url: $('.editForm').attr('action'),
     type: "POST",
