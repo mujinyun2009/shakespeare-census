@@ -52,7 +52,7 @@ account</p></a>
 
 <select name='j' class="select1">
 <option value="issue__edition__title__title__icontains">title</option>
-<option value="issue__year__icontains">year</option>
+<option value="issue__year__icontains">year (published at)</option>
 <option value="issue__STC_Wing__icontains">stc wing</option>
 </select>
 <br>
@@ -74,8 +74,9 @@ account</p></a>
   <option value="issue__STC_Wing__icontains">stc wing</option>
   <option value="issue__DEEP">DEEP</option>
   <option value="issue__ESTC__icontains">ESTC</option>
-  <option value="issue__start_date">start date</option>
-  <option value="issue__end_date">end date</option>
+  <option value="issue__year__icontains">year (published at)</option>
+  <option value="issue__start_date__gte">year (published after)</option>
+  <option value="issue__end_date__lte">year (published before)</option>
 </optgroup>
 <optgroup label="Copy">
   <option value="NSC">NSC</option>

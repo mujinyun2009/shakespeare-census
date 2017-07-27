@@ -9,9 +9,9 @@
 <link rel="stylesheet" type="text/css" href="{% static 'census/submission.css' %}" />
 
 {% if messages %}
-<ul class="errorlist" style="margin-left:300px">
+<ul class="errorlist">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    <p class="sansserif" style="position:relative; color:#b91f44; text-align:center;">{{ message }}</p>
     {% endfor %}
 </ul>
 {% endif %}

@@ -28,7 +28,9 @@
 <td class="subhead">STC/Wing</td>
 <td class="subhead">Owner</td>
 <td class="subhead"></td>
+{% if user.is_authenticated %}
 <td class="subhead"></td>
+{% endif %}
 </tr>
 <tr>
 {% for copy in result_list %}

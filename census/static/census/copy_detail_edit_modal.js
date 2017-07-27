@@ -29,9 +29,9 @@ function generateDialog(copy_id) {
     type: "POST",
     datatype: "json",
     data: $('.editForm').serialize(),
-    success: function(data, xhr) {
+    success: function(data) {
       if(data['stat'] === "ok") {
-        alert('saved');
+        alert('Success! Your changes have been saved.');
         $("#editModal").modal('hide');
       } else {
         alert(data['stat']);
