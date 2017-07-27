@@ -153,9 +153,9 @@ def copylist(request):
 	query = request.GET.get("q")
 	if query:
 		if query.isdigit() == False:
-			queryset_list = queryset_list.filter(Q(issue__edition__title__title__icontains=query)|Q(Owner__icontains=query)|Q(Bookplate__icontains=query))
+			queryset_list = queryset_list.filter(Q(issue__edition__title__title__icontains=query)|Q(Owner__icontains=query)|Q(issue__ESTC=query)|Q(issue__STC_Wing=query))
 		elif query.isdigit() == True:
-			queryset_list = queryset_list.filter(Q(NSC=query)|Q(issue=query)|Q(Bartlett1939=query)|Q(issue__edition__Edition_number=query))
+			queryset_list = queryset_list.filter(Q(issue=query)|Q(issue__edition__Edition_number=query)|Q(issue__start_date=query)|Q(issue__end_date=query)|Q(issue__STC_Wing=query))
 
 		paginator = Paginator(queryset_list, 10)
 		page = request.GET.get('page')
