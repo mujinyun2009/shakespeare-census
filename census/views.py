@@ -147,9 +147,9 @@ def copy(request, id):
 
 #showing all copies in the database
 def copylist(request):
-	all_copies = Copy.objects.all().order_by('id')
+	all_copies = Copy.objects.all().order_by('issue__start_date', 'issue__edition__title__title')
 	template = loader.get_template('census/copylist.html')
-	queryset_list = Copy.objects.all()
+	queryset_list = Copy.objects.all().order_by('issue__start_date', 'issue__edition__title__title')
 	query = request.GET.get("q")
 	if query:
 		if query.isdigit() == False:
@@ -446,7 +446,7 @@ def user_history(request):
 	current_user=request.user
 	copy_form=CopyForm()
 	all_titles=Title.objects.all()
-	all_submissions=current_user.submitted_copies.all()
+	all_submissions=current_user.submitted_copies.all().order_by('issue__start_date', 'issue__edition__title__title')
 	paginator=Paginator(all_submissions, 10)
 	page = request.GET.get('page')
 	try:
