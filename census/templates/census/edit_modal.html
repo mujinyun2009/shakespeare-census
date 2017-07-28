@@ -26,12 +26,21 @@
     <div class="modal-body">
         <script type="text/javascript" src="/static/census/edit_dropdown.js"></script>
         <script type="text/javascript" src="/static/census/edit_popup_script.js"></script>
+
+        {% if messages %}
+        <ul class="errorlist">
+            {% for message in messages %}
+            <p class="sansserif" style="position:relative; color:#b91f44; text-align:center;">{{ message }}</p>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
         <form class="editForm"  action="{% url 'update_copy' copy_id %}" method="post" accept-charset="utf-8" style="margin-left:20px">
         	{% csrf_token %}
           <div>
             <p style="color:blue">Select a title:</p>
             <select name="title" id="title" class="submissionselect2">
-          		<option value="Z">Select a title</option>
+          		<option value='Z'>Select a title</option>
             {% for title in all_titles %}
           		{% if title.id == old_title_id %}
           			<option value="{{ title.id }}" selected>{{ title.title }}</option>
@@ -50,7 +59,7 @@
           <div class='edition_section' id ='edition_section'>
             <p style="color:blue">Select an edition:</p>
             <select name="edition" id="edition" class="submissionselect3">
-          		<option value="Z">Select an edition</option>
+          		<option value='Z'>Select an edition</option>
           	  {% for edition in old_edition_set %}
           			{% if edition.id == old_edition_id %}
           				<option value="{{ edition.id }}" selected>Edition {{ edition.Edition_number }}</option>
@@ -68,7 +77,7 @@
           <div class='issue_section' id='issue_section'>
             <p style="color:blue">Select an issue:</p>
             <select name="issue" id="issue" class="submissionselect3">
-          		<option value="Z">Select an issue</option>
+          		<option value='Z'>Select an issue</option>
           		{% for issue in old_issue_set %}
           			{% if issue.id == old_issue_id %}
           				<option value="{{ issue.id }}" selected>Issue {{ issue.STC_Wing }}</option>
@@ -89,6 +98,7 @@
               {% for field in copy_form.visible_fields %}
 
               <p>{{ field.label_tag }}{% if field.field.required %}*{% endif %} {{ field }}</p>
+              <ul class="errorlist">{% for error in field.errors %}<li>{{error}}</li>{% endfor %}</ul>
 
               {% endfor %}
 

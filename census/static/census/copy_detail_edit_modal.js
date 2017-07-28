@@ -24,18 +24,6 @@ $(document).ready(function() {
 });
 
 function generateDialog(copy_id) {
-  // var postUrl = $('.editForm').attr('action');
-  // var postData = $('.editForm').serialize();
-  // $.post(postUrl, postData).done(function(data){
-  //   if(data['stat'] === "ok") {
-  //     alert('Success! Your changes have been saved.');
-  //     $("#editModal").modal('hide');
-  //     } else {
-  //       alert(data['stat']);
-  //       $("#editModal").modal('show');
-  //     }
-  // });
-  // e.preventDefault();
   $.ajax({
     url: $('.editForm').attr('action'),
     type: "POST",
@@ -46,7 +34,25 @@ function generateDialog(copy_id) {
         alert('Success! Your changes have been saved.');
         $("#editModal").modal('hide');
       } else {
-        alert(data['stat']);
+        alert("Error: invalid input! Please correct the errors in your input and submit again!");
+        $("#editModal").html(data['form']);
+        if(data['stat']==='title error') {
+          var option = $('#title').val('Z');
+      		option.selected = true;
+      		var editions = document.getElementById('edition');
+      		editions.options.length = 0;
+      		var issues = document.getElementById('issue');
+      		issues.options.length = 0;
+        } else if (data['stat'] ==='edition error') {
+          var option = $('#edition').val('Z');
+          option.selected = true;
+          var issues = document.getElementById('issue');
+      		issues.options.length = 0;
+        } else if (data['stat'] === 'issue error') {
+          var option = $('#issue').val('Z');
+          option.selected = true;
+        }
+
         $("#editModal").modal('show');
       }
       }
