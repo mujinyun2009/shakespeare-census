@@ -573,7 +573,17 @@ td.hoverspecial:hover {
 tr.errors {
   background-color: none;
 }
-
+.rotator {
+  transform: rotateX(180deg);
+  transition-duration:1s;
+}
+.antirotator {
+  transform: rotateY(180deg);
+  transition-duration:1s;
+}
+.defaultrotate {
+  transition-duration:1s;
+}
 #help .wrapper {
   color:#000000;
   visibility: hidden;
@@ -582,12 +592,35 @@ tr.errors {
   transform-origin: 50% 0%;
 
 }
+
 #help:hover .wrapper {
   visibility: visible;
   animation-name: swingdown;
   animation-duration: 1s;
   animation-timing-function: ease-in-out;
 }
+@keyframes swingdown2 {
+  0% {
+    opacity: .99999;
+    transform: rotateX(90deg);
+  }
+
+  30% {
+    transform: rotateX(-20deg) rotateY(5deg);
+    animation-timing-function: ease-in-out;
+  }
+
+  65% {
+    transform: rotateX(20deg) rotateY(-3deg);
+    animation-timing-function: ease-in-out;
+  }
+
+  100% {
+    transform: rotateX(0);
+    animation-timing-function: ease-in-out;
+  }
+}
+
 
 @keyframes swingdown {
   0% {

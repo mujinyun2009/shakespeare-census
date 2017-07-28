@@ -51,7 +51,7 @@ function generateDialog(copy_id) {
           option.selected = true;
           var issues = document.getElementById('issue');
       		issues.options.length = 0;
-          $('#add_issue').attr('href', "");
+          $('#add_issue').attr('href', "#");
         } else if (data['stat'] === 'issue error') {
           var option = $('#issue').val('Z');
           option.selected = true;
