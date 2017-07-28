@@ -19,10 +19,13 @@
 <td colspan="6" class="announcer">
   <a href= "{% url 'index' %}" class="linkbutton">all titles</a> |
   <a href = "{% url 'index' %}?q={{ selected_edition.title }}" class="linkbutton">{{selected_edition.title}}</a> |
-  {% if selected_edition.Edition_number == "anr. ed." %}
+  {% if selected_edition.Edition_number == '"anr. ed."' %}
     {{ selected_edition.Edition_number }}
-  {% else %}
+
+  {% elif selected_edition.Edition_number %}
     edition {{ selected_edition.Edition_number }}:
+  {% else %}
+    unknown edition
   {% endif %}
   <div class = "announcer2"> Copies</div>
 </td>
@@ -59,8 +62,8 @@
   <th colspan="4">
   <i class="chevron circle up icon" id = "rotating" style="position:relative"></i>
 
-  <a href="#copy_info{{issue.id}}" class="linkbutton" onclick="show_copy_info({{issue.id}}); myfunction(rotating);"> issue ESTC {{ issue.ESTC }} |
-    STC/Wing {{ issue.STC_Wing}} ({{ issue.year }})</a>
+  <a href="#copy_info{{issue.id}}" class="linkbutton" onclick="show_copy_info({{issue.id}}); myfunction(rotating);"> issue ESTC: {{ issue.ESTC }} |
+    STC/Wing: {{ issue.STC_Wing}} | Year: {{ issue.year }}</a>
   </th>
 </thead>
 {% if issue.copy_set.all %}
