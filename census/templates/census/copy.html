@@ -56,7 +56,7 @@
 </div>
 
 <table align="center" style="width:70%;">
-  <thead style="width:100%">
+  <thead style="width:100%;">
 
 
   <th colspan="4">
@@ -139,18 +139,19 @@ function show_copy_info(issue_id) {
   // }
 }
 function myfunction(issue_id) {
-  var rotate_selector = "rotating" + issue_id;
-  if(rotate_selector.classList.contains("rotator")) {
-    rotate_selector.classList.remove("rotator");
-    rotate_selector.classList.add("antirotator");
+  var rotate_selector="rotating"+issue_id;
+  var rotate_div=document.getElementById(rotate_selector);
+  if(rotate_div.classList.contains("rotator")) {
+    rotate_div.classList.remove("rotator");
+    rotate_div.classList.add("antirotator");
   }
-  else if(rotate_selector.classList.contains("antirotator")) {
-    rotate_selector.classList.remove("antirotator");
-    rotate_selector.classList.add("rotator");
+  else if(rotate_div.classList.contains("antirotator")) {
+    rotate_div.classList.remove("antirotator");
+    rotate_div.classList.add("rotator");
 
   }
   else {
-  rotate_selector.classList.add("rotator");
+  rotate_div.classList.add("rotator");
 }
 }
 </script>
