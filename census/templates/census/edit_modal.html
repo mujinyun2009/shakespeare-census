@@ -94,7 +94,7 @@
           </div>
 
           <div class='copy_section' id='copy_section'>
-            <p style="color:#45556f">Fill in the copy information for the copy. Field with * is required.</p>
+            <p style="color:#45556f">Fill in the copy information for the copy. Fields with * are required.</p>
               {% for field in copy_form.visible_fields %}
 
               <p>{{ field.label_tag }}{% if field.field.required %}*{% endif %} {{ field }}</p>
