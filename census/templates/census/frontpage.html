@@ -2,6 +2,7 @@
 {% load static %}
 
 <html>
+
 <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300" rel="stylesheet">
 
 <link rel="stylesheet" type="text/css" href= "{% static 'census/frontpage.css' %}" />
@@ -10,11 +11,19 @@
 			<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 			<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/css/semantic.min.css'>
 
 <title>Shakespeare Census</title>
 <head>
-<p class = "title" style="text-align:center;"><a href="{% url 'index' %}" class="linkbutton">shakespeare census</a></p>
+<div class="container">
+<div class = "ui list">
+<div class="item">
+<div id = "submitz" style="text-align:center; overflow:hidden;">
+<div class = "div1" style="display:inline-block;"><p class = "title" style="text-align:center;"><a href="{% url 'index' %}" class="linkbutton" style="overflow:hidden;">shakespeare census</a></div> <div class="reset" style="position:relative; display:inline-block"> <i class="angle double right icon" ></i></div></p></div>
 
+</div>
+</div>
+</div>
 </head>
 <body>
 <div class = "wrapper">
