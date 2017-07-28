@@ -147,9 +147,9 @@ def copy(request, id):
 
 #showing all copies in the database
 def copylist(request):
-	all_copies = Copy.objects.all().order_by('id')
+	all_copies = Copy.objects.all().order_by('issue__start_date', 'issue__edition__title__title')
 	template = loader.get_template('census/copylist.html')
-	queryset_list = Copy.objects.all()
+	queryset_list = Copy.objects.all().order_by('issue__start_date', 'issue__edition__title__title')
 	query = request.GET.get("q")
 	if query:
 		if query.isdigit() == False:
@@ -446,7 +446,7 @@ def user_history(request):
 	current_user=request.user
 	copy_form=CopyForm()
 	all_titles=Title.objects.all()
-	all_submissions=current_user.submitted_copies.all()
+	all_submissions=current_user.submitted_copies.all().order_by('issue__start_date', 'issue__edition__title__title')
 	paginator=Paginator(all_submissions, 10)
 	page = request.GET.get('page')
 	try:
@@ -508,15 +508,17 @@ def update_copy(request, copy_id):
 		edition_id=request.POST.get('edition')
 		title_id=request.POST.get('title')
 		if not issue_id or issue_id == 'Z':
-			copy_form=CopyForm(instance=copy_to_edit)
-			data['stat'] = 'Error: Please choose or add an issue!'
+			issue_id = old_issue.id
+			messages.error(request, 'Error: Please choose or add an issue!')
+			data['stat']='issue error'
 		elif not edition_id or edition_id == 'Z':
-			copy_form=CopyForm(instance=copy_to_edit)
-			data['stat'] = 'Error: Please choose or add an edition!'
+			edition_id = old_edition.id
+			messages.error(request, 'Error: Please choose or add an edition!')
+			data['stat']='edition error'
 		elif not title_id or title_id == 'Z':
-			copy_form=CopyForm(instance=copy_to_edit)
-			data['stat'] = 'Error: Please choose or add a title!'
-
+			title_id = old_title.id
+			messages.error(request, 'Error: Please choose or add a title!')
+			data['stat']='title error'
 		else:
 			selected_issue=Issue.objects.get(pk=issue_id)
 			copy_form=CopyForm(request.POST, instance=copy_to_edit)
@@ -529,27 +531,45 @@ def update_copy(request, copy_id):
 				current_userHistory=UserHistory.objects.get(user=current_user)
 				current_userHistory.edited_copies.add(new_copy)
 				data['stat']="ok"
+				return HttpResponse(json.dumps(data), content_type='application/json')
 
 			else:
-				messages.error(request, 'The information you entered is invalid.')
-				copy_form=CopyForm(data=request.POST)
-				data['stat'] = "Error: Invalid copy information."
+				messages.error(request, 'Invalid copy information!')
+				data['stat'] = "copy error"
 
+		copy_form=CopyForm(data=request.POST)
+		selected_title=Title.objects.get(pk=title_id)
+		selected_edition=Edition.objects.get(pk=edition_id)
+		selected_issue=Issue.objects.get(pk=issue_id)
+
+		context = {
+				'all_titles': all_titles,
+				'copy_form': copy_form,
+				'copy_id': copy_id,
+				'old_title_id': selected_title.id,
+				'old_edition_set': selected_title.edition_set.all(),
+				'old_edition_id': selected_edition.id,
+				'old_issue_set': selected_edition.issue_set.all(),
+				'old_issue_id': selected_issue.id,
+				}
+		html=loader.render_to_string('census/edit_modal.html', context, request=request)
+		data['form']=html
+		print(title_id)
 		return HttpResponse(json.dumps(data), content_type='application/json')
 
 	else:
 		copy_form=CopyForm(instance=copy_to_edit)
 
 	context = {
-	'all_titles': all_titles,
-	'copy_form': copy_form,
-	'copy_id': copy_id,
-	'old_title_id': old_title.id,
-	'old_edition_set': old_title.edition_set.all(),
-	'old_edition_id': old_edition.id,
-	'old_issue_set': old_edition.issue_set.all(),
-	'old_issue_id': old_issue.id,
-	}
+			'all_titles': all_titles,
+			'copy_form': copy_form,
+			'copy_id': copy_id,
+			'old_title_id': old_title.id,
+			'old_edition_set': old_title.edition_set.all(),
+			'old_edition_id': old_edition.id,
+			'old_issue_set': old_edition.issue_set.all(),
+			'old_issue_id': old_issue.id,
+			}
 	return HttpResponse(template.render(context, request))
 
 #The functions below are not used right now.
