@@ -36,34 +36,36 @@
 <div class = "ui list">
 <div class="item">
 
-<div class="announcer" id="announcer{{issue.id}}" style="display:none">
-
-  <table class = "center" align="center">
+<!-- <div class="announcer" id="announcer{{issue.id}}" style="display:none">
+ -->
+<!--   <table class = "center" align="center">
     <thead>
     <th colspan="6">
-      <i class="chevron circle down icon" style="position:relative"></i>
-      <a href="#copy_info{{issue.id}}" class="linkbutton" onclick="show_copy_info({{issue.id}});"> issue ESTC {{ issue.ESTC }} |
+      <i class="chevron circle down icon" id= "rotating" style="position:relative"></i>
+      <a href="#copy_info{{issue.id}}" class="linkbutton" onclick="myfunction(rotating)"> issue ESTC {{ issue.ESTC }} |
       STC/Wing {{ issue.STC_Wing}} ({{ issue.year }})</a>
     </th>
     </thead>
   </table>
 </div>
-</div>
+ </div>-->
 </div>
 </div>
 
-<div id="copy_info{{issue.id}}" style="display:block">
-<table class = "center" align="center">
-  <thead>
-  <th colspan="6">
-  <i class="chevron circle up icon" style="position:relative"></i>
-  <a href="#copy_info{{issue.id}}" class="linkbutton" onclick="show_copy_info({{issue.id}});"> issue ESTC {{ issue.ESTC }} |
+<table align="center" style="width:70%;">
+  <thead style="width:100%">
+
+
+  <th colspan="4">
+  <i class="chevron circle up icon" id = "rotating" style="position:relative"></i>
+
+  <a href="#copy_info{{issue.id}}" class="linkbutton" onclick="show_copy_info({{issue.id}}); myfunction(rotating);"> issue ESTC {{ issue.ESTC }} |
     STC/Wing {{ issue.STC_Wing}} ({{ issue.year }})</a>
   </th>
 </thead>
-
 {% if issue.copy_set.all %}
-<tbody>
+
+<tbody id="copy_info{{issue.id}}" style="display:block">
 <tr>
 <td class="subhead">Owner</td>
 <td class="subhead">Shelfmark</td>
@@ -113,20 +115,39 @@
 
 <script>
 function show_copy_info(issue_id) {
-  var announcer_id = "announcer" +issue_id;
-  var announcer_div = document.getElementById(announcer_id);
+  event.preventDefault();
+  // var announcer_id = "announcer" +issue_id;
+  // var announcer_div = document.getElementById(announcer_id);
   var div_id = "copy_info"+issue_id;
   var copy_div=document.getElementById(div_id);
-  if(copy_div.style.display==="none") {
-    copy_div.style.display = "block";
-  } else {
+
+  if(copy_div.style.display==="block") {
     copy_div.style.display = "none";
-  }
-  if(announcer_div.style.display==="none") {
-    announcer_div.style.display="block";
+    copy_div.style.width = "100%";
+
   } else {
-    announcer_div.style.display="none";
+    copy_div.style.display = "block";
+    copy_div.style.width = "100%";
   }
+  // if(announcer_div.style.display==="none") {
+  //   announcer_div.style.display="block";
+  // } else {
+  //   announcer_div.style.display="none";
+  // }
+}
+function myfunction() {
+  if(document.getElementById("rotating").classList.contains("rotator")) {
+    document.getElementById("rotating").classList.remove("rotator");
+    document.getElementById("rotating").classList.add("antirotator");
+  } 
+  else if(document.getElementById("rotating").classList.contains("antirotator")) {
+    document.getElementById("rotating").classList.remove("antirotator");
+    document.getElementById("rotating").classList.add("rotator");
+
+  }
+  else {
+  document.getElementById("rotating").classList.add("rotator");
+}
 }
 </script>
 
