@@ -53,7 +53,9 @@ function generateDialog(copy_id) {
           option.selected = true;
           var issues = document.getElementById('issue');
       		issues.options.length = 0;
-          $('#add_issue').attr('href', "#");
+          
+          var add_issue=document.getElementById('add_issue');
+          add_issue.classList.add('hidden');
         } else if (data['stat'] === 'issue error') {
           var option = $('#issue').val('Z');
           option.selected = true;
