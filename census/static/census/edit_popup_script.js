@@ -22,6 +22,7 @@ function dismissAddAnotherTitle(win, newId, newTitle) {
 
 		var new_url = "/addEdition/" + newId + "/";
 		var add_edition=document.getElementById('add_edition');
+		add_edition.classList.remove('hidden');
 		add_edition.href = new_url;
 		win.close();
 }
@@ -39,6 +40,7 @@ function dismissAddAnotherEdition(win, newId, newEdition) {
 
 		var new_url = "/addIssue/" + newId + "/";
 		var add_issue=document.getElementById('add_issue');
+		add_issue.classList.remove('hidden');
 		add_issue.href = new_url;
 		win.close();
 }

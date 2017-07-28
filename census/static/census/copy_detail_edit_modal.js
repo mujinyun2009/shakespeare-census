@@ -43,8 +43,10 @@ function generateDialog(copy_id) {
       		editions.options.length = 0;
       		var issues = document.getElementById('issue');
       		issues.options.length = 0;
-          $('#add_edition').attr('href', "#");
-          $('#add_issue').attr('href', "#");
+          var add_edition=document.getElementById('add_edition');
+          add_edition.classList.add('hidden');
+          var add_issue=document.getElementById('add_issue');
+          add_issue.classList.add('hidden');
 
         } else if (data['stat'] ==='edition error') {
           var option = $('#edition').val('Z');
