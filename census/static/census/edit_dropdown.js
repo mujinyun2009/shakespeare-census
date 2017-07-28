@@ -5,6 +5,8 @@ $(document).ready(function() {
       var title = $(this).val();
       var new_url = "/addEdition/" + $(this).val() + "/";
       $('#add_edition').attr('href', new_url);
+      var add_edition=document.getElementById('add_edition');
+      add_edition.classList.remove('hidden');
       var url = "/title/" + $(this).val() + "/";
       $.getJSON(url, function(editions) {
         var options = '<option value="Z">select an edition</option>';
@@ -24,6 +26,8 @@ $(document).ready(function() {
       var edition = $(this).val();
       var new_url = "/addIssue/" + $(this).val() + "/";
       $('#add_issue').attr('href', new_url);
+      var add_issue=document.getElementById('add_issue');
+  		add_issue.classList.remove('hidden');
       var url = "/edition/" + $(this).val() + "/";
       $.getJSON(url, function(issues) {
         var options = '<option value="Z">select an issue</option>';
