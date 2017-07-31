@@ -31,7 +31,7 @@
       </li>
 
          <li class="dropdown">
-         <a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false" id="dropdownMenu">  <p class = sansserif>
+         <a class="dropdown-toggle" href="{% url 'profile' %}" data-toggle="dropdown" role="button" aria-expanded="false" id="dropdownMenu">  <p class = sansserif>
          Account</p></a>
          <div class="dropdown-content">
         {% if user.is_authenticated %}
