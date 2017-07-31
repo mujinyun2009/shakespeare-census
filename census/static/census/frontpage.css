@@ -12,16 +12,24 @@ a.linkbutton:hover {
     
 }
 
+.popuparrow {
+  position:relative; 
+  display:inline-block;
+  margin:auto;
+  left:55%;
+  top:-15px;
+}
 
-#submitz .reset {
+#submitz .popuparrow {
   color:#000000;
   visibility: hidden;
   background: transparent;
   overflow: hidden;
+  transform-origin: 50% 0%;
 }
 
 
-#submitz:hover .reset {
+#submitz:hover .popuparrow {
   visibility: visible;
   animation-name: swingdown;
   animation-duration: 1s;

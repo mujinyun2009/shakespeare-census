@@ -103,7 +103,15 @@ input[type=submit]{
 	height:30px;
 }
 
-#submitz .reset {
+.popuparrow {
+  position:relative; 
+  display:inline-block;
+  margin:auto;
+  left:55%;
+  top:-20px;
+}
+
+#submitz .popuparrow {
   color:#000000;
   visibility: hidden;
   background: transparent;
@@ -115,7 +123,7 @@ input[type=submit]:hover{
   color:#FFEBCD;
 }
 
-#submitz:hover .reset {
+#submitz:hover .popuparrow {
   visibility: visible;
   animation-name: swingdown;
   animation-duration: 1s;

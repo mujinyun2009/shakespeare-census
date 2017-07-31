@@ -46,9 +46,17 @@ li a, .dropbtn {
 }
 
 
+.popuparrow {
+  position:relative; 
+  display:inline-block;
+  margin:auto;
+  left:55%;
+  top:-20px;
+}
 
 
-#submitz .reset {
+
+#submitz .popuparrow {
   color:#000000;
   visibility: hidden;
   background: transparent;
@@ -56,7 +64,7 @@ li a, .dropbtn {
 }
 
 
-#submitz:hover .reset {
+#submitz:hover .popuparrow {
   visibility: visible;
   animation-name: swingdown;
   animation-duration: 1s;
