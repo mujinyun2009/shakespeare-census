@@ -136,12 +136,22 @@ p.sansserifgrey {
 	.active2 {
 		background-color: #83cca5;
 	}
-
-  table {
+.copyz {
+  font-family:"Century Gothic", AppleGothic, sans-serif;
+  border-collapse: collapse;
+  width:60%;
+}
+.copyz th, td {
+  padding: 15px;
+    text-align: left;
+  }
+  table:not(.copyz) {
     border-collapse: collapse;
     width: 50%;
     font-family:"Century Gothic", AppleGothic, sans-serif;
 }
+
+
 th, td {
     padding: 15px;
     text-align: left;
