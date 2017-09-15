@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 {% load static %}
-
+<style>
+.image1:hover {
+	opacity: 0.5;
+	-webkit-transition: opacity 0.1s;
+}
+</style>
 <html>
 
 <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300" rel="stylesheet">
@@ -11,10 +16,24 @@
 			<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 			<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/css/semantic.min.css'>
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
 
 <title>Shakespeare Census</title>
 <head>
+<div class="container">
+<div class="ui list">
+<div class="item">
+<i class="large grey link upload icon" style="float:right;"></i>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="ui list">
+<div class="item">
+<i class="large grey link user icon" style="float:right;"></i>
+</div>
+</div>
+</div>
 <div class="container">
 <div class = "ui list">
 <div class="item">
@@ -26,6 +45,7 @@
 </div>
 </head>
 <body>
+<img src="tumblr.jpg"></img>
 <div class = "wrapper">
 <ul>
 <li class = "test"><div id = "unhidebutton"><p class = sansserif>search</div></p></li>
@@ -163,6 +183,93 @@ account</p></a>
 </div>
 </span>
 </div>
+<!-- <table>
+{% for a in titlelist %}
+<tr>
+<p class="sansserif">
+{% if a|length == 0 %}
+{{ a.title|slice:"5" }}
+</p>
+{% endif %}
+</tr>
+{% endfor %}
+</table>
+ -->
+ <table align="center">
+ <tr>
+ <td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
+</td>
+<td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+<td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+<td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+<td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+
+</tr>
+<tr>
+ <td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+<td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+<td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+<td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+<td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+
+</tr>
+<tr>
+ <td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+<td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+<td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+<td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+<td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+
+</tr>
+<tr>
+ <td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+<td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+<td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+<td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+<td>
+ <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+</td>
+
+</tr>
+</table>
+</p>
 </body>
 </tr>
 <script>

@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template import loader
 import models
 from .models import *
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
@@ -25,6 +25,7 @@ import re
 
 
 # Create your views here.
+
 def search(request):
 	template=loader.get_template('census/results.html')
 	query1 = request.GET.get('a')
@@ -81,7 +82,11 @@ def search(request):
 
 def homepage(request):
 	template=loader.get_template('census/frontpage.html')
+	titlelist=Title.objects.all()
+	print(titlelist)
+	print('hello')
 	context = {
+		'titlelist':titlelist
 	}
 	return HttpResponse(template.render(context, request))
 
@@ -138,6 +143,8 @@ def copy(request, id):
 		copies = paginator.page(1)
 	except EmptyPage:
 		copies = paginator.page(paginator.num_pages)
+	copy.created_by=request.user
+	print(copy.created_by.groups.all())
 	template = loader.get_template('census/copy.html')
 	context = {
 		'all_issues': all_issues,
