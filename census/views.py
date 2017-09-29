@@ -143,14 +143,21 @@ def copy(request, id):
 		copies = paginator.page(1)
 	except EmptyPage:
 		copies = paginator.page(paginator.num_pages)
-	copy.created_by=request.user
-	print(copy.created_by.groups.all())
+	# copy.created_by=all_issues.objects.
+	# if copy.created_by.groups.filter(name__icontains="Librarian2").exists():
+	# 	librarian = True
+	# 	print('test')
+	# else:
+	# 	librarian = False
+	# 	print('antitest')
+	# 	print(copy.created_by.groups.all())
 	template = loader.get_template('census/copy.html')
 	context = {
 		'all_issues': all_issues,
 		'selected_edition': selected_edition,
 	}
 	return HttpResponse(template.render(context,request))
+
 
 #showing all copies in the database
 def copylist(request):
@@ -593,7 +600,8 @@ def register(request):
 				username=user_form.cleaned_data['username'],
 				first_name=user_form.cleaned_data['first_name'],
 				last_name=user_form.cleaned_data['last_name'],
-				email=user_form.cleaned_data['email'],
+				email=user_form.cleaned_data['email'],    
+
 				password=user_form.cleaned_data['password1'],
 				)
 			new_user.save()

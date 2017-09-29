@@ -2,12 +2,16 @@
 {% load static %}
 {% block content %}
 <script type="text/javascript" src="/static/census/popup_script.js"></script>
+{% if 'Librarian' in copy.group|stringformat:"s" %}
+
 <div align="center">
 <p class="sansserif">
 Title input is currently disabled for librarians. If you'd like to input a new title, please email something@upenn.edu with your request.
 </p>
 </div>
-<!-- <div align="center">
+{% else %}
+
+<div align="center">
 	<p class="sansserifgrey">
 	<font size = "6"> <light>Title</light> </font></br>1. Input your title. Fields with * are required.</br> 2. Click "Submit".
 	</p>
@@ -36,6 +40,6 @@ Title input is currently disabled for librarians. If you'd like to input a new t
 		</form>
 	</p>
 </div>
- -->
 
+{% endif %}
 {% endblock content %}

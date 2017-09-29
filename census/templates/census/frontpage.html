@@ -1,9 +1,56 @@
 <!DOCTYPE html>
 {% load static %}
 <style>
-.image1:hover {
-	opacity: 0.5;
-	-webkit-transition: opacity 0.1s;
+
+table {
+	border-collapse: collapse;
+}
+tr {
+	height:100px;
+	border: none;
+}
+.img__wrap {
+  position: relative;
+  height:auto;
+}
+
+.img__description_layer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #f1efde;
+  color: #000000;
+  visibility: hidden;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* transition effect. not necessary */
+  transition: opacity .2s, visibility .2s;
+}
+.image1 {
+	height:100px;
+	width:100px;
+}
+.img__wrap:hover .img__description_layer{
+  visibility: visible;
+  opacity: 0.7;
+  height:100px;
+  width:100px;
+}
+
+.img__description {
+  transition: .2s;
+  transform: translateY(1em);
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+
+}
+
+.img__wrap:hover .img__description {
+  transform: translateY(0);
 }
 </style>
 <html>
@@ -198,73 +245,77 @@ account</p></a>
  <table align="center">
  <tr>
  <td>
+<div class="img__wrap"> <img src = "{% static 'census/the-tempest.jpg' %}" class="image1">
+	<div class="img__description_layer"><p class="img__description">The Tempest</p>
+	</div>
+</div>
+</td>
+<td>
  <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
 </td>
 <td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+	 <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
+
 </td>
 <td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+ <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
 </td>
 <td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
-</td>
-<td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+ <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
 </td>
 
 </tr>
 <tr>
  <td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+ <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
 </td>
 <td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+ <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
 </td>
 <td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+ <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
 </td>
 <td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+ <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
 </td>
 <td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+ <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
 </td>
 
 </tr>
 <tr>
  <td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+ <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
 </td>
 <td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+ <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
 </td>
 <td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+ <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
 </td>
 <td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+ <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
 </td>
 <td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+ <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
 </td>
 
 </tr>
 <tr>
  <td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+ <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
 </td>
 <td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+ <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
 </td>
 <td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+ <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
 </td>
 <td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+ <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
 </td>
 <td>
- <img src = "{% static 'census/the-tempest.jpg' %}" style="width:100px; height:100px;">
+ <img src = "{% static 'census/the-tempest.jpg' %}" class="image1" style="width:100px; height:100px;">
 </td>
 
 </tr>

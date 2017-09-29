@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.forms import ModelForm
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -53,6 +53,7 @@ class Copy (models.Model):
 	Lee_Notes = models.CharField(max_length=2000, default=None, null=True)
 	Library_Notes=models.CharField(max_length=2000, default=None, null=True)
 	created_by=models.ForeignKey(User, related_name="submitted_copies", default=1, null=True)
+	group = models.ForeignKey(Group, related_name="submitted_copies", default=1, null=True)
 	copynote=models.CharField(max_length=5000, default=None, null=True)
 	prov_info=models.TextField(null=True, default=None)
 	Verification = models.BooleanField(default=False)
