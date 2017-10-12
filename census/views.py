@@ -323,6 +323,44 @@ def edit_copy_submission(request, copy_id):
 	}
 	return HttpResponse(template.render(context, request))
 
+@login_required()
+def edit_title_submission(request, title_id):
+	template = loader.get_template('census/edit_title_submission.html')
+	all_titles = Title.objects.all()
+	title_to_edit = Title.object.get(pk=title_id)
+	if request.method=='POST':
+		title_id=request.POST.get('title')
+		if not issue_id or issue_id == 'Z':
+			title_form=TitleForm(instance=copy_to_edit)
+			copy_form=CopyForm(instance=copy_to_edit)
+			messages.error(request, 'Error: Please choose or add a title.')
+
+		else:
+			selected_issue=Issue.objects.get(pk=issue_id)
+			copy_form=CopyFor9m(request.POST, instance=copy_to_edit)
+
+			if copy_form.is_valid():
+				new_copy=copy_form.save()
+				new_copy.issue = selected_issue
+				new_copy.save(force_update=True)
+				current_user = request.user
+				current_userHistory=UserHistory.objects.get(user=current_user)
+				current_userHistory.edited_copies.add(new_copy)
+				return HttpResponseRedirect(reverse('copy_info', args=(new_copy.id,)))
+			else:
+				messages.error(request, 'Error: invalid copy information!')
+				copy_form=CopyForm(data=request.POST)
+
+	else:
+		copy_form=CopyForm(instance=copy_to_edit)
+
+	context = {
+	'all_titles': all_titles,
+	'copy_form': copy_form,
+	'old_title_id': old_title.id,
+	}
+	return HttpResponse(template.render(context, request))
+
 def copy_submission_success(request):
 	template=loader.get_template('census/copysubmissionsuccess.html')
 	context={}

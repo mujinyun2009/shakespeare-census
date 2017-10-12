@@ -10,6 +10,14 @@ class TitleForm(forms.ModelForm):
 		model = Title
 		fields = '__all__'
 
+
+
+class EditTitleForm(forms.ModelForm):
+	title=forms.CharField(required=True)
+	class Meta:
+		model = Title
+		fields = '__all__'
+
 class SearchForm(forms.Form):
     search = forms.CharField()
 

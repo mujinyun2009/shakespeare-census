@@ -34,6 +34,7 @@ urlpatterns = [
 	url(r'^copysubmissionsuccess$', views.copy_submission_success, name='copy_success'),
 	url(r'^cancelcopysubmission/(?P<copy_id>[0-9]+)/$', views.cancel_copy_submission, name='cancel_copy_submission'),
 	url(r'^editcopysubmission/(?P<copy_id>[0-9]+)/$', views.edit_copy_submission, name='edit_copy_submission'),
+	url(r'^edittitlesubmission/(?P<title_id>[0-9]+)/$', views.edit_title_submission, name='edit_title_submission'),
 
 	#for viewing transactions related to a copy
 	url(r'^transactions/(?P<copy_id>[0-9]+)/$', views.transactions, name='transactions'),
