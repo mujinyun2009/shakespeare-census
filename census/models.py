@@ -53,11 +53,11 @@ class Copy (models.Model):
 	Lee_Notes = models.CharField(max_length=2000, default=None, null=True)
 	Library_Notes=models.CharField(max_length=2000, default=None, null=True)
 	created_by=models.ForeignKey(User, related_name="submitted_copies", default=1, null=True)
-	group = models.ForeignKey(Group, related_name="submitted_copies", default=1, null=True)
+	# group = models.ForeignKey(Group, related_name="submitted_copies", default=1, null=True)
 	copynote=models.CharField(max_length=5000, default=None, null=True)
 	prov_info=models.TextField(null=True, default=None)
 	Verification = models.BooleanField(default=False)
-	
+
 	def __str__(self):
 		return  "%s (%s)" % (self.issue, self.issue.year)
 	class Meta:
@@ -91,11 +91,13 @@ class Transaction(models.Model):
 class UserHistory(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	edited_copies = models.ManyToManyField(Copy, null=True, blank=True)
+	affiliation = models.CharField(max_length=255, null=True)
+	group=models.ForeignKey(Group, default=1)
 
 	def __str__(self):
 		return self.user.username
 	class Meta:
-		verbose_name_plural = "user histories"
+		verbose_name_plural = "user details"
 
 @receiver(post_save, sender=User)
 def create_user_history(sender, instance, created, **kwargs):

@@ -473,6 +473,18 @@ def display_user_profile(request):
 	return HttpResponse(template.render(context, request))
 
 @login_required()
+def view_copies_submitted(request):
+	template=loader.get_template('census/view_submitted_copies.html')
+	current_user=request.user
+	cur_user_history=UserHistory.objects.get(user=current_user)
+	affiliation=cur_user_history.affiliation
+	submitted_copies=Copy.objects.all().filter(Owner=affiliation)
+	context={
+		'submitted_copies': submitted_copies,
+	}
+	return HttpResponse(template.render(context, request))
+
+@login_required()
 def edit_profile(request):
 	template=loader.get_template('census/edit_profile.html')
 	current_user=request.user
@@ -638,7 +650,7 @@ def register(request):
 				username=user_form.cleaned_data['username'],
 				first_name=user_form.cleaned_data['first_name'],
 				last_name=user_form.cleaned_data['last_name'],
-				email=user_form.cleaned_data['email'],    
+				email=user_form.cleaned_data['email'],
 
 				password=user_form.cleaned_data['password1'],
 				)

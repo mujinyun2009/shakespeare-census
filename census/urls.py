@@ -51,6 +51,8 @@ urlpatterns = [
 	#for viewing user's history (submitted copies & editted copies)
 	url(r'^user_history$', views.user_history, name='user_history'),
 
+    url(r'^view_submitted_copies$', views.view_copies_submitted, name='view_copies_submitted'),
+
 	url(r'^editProfile$', views.edit_profile, name='edit_profile'),
 	url(r'^welcome$', views.welcome, name='welcome'),
 

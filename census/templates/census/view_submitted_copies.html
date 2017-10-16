@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<br>
+<br>
+<div>
+  <link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
+  <script type="text/javascript" src="/static/census/bootstrap-modal.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'census/modal.css' %}" />
+  <script type="text/javascript" src="/static/census/copy_detail_edit_modal.js"></script>
+
+<div class = "history">Your contributions: </div>
+
+<br>
+<br>
+<div class="container">
+<table class="table table-striped" align="center" style="width:70%">
+	<thead>
+    <tr>
+		 <th colspan=4>Copies you have submitted</th>
+	  </tr>
+  <tbody>
+	{% if submitted_copies %}
+	{% for copy in submitted_copies %}
+		<tr>
+			<td>{{ copy }}<td>
+        <td> {{ copy.Owner }} </td>
+        <td><a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">Details</a></td>
+        <div id="copyModal" class="modal fade" role="dialog"></div>
+
+
+        <td><a class="update_copy" href="#" data-form="{% url 'update_copy' copy.id %}" title="Edit">Edit</a></td>
+        <div id="editModal" class="modal fade" role="dialog"></div>
+
+
+		</tr>
+	{% endfor %}
+  {% endif %}
+
+
+</div>
+
+{% endblock content %}

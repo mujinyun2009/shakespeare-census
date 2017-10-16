@@ -10,8 +10,6 @@ class TitleForm(forms.ModelForm):
 		model = Title
 		fields = '__all__'
 
-
-
 class EditTitleForm(forms.ModelForm):
 	title=forms.CharField(required=True)
 	class Meta:
@@ -148,7 +146,7 @@ class LoginForm(forms.ModelForm):
 
 class editProfileForm(forms.ModelForm):
 	email = forms.CharField(max_length=150, required=True)
-	
+
 	class Meta:
 		model = User
 		fields = ['first_name', 'last_name', 'email',]
