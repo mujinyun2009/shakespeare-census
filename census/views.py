@@ -327,37 +327,26 @@ def edit_copy_submission(request, copy_id):
 def edit_title_submission(request, title_id):
 	template = loader.get_template('census/edit_title_submission.html')
 	all_titles = Title.objects.all()
-	title_to_edit = Title.object.get(pk=title_id)
+	title_to_edit = Title.objects.get(pk=title_id)
 	if request.method=='POST':
 		title_id=request.POST.get('title')
-		if not issue_id or issue_id == 'Z':
-			title_form=TitleForm(instance=copy_to_edit)
-			copy_form=CopyForm(instance=copy_to_edit)
+		if not title_id or title_id == 'Z':
+			title_form=TitleForm(instance=title_to_edit)
 			messages.error(request, 'Error: Please choose or add a title.')
-
 		else:
-			selected_issue=Issue.objects.get(pk=issue_id)
-			copy_form=CopyFor9m(request.POST, instance=copy_to_edit)
-
-			if copy_form.is_valid():
-				new_copy=copy_form.save()
-				new_copy.issue = selected_issue
-				new_copy.save(force_update=True)
-				current_user = request.user
-				current_userHistory=UserHistory.objects.get(user=current_user)
-				current_userHistory.edited_copies.add(new_copy)
-				return HttpResponseRedirect(reverse('copy_info', args=(new_copy.id,)))
+			title_form=TitleForm(request.POST, instance=title_to_edit)
+			if title_form.is_valid():
+				new_title=title_form.save()
+				new_title.save(force_update=True)
+				return HttpResponseRedirect(reverse('title_info', args=(new_title.id,)))
 			else:
-				messages.error(request, 'Error: invalid copy information!')
-				copy_form=CopyForm(data=request.POST)
-
+				messages.error(request, 'Error: invalid title information!')
+				title_form=TitleForm(data=request.POST)
 	else:
-		copy_form=CopyForm(instance=copy_to_edit)
-
+		title_form=TitleForm(instance=title_to_edit)
 	context = {
-	'all_titles': all_titles,
-	'copy_form': copy_form,
-	'old_title_id': old_title.id,
+	# 'all_titles': all_titles,
+	'title_form': title_form
 	}
 	return HttpResponse(template.render(context, request))
 
