@@ -19,7 +19,7 @@ admin.site.register(UserProfile)
 admin.site.register(Issue)
 admin.site.register(Entity)
 admin.site.register(Transaction)
-admin.site.register(UserHistory)
+admin.site.register(UserDetail)
 
 class BookPlatezInline(admin.StackedInline):
 	model = BookPlate

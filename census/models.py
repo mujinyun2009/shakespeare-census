@@ -56,7 +56,9 @@ class Copy (models.Model):
 	# group = models.ForeignKey(Group, related_name="submitted_copies", default=1, null=True)
 	copynote=models.CharField(max_length=5000, default=None, null=True)
 	prov_info=models.TextField(null=True, default=None)
-	Verification = models.BooleanField(default=False)
+	librarian_validated = models.BooleanField(default=False)
+	admin_validated = models.BooleanField(default=False)
+	parent = models.ForeignKey('self', blank=True, null=True, related_name='children')
 
 	def __str__(self):
 		return  "%s (%s)" % (self.issue, self.issue.year)
@@ -88,7 +90,7 @@ class Transaction(models.Model):
 	def __str__(self):
 		return "Sold from %s to %s" % (self.seller, self.buyer)
 
-class UserHistory(models.Model):
+class UserDetail(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	edited_copies = models.ManyToManyField(Copy, null=True, blank=True)
 	affiliation = models.CharField(max_length=255, null=True)
@@ -100,9 +102,9 @@ class UserHistory(models.Model):
 		verbose_name_plural = "user details"
 
 @receiver(post_save, sender=User)
-def create_user_history(sender, instance, created, **kwargs):
+def create_user_detail(sender, instance, created, **kwargs):
 	if created:
-		UserHistory.objects.create(user=instance)
+		UserDetail.objects.create(user=instance)
 
 #The following models are not used right now. Need further information.
 class Provenance (models.Model):

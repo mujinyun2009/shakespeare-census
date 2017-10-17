@@ -301,8 +301,8 @@ def edit_copy_submission(request, copy_id):
 				new_copy.issue = selected_issue
 				new_copy.save(force_update=True)
 				current_user = request.user
-				current_userHistory=UserHistory.objects.get(user=current_user)
-				current_userHistory.edited_copies.add(new_copy)
+				current_userDetail=UserDetail.objects.get(user=current_user)
+				current_userDetail.edited_copies.add(new_copy)
 				return HttpResponseRedirect(reverse('copy_info', args=(new_copy.id,)))
 			else:
 				messages.error(request, 'Error: invalid copy information!')
@@ -337,15 +337,15 @@ def edit_title_submission(request, title_id):
 
 		else:
 			selected_issue=Issue.objects.get(pk=issue_id)
-			copy_form=CopyFor9m(request.POST, instance=copy_to_edit)
+			copy_form=CopyForm(request.POST, instance=copy_to_edit)
 
 			if copy_form.is_valid():
 				new_copy=copy_form.save()
 				new_copy.issue = selected_issue
 				new_copy.save(force_update=True)
 				current_user = request.user
-				current_userHistory=UserHistory.objects.get(user=current_user)
-				current_userHistory.edited_copies.add(new_copy)
+				current_userDetail=UserDetailobjects.get(user=current_user)
+				current_userDetail.edited_copies.add(new_copy)
 				return HttpResponseRedirect(reverse('copy_info', args=(new_copy.id,)))
 			else:
 				messages.error(request, 'Error: invalid copy information!')
@@ -476,11 +476,15 @@ def display_user_profile(request):
 def view_copies_submitted(request):
 	template=loader.get_template('census/view_submitted_copies.html')
 	current_user=request.user
-	cur_user_history=UserHistory.objects.get(user=current_user)
-	affiliation=cur_user_history.affiliation
+	cur_user_detail=UserDetail.objects.get(user=current_user)
+	affiliation=cur_user_detail.affiliation
 	submitted_copies=Copy.objects.all().filter(Owner=affiliation)
+	edited_copies=cur_user_detail.edited_copies.all()
 	context={
+		'username': current_user.username,
+		'affiliation': affiliation,
 		'submitted_copies': submitted_copies,
+		'edited_copies': edited_copies,
 	}
 	return HttpResponse(template.render(context, request))
 
@@ -519,8 +523,8 @@ def user_history(request):
 		submissions = paginator.page(1)
 	except EmptyPage:
 		copies = paginator.page(paginator.num_pages)
-	cur_user_history=UserHistory.objects.get(user=current_user)
-	edited_copies=cur_user_history.edited_copies.all()
+	cur_user_detail=UserDetail.objects.get(user=current_user)
+	edited_copies=cur_user_detail.edited_copies.all()
 	context={
 		'submissions': submissions,
 		'edited_copies': edited_copies,
@@ -585,15 +589,20 @@ def update_copy(request, copy_id):
 			data['stat']='title error'
 		else:
 			selected_issue=Issue.objects.get(pk=issue_id)
-			copy_form=CopyForm(request.POST, instance=copy_to_edit)
+			copy_form=CopyForm(data=request.POST)
 
 			if copy_form.is_valid():
-				new_copy=copy_form.save()
+				new_copy=copy_form.save(commit=False)
 				new_copy.issue = selected_issue
-				new_copy.save(force_update=True)
+
+				# changes are made here
+				new_copy.librarian_validated = True
+				new_copy.parent = copy_to_edit
+				new_copy.save()
+				#
 				current_user = request.user
-				current_userHistory=UserHistory.objects.get(user=current_user)
-				current_userHistory.edited_copies.add(new_copy)
+				current_userDetail=UserDetail.objects.get(user=current_user)
+				current_userDetail.edited_copies.add(new_copy)
 				data['stat']="ok"
 				return HttpResponse(json.dumps(data), content_type='application/json')
 
@@ -635,6 +644,13 @@ def update_copy(request, copy_id):
 			'old_issue_id': old_issue.id,
 			}
 	return HttpResponse(template.render(context, request))
+
+def librarian_validate(request, id):
+	selected_copy = Copy.objects.get(pk=id)
+	selected_copy.librarian_validated = True
+	selected_copy.save()
+	data='success'
+	return HttpResponse(json.dumps(data), content_type='application/json')
 
 #The functions below are not used right now.
 
