@@ -548,7 +548,8 @@ def update_copy(request, copy_id):
 	old_issue=copy_to_edit.issue
 	old_edition=old_issue.edition
 	old_title=old_edition.title
-
+	title_id = old_title.id
+	print(title_id)
 	if request.method=='POST':
 		data={}
 		if request.POST.get('cancel', None):
@@ -594,6 +595,7 @@ def update_copy(request, copy_id):
 
 		context = {
 				'all_titles': all_titles,
+				'oldtitle.id': oldtitle.id,
 				'copy_form': copy_form,
 				'copy_id': copy_id,
 				'old_title_id': selected_title.id,
@@ -601,6 +603,7 @@ def update_copy(request, copy_id):
 				'old_edition_id': selected_edition.id,
 				'old_issue_set': selected_edition.issue_set.all(),
 				'old_issue_id': selected_issue.id,
+				'selected_title':selected_title,
 				}
 		html=loader.render_to_string('census/edit_modal.html', context, request=request)
 		data['form']=html

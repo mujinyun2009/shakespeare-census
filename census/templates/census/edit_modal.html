@@ -47,14 +47,13 @@
           		{% else %}
               	<option value="{{ title.id }}">{{ title.title }}</option>
           		{% endif %}
-            {% endfor %}
+{% endfor %}
             </select>
             <select id="width_tmp_select">
             <option id="width_tmp_option"></option>
             </select>
           <a href="{% url 'add_title' %}" style="z-index:-1;" name="add another title" type="btn" class="editmodalsubmission" onclick="return showAddAnotherPopup(this);">Add title+</a>
-          <a href="{% url 'edit_title_submission' %}" style="z-index:-1;" name="add another title" type="btn" class="editmodalsubmission" onclick="return showAddAnotherPopup(this);">Edit title+</a>
-
+          <a href="{% url 'edit_title_submission' title_id %}" style="z-index:-1;" name="add another title" type="btn" class="editmodalsubmission" onclick="return showAddAnotherPopup(this);">Edit title+</a>
           </div>
 
           <div class='edition_section' id ='edition_section'>
