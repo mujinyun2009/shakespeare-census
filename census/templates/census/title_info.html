@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div id="submitted_line" class = "submitted_line">
+<p>You have submitted the following title: </p>
+</div>
+    <p class="sansserif">
+    	<table align = "center">
+    		<tr>
+    			<th> Info type </th>
+    			<th> Book info </th>
+    		</tr>
+        <tr>
+    			<td>Title</td>
+   				<td>{{ selected_title.title }}</td>
+   			</tr>
+
+        </table>
+        </p>
+</div>
+
+{% endblock content %}

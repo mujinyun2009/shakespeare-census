@@ -27,6 +27,7 @@ urlpatterns = [
 
 	#reviewing submitted copy-info, having edit, confirm, and cancel buttons
 	url(r'^copy_info/(?P<copy_id>[0-9]+)/$', views.copy_info, name='copy_info'),
+	url(r'^title_info/(?P<title_id>[0-9]+)/$', views.title_info, name='title_info'),
 
 	#displaying copy info for all
 	url(r'^copy_detail/(?P<copy_id>[0-9]+)/$', views.copy_detail, name='copy_detail'),

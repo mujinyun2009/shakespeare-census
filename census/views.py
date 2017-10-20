@@ -235,6 +235,14 @@ def copy_info(request, copy_id):
 	}
 	return HttpResponse(template.render(context,request))
 
+def title_info(request, title_id):
+	template=loader.get_template('census/title_info.html')
+	selected_title=get_object_or_404(Title, pk=title_id)
+	context={
+		'selected_title': selected_title,
+	}
+	return HttpResponse(template.render(context,request))
+
 @login_required()
 def submission(request):
 	template = loader.get_template('census/submission.html')
@@ -346,7 +354,8 @@ def edit_title_submission(request, title_id):
 		title_form=TitleForm(instance=title_to_edit)
 	context = {
 	# 'all_titles': all_titles,
-	'title_form': title_form
+	'title_form': title_form,
+	'title_id': title_id
 	}
 	return HttpResponse(template.render(context, request))
 
