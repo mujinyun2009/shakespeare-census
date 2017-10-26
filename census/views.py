@@ -478,8 +478,15 @@ def view_copies_submitted(request):
 	current_user=request.user
 	cur_user_detail=UserDetail.objects.get(user=current_user)
 	affiliation=cur_user_detail.affiliation
-	submitted_copies=Copy.objects.all().filter(Owner=affiliation)
-	edited_copies=cur_user_detail.edited_copies.all()
+	all_copies=Copy.objects.all().filter(Owner=affiliation)
+	submitted_copies = []  #parent copies that do not have children
+	edited_copies = [] #child copies
+	for copy in all_copies:
+		if not copy.parent == None:
+			edited_copies.append(copy)
+		elif copy.parent == None and not copy.children.all():
+			submitted_copies.append(copy)
+
 	context={
 		'username': current_user.username,
 		'affiliation': affiliation,
@@ -596,13 +603,12 @@ def update_copy(request, copy_id):
 				new_copy.issue = selected_issue
 
 				# changes are made here
-				new_copy.librarian_validated = True
 				new_copy.parent = copy_to_edit
 				new_copy.save()
 				#
 				current_user = request.user
 				current_userDetail=UserDetail.objects.get(user=current_user)
-				current_userDetail.edited_copies.add(new_copy)
+				# current_userDetail.edited_copies.add(new_copy)
 				data['stat']="ok"
 				return HttpResponse(json.dumps(data), content_type='application/json')
 
@@ -652,6 +658,87 @@ def librarian_validate(request, id):
 	data='success'
 	return HttpResponse(json.dumps(data), content_type='application/json')
 
+
+@login_required()
+def update_child_copy(request, copy_id):
+	template = loader.get_template('census/edit_child_modal.html')
+	all_titles = Title.objects.all()
+	copy_to_edit=Copy.objects.get(pk=copy_id)
+	old_issue=copy_to_edit.issue
+	old_edition=old_issue.edition
+	old_title=old_edition.title
+
+	if request.method=='POST':
+		data={}
+		if request.POST.get('cancel', None):
+			return HttpResponseRedirect(reverse('user_history'))
+
+		issue_id=request.POST.get('issue')
+		edition_id=request.POST.get('edition')
+		title_id=request.POST.get('title')
+		if not issue_id or issue_id == 'Z':
+			issue_id = old_issue.id
+			messages.error(request, 'Error: Please choose or add an issue!')
+			data['stat']='issue error'
+		elif not edition_id or edition_id == 'Z':
+			edition_id = old_edition.id
+			messages.error(request, 'Error: Please choose or add an edition!')
+			data['stat']='edition error'
+		elif not title_id or title_id == 'Z':
+			title_id = old_title.id
+			messages.error(request, 'Error: Please choose or add a title!')
+			data['stat']='title error'
+		else:
+			selected_issue=Issue.objects.get(pk=issue_id)
+			copy_form=CopyForm(request.POST, instance=copy_to_edit)
+
+			if copy_form.is_valid():
+				new_copy=copy_form.save()
+				new_copy.issue = selected_issue
+				new_copy.save(force_update=True)
+				current_user = request.user
+				current_userDetail=UserDetail.objects.get(user=current_user)
+				data['stat']="ok"
+				return HttpResponse(json.dumps(data), content_type='application/json')
+
+			else:
+				messages.error(request, 'Invalid copy information!')
+				data['stat'] = "copy error"
+
+		copy_form=CopyForm(data=request.POST)
+		selected_title=Title.objects.get(pk=title_id)
+		selected_edition=Edition.objects.get(pk=edition_id)
+		selected_issue=Issue.objects.get(pk=issue_id)
+
+		context = {
+				'all_titles': all_titles,
+				'copy_form': copy_form,
+				'copy_id': copy_id,
+				'old_title_id': selected_title.id,
+				'old_edition_set': selected_title.edition_set.all(),
+				'old_edition_id': selected_edition.id,
+				'old_issue_set': selected_edition.issue_set.all(),
+				'old_issue_id': selected_issue.id,
+				}
+		html=loader.render_to_string('census/edit_modal.html', context, request=request)
+		data['form']=html
+		print(title_id)
+		return HttpResponse(json.dumps(data), content_type='application/json')
+
+	else:
+		copy_form=CopyForm(instance=copy_to_edit)
+
+	context = {
+			'all_titles': all_titles,
+			'copy_form': copy_form,
+			'copy_id': copy_id,
+			'old_title_id': old_title.id,
+			'old_edition_set': old_title.edition_set.all(),
+			'old_edition_id': old_edition.id,
+			'old_issue_set': old_edition.issue_set.all(),
+			'old_issue_id': old_issue.id,
+			}
+	return HttpResponse(template.render(context, request))
 #The functions below are not used right now.
 
 #not used right now

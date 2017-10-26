@@ -20,6 +20,17 @@ $(document).ready(function() {
     });
     return false;
   });
+
+  $(".update_childcopy").unbind('click');
+
+  $(".update_child_copy").click(function(ev) {
+    ev.preventDefault();
+    var url=$(this).data("form");
+    $("#editChildModal").load(url, function() {
+      $("#editChildModal").modal('show');
+    });
+    return false;
+  });
 });
 });
 
@@ -33,6 +44,7 @@ function generateDialog(copy_id) {
       if(data['stat'] === "ok") {
         alert('Success! Your changes have been saved.');
         $("#editModal").modal('hide');
+        window.location.reload();
       } else {
         alert("Error: invalid input! Please correct the errors in your input and submit again!");
         $("#editModal").html(data['form']);
@@ -53,7 +65,7 @@ function generateDialog(copy_id) {
           option.selected = true;
           var issues = document.getElementById('issue');
       		issues.options.length = 0;
-          
+
           var add_issue=document.getElementById('add_issue');
           add_issue.classList.add('hidden');
         } else if (data['stat'] === 'issue error') {

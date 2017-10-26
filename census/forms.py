@@ -49,7 +49,7 @@ class CopyForm(forms.ModelForm):
 	prov_info=forms.CharField(widget=forms.Textarea, required=False)
 	class Meta:
 		model = Copy
-		exclude = ['issue', 'created_by']
+		exclude = ['issue', 'created_by', 'librarian_validated', 'admin_validated', 'parent']
 
 	def clean_url(self):
 		entered_URL=self.cleaned_data['thumbnail_URL']

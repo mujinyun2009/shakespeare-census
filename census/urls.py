@@ -60,6 +60,7 @@ urlpatterns = [
 	url(r'^copydata/(?P<copy_id>[0-9]+)/$', views.copy_data, name='copy_data'),
 
 	url(r'^updatecopy/(?P<copy_id>[0-9]+)/$', views.update_copy, name='update_copy'),
+    url(r'^updatechildcopy/(?P<copy_id>[0-9]+)/$', views.update_child_copy, name='update_child_copy'),
 
     url(r'^password_reset/$', password_reset,
         {'template_name': 'census/password_reset_form.html',
