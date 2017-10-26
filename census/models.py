@@ -65,6 +65,10 @@ class Copy (models.Model):
 	class Meta:
 		verbose_name_plural = "copies"
 
+class CopyHistory(Copy):
+	stored_copy = models.ForeignKey(Copy, related_name="copy_history")  #copy of which the current object is the history of
+	date_created = models.DateTimeField(auto_now_add=True)
+
 class UserProfile(models.Model):
 	user = models.OneToOneField(User)
 	def __unicode__(self):
@@ -92,7 +96,7 @@ class Transaction(models.Model):
 
 class UserDetail(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	edited_copies = models.ManyToManyField(Copy, null=True, blank=True)
+	# edited_copies = models.ManyToManyField(Copy, null=True, blank=True)
 	affiliation = models.CharField(max_length=255, null=True)
 	group=models.ForeignKey(Group, default=1)
 

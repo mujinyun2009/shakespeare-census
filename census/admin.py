@@ -2,16 +2,6 @@ from django.contrib import admin
 
 # Register your models here.
 from .models import *
-# from .models import Title
-# from .models import Edition
-# from .models import Copy
-# from .models import Provenance
-# from .models import UserProfile
-# from .models import BookPlate
-# from .models import BookPlate_Location
-# from .models import Transfer
-# from .models import Transfer_Value
-# from .models import Issue
 
 admin.site.register(Title)
 admin.site.register(Edition)
@@ -20,6 +10,7 @@ admin.site.register(Issue)
 admin.site.register(Entity)
 admin.site.register(Transaction)
 admin.site.register(UserDetail)
+admin.site.register(CopyHistory)
 
 class BookPlatezInline(admin.StackedInline):
 	model = BookPlate

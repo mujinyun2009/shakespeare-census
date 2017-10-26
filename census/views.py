@@ -488,7 +488,8 @@ def view_copies_submitted(request):
 			submitted_copies.append(copy)
 
 	context={
-		'username': current_user.username,
+		# 'user': current_user,
+		'user_detail': cur_user_detail,
 		'affiliation': affiliation,
 		'submitted_copies': submitted_copies,
 		'edited_copies': edited_copies,
