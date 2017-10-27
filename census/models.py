@@ -57,6 +57,8 @@ class Copy (models.Model):
 	prov_info=models.TextField(null=True, default=None)
 	librarian_validated = models.BooleanField(default=False)
 	admin_validated = models.BooleanField(default=False)
+	is_parent=models.BooleanField(default=True)
+	is_history=models.BooleanField(default=False)
 	# parent = models.ForeignKey('self', blank=True, null=True, related_name='children')
 
 	def __str__(self):
@@ -66,7 +68,6 @@ class Copy (models.Model):
 
 class ChildCopy(Copy):
 	parent = models.ForeignKey(Copy, related_name='children', default=None, null=True)
-	is_submission=models.BooleanField(default=False)
 
 class CopyHistory(Copy):
 	stored_copy = models.ForeignKey(Copy, related_name="copy_history")  #copy of which the current object is the history of
