@@ -15,6 +15,10 @@ if (url.indexOf('search') > -1) {
   copy_link.classList.remove('not.active');
   copy_link.classList.add('active');
 
+} else if (url.indexOf('view_submitted_copies') > -1){
+  account.classList.add('active');
+  history_link.classList.add('active2');
+
 } else if (url.indexOf('titles') > -1 || url.indexOf('editions') > -1 || url.indexOf('issue') > -1) {
   titles_link.classList.remove('not.active');
   titles_link.classList.add('active');

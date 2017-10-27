@@ -36,7 +36,12 @@
          <div class="dropdown-content">
         {% if user.is_authenticated %}
           <a href="{% url 'profile' %}" id="profilelink"><p class = sansserif>my profile</p></a>
-          <a href="{% url 'user_history' %}" id="historylink"><p class = sansserif>my history</p></a>
+          {% if user.is_superuser %}
+          <a href="{% url 'admin_validate' %}" id="historylink"><p class = sansserif>admin validate</p></a>
+          {% else %}
+          <a href="{% url 'view_copies_submitted' %}" id="historylink"><p class = sansserif>View copies in affiliation</p></a>
+          {% endif %}
+          <!-- <a href="{% url 'user_history' %}" id="historylink"><p class = sansserif>my history</p></a> -->
           <a href="{% url 'logout_user' %}" id="logoutlink"><p class = sansserif>logout</p></a>
 
            {% else %}

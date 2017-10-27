@@ -1,13 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<p>Username: {{ user.username }}</P>
-<p>User group: {{ user_detail.group }}</p>
-{% if user.is_superuser %}
-    <p>Hello, admin.</p>
-{% else %}
-    <p>Hello, ordinary visitor.</p>
-{% endif %}
 
 <div>
   <link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
