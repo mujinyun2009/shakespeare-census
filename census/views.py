@@ -23,9 +23,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import re
 
-
 # Create your views here.
-
 def search(request):
 	template=loader.get_template('census/results.html')
 	query1 = request.GET.get('a')
