@@ -78,7 +78,6 @@
 <td class="subhead"> </td>
 
 </tr>
-
   {% for copy in issue.copy_set.all %}
   <tr>
     <td>{{copy.Owner}}</td>
@@ -103,9 +102,9 @@
         None
       {% endif %}
     </td>
-    <td> 
+    <td>
     {% if copy.Verification %}
-    <div class="container"> 
+    <div class="container">
     <div class="ui list">
     <div class="item">
     <i class="checkmark box icon"></i>
@@ -117,8 +116,8 @@
     </td>
     <td>
     {% if 'Librarian' in copy.group|stringformat:"s" %}
-    
-      <div class="container"> 
+
+      <div class="container">
   <div class="ui list">
   <div class="item">
   <i class="book icon"></i>

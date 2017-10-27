@@ -35,6 +35,7 @@ def search(request):
 	category3 = request.GET.get('l')
 	category4 = request.GET.get('z')
 	copy_list = Copy.objects.all()
+
 	result_list = None
 	if query1 and not query2 and not query3 and not query4:
 		results_list = copy_list.filter(Q(**{category1: query1}))
@@ -55,6 +56,12 @@ def search(request):
 	if not query1 and not query2 and not query3 and not query4:
 		results_list = copy_list.filter(Q(**{category1: query1})&Q(**{category2: query2})&Q(**{category4: query4}))
 		result_list = list(chain(results_list))
+
+	child_copies = ChildCopy.objects.all()
+	child_copies_ids = [copy.id for copy in child_copies]
+	history_copies = CopyHistory.objects.all()
+	history_copies_ids = [copy.id for copy in history_copies]
+	result_list = [copy for copy in result_list if copy.id not in child_copies_ids and copy.id not in history_copies_ids]
 
 	paginator = Paginator(result_list, 10)
 	page = request.GET.get('page')
@@ -141,14 +148,7 @@ def copy(request, id):
 		copies = paginator.page(1)
 	except EmptyPage:
 		copies = paginator.page(paginator.num_pages)
-	# copy.created_by=all_issues.objects.
-	# if copy.created_by.groups.filter(name__icontains="Librarian2").exists():
-	# 	librarian = True
-	# 	print('test')
-	# else:
-	# 	librarian = False
-	# 	print('antitest')
-	# 	print(copy.created_by.groups.all())
+
 	template = loader.get_template('census/copy.html')
 	context = {
 		'all_issues': all_issues,
@@ -163,11 +163,19 @@ def copylist(request):
 	template = loader.get_template('census/copylist.html')
 	queryset_list = Copy.objects.all().order_by('issue__start_date', 'issue__edition__title__title')
 	query = request.GET.get("q")
+
+	child_copies = ChildCopy.objects.all()
+	child_copies_ids = [copy.id for copy in child_copies]
+	history_copies = CopyHistory.objects.all()
+	history_copies_ids = [copy.id for copy in history_copies]
+
 	if query:
 		if query.isdigit() == False:
 			queryset_list = queryset_list.filter(Q(issue__edition__title__title__icontains=query)|Q(Owner__icontains=query)|Q(issue__ESTC=query)|Q(issue__STC_Wing=query))
 		elif query.isdigit() == True:
 			queryset_list = queryset_list.filter(Q(issue=query)|Q(issue__edition__Edition_number=query)|Q(issue__start_date=query)|Q(issue__end_date=query)|Q(issue__STC_Wing=query))
+
+		queryset_list = [copy for copy in queryset_list if copy.id not in child_copies_ids and copy.id not in history_copies_ids]
 
 		paginator = Paginator(queryset_list, 10)
 		page = request.GET.get('page')
@@ -177,12 +185,17 @@ def copylist(request):
 			queryset_list = paginator.page(1)
 		except EmptyPage:
 			queryset_list = paginator.page(paginator.num_pages)
+
+
+
 		context = {
 			'query': query,
 			'object_list': queryset_list,
 		}
 
 	else:
+		all_copies = [copy for copy in all_copies if copy.id not in child_copies_ids and copy.id not in history_copies_ids]
+		queryset_list = [copy for copy in queryset_list if copy.id not in child_copies_ids and copy.id not in history_copies_ids]
 		paginator = Paginator(all_copies, 10)
 		page = request.GET.get('page')
 		try:
@@ -191,6 +204,7 @@ def copylist(request):
 			copies = paginator.page(1)
 		except EmptyPage:
 			copies = paginator.page(paginator.num_pages)
+
 		context = {
 			'object_list': queryset_list,
 			'copies': copies,
@@ -275,7 +289,7 @@ def submission(request):
 def edit_copy_submission(request, copy_id):
 	template = loader.get_template('census/edit_submission.html')
 	all_titles = Title.objects.all()
-	copy_to_edit=Copy.objects.get(pk=copy_id)
+	copy_to_edit=ChildCopy.objects.get(pk=copy_id)
 	old_issue=copy_to_edit.issue
 	old_edition=old_issue.edition
 	old_title=old_edition.title
@@ -369,7 +383,7 @@ def copy_submission_success(request):
 	return HttpResponse(template.render(context, request))
 
 def cancel_copy_submission(request, copy_id):
-	copy_to_delete=Copy.objects.get(pk=copy_id)
+	copy_to_delete=ChildCopy.objects.get(pk=copy_id)
 	copy_to_delete.delete()
 	return HttpResponseRedirect(reverse('submission'))
 
@@ -482,11 +496,13 @@ def view_copies_submitted(request):
 	affiliation=cur_user_detail.affiliation
 	all_copies=Copy.objects.all().filter(Owner=affiliation)
 	child_copies=ChildCopy.objects.all().filter(Owner=affiliation)
+	history_copies=CopyHistory.objects.all().filter(Owner=affiliation)
 	child_copies_id=[copy.id for copy in child_copies]
+	history_copies_id=[copy.id for copy in history_copies]
 
 	parent_copies=[]
 	for copy in all_copies:
-		if copy.id not in child_copies_id and not copy.children.all():
+		if copy.id not in child_copies_id and copy.id not in history_copies_id and not copy.children.all():
 			parent_copies.append(copy)
 
 	context={
@@ -740,7 +756,7 @@ def librarian_validate(request, id):
 def update_child_copy(request, copy_id):
 	template = loader.get_template('census/edit_child_modal.html')
 	all_titles = Title.objects.all()
-	copy_to_edit=Copy.objects.get(pk=copy_id)
+	copy_to_edit=ChildCopy.objects.get(pk=copy_id)
 	old_issue=copy_to_edit.issue
 	old_edition=old_issue.edition
 	old_title=old_edition.title

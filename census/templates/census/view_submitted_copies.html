@@ -13,9 +13,43 @@
 <div id="editModal" class="modal fade" role="dialog"></div>
 <div id="editChildModal" class="modal fade" role="dialog"></div>
 
+<div class = "history">Edited & Submitted Copies </div>
+<div class="container">
+<table class="table table-striped" align="center" style="width:70%">
+  <tbody>
+    <tr>
+      <th>Copy</th>
+      <th></th>
+      <th>Details</th>
+      <th>Librarian validation</th>
+      <th>Admin validation</th>
+      <th></th>
+    </tr>
+	{% if child_copies %}
+	{% for copy in child_copies %}
 
-<div class = "history">Copies in {{ affiliation }} </div>
+		<tr>
+			<td>{{ copy }}<td>
+        <td><a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">Details</a></td>
+        <td id="validate {{ copy.id }}">
+          {% if copy.librarian_validated %}
+          Yes
+          {% else %}
+           <button onclick="libValidate({{ copy.id }});">Validate</button>
+          {% endif %}
+        </td>
+      <td> {{ copy.admin_validated }}</td>
+      <td><a class="update_child_copy" href="#" data-form="{% url 'update_child_copy' copy.id %}" title="Edit">Edit</a></td>
 
+		</tr>
+
+  {% endfor %}
+  {% endif %}
+  </tbody>
+</table>
+<br>
+
+<div class = "history">Other Copies in {{ affiliation }} </div>
 <div class="container">
 <table class="table table-striped" align="center" style="width:70%">
   <tbody>
@@ -52,41 +86,6 @@
     {% endfor %}
     {% endif %}
 
-  </tbody>
-</table>
-<br>
-<div class = "history">Copies that have been edited or submitted but not validated by admin </div>
-<div class="container">
-<table class="table table-striped" align="center" style="width:70%">
-  <tbody>
-    <tr>
-      <th>Copy</th>
-      <th></th>
-      <th>Details</th>
-      <th>Librarian validation</th>
-      <th>Admin validation</th>
-      <th></th>
-    </tr>
-	{% if child_copies %}
-	{% for copy in child_copies %}
-
-		<tr>
-			<td>{{ copy }}<td>
-        <td><a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">Details</a></td>
-        <td id="validate {{ copy.id }}">
-          {% if copy.librarian_validated %}
-          Yes
-          {% else %}
-           <button onclick="libValidate({{ copy.id }});">Validate</button>
-          {% endif %}
-        </td>
-      <td> {{ copy.admin_validated }}</td>
-      <td><a class="update_child_copy" href="#" data-form="{% url 'update_child_copy' copy.id %}" title="Edit">Edit</a></td>
-
-		</tr>
-
-  {% endfor %}
-  {% endif %}
   </tbody>
 </table>
 
