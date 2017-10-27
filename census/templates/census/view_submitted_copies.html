@@ -3,6 +3,11 @@
 {% block content %}
 <p>Username: {{ user.username }}</P>
 <p>User group: {{ user_detail.group }}</p>
+{% if user.is_superuser %}
+    <p>Hello, admin.</p>
+{% else %}
+    <p>Hello, ordinary visitor.</p>
+{% endif %}
 
 <div>
   <link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
@@ -29,8 +34,8 @@
       <th>Admin validation</th>
       <th></th>
     </tr>
-	{% if submitted_copies %}
-	{% for copy in submitted_copies %}
+	{% if parent_copies %}
+	{% for copy in parent_copies %}
 		<tr>
 			<td>{{ copy }}<td>
         <!-- <td> {{ copy.Owner }} </td> -->
@@ -57,7 +62,7 @@
   </tbody>
 </table>
 <br>
-<div class = "history">Copies that have been edited but not validated by admin </div>
+<div class = "history">Copies that have been edited or submitted but not validated by admin </div>
 <div class="container">
 <table class="table table-striped" align="center" style="width:70%">
   <tbody>
@@ -69,8 +74,8 @@
       <th>Admin validation</th>
       <th></th>
     </tr>
-	{% if edited_copies %}
-	{% for copy in edited_copies %}
+	{% if child_copies %}
+	{% for copy in child_copies %}
 
 		<tr>
 			<td>{{ copy }}<td>

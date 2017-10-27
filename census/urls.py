@@ -53,6 +53,8 @@ urlpatterns = [
 
     url(r'^view_submitted_copies$', views.view_copies_submitted, name='view_copies_submitted'),
     url(r'^librarian_validate/(?P<id>[0-9]+)/$', views.librarian_validate, name='librarian_validate'),
+    url(r'^admin_validate$', views.admin_validate, name='admin_validate'),
+    url(r'^admin_validate_copy/(?P<id>[0-9]+)/$', views.admin_validate_copy, name='admin_validate_copy'),
 
 	url(r'^editProfile$', views.edit_profile, name='edit_profile'),
 	url(r'^welcome$', views.welcome, name='welcome'),

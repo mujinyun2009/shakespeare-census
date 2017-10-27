@@ -27,7 +27,7 @@ class EditionForm(forms.ModelForm):
 
 class CopyForm(forms.ModelForm):
 	thumbnail_URL = forms.URLField(widget=forms.TextInput(attrs={'size':'80'}), error_messages={'invalid': 'Enter a valid url.'}, required=False)
-	Owner=forms.CharField(required=True)
+	# Owner=forms.CharField(required=True)
 	thumbnail_URL = forms.URLField(widget=forms.TextInput(attrs={'size':'80'}), error_messages={'invalid': 'Enter a valid url.'}, required=False)
 	NSC=forms.IntegerField(label="NSC", initial=0, required=False)
 	Shelfmark=forms.CharField(required=False)
@@ -48,8 +48,8 @@ class CopyForm(forms.ModelForm):
 	copynote=forms.CharField(required=False)
 	prov_info=forms.CharField(widget=forms.Textarea, required=False)
 	class Meta:
-		model = Copy
-		exclude = ['issue', 'created_by', 'librarian_validated', 'admin_validated', 'parent']
+		model = ChildCopy
+		exclude = ['issue', 'Owner','created_by', 'librarian_validated', 'admin_validated', 'parent']
 
 	def clean_url(self):
 		entered_URL=self.cleaned_data['thumbnail_URL']

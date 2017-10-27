@@ -226,7 +226,7 @@ def logout_user(request):
 #expected to be called when a new copy is submitted; displaying the copy info
 def copy_info(request, copy_id):
 	template=loader.get_template('census/copy_info.html')
-	selected_copy=get_object_or_404(Copy, pk=copy_id)
+	selected_copy=get_object_or_404(ChildCopy, pk=copy_id)
 	selected_issue=selected_copy.issue
 	selected_edition=selected_issue.edition
 	context={
@@ -253,6 +253,10 @@ def submission(request):
 				copy=copy_form.save(commit=False)
 				copy.issue=selected_issue
 				copy.created_by=request.user
+				user_detail=UserDetail.objects.get(user=request.user)
+				copy.Owner=user_detail.affiliation
+				copy.librarian_validated=True
+				copy.is_submission=True
 				copy.save()
 				return HttpResponseRedirect(reverse('copy_info', args=(copy.id,)))
 			else:
@@ -479,22 +483,95 @@ def view_copies_submitted(request):
 	cur_user_detail=UserDetail.objects.get(user=current_user)
 	affiliation=cur_user_detail.affiliation
 	all_copies=Copy.objects.all().filter(Owner=affiliation)
-	submitted_copies = []  #parent copies that do not have children
-	edited_copies = [] #child copies
+	child_copies=ChildCopy.objects.all().filter(Owner=affiliation)
+	child_copies_id=[copy.id for copy in child_copies]
+
+	parent_copies=[]
 	for copy in all_copies:
-		if not copy.parent == None:
-			edited_copies.append(copy)
-		elif copy.parent == None and not copy.children.all():
-			submitted_copies.append(copy)
+		if copy.id not in child_copies_id and not copy.children.all():
+			parent_copies.append(copy)
 
 	context={
-		# 'user': current_user,
 		'user_detail': cur_user_detail,
 		'affiliation': affiliation,
-		'submitted_copies': submitted_copies,
-		'edited_copies': edited_copies,
+		'parent_copies': parent_copies,
+		'child_copies': child_copies,
 	}
 	return HttpResponse(template.render(context, request))
+
+@login_required()
+def admin_validate(request):
+	template=loader.get_template('census/admin_validate.html')
+	child_copies=ChildCopy.objects.all()
+	copies=[copy for copy in child_copies if copy.librarian_validated]
+
+	context={
+		'copies': copies,
+	}
+	return HttpResponse(template.render(context, request))
+
+@login_required()
+def admin_validate_copy(request, id):
+	selected_copy = ChildCopy.objects.get(pk=id)
+	if selected_copy.parent:
+		copy_parent=selected_copy.parent
+
+		#create a copyHistory object and copy all copy_parent info to that object
+		CopyHistory.objects.create(Owner=copy_parent.Owner, issue=copy_parent.issue, \
+		thumbnail_URL=copy_parent.thumbnail_URL, NSC=copy_parent.NSC, Shelfmark=copy_parent.Shelfmark,\
+		Height=copy_parent.Height, Width=copy_parent.Width, Marginalia=copy_parent.Marginalia, \
+		Condition=copy_parent.Condition, Binding=copy_parent.Binding, Binder=copy_parent.Binder, \
+		Bookplate=copy_parent.Bookplate, Bookplate_Location=copy_parent.Bookplate_Location, Bartlett1939=copy_parent.Bartlett1939,\
+		Bartlett1939_Notes=copy_parent.Bartlett1939_Notes, Bartlett1916=copy_parent.Bartlett1916, Bartlett1916_Notes=copy_parent.Bartlett1916_Notes,\
+		Lee_Notes=copy_parent.Lee_Notes, Library_Notes=copy_parent.Library_Notes, created_by=copy_parent.created_by,\
+		copynote=copy_parent.copynote, prov_info=copy_parent.prov_info, librarian_validated=copy_parent.librarian_validated, admin_validated=copy_parent.admin_validated, stored_copy=copy_parent)
+
+		#update parent copy info:
+		copy_parent.Owner=selected_copy.Owner
+		copy_parent.issue=selected_copy.issue
+		copy_parent.thumbnail_URL=selected_copy.thumbnail_URL
+		copy_parent.NSC=selected_copy.NSC
+		copy_parent.Shelfmark=selected_copy.Shelfmark
+		copy_parent.Height=selected_copy.Height
+		copy_parent.Width=selected_copy.Width
+		copy_parent.Marginalia=selected_copy.Marginalia
+		copy_parent.Condition=selected_copy.Condition
+		copy_parent.Binding=selected_copy.Binding
+		copy_parent.Binder=selected_copy.Binder
+		copy_parent.Bookplate=selected_copy.Bookplate
+		copy_parent.Bookplate_Location=selected_copy.Bookplate_Location
+		copy_parent.Bartlett1939=selected_copy.Bartlett1939
+		copy_parent.Bartlett1939_Notes=selected_copy.Bartlett1939_Notes
+		copy_parent.Bartlett1916=selected_copy.Bartlett1916
+		copy_parent.Bartlett1916_Notes=selected_copy.Bartlett1916_Notes
+		copy_parent.Lee_Notes=selected_copy.Lee_Notes
+		copy_parent.Library_Notes=selected_copy.Library_Notes
+		copy_parent.created_by=selected_copy.created_by
+		copy_parent.copynote=selected_copy.copynote
+		copy_parent.prov_info=selected_copy.prov_info
+		copy_parent.librarian_validated=True
+		copy_parent.admin_validated=True
+		copy_parent.save()
+
+		#delete the child copy
+		selected_copy.delete()
+		print str(selected_copy.id) + ' has parent ' + str(copy_parent.id)
+	else:
+		#create a new parent copy
+		Copy.objects.create(Owner=selected_copy.Owner, issue=selected_copy.issue, \
+		thumbnail_URL=selected_copy.thumbnail_URL, NSC=selected_copy.NSC, Shelfmark=selected_copy.Shelfmark,\
+		Height=selected_copy.Height, Width=selected_copy.Width, Marginalia=selected_copy.Marginalia, \
+		Condition=selected_copy.Condition, Binding=selected_copy.Binding, Binder=selected_copy.Binder, \
+		Bookplate=selected_copy.Bookplate, Bookplate_Location=selected_copy.Bookplate_Location, Bartlett1939=selected_copy.Bartlett1939,\
+		Bartlett1939_Notes=selected_copy.Bartlett1939_Notes, Bartlett1916=selected_copy.Bartlett1916, Bartlett1916_Notes=selected_copy.Bartlett1916_Notes,\
+		Lee_Notes=selected_copy.Lee_Notes, Library_Notes=selected_copy.Library_Notes, created_by=selected_copy.created_by,\
+		copynote=selected_copy.copynote, prov_info=selected_copy.prov_info, librarian_validated=True, admin_validated=True)
+
+		#delete the child copy
+		selected_copy.delete()
+
+	data='success'
+	return HttpResponse(json.dumps(data), content_type='application/json')
 
 @login_required()
 def edit_profile(request):
@@ -602,6 +679,7 @@ def update_copy(request, copy_id):
 			if copy_form.is_valid():
 				new_copy=copy_form.save(commit=False)
 				new_copy.issue = selected_issue
+				new_copy.Owner = copy_to_edit.Owner
 
 				# changes are made here
 				new_copy.parent = copy_to_edit

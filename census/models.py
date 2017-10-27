@@ -53,17 +53,20 @@ class Copy (models.Model):
 	Lee_Notes = models.CharField(max_length=2000, default=None, null=True)
 	Library_Notes=models.CharField(max_length=2000, default=None, null=True)
 	created_by=models.ForeignKey(User, related_name="submitted_copies", default=1, null=True)
-	# group = models.ForeignKey(Group, related_name="submitted_copies", default=1, null=True)
 	copynote=models.CharField(max_length=5000, default=None, null=True)
 	prov_info=models.TextField(null=True, default=None)
 	librarian_validated = models.BooleanField(default=False)
 	admin_validated = models.BooleanField(default=False)
-	parent = models.ForeignKey('self', blank=True, null=True, related_name='children')
+	# parent = models.ForeignKey('self', blank=True, null=True, related_name='children')
 
 	def __str__(self):
 		return  "%s (%s)" % (self.issue, self.issue.year)
 	class Meta:
 		verbose_name_plural = "copies"
+
+class ChildCopy(Copy):
+	parent = models.ForeignKey(Copy, related_name='children', default=None, null=True)
+	is_submission=models.BooleanField(default=False)
 
 class CopyHistory(Copy):
 	stored_copy = models.ForeignKey(Copy, related_name="copy_history")  #copy of which the current object is the history of
