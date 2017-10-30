@@ -359,6 +359,10 @@ input:focus:not(.finalsubmit):not(.editprofilesubmit):not(.editprofilesubmit2){
   background: #ff9966;
   font-family: "Century Gothic", AppleGothic, sans-serif;
 }
+
+.copy_data {
+  font-size:75%;
+}
 .editmodalsubmission {
   font-size:12px;
   border:none;

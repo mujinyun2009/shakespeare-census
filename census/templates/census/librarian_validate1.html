@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div>
+  <link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
+  <script type="text/javascript" src="/static/census/bootstrap-modal.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'census/modal.css' %}" />
+  <script type="text/javascript" src="/static/census/copy_detail_edit_modal.js"></script>
+
+<div id="copyModal" class="modal fade" role="dialog"></div>
+<hr class = "style14" width = "50%"></hr>
+	<p class="sansserifgrey" align="center">
+	Here is a list of the copies we think your affiliation holds.</p>
+  <p class="sansserifgrey" align="center">Do you actually hold these copies?</p>
+</div>
+<hr class="style14" width = "50%"></hr>
+
+<div class="container">
+<table class="table table-striped" align="center" style="width:70%">
+  <tbody>
+    <tr>
+      <th>Copies in {{ affiliation }}</th>
+      <th>hold the copy?</th>
+
+    </tr>
+	{% if copies %}
+	{% for copy in copies %}
+		<tr>
+			<td>{{ copy }}
+        <a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">
+          more details...</a></td>
+          {% if copy.held_by_library %}
+          <td>&#10004</td>
+          {% else %}
+        <td id='validate {{copy.id}}'> <button onclick="holdCopy({{ copy.id }});">Yes</button>
+        <button onclick="reportError({{ copy.id }});">No</button> </td>
+          {% endif %}
+		</tr>
+
+  {% endfor %}
+  {% endif %}
+  </tbody>
+</table>
+<br>
+<button class="finalsubmit">Continue to validate copy details</button>
+<script>
+function holdCopy(copy_id) {
+  var req = new XMLHttpRequest();
+  var url = 'validate_hold/' + copy_id;
+  req.open('GET', url, false);
+  req.setRequestHeader('Content-Type', 'application/json');
+  req.send();
+  var res = JSON.parse(req.responseText);
+  if (res === "success") {
+    var div_id = "validate " + copy_id;
+    var selected_div = document.getElementById(div_id);
+    selected_div.innerHTML = "&#10004";
+  }
+}
+
+function reportError(copy_id) {
+  var req = new XMLHttpRequest();
+  var url = 'report_false_info/' + copy_id;
+  req.open('GET', url, false);
+  req.setRequestHeader('Content-Type', 'application/json');
+  req.send();
+  var res = JSON.parse(req.responseText);
+  if (res === "success") {
+    var div_id = "validate " + copy_id;
+    var selected_div = document.getElementById(div_id);
+    selected_div.innerHTML = "&#10004";
+  }
+}
+</script>
+{% endblock content %}

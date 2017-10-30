@@ -474,6 +474,36 @@ def display_user_profile(request):
 	}
 	return HttpResponse(template.render(context, request))
 
+@login_required
+def librarian_validate1(request):
+	template=loader.get_template('census/librarian_validate1.html')
+	current_user=request.user
+	cur_user_detail=UserDetail.objects.get(user=current_user)
+	affiliation=cur_user_detail.affiliation
+	copies=Copy.objects.all().filter(Owner=affiliation, from_estc=True, is_history=False)
+	context={
+		'affiliation': affiliation,
+		'copies': copies,
+	}
+	return HttpResponse(template.render(context, request))
+
+@login_required
+def validate_hold (request, id):
+	selected_copy = Copy.objects.get(pk=id)
+	selected_copy.held_by_library = True
+	selected_copy.save()
+	data='success'
+	return HttpResponse(json.dumps(data), content_type='application/json')
+
+@login_required
+def report_false_info(request, id):
+	selected_copy = Copy.objects.get(pk=id)
+	selected_copy.held_by_library=False
+	selected_copy.false_positive=True
+	selected_copy.save()
+	data='success'
+	return HttpResponse(json.dumps(data), content_type='application/json')
+
 @login_required()
 def view_copies_submitted(request):
 	template=loader.get_template('census/view_submitted_copies.html')

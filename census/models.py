@@ -55,11 +55,14 @@ class Copy (models.Model):
 	created_by=models.ForeignKey(User, related_name="submitted_copies", default=1, null=True)
 	copynote=models.CharField(max_length=5000, default=None, null=True)
 	prov_info=models.TextField(null=True, default=None)
+
+	held_by_library=models.BooleanField(default=False)
 	librarian_validated = models.BooleanField(default=False)
 	admin_validated = models.BooleanField(default=False)
-	is_parent=models.BooleanField(default=True)
+	is_parent=models.BooleanField(default=False)
 	is_history=models.BooleanField(default=False)
-	# parent = models.ForeignKey('self', blank=True, null=True, related_name='children')
+	from_estc=models.BooleanField(default=False)
+	false_positive=models.NullBooleanField(default=None)
 
 	def __str__(self):
 		return  "%s (%s)" % (self.issue, self.issue.year)
