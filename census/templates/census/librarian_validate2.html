@@ -62,17 +62,23 @@ input:checked + .slider:before {
 .off { background:red; }
 </style>
 
+
 <div>
   <link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
   <script type="text/javascript" src="/static/census/bootstrap-modal.js"></script>
   <link rel="stylesheet" type="text/css" href="{% static 'census/modal.css' %}" />
   <script type="text/javascript" src="/static/census/copy_detail_edit_modal.js"></script>
 
+<!-- models -->
 <div id="copyModal" class="modal fade" role="dialog"></div>
+<div id="editModal" class="modal fade" role="dialog"></div>
+<div id="editChildModal" class="modal fade" role="dialog"></div>
+
 <hr class = "style14" width = "50%"></hr>
 	<p class="sansserifgrey" align="center">
-	Here is a list of the copies we think your affiliation holds.</p>
-  <p class="sansserifgrey" align="center">Do you actually hold these copies?</p>
+	You have validated the following copies.</p>
+  <p class="sansserifgrey" align="center">
+  Please click details to see if anything needs to be edited.</p>
 </div>
 <hr class="style14" width = "50%"></hr>
 
@@ -80,58 +86,53 @@ input:checked + .slider:before {
 <table class="table table-striped" align="center" style="width:70%">
   <tbody>
     <tr>
-      <th>Copies in {{ affiliation }}</th>
-      <th>hold the copy?</th>
-
+      <th>Copy</th>
+      <th>Held by library?</th>
+      <th>Librarian validation</th>
+      <th></th>
     </tr>
-	{% if copies %}
-	{% for copy in copies %}
+	{% if child_copies %}
+	{% for copy in child_copies %}
+
 		<tr>
 			<td>{{ copy }}
         <a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">
           more details...</a></td>
-          {% if copy.children.all %}
-          {% for child_copy in copy.children.all %}
-           <td>
-             <!-- <input type="button" id="btn" value="button" class="off" onclick="toggleState(this)" /> -->
-             <label class="switch">
-               {% if child_copy.held_by_library %}
-               <input type="checkbox" onclick="toggleState({{ child_copy.id }});" checked>
-               {% else %}
-               <input type="checkbox" onclick="toggleState({{ child_copy.id }});">
-               {% endif %}
-               <span class="slider round"></span>
-             </label>
-           </td>
-          {% endfor %}
+      </td>
+
+        <td>
+        <label class="switch">
+          {% if copy.held_by_library %}
+          <input type="checkbox" onclick="toggleState({{ copy.id }});" checked>
           {% else %}
-        <td id='validate {{copy.id}}'> <button onclick="holdCopy({{ copy.id }});">Yes</button>
-        <button onclick="notHoldCopy({{ copy.id }});">No</button> </td>
+          <input type="checkbox" onclick="toggleState({{ copy.id }});">
           {% endif %}
+          <span class="slider round"></span>
+        </label>
+      </td>
+
+        <td id="validate {{ copy.id }}">
+          {% if copy.librarian_validated %}
+          Yes
+          {% else %}
+           <button onclick="libValidate({{ copy.id }});">Validate</button>
+          {% endif %}
+        </td>
+
+      <td>
+        <a class="update_child_copy" href="#" data-form="{% url 'update_child_copy' copy.id %}" title="Edit">Edit</a>
+      </td>
 		</tr>
 
   {% endfor %}
   {% endif %}
   </tbody>
 </table>
-<br>
-<button class="finalsubmit">Continue to validate copy details</button>
+</div>
 <script>
-function holdCopy(copy_id) {
+function libValidate(copy_id) {
   var req = new XMLHttpRequest();
-  var url = 'validate_hold/' + copy_id;
-  req.open('GET', url, false);
-  req.setRequestHeader('Content-Type', 'application/json');
-  req.send();
-  var res = JSON.parse(req.responseText);
-  if (res === "success") {
-    window.location.reload();
-  }
-}
-
-function notHoldCopy(copy_id) {
-  var req = new XMLHttpRequest();
-  var url = 'validate_not_hold/' + copy_id;
+  var url = 'librarian_validate/' + copy_id;
   req.open('GET', url, false);
   req.setRequestHeader('Content-Type', 'application/json');
   req.send();
@@ -152,4 +153,5 @@ function toggleState(childcopyid){
     }
   }
 </script>
+
 {% endblock content %}

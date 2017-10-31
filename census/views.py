@@ -480,7 +480,7 @@ def librarian_validate1(request):
 	current_user=request.user
 	cur_user_detail=UserDetail.objects.get(user=current_user)
 	affiliation=cur_user_detail.affiliation
-	copies=Copy.objects.all().filter(Owner=affiliation, from_estc=True, is_history=False)
+	copies=Copy.objects.all().filter(Owner=affiliation, from_estc=True, librarian_validated=False, is_parent=True, is_history=False)
 	context={
 		'affiliation': affiliation,
 		'copies': copies,
@@ -490,21 +490,65 @@ def librarian_validate1(request):
 @login_required
 def validate_hold (request, id):
 	selected_copy = Copy.objects.get(pk=id)
-	selected_copy.held_by_library = True
+
+	ChildCopy.objects.create(Owner=selected_copy.Owner, issue=selected_copy.issue, \
+	thumbnail_URL=selected_copy.thumbnail_URL, NSC=selected_copy.NSC, Shelfmark=selected_copy.Shelfmark,\
+	Height=selected_copy.Height, Width=selected_copy.Width, Marginalia=selected_copy.Marginalia, \
+	Condition=selected_copy.Condition, Binding=selected_copy.Binding, Binder=selected_copy.Binder, \
+	Bookplate=selected_copy.Bookplate, Bookplate_Location=selected_copy.Bookplate_Location, Bartlett1939=selected_copy.Bartlett1939,\
+	Bartlett1939_Notes=selected_copy.Bartlett1939_Notes, Bartlett1916=selected_copy.Bartlett1916, Bartlett1916_Notes=selected_copy.Bartlett1916_Notes,\
+	Lee_Notes=selected_copy.Lee_Notes, Library_Notes=selected_copy.Library_Notes, created_by=selected_copy.created_by,\
+	copynote=selected_copy.copynote, prov_info=selected_copy.prov_info, from_estc=selected_copy.from_estc,\
+	librarian_validated=False, admin_validated=False, is_parent=False, is_history=False, held_by_library=True, parent=selected_copy)
+
+	data='success'
+	return HttpResponse(json.dumps(data), content_type='application/json')
+
+@login_required
+def validate_not_hold (request, id):
+	selected_copy = Copy.objects.get(pk=id)
+
+	ChildCopy.objects.create(Owner=selected_copy.Owner, issue=selected_copy.issue, \
+	thumbnail_URL=selected_copy.thumbnail_URL, NSC=selected_copy.NSC, Shelfmark=selected_copy.Shelfmark,\
+	Height=selected_copy.Height, Width=selected_copy.Width, Marginalia=selected_copy.Marginalia, \
+	Condition=selected_copy.Condition, Binding=selected_copy.Binding, Binder=selected_copy.Binder, \
+	Bookplate=selected_copy.Bookplate, Bookplate_Location=selected_copy.Bookplate_Location, Bartlett1939=selected_copy.Bartlett1939,\
+	Bartlett1939_Notes=selected_copy.Bartlett1939_Notes, Bartlett1916=selected_copy.Bartlett1916, Bartlett1916_Notes=selected_copy.Bartlett1916_Notes,\
+	Lee_Notes=selected_copy.Lee_Notes, Library_Notes=selected_copy.Library_Notes, created_by=selected_copy.created_by,\
+	copynote=selected_copy.copynote, prov_info=selected_copy.prov_info, from_estc=selected_copy.from_estc,\
+	librarian_validated=False, admin_validated=False, is_parent=False, is_history=False, held_by_library=False, parent=selected_copy)
+
+	data='success'
+	return HttpResponse(json.dumps(data), content_type='application/json')
+
+@login_required
+def change_hold_status(request, id):
+	selected_copy=ChildCopy.objects.get(pk=id)
+	if selected_copy.held_by_library:
+		selected_copy.held_by_library = False
+	else:
+		selected_copy.held_by_library = True
 	selected_copy.save()
 	data='success'
 	return HttpResponse(json.dumps(data), content_type='application/json')
 
 @login_required
-def report_false_info(request, id):
-	selected_copy = Copy.objects.get(pk=id)
-	selected_copy.held_by_library=False
-	selected_copy.false_positive=True
-	selected_copy.save()
-	data='success'
-	return HttpResponse(json.dumps(data), content_type='application/json')
+def librarian_validate2(request):
+	template=loader.get_template('census/librarian_validate2.html')
+	current_user=request.user
+	cur_user_detail=UserDetail.objects.get(user=current_user)
+	affiliation=cur_user_detail.affiliation
+	child_copies=ChildCopy.objects.all().filter(Owner=affiliation, librarian_validated=False)
 
-@login_required()
+	context={
+		'user_detail': cur_user_detail,
+		'affiliation': affiliation,
+		'child_copies': child_copies,
+	}
+	return HttpResponse(template.render(context, request))
+
+
+@login_required
 def view_copies_submitted(request):
 	template=loader.get_template('census/view_submitted_copies.html')
 	current_user=request.user
@@ -764,9 +808,11 @@ def update_copy(request, copy_id):
 	return HttpResponse(template.render(context, request))
 
 def librarian_validate(request, id):
-	selected_copy = Copy.objects.get(pk=id)
+	selected_copy = ChildCopy.objects.get(pk=id)
 	selected_copy.librarian_validated = True
+	selected_copy.parent.librarian_validated=True
 	selected_copy.save()
+	selected_copy.parent.save()
 	data='success'
 	return HttpResponse(json.dumps(data), content_type='application/json')
 

@@ -55,8 +55,6 @@ class Copy (models.Model):
 	created_by=models.ForeignKey(User, related_name="submitted_copies", default=1, null=True)
 	copynote=models.CharField(max_length=5000, default=None, null=True)
 	prov_info=models.TextField(null=True, default=None)
-
-	held_by_library=models.BooleanField(default=False)
 	librarian_validated = models.BooleanField(default=False)
 	admin_validated = models.BooleanField(default=False)
 	is_parent=models.BooleanField(default=False)
@@ -71,6 +69,7 @@ class Copy (models.Model):
 
 class ChildCopy(Copy):
 	parent = models.ForeignKey(Copy, related_name='children', default=None, null=True)
+	held_by_library=models.BooleanField(default=False)
 
 class CopyHistory(Copy):
 	stored_copy = models.ForeignKey(Copy, related_name="copy_history")  #copy of which the current object is the history of
@@ -103,7 +102,6 @@ class Transaction(models.Model):
 
 class UserDetail(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	# edited_copies = models.ManyToManyField(Copy, null=True, blank=True)
 	affiliation = models.CharField(max_length=255, null=True)
 	group=models.ForeignKey(Group, default=1)
 
