@@ -480,6 +480,7 @@ def librarian_validate1(request):
 	current_user=request.user
 	cur_user_detail=UserDetail.objects.get(user=current_user)
 	affiliation=cur_user_detail.affiliation
+	# copies=Copy.objects.all().filter(Owner=affiliation, from_estc=True, is_parent=True, is_history=False)
 	copies=Copy.objects.all().filter(Owner=affiliation, from_estc=True, librarian_validated=False, is_parent=True, is_history=False)
 	context={
 		'affiliation': affiliation,
@@ -488,7 +489,7 @@ def librarian_validate1(request):
 	return HttpResponse(template.render(context, request))
 
 @login_required
-def validate_hold (request, id):
+def validate_hold(request, id):
 	selected_copy = Copy.objects.get(pk=id)
 
 	ChildCopy.objects.create(Owner=selected_copy.Owner, issue=selected_copy.issue, \
@@ -505,7 +506,7 @@ def validate_hold (request, id):
 	return HttpResponse(json.dumps(data), content_type='application/json')
 
 @login_required
-def validate_not_hold (request, id):
+def validate_not_hold(request, id):
 	selected_copy = Copy.objects.get(pk=id)
 
 	ChildCopy.objects.create(Owner=selected_copy.Owner, issue=selected_copy.issue, \

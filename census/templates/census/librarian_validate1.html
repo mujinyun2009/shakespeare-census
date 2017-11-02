@@ -81,7 +81,7 @@ input:checked + .slider:before {
   <tbody>
     <tr>
       <th>Copies in {{ affiliation }}</th>
-      <th>hold the copy?</th>
+      <th>Held by library?</th>
 
     </tr>
 	{% if copies %}
@@ -89,24 +89,27 @@ input:checked + .slider:before {
 		<tr>
 			<td>{{ copy }}
         <a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">
-          more details...</a></td>
+          more details...</a>
+        </td>
+        {% if copy.librarian_validated %}
+        <td>Validated</td>
+        {% else %}
           {% if copy.children.all %}
           {% for child_copy in copy.children.all %}
            <td>
-             <!-- <input type="button" id="btn" value="button" class="off" onclick="toggleState(this)" /> -->
-             <label class="switch">
-               {% if child_copy.held_by_library %}
-               <input type="checkbox" onclick="toggleState({{ child_copy.id }});" checked>
-               {% else %}
-               <input type="checkbox" onclick="toggleState({{ child_copy.id }});">
-               {% endif %}
-               <span class="slider round"></span>
-             </label>
+             {% if child_copy.held_by_library %}
+             <button style='background-color: #8FBC8F'>Yes</button>
+             <button onclick="toggleState({{ child_copy.id }});">No</button>
+             {% else %}
+             <button onclick="toggleState({{ child_copy.id }});">Yes</button>
+             <button style='background-color: #8FBC8F'>No</button>
+             {% endif %}
            </td>
           {% endfor %}
           {% else %}
-        <td id='validate {{copy.id}}'> <button onclick="holdCopy({{ copy.id }});">Yes</button>
+        <td id='validate {{ copy.id }}'> <button onclick="holdCopy({{ copy.id }});">Yes</button>
         <button onclick="notHoldCopy({{ copy.id }});">No</button> </td>
+          {% endif %}
           {% endif %}
 		</tr>
 
@@ -115,7 +118,8 @@ input:checked + .slider:before {
   </tbody>
 </table>
 <br>
-<button class="finalsubmit">Continue to validate copy details</button>
+<a href="{% url 'librarian_validate2' %}" class="finalsubmit">Continue to validate copy details</a>
+
 <script>
 function holdCopy(copy_id) {
   var req = new XMLHttpRequest();
@@ -149,6 +153,7 @@ function toggleState(childcopyid){
   req.send();
   var res = JSON.parse(req.responseText);
   if (res === "success") {
+      window.location.reload();
     }
   }
 </script>

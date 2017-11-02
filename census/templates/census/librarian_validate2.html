@@ -88,7 +88,7 @@ input:checked + .slider:before {
     <tr>
       <th>Copy</th>
       <th>Held by library?</th>
-      <th>Librarian validation</th>
+      <th>Details validated by librarian?</th>
       <th></th>
     </tr>
 	{% if child_copies %}
@@ -100,16 +100,25 @@ input:checked + .slider:before {
           more details...</a></td>
       </td>
 
-        <td>
-        <label class="switch">
+        <!-- <td> -->
+          <td>
+            {% if copy.held_by_library %}
+            <button style='background-color: #8FBC8F'>Yes</button>
+            <button onclick="toggleState({{ copy.id }});">No</button>
+            {% else %}
+            <button onclick="toggleState({{ copy.id }});">Yes</button>
+            <button style='background-color: #8FBC8F'>No</button>
+            {% endif %}
+          </td>
+        <!-- <label class="switch">
           {% if copy.held_by_library %}
           <input type="checkbox" onclick="toggleState({{ copy.id }});" checked>
           {% else %}
           <input type="checkbox" onclick="toggleState({{ copy.id }});">
           {% endif %}
           <span class="slider round"></span>
-        </label>
-      </td>
+        </label> -->
+      <!-- </td> -->
 
         <td id="validate {{ copy.id }}">
           {% if copy.librarian_validated %}
@@ -129,6 +138,8 @@ input:checked + .slider:before {
   </tbody>
 </table>
 </div>
+<br>
+<button class="finalsubmit">Continue to submit copies</button>
 <script>
 function libValidate(copy_id) {
   var req = new XMLHttpRequest();
@@ -150,6 +161,7 @@ function toggleState(childcopyid){
   req.send();
   var res = JSON.parse(req.responseText);
   if (res === "success") {
+    window.location.reload();
     }
   }
 </script>
