@@ -6,6 +6,7 @@
   <script type="text/javascript" src="/static/census/bootstrap-modal.js"></script>
   <link rel="stylesheet" type="text/css" href="{% static 'census/modal.css' %}" />
   <script type="text/javascript" src="/static/census/copy_detail_edit_modal.js"></script>
+  <link rel="stylesheet" type="text/css" href= "{% static 'census/bootstrapbuttons.css' %}" />
 
 <!-- models -->
 <div id="copyModal" class="modal fade" role="dialog"></div>
@@ -41,19 +42,20 @@
         <!-- <td> -->
           <td>
             {% if copy.held_by_library %}
-            <button class = "togglebtn" style='background-color: #8FBC8F'>Yes</button>
-            <button class = "togglebtn" onclick="toggleState({{ copy.id }});">No</button>
+            <button type="button" class="btn btn-primary">Yes</button>
+            <button type="button" class="btn btn-default" onclick="toggleState({{ copy.id }});">No</button>
             {% else %}
-            <button class = "togglebtn" onclick="toggleState({{ copy.id }});">Yes</button>
-            <button class = "togglebtn" style='background-color: #8FBC8F'>No</button>
+            <button type="button" class="btn btn-default" onclick="toggleState({{ copy.id }});">Yes</button>
+            <button type="button" class="btn btn-primary">No</button>
             {% endif %}
+            <!-- <button type="button" class="btn btn-success">Test</button> -->
           </td>
 
         <td id="validate {{ copy.id }}">
           {% if copy.librarian_validated %}
           Yes
           {% else %}
-           <button onclick="libValidate({{ copy.id }});">Validate</button>
+           <button class="btn btn-default" onclick="libValidate({{ copy.id }});">Validate</button>
           {% endif %}
         </td>
 

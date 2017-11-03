@@ -6,6 +6,7 @@
   <script type="text/javascript" src="/static/census/bootstrap-modal.js"></script>
   <link rel="stylesheet" type="text/css" href="{% static 'census/modal.css' %}" />
   <script type="text/javascript" src="/static/census/copy_detail_edit_modal.js"></script>
+  <link rel="stylesheet" type="text/css" href= "{% static 'census/bootstrapbuttons.css' %}" />
 
 <div id="copyModal" class="modal fade" role="dialog"></div>
 <hr class = "style14" width = "50%"></hr>
@@ -37,17 +38,17 @@
           {% for child_copy in copy.children.all %}
            <td>
              {% if child_copy.held_by_library %}
-             <button style='background-color: #8FBC8F'>Yes</button>
-             <button onclick="toggleState({{ child_copy.id }});">No</button>
+             <button class="btn btn-primary">Yes</button>
+             <button class="btn btn-default" onclick="toggleState({{ child_copy.id }});">No</button>
              {% else %}
-             <button onclick="toggleState({{ child_copy.id }});">Yes</button>
-             <button style='background-color: #8FBC8F'>No</button>
+             <button class="btn btn-default" onclick="toggleState({{ child_copy.id }});">Yes</button>
+             <button class="btn btn-primary">No</button>
              {% endif %}
            </td>
           {% endfor %}
           {% else %}
-        <td id='validate {{ copy.id }}'> <button onclick="holdCopy({{ copy.id }});">Yes</button>
-        <button onclick="notHoldCopy({{ copy.id }});">No</button> </td>
+        <td id='validate {{ copy.id }}'> <button class="btn btn-default" onclick="holdCopy({{ copy.id }});">Yes</button>
+        <button class="btn btn-default" onclick="notHoldCopy({{ copy.id }});">No</button> </td>
           {% endif %}
           {% endif %}
 		</tr>
