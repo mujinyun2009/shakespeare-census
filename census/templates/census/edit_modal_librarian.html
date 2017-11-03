@@ -35,7 +35,7 @@
         </ul>
         {% endif %}
 
-        <form class="editForm"  action="{% url 'update_copy' copy_id %}" method="post" accept-charset="utf-8" style="margin-left:20px">
+        <form class="editForm"  action="{% url 'update_copy_librarian' copy_id %}" method="post" accept-charset="utf-8" style="margin-left:20px">
         	{% csrf_token %}
           <div>
             <p style="color:#45556f">Select a title:</p>
@@ -52,12 +52,6 @@
             <select id="width_tmp_select">
             <option id="width_tmp_option"></option>
             </select>
-          <a href="{% url 'add_title' %}" style="z-index:-1;" name="add another title" type="btn" class="editmodalsubmission" onclick="return showAddAnotherPopup(this);">Add title+</a>
-          {% if islibrarian == "True" %}
-           <a href="{% url 'edit_title_submission' old_title_id %}" style="z-index:-1;" name="add another title" type="btn" class="editmodalsubmission" onclick="return showAddAnotherPopup(this);">Edit title+</a>
-          {% else %}
-         
-          {% endif %}
           </div>
           
           <div class='edition_section' id ='edition_section'>
@@ -75,7 +69,6 @@
             <select id="width_tmp_select">
             <option id="width_tmp_option"></option>
             </select>
-           <a href="{% url 'add_edition' old_title_id %}" id="add_edition" name ="add another edition" class="editmodalsubmission" onclick="return showAddAnotherPopup(this);">Add edition+</a>
           </div>
 
           <div class='issue_section' id='issue_section'>
@@ -93,7 +86,6 @@
             <select id="width_tmp_select">
             <option id="width_tmp_option"></option>
             </select>
-          <a href="{% url 'add_issue' old_edition_id %}" id="add_issue" name ="add another issue" class="editmodalsubmission" onclick="return showAddAnotherPopup(this);">Add issue+</a>
 
           </div>
 

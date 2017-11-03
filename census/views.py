@@ -143,8 +143,8 @@ def copy(request, id):
 		copies = paginator.page(1)
 	except EmptyPage:
 		copies = paginator.page(paginator.num_pages)
-	# copy.created_by=all_issues.objects.
-	# if copy.created_by.groups.filter(name__icontains="Librarian2").exists():
+	# copy.created_by=all_issues.all()
+	# if copy.created_by.groups.filter(name__icontains="Librarian").exists():
 	# 	librarian = True
 	# 	print('test')
 	# else:
@@ -494,6 +494,11 @@ def edit_profile(request):
 def user_history(request):
 	template=loader.get_template('census/user_history.html')
 	current_user=request.user
+	islibrarian = 0
+	if current_user.groups.filter(name='Librarian').exists() == True:
+		islibrarian = 1
+	print(islibrarian)
+	group = current_user.groups.all()
 	copy_form=CopyForm()
 	all_titles=Title.objects.all()
 	all_submissions=current_user.submitted_copies.all().order_by('issue__start_date', 'issue__edition__title__title')
@@ -512,6 +517,7 @@ def user_history(request):
 		'edited_copies': edited_copies,
 		'all_titles': all_titles,
 		'copy_form': copy_form,
+		'islibrarian': islibrarian,
 	}
 	return HttpResponse(template.render(context, request))
 
@@ -541,15 +547,51 @@ def copy_data(request, copy_id):
 	return HttpResponse(template.render(context, request))
 
 @login_required()
-def update_copy(request, copy_id):
-	template = loader.get_template('census/edit_modal.html')
+def submission(request):
+	template = loader.get_template('census/submission.html')
 	all_titles = Title.objects.all()
+	copy_form = CopyForm()
+
+	if request.method=='POST':
+		issue_id=request.POST.get('issue')
+		if not issue_id or issue_id == 'Z':
+			copy_form=CopyForm()
+			messages.error(request, 'Error: Please choose or add an issue.')
+		else:
+			selected_issue=Issue.objects.get(pk=issue_id)
+			copy_form=CopyForm(data=request.POST)
+			if copy_form.is_valid():
+				copy=copy_form.save(commit=False)
+				copy.issue=selected_issue
+				copy.created_by=request.user
+				copy.save()
+				return HttpResponseRedirect(reverse('copy_info', args=(copy.id,)))
+			else:
+				copy_form=CopyForm(data=request.POST)
+				messages.error(request, 'Error: invalid copy information!')
+
+	else:
+		copy_form=CopyForm()
+
+	context = {
+	'all_titles': all_titles,
+	'copy_form': copy_form,
+	}
+
+	return HttpResponse(template.render(context, request))
+
+def update_copy_librarian(request, copy_id):
+	template = loader.get_template('census/edit_modal_librarian.html')
+	all_titles = Title.objects.all()
+	current_user=request.user
+	islibrarian = 0
+	if current_user.groups.filter(name='Librarian').exists() == True:
+		islibrarian = 1
+	copy = Copy.objects.get(pk=copy_id)
 	copy_to_edit=Copy.objects.get(pk=copy_id)
 	old_issue=copy_to_edit.issue
 	old_edition=old_issue.edition
 	old_title=old_edition.title
-	title_id = old_title.id
-	print(title_id)
 	if request.method=='POST':
 		data={}
 		if request.POST.get('cancel', None):
@@ -576,6 +618,85 @@ def update_copy(request, copy_id):
 
 			if copy_form.is_valid():
 				new_copy=copy_form.save()
+				new_copy.issue = selected_issue
+				new_copy.save()
+				current_user = request.user
+				current_userHistory=UserHistory.objects.get(user=current_user)
+				current_userHistory.edited_copies.add(new_copy)
+				return HttpResponse(reverse('copy_info', args=(copy.id,)))
+
+
+		context = {
+				'all_titles': all_titles,
+				'oldtitle.id': oldtitle.id,
+				'copy_form': copy_form,
+				'copy_id': copy_id,
+				'old_title_id': selected_title.id,
+				'old_edition_set': selected_title.edition_set.all(),
+				'old_edition_id': selected_edition.id,
+				'old_issue_set': selected_edition.issue_set.all(),
+				'old_issue_id': selected_issue.id,
+				'selected_title':selected_title,
+				'islibrarian': islibrarian,
+				}
+		html=loader.render_to_string('census/edit_modal_librarian.html', context, request=request)
+		print(title_id)
+		return HttpResponse(json.dumps(data), content_type='application/json')
+
+	else:
+		copy_form=CopyForm(instance=copy_to_edit)
+
+	context = {
+			'all_titles': all_titles,
+			'copy_form': copy_form,
+			'copy_id': copy_id,
+			'old_title_id': old_title.id,
+			'old_edition_set': old_title.edition_set.all(),
+			'old_edition_id': old_edition.id,
+			'old_issue_set': old_edition.issue_set.all(),
+			'old_issue_id': old_issue.id,
+			}
+	return HttpResponse(template.render(context, request))
+@login_required()
+def update_copy(request, copy_id):
+	template = loader.get_template('census/edit_modal.html')
+	all_titles = Title.objects.all()
+	current_user=request.user
+	islibrarian = 0
+	if current_user.groups.filter(name='Librarian').exists() == True:
+		islibrarian = 1
+	print(type(islibrarian))
+	copy_to_edit=Copy.objects.get(pk=copy_id)
+	old_issue=copy_to_edit.issue
+	old_edition=old_issue.edition
+	old_title=old_edition.title
+	if request.method=='POST':
+		data={}
+		if request.POST.get('cancel', None):
+			return HttpResponseRedirect(reverse('user_history'))
+
+		issue_id=request.POST.get('issue')
+		edition_id=request.POST.get('edition')
+		title_id=request.POST.get('title')
+		if not issue_id or issue_id == 'Z':
+			issue_id = old_issue.id
+			messages.error(request, 'Error: Please choose or add an issue!')
+			data['stat']='issue error'
+		elif not edition_id or edition_id == 'Z':
+			edition_id = old_edition.id
+			messages.error(request, 'Error: Please choose or add an edition!')
+			data['stat']='edition error'
+		elif not title_id or title_id == 'Z':
+			title_id = old_title.id
+			messages.error(request, 'Error: Please choose or add a title!')
+			data['stat']='title error'
+		else:
+			selected_issue=Issue.objects.get(pk=issue_id)
+			copy_form=CopyForm(request.POST, instance=copy_to_edit)
+
+			if copy_form.is_valid():
+				new_copy=copy_form.save()
+				selected_issue.copies.add(new_copy)
 				new_copy.issue = selected_issue
 				new_copy.save(force_update=True)
 				current_user = request.user
@@ -604,6 +725,7 @@ def update_copy(request, copy_id):
 				'old_issue_set': selected_edition.issue_set.all(),
 				'old_issue_id': selected_issue.id,
 				'selected_title':selected_title,
+				'islibrarian': islibrarian,
 				}
 		html=loader.render_to_string('census/edit_modal.html', context, request=request)
 		data['form']=html

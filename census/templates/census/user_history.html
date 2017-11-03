@@ -26,7 +26,10 @@
 			<td>{{ copy }}<td>
         <td><a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">Details</a></td>
         <div id="copyModal" class="modal fade" role="dialog"></div>
-    {% if 'Librarian' in copy.group|stringformat:"s" %}
+   {% if islibrarian > 0 %}
+    <td><a class="update_copy" href="#" data-form="{% url 'update_copy_librarian' copy.id %}" title="Edit">Edit</a></td>
+        <div id="editModal" class="modal fade" role="dialog"></div>
+
     {% else %}
 
 
@@ -92,7 +95,7 @@
 		<tr>
 			<td>{{ copy }}<td>
         <td><a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">Details</a></td>
-          {% if 'Librarian' in copy.group|stringformat:"s" %}
+          {% if islibrarian > 0 %}
     {% else %}
 
         <td><a class="update_copy" href="#" data-form="{% url 'update_copy' copy.id %}" title="Edit">Edit</a></td>

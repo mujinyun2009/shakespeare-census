@@ -58,9 +58,13 @@
  <option id="width_tmp_option"></option>
 </select>
   </td>
+  {% if 'Librarian' in copy.group|stringformat:"s" %}
+  {% else %}
+
   <td>
   <a href="{% url 'add_title' %}" style="color:#FFFFFF;" name="add another title" onclick="return showAddAnotherPopup(this);" class="copysubmission">add title+</a>
   </td>
+  {% endif %}
   </tr>
   </table>
 </div>
