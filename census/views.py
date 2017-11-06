@@ -206,8 +206,11 @@ def login_user(request):
 			login(request, user_account)
 			next_url = request.POST.get('next',default=request.GET.get('next', 'login.html'))
 			if request.GET.get('next') is None:
-				next_url = "homepage"
-				print(request.GET.get('next'))
+				if user_account.is_superuser:
+					next_url = "admin_validate"
+				else:
+					next_url = "librarian_start"
+				
 			return HttpResponseRedirect(next_url)
 		else:
 			return HttpResponse(template.render({'failed': True}, request))
