@@ -62,6 +62,37 @@
 <a href="{% url 'librarian_start' %}" class="btn btn-default" style="margin-left: 200px">Back</a>
 <a href="{% url 'librarian_validate2' %}" class="btn btn-default" style="margin-left: 700px">Continue to verify copy detail</a>
 
+<div class="pagination">
+    <table class = "pagenavigator" align="center">
+    <tr class ="pagenavigator">
+      {% if copies.has_previous %}
+      <td class = "hoverspecial">  <a href="?page={{ copies.paginator.1 }}" class="paginator"><<</a></td>
+
+      <td class = "hoverspecial"> <a href="?page={{ copies.previous_page_number }}" class="paginator"><</a></td>
+      {% endif %}
+
+    {% for page in copies.paginator.page_range %}
+      {% if page <= copies.number|add:"3" %}
+        {% if page >= copies.number|add:"-3" %}
+        {% if page == copies.number %}
+          <td class = "currentpage" width="20px">{{ page }}</td>
+        {% else %}
+          <td class="pagenavigator" width="20px"> <a href = "?page={{ page }}" class="paginator">{{ page }}</td>
+        {% endif %}
+        {% endif %}
+
+      {% endif %}
+    {% endfor %}
+
+      {% if copies.has_next %}
+       <td class = "hoverspecial">  <a href="?page={{ copies.next_page_number }}" class="paginator">></a></td>
+      <td class = "hoverspecial">  <a href="?page={{ copies.paginator.num_pages }}" class="paginator">>></a></td>
+
+      {% endif %}
+    </tr>
+  </table>
+  Pages generated: {{ copies.paginator.num_pages }}
+</div>
 
 <script>
 function holdCopy(copy_id) {

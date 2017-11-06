@@ -493,7 +493,17 @@ def librarian_validate1(request):
 	cur_user_detail=UserDetail.objects.get(user=current_user)
 	affiliation=cur_user_detail.affiliation
 	# copies=Copy.objects.all().filter(Owner=affiliation, from_estc=True, is_parent=True, is_history=False)
-	copies=Copy.objects.all().filter(Owner=affiliation, from_estc=True, librarian_validated=False, is_parent=True, is_history=False)
+	copy_list=Copy.objects.all().filter(Owner=affiliation, from_estc=True, librarian_validated=False, is_parent=True, is_history=False)
+
+	paginator = Paginator(copy_list, 10)
+	page = request.GET.get('page')
+	try:
+		copies = paginator.page(page)
+	except PageNotAnInteger:
+		copies = paginator.page(1)
+	except EmptyPage:
+		copies = paginator.page(paginator.num_pages)
+
 	context={
 		'affiliation': affiliation,
 		'copies': copies,
