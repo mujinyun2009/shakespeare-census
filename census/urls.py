@@ -51,7 +51,6 @@ urlpatterns = [
 	#for viewing user's history (submitted copies & editted copies)
 	url(r'^user_history$', views.user_history, name='user_history'),
 
-    url(r'^view_submitted_copies$', views.view_copies_submitted, name='view_copies_submitted'),
     url(r'^librarian_validate/(?P<id>[0-9]+)/$', views.librarian_validate, name='librarian_validate'),
     url(r'^admin_validate$', views.admin_validate, name='admin_validate'),
     url(r'^admin_validate_copy/(?P<id>[0-9]+)/$', views.admin_validate_copy, name='admin_validate_copy'),
@@ -61,6 +60,7 @@ urlpatterns = [
     url(r'^validate_not_hold/(?P<id>[0-9]+)/$', views.validate_not_hold, name='validate_not_hold'),
     url(r'^change_hold_status/(?P<id>[0-9]+)/$', views.change_hold_status, name='change_hold_status'),
     url(r'^librarian_validate2$', views.librarian_validate2, name='librarian_validate2'),
+    url(r'^librarian_start$', views.librarian_start, name='librarian_start'),
 
 	url(r'^editProfile$', views.edit_profile, name='edit_profile'),
 	url(r'^welcome$', views.welcome, name='welcome'),

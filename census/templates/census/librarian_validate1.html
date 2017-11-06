@@ -26,7 +26,7 @@
     </tr>
 	{% if copies %}
 	{% for copy in copies %}
-		<tr>
+		<tr id="section {{ copy.id }}">
 			<td>{{ copy }}
         <a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">
           more details...</a>
@@ -52,13 +52,15 @@
           {% endif %}
           {% endif %}
 		</tr>
-
   {% endfor %}
   {% endif %}
+
   </tbody>
 </table>
+
 <br>
-<a href="{% url 'librarian_validate2' %}" class="finalsubmit">Continue to validate copy details</a>
+<a href="{% url 'librarian_start' %}" class="btn btn-default" style="margin-left: 200px">Back</a>
+
 
 <script>
 function holdCopy(copy_id) {

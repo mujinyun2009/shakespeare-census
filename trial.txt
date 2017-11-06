@@ -1,4 +1,0 @@
-Copies in British Library:
-Copy1            Start validation      (librarian hasn't started validation on this copy.)
-Copy2            Continue validation   (librarian has started validation, but has not finished.)
-Copy3            Validation done       (librarian has completed validation.)

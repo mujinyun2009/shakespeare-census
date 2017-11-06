@@ -15,9 +15,13 @@
 
 <hr class = "style14" width = "50%"></hr>
 	<p class="sansserifgrey" align="center">
-	You have validated the following copies.</p>
+	You have verified the following copies.</p>
   <p class="sansserifgrey" align="center">
-  Please click details to see if anything needs to be edited.</p>
+  Please click details to see if anything needs to be edited.
+  </p>
+  <p class="sansserifgrey" align="center">
+  When everything is correct, please click "Confirm".
+  </p>
 </div>
 <hr class="style14" width = "50%"></hr>
 
@@ -26,9 +30,9 @@
   <tbody>
     <tr>
       <th>Copy</th>
-      <th>Held by library?</th>
-      <th>Details validated by librarian?</th>
       <th></th>
+      <th>Held by library?</th>
+      <th>Confirmed by librarian?</th>
     </tr>
 	{% if child_copies %}
 	{% for copy in child_copies %}
@@ -38,8 +42,9 @@
         <a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">
           more details...</a></td>
       </td>
-
-        <!-- <td> -->
+      <td>
+        <a class="update_child_copy" href="#" data-form="{% url 'update_child_copy' copy.id %}" title="Edit">Edit</a>
+      </td>
           <td>
             {% if copy.held_by_library %}
             <button type="button" class="btn btn-primary">Yes</button>
@@ -48,29 +53,30 @@
             <button type="button" class="btn btn-default" onclick="toggleState({{ copy.id }});">Yes</button>
             <button type="button" class="btn btn-primary">No</button>
             {% endif %}
-            <!-- <button type="button" class="btn btn-success">Test</button> -->
+
           </td>
 
         <td id="validate {{ copy.id }}">
           {% if copy.librarian_validated %}
           Yes
           {% else %}
-           <button class="btn btn-default" onclick="libValidate({{ copy.id }});">Validate</button>
+           <button class="btn btn-default" onclick="libValidate({{ copy.id }});">Confirm</button>
           {% endif %}
         </td>
-
-      <td>
-        <a class="update_child_copy" href="#" data-form="{% url 'update_child_copy' copy.id %}" title="Edit">Edit</a>
-      </td>
 		</tr>
 
   {% endfor %}
   {% endif %}
+
   </tbody>
 </table>
-</div>
+
 <br>
-<a href="{% url 'submission' %}" class="finalsubmit">Continue to submit copies</a>
+<a href="{% url 'librarian_start' %}" class="btn btn-default" style="margin-left: 200px">Back</a>
+
+</div>
+
+
 <script>
 function libValidate(copy_id) {
   var req = new XMLHttpRequest();

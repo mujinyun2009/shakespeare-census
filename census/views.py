@@ -473,6 +473,18 @@ def display_user_profile(request):
 		'user': current_user,
 	}
 	return HttpResponse(template.render(context, request))
+@login_required
+def librarian_start(request):
+	template=loader.get_template('census/librarian_start_page.html')
+	current_user=request.user
+	cur_user_detail=UserDetail.objects.get(user=current_user)
+	affiliation=cur_user_detail.affiliation
+	copy_count=Copy.objects.all().filter(Owner=affiliation, from_estc=True, librarian_validated=False, is_parent=True, is_history=False).count()
+	context={
+		'affiliation': affiliation,
+		'copyCount': copy_count,
+	}
+	return HttpResponse(template.render(context, request))
 
 @login_required
 def librarian_validate1(request):
@@ -544,28 +556,6 @@ def librarian_validate2(request):
 	context={
 		'user_detail': cur_user_detail,
 		'affiliation': affiliation,
-		'child_copies': child_copies,
-	}
-	return HttpResponse(template.render(context, request))
-
-
-@login_required
-def view_copies_submitted(request):
-	template=loader.get_template('census/view_submitted_copies.html')
-	current_user=request.user
-	cur_user_detail=UserDetail.objects.get(user=current_user)
-	affiliation=cur_user_detail.affiliation
-	all_copies=Copy.objects.all().filter(Owner=affiliation, is_parent=True, is_history=False)
-	child_copies=ChildCopy.objects.all().filter(Owner=affiliation)
-	parent_copies = []
-	for copy in all_copies:
-		if not copy.children.all():
-			parent_copies.append(copy)
-
-	context={
-		'user_detail': cur_user_detail,
-		'affiliation': affiliation,
-		'parent_copies': parent_copies,
 		'child_copies': child_copies,
 	}
 	return HttpResponse(template.render(context, request))
