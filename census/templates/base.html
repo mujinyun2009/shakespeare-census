@@ -37,7 +37,7 @@
         {% if user.is_authenticated %}
           <a href="{% url 'profile' %}" id="profilelink"><p class = sansserif>my profile</p></a>
           {% if user.is_superuser %}
-          <a href="{% url 'admin_validate' %}" id="historylink"><p class = sansserif>admin validate</p></a>
+          <a href="{% url 'admin_verify' %}" id="historylink"><p class = sansserif>admin validate</p></a>
           {% else %}
           <a href="{% url 'librarian_start' %}" id="historylink"><p class = sansserif>View copies in my affiliation</p></a>
           {% endif %}

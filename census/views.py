@@ -207,7 +207,7 @@ def login_user(request):
 			next_url = request.POST.get('next',default=request.GET.get('next', 'login.html'))
 			if request.GET.get('next') is None:
 				if user_account.is_superuser:
-					next_url = "admin_validate"
+					next_url = "admin_verify"
 				else:
 					next_url = "librarian_start"
 
@@ -584,8 +584,8 @@ def librarian_confirm(request, id):
 	return HttpResponse(json.dumps(data), content_type='application/json')
 
 @login_required()
-def admin_validate(request):
-	template=loader.get_template('census/admin_validate.html')
+def admin_verify(request):
+	template=loader.get_template('census/admin_verify.html')
 	all_copies=ChildCopy.objects.all()
 	copy_list=[copy for copy in all_copies if copy.librarian_validated and not copy.admin_validated]
 
@@ -604,7 +604,7 @@ def admin_validate(request):
 	return HttpResponse(template.render(context, request))
 
 @login_required()
-def admin_validate_copy(request, id):
+def admin_verify_copy(request, id):
 	selected_copy = ChildCopy.objects.get(pk=id)
 	data=[]
 	if selected_copy.parent:
