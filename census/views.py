@@ -210,7 +210,7 @@ def login_user(request):
 					next_url = "admin_validate"
 				else:
 					next_url = "librarian_start"
-				
+
 			return HttpResponseRedirect(next_url)
 		else:
 			return HttpResponse(template.render({'failed': True}, request))
@@ -476,6 +476,7 @@ def display_user_profile(request):
 		'user': current_user,
 	}
 	return HttpResponse(template.render(context, request))
+
 @login_required
 def librarian_start(request):
 	template=loader.get_template('census/librarian_start_page.html')
@@ -573,11 +574,21 @@ def librarian_validate2(request):
 	}
 	return HttpResponse(template.render(context, request))
 
+def librarian_confirm(request, id):
+	#Libririan confirms all infor is correct; the childcopy's librarian_validated will be marked true; so is its parent
+	selected_copy = ChildCopy.objects.get(pk=id)
+	selected_copy.librarian_validated = True
+	selected_copy.parent.librarian_validated=True
+	selected_copy.save()
+	selected_copy.parent.save()
+	data='success'
+	return HttpResponse(json.dumps(data), content_type='application/json')
+
 @login_required()
 def admin_validate(request):
 	template=loader.get_template('census/admin_validate.html')
 	all_copies=Copy.objects.all()
-	copies=[copy for copy in all_copies if copy.librarian_validated and not copy.admin_validated]
+	copies=[copy for copy in all_copies if copy.librarian_validated and not copy.admin_validated and not copy.is_parent]
 
 	context={
 		'copies': copies,
@@ -604,7 +615,8 @@ def admin_validate_copy(request, id):
 			Bookplate=copy_parent.Bookplate, Bookplate_Location=copy_parent.Bookplate_Location, Bartlett1939=copy_parent.Bartlett1939,\
 			Bartlett1939_Notes=copy_parent.Bartlett1939_Notes, Bartlett1916=copy_parent.Bartlett1916, Bartlett1916_Notes=copy_parent.Bartlett1916_Notes,\
 			Lee_Notes=copy_parent.Lee_Notes, Library_Notes=copy_parent.Library_Notes, created_by=copy_parent.created_by,\
-			copynote=copy_parent.copynote, prov_info=copy_parent.prov_info, librarian_validated=copy_parent.librarian_validated, admin_validated=copy_parent.admin_validated, is_history=True, stored_copy=copy_parent)
+			copynote=copy_parent.copynote, prov_info=copy_parent.prov_info, librarian_validated=copy_parent.librarian_validated, \
+			admin_validated=copy_parent.admin_validated, is_history=True, from_estc=copy_parent.from_estc, stored_copy=copy_parent)
 
 			#update parent copy info:
 			copy_parent.Owner=selected_copy.Owner
@@ -811,14 +823,6 @@ def update_copy(request, copy_id):
 			}
 	return HttpResponse(template.render(context, request))
 
-def librarian_validate(request, id):
-	selected_copy = ChildCopy.objects.get(pk=id)
-	selected_copy.librarian_validated = True
-	selected_copy.parent.librarian_validated=True
-	selected_copy.save()
-	selected_copy.parent.save()
-	data='success'
-	return HttpResponse(json.dumps(data), content_type='application/json')
 
 
 @login_required()

@@ -51,7 +51,7 @@ urlpatterns = [
 	#for viewing user's history (submitted copies & editted copies)
 	url(r'^user_history$', views.user_history, name='user_history'),
 
-    url(r'^librarian_validate/(?P<id>[0-9]+)/$', views.librarian_validate, name='librarian_validate'),
+    url(r'^librarian_confirm/(?P<id>[0-9]+)/$', views.librarian_confirm, name='librarian_validate'),
     url(r'^admin_validate$', views.admin_validate, name='admin_validate'),
     url(r'^admin_validate_copy/(?P<id>[0-9]+)/$', views.admin_validate_copy, name='admin_validate_copy'),
 

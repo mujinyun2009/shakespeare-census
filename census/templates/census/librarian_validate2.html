@@ -60,7 +60,7 @@
           {% if copy.librarian_validated %}
           Yes
           {% else %}
-           <button class="btn btn-default" onclick="libValidate({{ copy.id }});">Confirm</button>
+           <button class="btn btn-default" onclick="libConfirm({{ copy.id }});">Confirm</button>
           {% endif %}
         </td>
 		</tr>
@@ -80,9 +80,9 @@
 
 
 <script>
-function libValidate(copy_id) {
+function libConfirm(copy_id) {
   var req = new XMLHttpRequest();
-  var url = 'librarian_validate/' + copy_id;
+  var url = 'librarian_confirm/' + copy_id;
   req.open('GET', url, false);
   req.setRequestHeader('Content-Type', 'application/json');
   req.send();
