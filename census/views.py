@@ -34,7 +34,7 @@ def search(request):
 	category2 = request.GET.get('k')
 	category3 = request.GET.get('l')
 	category4 = request.GET.get('z')
-	copy_list = Copy.objects.all().filter(is_parent=True, is_history=False)
+	copy_list = Copy.objects.all().filter(is_parent=True, is_history=False).exclude(false_positive=True)
 
 	result_list = None
 	if query1 and not query2 and not query3 and not query4:
@@ -496,7 +496,6 @@ def librarian_validate1(request):
 	current_user=request.user
 	cur_user_detail=UserDetail.objects.get(user=current_user)
 	affiliation=cur_user_detail.affiliation
-	# copies=Copy.objects.all().filter(Owner=affiliation, from_estc=True, is_parent=True, is_history=False)
 	copy_list=Copy.objects.all().filter(Owner=affiliation, from_estc=True, librarian_validated=False, is_parent=True, is_history=False)
 
 	paginator = Paginator(copy_list, 10)
@@ -587,8 +586,17 @@ def librarian_confirm(request, id):
 @login_required()
 def admin_validate(request):
 	template=loader.get_template('census/admin_validate.html')
-	all_copies=Copy.objects.all()
-	copies=[copy for copy in all_copies if copy.librarian_validated and not copy.admin_validated and not copy.is_parent]
+	all_copies=ChildCopy.objects.all()
+	copy_list=[copy for copy in all_copies if copy.librarian_validated and not copy.admin_validated]
+
+	paginator = Paginator(copy_list, 10)
+	page = request.GET.get('page')
+	try:
+		copies = paginator.page(page)
+	except PageNotAnInteger:
+		copies = paginator.page(1)
+	except EmptyPage:
+		copies = paginator.page(paginator.num_pages)
 
 	context={
 		'copies': copies,
@@ -597,72 +605,75 @@ def admin_validate(request):
 
 @login_required()
 def admin_validate_copy(request, id):
-	selected_copy = Copy.objects.get(pk=id)
-	if selected_copy.is_parent:
-		selected_copy.admin_validated=True
-		selected_copy.save()
+	selected_copy = ChildCopy.objects.get(pk=id)
+	data=[]
+	if selected_copy.parent:
+		copy_parent=selected_copy.parent
+
+		#create a copyHistory object and copy all copy_parent info to that object
+		copyHistory=CopyHistory.objects.create(Owner=copy_parent.Owner, issue=copy_parent.issue, \
+		thumbnail_URL=copy_parent.thumbnail_URL, NSC=copy_parent.NSC, Shelfmark=copy_parent.Shelfmark,\
+		Height=copy_parent.Height, Width=copy_parent.Width, Marginalia=copy_parent.Marginalia, \
+		Condition=copy_parent.Condition, Binding=copy_parent.Binding, Binder=copy_parent.Binder, \
+		Bookplate=copy_parent.Bookplate, Bookplate_Location=copy_parent.Bookplate_Location, Bartlett1939=copy_parent.Bartlett1939,\
+		Bartlett1939_Notes=copy_parent.Bartlett1939_Notes, Bartlett1916=copy_parent.Bartlett1916, Bartlett1916_Notes=copy_parent.Bartlett1916_Notes,\
+		Lee_Notes=copy_parent.Lee_Notes, Library_Notes=copy_parent.Library_Notes, created_by=copy_parent.created_by,\
+		copynote=copy_parent.copynote, prov_info=copy_parent.prov_info, librarian_validated=copy_parent.librarian_validated, \
+		admin_validated=copy_parent.admin_validated, is_history=True, from_estc=copy_parent.from_estc, stored_copy=copy_parent)
+
+		#update parent copy info:
+		copy_parent.Owner=selected_copy.Owner
+		copy_parent.issue=selected_copy.issue
+		copy_parent.thumbnail_URL=selected_copy.thumbnail_URL
+		copy_parent.NSC=selected_copy.NSC
+		copy_parent.Shelfmark=selected_copy.Shelfmark
+		copy_parent.Height=selected_copy.Height
+		copy_parent.Width=selected_copy.Width
+		copy_parent.Marginalia=selected_copy.Marginalia
+		copy_parent.Condition=selected_copy.Condition
+		copy_parent.Binding=selected_copy.Binding
+		copy_parent.Binder=selected_copy.Binder
+		copy_parent.Bookplate=selected_copy.Bookplate
+		copy_parent.Bookplate_Location=selected_copy.Bookplate_Location
+		copy_parent.Bartlett1939=selected_copy.Bartlett1939
+		copy_parent.Bartlett1939_Notes=selected_copy.Bartlett1939_Notes
+		copy_parent.Bartlett1916=selected_copy.Bartlett1916
+		copy_parent.Bartlett1916_Notes=selected_copy.Bartlett1916_Notes
+		copy_parent.Lee_Notes=selected_copy.Lee_Notes
+		copy_parent.Library_Notes=selected_copy.Library_Notes
+		copy_parent.created_by=selected_copy.created_by
+		copy_parent.copynote=selected_copy.copynote
+		copy_parent.prov_info=selected_copy.prov_info
+		copy_parent.librarian_validated=True
+		copy_parent.admin_validated=True
+		if selected_copy.held_by_library:
+			copy_parent.false_positive=False
+		else:
+			copy_parent.false_positive=True
+		copy_parent.save()
+
+		#delete the child copy
+		selected_copy.delete()
+
+		data.append(model_to_dict(copy_parent))
 
 	else:
-		selected_copy = ChildCopy.objects.get(pk=id)
-		if selected_copy.parent:
-			copy_parent=selected_copy.parent
+		#create a new parent copy
+		new_copy=Copy.objects.create(Owner=selected_copy.Owner, issue=selected_copy.issue, \
+		thumbnail_URL=selected_copy.thumbnail_URL, NSC=selected_copy.NSC, Shelfmark=selected_copy.Shelfmark,\
+		Height=selected_copy.Height, Width=selected_copy.Width, Marginalia=selected_copy.Marginalia, \
+		Condition=selected_copy.Condition, Binding=selected_copy.Binding, Binder=selected_copy.Binder, \
+		Bookplate=selected_copy.Bookplate, Bookplate_Location=selected_copy.Bookplate_Location, Bartlett1939=selected_copy.Bartlett1939,\
+		Bartlett1939_Notes=selected_copy.Bartlett1939_Notes, Bartlett1916=selected_copy.Bartlett1916, Bartlett1916_Notes=selected_copy.Bartlett1916_Notes,\
+		Lee_Notes=selected_copy.Lee_Notes, Library_Notes=selected_copy.Library_Notes, created_by=selected_copy.created_by,\
+		copynote=selected_copy.copynote, prov_info=selected_copy.prov_info, \
+		librarian_validated=True, admin_validated=True, from_estc=False, false_positive=False, is_parent=True, is_history=False)
 
-			#create a copyHistory object and copy all copy_parent info to that object
-			copyHistory=CopyHistory.objects.create(Owner=copy_parent.Owner, issue=copy_parent.issue, \
-			thumbnail_URL=copy_parent.thumbnail_URL, NSC=copy_parent.NSC, Shelfmark=copy_parent.Shelfmark,\
-			Height=copy_parent.Height, Width=copy_parent.Width, Marginalia=copy_parent.Marginalia, \
-			Condition=copy_parent.Condition, Binding=copy_parent.Binding, Binder=copy_parent.Binder, \
-			Bookplate=copy_parent.Bookplate, Bookplate_Location=copy_parent.Bookplate_Location, Bartlett1939=copy_parent.Bartlett1939,\
-			Bartlett1939_Notes=copy_parent.Bartlett1939_Notes, Bartlett1916=copy_parent.Bartlett1916, Bartlett1916_Notes=copy_parent.Bartlett1916_Notes,\
-			Lee_Notes=copy_parent.Lee_Notes, Library_Notes=copy_parent.Library_Notes, created_by=copy_parent.created_by,\
-			copynote=copy_parent.copynote, prov_info=copy_parent.prov_info, librarian_validated=copy_parent.librarian_validated, \
-			admin_validated=copy_parent.admin_validated, is_history=True, from_estc=copy_parent.from_estc, stored_copy=copy_parent)
+		#delete the child copy
+		selected_copy.delete()
 
-			#update parent copy info:
-			copy_parent.Owner=selected_copy.Owner
-			copy_parent.issue=selected_copy.issue
-			copy_parent.thumbnail_URL=selected_copy.thumbnail_URL
-			copy_parent.NSC=selected_copy.NSC
-			copy_parent.Shelfmark=selected_copy.Shelfmark
-			copy_parent.Height=selected_copy.Height
-			copy_parent.Width=selected_copy.Width
-			copy_parent.Marginalia=selected_copy.Marginalia
-			copy_parent.Condition=selected_copy.Condition
-			copy_parent.Binding=selected_copy.Binding
-			copy_parent.Binder=selected_copy.Binder
-			copy_parent.Bookplate=selected_copy.Bookplate
-			copy_parent.Bookplate_Location=selected_copy.Bookplate_Location
-			copy_parent.Bartlett1939=selected_copy.Bartlett1939
-			copy_parent.Bartlett1939_Notes=selected_copy.Bartlett1939_Notes
-			copy_parent.Bartlett1916=selected_copy.Bartlett1916
-			copy_parent.Bartlett1916_Notes=selected_copy.Bartlett1916_Notes
-			copy_parent.Lee_Notes=selected_copy.Lee_Notes
-			copy_parent.Library_Notes=selected_copy.Library_Notes
-			copy_parent.created_by=selected_copy.created_by
-			copy_parent.copynote=selected_copy.copynote
-			copy_parent.prov_info=selected_copy.prov_info
-			copy_parent.librarian_validated=True
-			copy_parent.admin_validated=True
-			copy_parent.save()
+		data.append(model_to_dict(new_copy))
 
-			#delete the child copy
-			selected_copy.delete()
-
-		else:
-			#create a new parent copy
-			Copy.objects.create(Owner=selected_copy.Owner, issue=selected_copy.issue, \
-			thumbnail_URL=selected_copy.thumbnail_URL, NSC=selected_copy.NSC, Shelfmark=selected_copy.Shelfmark,\
-			Height=selected_copy.Height, Width=selected_copy.Width, Marginalia=selected_copy.Marginalia, \
-			Condition=selected_copy.Condition, Binding=selected_copy.Binding, Binder=selected_copy.Binder, \
-			Bookplate=selected_copy.Bookplate, Bookplate_Location=selected_copy.Bookplate_Location, Bartlett1939=selected_copy.Bartlett1939,\
-			Bartlett1939_Notes=selected_copy.Bartlett1939_Notes, Bartlett1916=selected_copy.Bartlett1916, Bartlett1916_Notes=selected_copy.Bartlett1916_Notes,\
-			Lee_Notes=selected_copy.Lee_Notes, Library_Notes=selected_copy.Library_Notes, created_by=selected_copy.created_by,\
-			copynote=selected_copy.copynote, prov_info=selected_copy.prov_info, librarian_validated=True, admin_validated=True, is_parent=True, is_history=False)
-
-			#delete the child copy
-			selected_copy.delete()
-
-	data='success'
 	return HttpResponse(json.dumps(data), content_type='application/json')
 
 @login_required()

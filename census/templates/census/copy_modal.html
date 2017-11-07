@@ -138,7 +138,8 @@ p.sansserif {
           <p align="left" class = "sansserif"><b>Provenance information:</b> {{ copy.prov_info }}</p>
           {% endif %}
 
-          <p align="left" class = "sansserif"><b>Submitted by:</b> {{ copy.created_by }}</p>
+          <p align="left" class = "sansserif"><b>From estc:</b> {{ copy.from_estc }}</p>
+          <p align="left" class = "sansserif"><b>False positive:</b> {{ copy.false_positive }}</p>
         <div class="modal-footer">
           <button type="button" class="closebutton" data-dismiss="modal">close</button>
         </div>
