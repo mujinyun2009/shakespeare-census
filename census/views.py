@@ -676,6 +676,58 @@ def admin_verify_copy(request, id):
 
 	return HttpResponse(json.dumps(data), content_type='application/json')
 
+@login_required
+def admin_edit_titles(request):
+	all_titles = Title.objects.all().order_by('title')
+	template = loader.get_template('census/admin_edit_titles.html')
+	queryset_list = Title.objects.all()
+	query = request.GET.get("q")
+	if query:
+		queryset_list = queryset_list.filter(Q(title__icontains=query))
+		paginator = Paginator(queryset_list, 10) # Show 10 titles per page
+		page = request.GET.get('page')
+		try:
+			queryset_list = paginator.page(page)
+		except PageNotAnInteger:
+			#If page is not an integer, deliver first page.
+			queryset_list = paginator.page(1)
+		except EmptyPage:
+			#If page is out of range, deliver last page of results.
+			queryset_list = paginator.page(paginator.num_pages)
+		context = {
+			'query': query,
+			'object_list': queryset_list,
+		}
+
+	else:
+		paginator = Paginator(all_titles, 10) # Show 10 titles per page
+		page = request.GET.get('page')
+		try:
+			titles = paginator.page(page)
+		except PageNotAnInteger:
+			#If page is not an integer, deliver first page.
+			titles = paginator.page(1)
+		except EmptyPage:
+			#If page is out of range, deliver last page of results.
+			titles = paginator.page(paginator.num_pages)
+
+		context = {
+			'object_list': queryset_list,
+			'titles': titles,
+		}
+
+	return HttpResponse(template.render(context, request))
+
+@login_required
+def admin_test(request):
+	title=Title.objects.get(pk=1)
+	template = loader.get_template('census/test.html')
+	context = {
+	'title': title
+	}
+	return HttpResponse(template.render(context, request))
+
+
 @login_required()
 def edit_profile(request):
 	template=loader.get_template('census/edit_profile.html')

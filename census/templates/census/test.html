@@ -1,51 +1,43 @@
-<html>
+{% extends "base.html" %}
 {% load static %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script type="text/javascript" src="/static/census/bootstrap-modal.js"></script>
-<link rel="stylesheet" type="text/css" href="{% static 'census/modal.css' %}"/>
+{% block content %}
+  <link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/css/semantic.min.css'>
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
+  <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<a href="#myModal" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
 
+<p><i class="fa fa-caret-down" aria-hidden="true" onclick="toggleEditions({{title.id}});"></i>{{title.title}} </p>
 
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 align="left" class="modal-title">add title</h4>
-      </div>
-      <div class="modal-body">
-		<form id="myForm" method="post" action="{% url 'add_title' %}">
-      {% csrf_token %}
-       {{ title_form.as_p }}
-    		<button id="myFormSubmit" type="submit">Submit</button>
-		</form>
-	</div>
-	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-	</div>
+  <div id="editions {{title.id}}" class="hidden">
+    {% for edition in title.edition_set.all %}
+    <p>{{ edition.Edition_number }}</p>
+    {% endfor %}
+  </div>
 </div>
 
-<div id="confirm" class="modal hide fade in" aria-hidden="true">
-    <div class="modal-header">
-        <label id="responsestatus"></label>
-    </div>
-</div>
 
+<!-- <div class="container">
+<div class="dropdown">
+<a class="dropdown-toggle" data-toggle="dropdown">{{title.title}}<span class="caret"></span></a>
+<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+  {% for edition in title.edition_set.all %}
+  <li role="presentation"><a role="menuitem" href="#">{{ edition.Edition_number }}</a></li>
+  {% endfor %}
+</ul>
+</div>
+</div> -->
 <script>
-    $(function(){
-       $('myForm').on('submit', function(e){
-            e.preventDefault();
-            $.ajax({
-                url: "addTitle",
-                type: "POST",
-                data: $("myForm").serialize(),
-                success: function(data){
-                  $('responsestatus').val(data);
-                   $('confirm').modal('show');   
-                }
-            });
-       });
-    });
+function toggleEditions(title_id) {
+  var editions_div_id = "editions " + title_id;
+  var editions_div = document.getElementById(editions_div_id);
+  if (editions_div.classList.contains("hidden")) {
+    editions_div.classList.remove("hidden");
+  } else {
+    editions_div.classList.add("hidden");
+  }
+}
 </script>
-</html>
+
+{% endblock content %}

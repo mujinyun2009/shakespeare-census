@@ -54,6 +54,7 @@ urlpatterns = [
     url(r'^librarian_confirm/(?P<id>[0-9]+)/$', views.librarian_confirm, name='librarian_validate'),
     url(r'^admin_verify$', views.admin_verify, name='admin_verify'),
     url(r'^admin_verify_copy/(?P<id>[0-9]+)/$', views.admin_verify_copy, name='admin_verify_copy'),
+    url(r'^admin_edit_titles$', views.admin_edit_titles, name='admin_edit_titles'),
 
     url(r'^librarian_validate1$', views.librarian_validate1, name='librarian_validate1'),
     url(r'^validate_hold/(?P<id>[0-9]+)/$', views.validate_hold, name='validate_hold'),

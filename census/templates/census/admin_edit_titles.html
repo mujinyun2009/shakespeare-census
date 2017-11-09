@@ -5,6 +5,7 @@
   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
   <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div class="wrapper">
 <hr class="style14" width = "50%"></hr>
@@ -93,50 +94,45 @@
 </div>
 </p>
 {% else %}
+
 {% if titles %}
-  <p class="sansserif">
-  <table class = "center" align="center" width="90%">
-        <tr>
-          <th> Title </th>
-          <th> Edition #</th>
-        </tr>
-        <tr>
+<p class="sansserif">
+<table class = "center" align="center" width="90%">
+    <tr>
+      <th> Title </th>
+    </tr>
     {% for title in titles %}
-    			<td>{{ title.title }}</td>
-          <td>
-            {% for edition in title.edition_set.all %}
-                {% if edition.Edition_number %}
-                  {% if edition.Edition_number == 'anr. ed.' %}
-                  {% if forloop.counter < title.edition_set.all|length %}
-                <a href="{% url 'copy' edition.id %}" class ="linkbutton"> anr. ed.</a> |
-                {% else %}
-                <a href="{% url 'copy' edition.id %}" class ="linkbutton"> anr. ed.</a>
-                {% endif %}
-                  {% else %}
-                  {% if forloop.counter < title.edition_set.all|length %}
+      <tr>
+        <td>
+        <i class="fa fa-caret-down" aria-hidden="true" onclick="toggleEditions({{title.id}});"></i>{{ title.title }}
+        <a href="#">Details</a>
+        <a href="#">Edit</a>
 
-                <a href="{% url 'copy' edition.id %}" class ="linkbutton"> {{ edition.Edition_number }}</a> |
-                  {% else %}
-                 <a href="{% url 'copy' edition.id %}" class ="linkbutton"> {{ edition.Edition_number }}</a>
-                  {% endif %}
-                  {% endif %}
+        <div id="editions {{title.id}}" class="hidden">
+          {% for edition in title.edition_set.all %}
+            <ul>
+              <i class="fa fa-caret-down" aria-hidden="true" onclick="toggleIssues({{edition.id}});"></i>
+              {{ edition }}
+              <a href="#">Details</a>
+              <a href="#">Edit</a>
 
-                {% else %}
-                {% if forloop.counter < title.edition_set.all|length %}
-                <a href="{% url 'copy' edition.id %}" class ="linkbutton">Unknown edition</a> |
-                {% else %}
-                 <a href="{% url 'copy' edition.id %}" class ="linkbutton">Unknown edition</a>
-                 {% endif %}
-                {% endif %}
-              </a>
-            {% endfor %}
-          </td>
-   			 </tr>
+              <div id="issue {{edition.id}}" class="hidden">
+              {% for issue in edition.issue_set.all %}
+              <ul>
+                {{ issue }}
+                <a href="#">Details</a>
+                <a href="#">Edit</a>
+              </ul>
+              {% endfor %}
+              </div>
+            </ul>
+              {% endfor %}
+        </div>
+      </td>
+   		</tr>
     {% endfor %}
-
-        </table>
-    </p>
 </div>
+</p>
 
 <div class="pagination">
       <table class = "pagenavigator" align="center">
@@ -170,9 +166,30 @@
 
 </div>
 
-
 {% else %}
     <p class="sansserif" align="center">Oh no! No books are available.</p>
 {% endif %}
 {% endif %}
+
+<script>
+function toggleEditions(title_id) {
+  var editions_div_id = "editions " + title_id;
+  var editions_div = document.getElementById(editions_div_id);
+  if (editions_div.classList.contains("hidden")) {
+    editions_div.classList.remove("hidden");
+  } else {
+    editions_div.classList.add("hidden");
+  }
+}
+
+function toggleIssues(edition_id) {
+  var issues_div_id = "issue " + edition_id;
+  var issues_div = document.getElementById(issues_div_id);
+  if (issues_div.classList.contains("hidden")) {
+    issues_div.classList.remove("hidden");
+  } else {
+    issues_div.classList.add("hidden");
+  }
+}
+</script>
 {% endblock content %}

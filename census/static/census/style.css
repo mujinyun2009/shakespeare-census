@@ -815,4 +815,14 @@ td.table3:last-child{
   font-size: 12px;
 }
 
+.adminedit {
+  font-size:20px;
+  border:none;
+  padding: 10px 10px;
+  left:0%;
+  color: #000000;
+  background: #FFFFFF;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
+}
+
 </style>
