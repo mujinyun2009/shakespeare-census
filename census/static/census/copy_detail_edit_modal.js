@@ -31,6 +31,36 @@ $(document).ready(function() {
     });
     return false;
   });
+
+  $(".title_data").unbind('click');
+  $(".title_data").click(function(ev) {
+    ev.preventDefault();
+    var url=$(this).data("form");
+    $("#titleModal").load(url, function() {
+      $("#titleModal").modal('show');
+    });
+    return false;
+  });
+
+  $(".edition_data").unbind('click');
+  $(".edition_data").click(function(ev) {
+    ev.preventDefault();
+    var url=$(this).data("form");
+    $("#editionModal").load(url, function() {
+      $("#editionModal").modal('show');
+    });
+    return false;
+  });
+
+  $(".issue_data").unbind('click');
+  $(".issue_data").click(function(ev) {
+    ev.preventDefault();
+    var url=$(this).data("form");
+    $("#issueModal").load(url, function() {
+      $("#issueModal").modal('show');
+    });
+    return false;
+  });
 });
 });
 

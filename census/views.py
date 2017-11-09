@@ -798,6 +798,25 @@ def copy_data(request, copy_id):
 	context={"copy": selected_copy,}
 	return HttpResponse(template.render(context, request))
 
+def title_data(request, title_id):
+	template = loader.get_template('census/title_modal.html')
+	selected_title=Title.objects.get(pk=title_id)
+	context={"title": selected_title,}
+	return HttpResponse(template.render(context, request))
+
+def edition_data(request, id):
+	template = loader.get_template('census/edition_modal.html')
+	print "here"
+	selected_edition=Edition.objects.get(pk=id)
+	context={"edition": selected_edition,}
+	return HttpResponse(template.render(context, request))
+
+def issue_data(request, issue_id):
+	template = loader.get_template('census/issue_modal.html')
+	selected_issue=Issue.objects.get(pk=issue_id)
+	context={"issue": selected_issue,}
+	return HttpResponse(template.render(context, request))
+
 @login_required()
 def update_copy(request, copy_id):
 	template = loader.get_template('census/edit_modal.html')
