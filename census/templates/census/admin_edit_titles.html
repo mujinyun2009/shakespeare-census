@@ -39,36 +39,39 @@
         <th> Title </th>
       </tr>
       {% for title in object_list %}
-        <tr>
-          <td>
-            <i class="fa fa-caret-down" aria-hidden="true" onclick="toggleEditions({{title.id}});"></i>{{ title.title }}
-            <a href="#"  class="copy_data">more details ... </a>
-            <a href="#"  class="btn btn-default" style="float:right">Edit</a>
+      <tr>
+        <td>
+          <i class="fa fa-caret-down" aria-hidden="true" onclick="toggleEditions({{title.id}});"></i>{{ title.title }}
+          <a class="title_data" id="title_modal{{title.id}}" href="#" data-form="{% url 'title_data' title.id %}" title="Details">
+            more details...</a>
+          <a href="#"  class="btn btn-default" style="float:right">Edit</a>
 
-          <div id="editions {{title.id}}" class="hidden">
-            <br>
-            <br>
-            {% for edition in title.edition_set.all %}
+        <div id="editions {{title.id}}" class="hidden">
+          <br>
+          <br>
+          {% for edition in title.edition_set.all %}
+            <ul style="line-height: 28px">
+              <i class="fa fa-caret-down" aria-hidden="true" onclick="toggleIssues({{edition.id}});"></i>
+              Edition {{ edition.Edition_number }}
+              <a class="edition_data" id="edition_modal{{edition.id}}" href="#" data-form="{% url 'edition_data' edition.id %}" title="Details">
+                more details...</a>
+              <a href="#" style="margin-left: 1.5em" >Edit</a>
+
+              <div id="issue {{edition.id}}" class="hidden">
+              {% for issue in edition.issue_set.all %}
               <ul style="line-height: 28px">
-                <i class="fa fa-caret-down" aria-hidden="true" onclick="toggleIssues({{edition.id}});"></i>
-                {{ edition }}
-                <a href="#"  class="copy_data">more details ... </a>
-                <a href="#" style="margin-left: 1.5em" class="copy_data">Edit</a>
-
-                <div id="issue {{edition.id}}" class="hidden">
-                {% for issue in edition.issue_set.all %}
-                <ul style="line-height: 28px">
-                  {{ issue }}
-                  <a href="#" style="margin-left: 1.5em" class="copy_data">Details</a>
-                  <a href="#" style="margin-left: 1.5em" class="copy_data">Edit</a>
-                </ul>
-                {% endfor %}
-                </div>
+                ESTC {{ issue.ESTC }}
+                <a class="issue_data" id="issue_modal{{issue.id}}" href="#" data-form="{% url 'issue_data' issue.id %}" title="Details">
+                  more details...</a>
+                <a href="#" style="margin-left: 1.5em">Edit</a>
               </ul>
-                {% endfor %}
-          </div>
-        </td>
-     		</tr>
+              {% endfor %}
+              </div>
+            </ul>
+              {% endfor %}
+        </div>
+      </td>
+      </tr>
       {% endfor %}
     </table>
 
@@ -122,7 +125,7 @@
           {% for edition in title.edition_set.all %}
             <ul style="line-height: 28px">
               <i class="fa fa-caret-down" aria-hidden="true" onclick="toggleIssues({{edition.id}});"></i>
-              {{ edition }}
+              Edition {{ edition.Edition_number }}
               <a class="edition_data" id="edition_modal{{edition.id}}" href="#" data-form="{% url 'edition_data' edition.id %}" title="Details">
                 more details...</a>
               <a href="#" style="margin-left: 1.5em" >Edit</a>
@@ -130,8 +133,9 @@
               <div id="issue {{edition.id}}" class="hidden">
               {% for issue in edition.issue_set.all %}
               <ul style="line-height: 28px">
-                {{ issue }}
-                <a href="#" style="margin-left: 1.5em">Details</a>
+                ESTC {{ issue.ESTC }}
+                <a class="issue_data" id="issue_modal{{issue.id}}" href="#" data-form="{% url 'issue_data' issue.id %}" title="Details">
+                  more details...</a>
                 <a href="#" style="margin-left: 1.5em">Edit</a>
               </ul>
               {% endfor %}

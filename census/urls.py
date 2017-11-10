@@ -69,6 +69,7 @@ urlpatterns = [
 	url(r'^copydata/(?P<copy_id>[0-9]+)/$', views.copy_data, name='copy_data'),
     url(r'^titledata/(?P<title_id>[0-9]+)/$', views.title_data, name='title_data'),
     url(r'^editiondata/(?P<id>[0-9]+)/$', views.edition_data, name='edition_data'),
+    url(r'^issuedata/(?P<issue_id>[0-9]+)/$', views.issue_data, name='issue_data'),
 
 	url(r'^updatecopy/(?P<copy_id>[0-9]+)/$', views.update_copy, name='update_copy'),
     url(r'^updatechildcopy/(?P<copy_id>[0-9]+)/$', views.update_child_copy, name='update_child_copy'),
