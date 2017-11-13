@@ -60,7 +60,7 @@
               <div id="issue {{edition.id}}" class="hidden">
               {% for issue in edition.issue_set.all %}
               <ul style="line-height: 28px">
-                ESTC {{ issue.ESTC }}
+                STC/Wing {{ issue.STC_Wing }}
                 <a class="issue_data" id="issue_modal{{issue.id}}" href="#" data-form="{% url 'issue_data' issue.id %}" title="Details">
                   more details...</a>
                 <a href="#" style="margin-left: 1.5em">Edit</a>
@@ -133,7 +133,7 @@
               <div id="issue {{edition.id}}" class="hidden">
               {% for issue in edition.issue_set.all %}
               <ul style="line-height: 28px">
-                ESTC {{ issue.ESTC }}
+                STC/Wing {{ issue.STC_Wing }}
                 <a class="issue_data" id="issue_modal{{issue.id}}" href="#" data-form="{% url 'issue_data' issue.id %}" title="Details">
                   more details...</a>
                 <a href="#" style="margin-left: 1.5em">Edit</a>

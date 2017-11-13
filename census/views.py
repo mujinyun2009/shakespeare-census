@@ -172,9 +172,6 @@ def copylist(request):
 			queryset_list = paginator.page(1)
 		except EmptyPage:
 			queryset_list = paginator.page(paginator.num_pages)
-
-
-
 		context = {
 			'query': query,
 			'object_list': queryset_list,
@@ -582,6 +579,12 @@ def librarian_confirm(request, id):
 	selected_copy.parent.save()
 	data='success'
 	return HttpResponse(json.dumps(data), content_type='application/json')
+
+@login_required
+def admin_start(request):
+	template=loader.get_template('census/admin_start_page.html')
+	context={}
+	return HttpResponse(template.render(context, request))
 
 @login_required()
 def admin_verify(request):

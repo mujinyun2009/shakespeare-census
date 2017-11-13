@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div>
+  <link rel="stylesheet" type="text/css" href= "{% static 'census/index.css' %}" />
+  <script type="text/javascript" src="/static/census/bootstrap-modal.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'census/modal.css' %}" />
+  <script type="text/javascript" src="/static/census/copy_detail_edit_modal.js"></script>
+  <link rel="stylesheet" type="text/css" href= "{% static 'census/bootstrapbuttons.css' %}" />
+
+<hr class = "style14" width = "50%"></hr>
+
+<div class="wrapper">
+<table class="center" align="center" width="90%">
+<tr>
+<td colspan="6" class="announcer">
+  <div class = "announcer2"> Edit title/edition/issue:</div>
+</td>
+</tr>
+<tr>
+  <td>
+    <p>Click here to edit title/edition/issue:</p>
+  </td>
+</tr>
+<tr>
+  <td>
+    <br>
+    <a href="{% url 'admin_edit_titles' %}" class="btn btn-success">Edit title/edition/issue</a>
+  </td>
+</tr>
+</table>
+
+<table class="center" align="center" width="90%">
+<tr>
+<td colspan="6" class="announcer">
+  <div class = "announcer2"> Edit copies:</div>
+</td>
+</tr>
+<tr>
+  <td>
+  	Click here to edit a copy:
+  </td>
+</tr>
+<tr>
+  <td>
+    <br>
+    <a href="#" class="btn btn-success">Edit copy</a>
+  </td>
+</tr>
+</table>
+
+<table class="center" align="center" width="90%">
+<tr>
+<td colspan="6" class="announcer">
+  <div class = "announcer2"> Verify librarian's changes:</div>
+</td>
+</tr>
+<tr>
+  <td>
+  	Click here to verify the changes made by librarians:
+  </td>
+</tr>
+<tr>
+  <td>
+    <br>
+    <a href="{% url 'admin_verify' %}" class="btn btn-success">Admin Verify</a>
+  </td>
+</tr>
+</table>
+</div>
+
+{% endblock content %}
