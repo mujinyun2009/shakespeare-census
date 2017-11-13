@@ -36,9 +36,6 @@ urlpatterns = [
 	url(r'^editcopysubmission/(?P<copy_id>[0-9]+)/$', views.edit_copy_submission, name='edit_copy_submission'),
 	url(r'^edittitlesubmission/(?P<title_id>[0-9]+)/$', views.edit_title_submission, name='edit_title_submission'),
 
-	#for viewing transactions related to a copy
-	url(r'^transactions/(?P<copy_id>[0-9]+)/$', views.transactions, name='transactions'),
-
 	url(r'^login', views.login_user, name='login_user'),
 	url(r'^accounts/login/$', views.login_user, name='login_user'),
 	url(r'^logout$', views.logout_user, name='logout_user'),
@@ -52,7 +49,7 @@ urlpatterns = [
 	url(r'^user_history$', views.user_history, name='user_history'),
 
     url(r'^librarian_confirm/(?P<id>[0-9]+)/$', views.librarian_confirm, name='librarian_validate'),
-    
+
     url(r'^admin_verify$', views.admin_verify, name='admin_verify'),
     url(r'^admin_verify_copy/(?P<id>[0-9]+)/$', views.admin_verify_copy, name='admin_verify_copy'),
     url(r'^admin_edit_titles$', views.admin_edit_titles, name='admin_edit_titles'),
@@ -66,12 +63,12 @@ urlpatterns = [
     url(r'^librarian_start$', views.librarian_start, name='librarian_start'),
 
 	url(r'^editProfile$', views.edit_profile, name='edit_profile'),
-	url(r'^welcome$', views.welcome, name='welcome'),
 
 	url(r'^copydata/(?P<copy_id>[0-9]+)/$', views.copy_data, name='copy_data'),
     url(r'^titledata/(?P<title_id>[0-9]+)/$', views.title_data, name='title_data'),
     url(r'^editiondata/(?P<id>[0-9]+)/$', views.edition_data, name='edition_data'),
     url(r'^issuedata/(?P<issue_id>[0-9]+)/$', views.issue_data, name='issue_data'),
+    url(r'^updatetitle/(?P<title_id>[0-9]+)/$', views.update_title, name='update_title'),
 
 	url(r'^updatecopy/(?P<copy_id>[0-9]+)/$', views.update_copy, name='update_copy'),
     url(r'^updatechildcopy/(?P<copy_id>[0-9]+)/$', views.update_child_copy, name='update_child_copy'),

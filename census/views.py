@@ -204,7 +204,7 @@ def login_user(request):
 			next_url = request.POST.get('next',default=request.GET.get('next', 'login.html'))
 			if request.GET.get('next') is None:
 				if user_account.is_superuser:
-					next_url = "admin_verify"
+					next_url = "admin_start"
 				else:
 					next_url = "librarian_start"
 
@@ -721,16 +721,6 @@ def admin_edit_titles(request):
 
 	return HttpResponse(template.render(context, request))
 
-@login_required
-def admin_test(request):
-	title=Title.objects.get(pk=1)
-	template = loader.get_template('census/test.html')
-	context = {
-	'title': title
-	}
-	return HttpResponse(template.render(context, request))
-
-
 @login_required()
 def edit_profile(request):
 	template=loader.get_template('census/edit_profile.html')
@@ -786,14 +776,6 @@ def copy_detail(request, copy_id):
 		'selected_copy': selected_copy,
 	}
 	return HttpResponse(template.render(context,request))
-@login_required()
-def welcome(request):
-	template=loader.get_template('census/welcome.html')
-	hello = 3
-	context={
-		'hello': hello,
-	}
-	return HttpResponse(template.render(context,request))
 
 def copy_data(request, copy_id):
 	template = loader.get_template('census/copy_modal.html')
@@ -819,6 +801,44 @@ def issue_data(request, issue_id):
 	selected_issue=Issue.objects.get(pk=issue_id)
 	context={"issue": selected_issue,}
 	return HttpResponse(template.render(context, request))
+
+@login_required
+def update_title(request, title_id):
+	template=loader.get_template('census/title_update_modal.html')
+	title_to_update = Title.objects.get(pk=title_id)
+	data = {}
+	if request.method=='POST':
+		if request.POST.get('cancel', None):
+			return HttpResponseRedirect(reverse('admin_edit_titles'))
+
+		title_form=TitleForm(request.POST, instance=title_to_update)
+		if title_form.is_valid():
+			new_title=title_form.save()
+			new_title.save(force_update=True)
+			data['stat']="ok"
+			print ("ok")
+			return HttpResponse(json.dumps(data), content_type='application/json')
+		else:
+			messages.error(request, 'Invalid title information!')
+			data['stat'] = "copy error"
+			print ("not ok")
+
+		title_form=TitleForm(data=request.POST)
+		context = {
+			'title_form': title_form,
+			'title_id': title_id,
+		}
+		html=loader.render_to_string('census/title_update_modal.html', context, request=request)
+		data['form']=html
+		return HttpResponse(json.dumps(data), content_type='application/json')
+	else:
+		title_form = TitleForm(instance=title_to_update)
+		context = {
+			'title_form': title_form,
+			'title_id': title_id,
+		}
+		return HttpResponse(template.render(context, request))
+
 
 @login_required()
 def update_copy(request, copy_id):

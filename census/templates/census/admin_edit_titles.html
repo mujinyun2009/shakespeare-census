@@ -14,6 +14,7 @@
 <div id="titleModal" class="modal fade" role="dialog"></div>
 <div id="editionModal" class="modal fade" role="dialog"></div>
 <div id="issueModal" class="modal fade" role="dialog"></div>
+<div id="titleUpdateModal" class="modal fade" role="dialog"></div>
 
 <div class="wrapper">
 <hr class="style14" width = "50%"></hr>
@@ -117,7 +118,8 @@
           <i class="fa fa-caret-down" aria-hidden="true" onclick="toggleEditions({{title.id}});"></i>{{ title.title }}
           <a class="title_data" id="title_modal{{title.id}}" href="#" data-form="{% url 'title_data' title.id %}" title="Details">
             more details...</a>
-          <a href="#"  class="btn btn-default" style="float:right">Edit</a>
+          <!-- <a href="#"  class="btn btn-default" style="float:right">Edit</a> -->
+          <a class="btn btn-default update_title" href="#" data-form="{% url 'update_title' title.id %}" title="Edit" style="float:right">Edit</a>
 
         <div id="editions {{title.id}}" class="hidden">
           <br>
