@@ -493,7 +493,8 @@ def librarian_validate1(request):
 	current_user=request.user
 	cur_user_detail=UserDetail.objects.get(user=current_user)
 	affiliation=cur_user_detail.affiliation
-	copy_list=Copy.objects.all().filter(Owner=affiliation, from_estc=True, librarian_validated=False, is_parent=True, is_history=False)
+	copy_list=Copy.objects.all().filter(Owner=affiliation, from_estc=True, librarian_validated=False, \
+	          is_parent=True, is_history=False, false_positive=None)
 
 	paginator = Paginator(copy_list, 10)
 	page = request.GET.get('page')
@@ -552,6 +553,21 @@ def change_hold_status(request, id):
 	else:
 		selected_copy.held_by_library = True
 	selected_copy.save()
+	data='success'
+	return HttpResponse(json.dumps(data), content_type='application/json')
+
+@login_required
+def change_false_positive(request, id):
+	selected_copy=ChildCopy.objects.get(pk=id)
+	parent = selected_copy.parent
+	if selected_copy.held_by_library:
+		selected_copy.false_positive = False
+		parent.false_positive = False
+	else:
+		selected_copy.false_positive = True
+		parent.false_positive = True
+	selected_copy.save()
+	parent.save()
 	data='success'
 	return HttpResponse(json.dumps(data), content_type='application/json')
 
@@ -816,12 +832,10 @@ def update_title(request, title_id):
 			new_title=title_form.save()
 			new_title.save(force_update=True)
 			data['stat']="ok"
-			print ("ok")
 			return HttpResponse(json.dumps(data), content_type='application/json')
 		else:
 			messages.error(request, 'Invalid title information!')
 			data['stat'] = "copy error"
-			print ("not ok")
 
 		title_form=TitleForm(data=request.POST)
 		context = {
