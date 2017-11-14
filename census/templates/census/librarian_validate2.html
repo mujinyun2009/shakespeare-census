@@ -31,8 +31,7 @@
     <tr>
       <th>Copy</th>
       <th></th>
-      <th>Held by library?</th>
-      <th>Confirmed by librarian?</th>
+      <th></th>
     </tr>
 	{% if child_copies %}
 	{% for copy in child_copies %}
@@ -45,16 +44,6 @@
       <td>
         <a class="update_child_copy" href="#" data-form="{% url 'update_child_copy' copy.id %}" title="Edit">Edit</a>
       </td>
-          <td>
-            {% if copy.held_by_library %}
-            <button type="button" class="btn btn-primary">Yes</button>
-            <button type="button" class="btn btn-default" onclick="toggleState({{ copy.id }});">No</button>
-            {% else %}
-            <button type="button" class="btn btn-default" onclick="toggleState({{ copy.id }});">Yes</button>
-            <button type="button" class="btn btn-primary">No</button>
-            {% endif %}
-
-          </td>
 
         <td id="validate {{ copy.id }}">
           {% if copy.librarian_validated %}
@@ -73,7 +62,7 @@
 
 <br>
 <a href="{% url 'librarian_start' %}" class="btn btn-default" style="margin-left: 200px">Back</a>
-<a href="{% url 'submission' %}" class="btn btn-default" style="margin-left: 700px">Continue to submit other copies</a>
+<a href="{% url 'submission' %}" class="btn btn-default" style="margin-left: 550px">Continue to submit other copies</a>
 
 
 </div>
@@ -91,18 +80,6 @@ function libConfirm(copy_id) {
     window.location.reload();
   }
 }
-
-function toggleState(childcopyid){
-  var req = new XMLHttpRequest();
-  var url = 'change_hold_status/' + childcopyid;
-  req.open('GET', url, false);
-  req.setRequestHeader('Content-Type', 'application/json');
-  req.send();
-  var res = JSON.parse(req.responseText);
-  if (res === "success") {
-    window.location.reload();
-    }
-  }
 </script>
 
 {% endblock content %}

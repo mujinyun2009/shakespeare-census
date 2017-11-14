@@ -640,10 +640,9 @@ def admin_verify_copy_fp(request, copy_id):
 		copynote=copy_parent.copynote, prov_info=copy_parent.prov_info, librarian_validated=copy_parent.librarian_validated, \
 		admin_validated=True, is_history=True, is_parent=False, from_estc=copy_parent.from_estc, false_positive=True, \
 		stored_copy=None)
-		
+
 		copy_parent.delete()
 		selected_copy.delete()
-
 	else:
 		copy_parent.false_positive=False
 		selected_copy.false_positive=False
