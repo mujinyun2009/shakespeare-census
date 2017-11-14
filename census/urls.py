@@ -50,8 +50,16 @@ urlpatterns = [
 
     url(r'^librarian_confirm/(?P<id>[0-9]+)/$', views.librarian_confirm, name='librarian_validate'),
 
-    url(r'^admin_verify$', views.admin_verify, name='admin_verify'),
+    url(r'^admin_verify$', views.admin_verify, name='admin_verify'), #to verify changes to copies
+    url(r'^admin_verify_fp$', views.admin_verify_fp, name='admin_verify_fp'), #to verify false_positive_draft
+
+    #button triggered, change false_positive attribute of the copy
+    url(r'^admin_verify_copy_fp/(?P<copy_id>[0-9]+)/$', views.admin_verify_copy_fp, name='admin_verify_copy_fp'),
+
+    #button triggered, change admin_validated attribute of the copy
     url(r'^admin_verify_copy/(?P<id>[0-9]+)/$', views.admin_verify_copy, name='admin_verify_copy'),
+
+
     url(r'^admin_edit_titles$', views.admin_edit_titles, name='admin_edit_titles'),
     url(r'^admin_start$', views.admin_start, name='admin_start'),
 
@@ -61,7 +69,7 @@ urlpatterns = [
     url(r'^change_hold_status/(?P<id>[0-9]+)/$', views.change_hold_status, name='change_hold_status'),
     url(r'^librarian_validate2$', views.librarian_validate2, name='librarian_validate2'),
     url(r'^librarian_start$', views.librarian_start, name='librarian_start'),
-    url(r'^change_false_positive/(?P<id>[0-9]+)/$', views.change_false_positive, name='change_false_positive'),
+    url(r'^change_false_positive_draft/(?P<id>[0-9]+)/$', views.change_false_positive_draft, name='change_false_positive_draft'),
 
 	url(r'^editProfile$', views.edit_profile, name='edit_profile'),
 

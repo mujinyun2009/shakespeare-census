@@ -60,6 +60,7 @@ class Copy (models.Model):
 	is_parent=models.BooleanField(default=False)
 	is_history=models.BooleanField(default=False)
 	from_estc=models.BooleanField(default=False)
+	false_positive_draft=models.NullBooleanField(default=None)
 	false_positive=models.NullBooleanField(default=None)
 
 	def __str__(self):

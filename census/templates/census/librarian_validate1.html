@@ -51,7 +51,7 @@
              {% endif %}
            </td>
            <td>
-             <button class="btn btn-default" onclick="changeFalsePositive({{ child_copy.id }});">Confirm</button>
+             <button class="btn btn-default" onclick="changeFalsePositive({{ child_copy.id }});">Confirm Choice</button>
            </td>
           {% endfor %}
         {% else %}
@@ -60,7 +60,7 @@
           <button class="btn btn-default" onclick="notHoldCopy({{ copy.id }});">No</button>
         </td>
         <td>
-          <button class="btn btn-default" onclick="#">Confirm</button>
+
         </td>
         {% endif %}
 		</tr>
@@ -144,9 +144,8 @@ function toggleState(childcopyid){
   }
 
 function changeFalsePositive(childcopyid) {
-  alert("here");
   var req = new XMLHttpRequest();
-  var url = 'change_false_positive/' + childcopyid;
+  var url = 'change_false_positive_draft/' + childcopyid;
   req.open('GET', url, false);
   req.setRequestHeader('Content-Type', 'application/json');
   req.send();

@@ -494,7 +494,7 @@ def librarian_validate1(request):
 	cur_user_detail=UserDetail.objects.get(user=current_user)
 	affiliation=cur_user_detail.affiliation
 	copy_list=Copy.objects.all().filter(Owner=affiliation, from_estc=True, librarian_validated=False, \
-	          is_parent=True, is_history=False, false_positive=None)
+	          is_parent=True, is_history=False, false_positive_draft=None, false_positive=None)
 
 	paginator = Paginator(copy_list, 10)
 	page = request.GET.get('page')
@@ -557,15 +557,16 @@ def change_hold_status(request, id):
 	return HttpResponse(json.dumps(data), content_type='application/json')
 
 @login_required
-def change_false_positive(request, id):
+def change_false_positive_draft(request, id):
 	selected_copy=ChildCopy.objects.get(pk=id)
-	parent = selected_copy.parent
+	parent=selected_copy.parent
 	if selected_copy.held_by_library:
-		selected_copy.false_positive = False
-		parent.false_positive = False
+		selected_copy.false_positive_draft = False
+		parent.false_positive_draft=False
 	else:
-		selected_copy.false_positive = True
-		parent.false_positive = True
+		selected_copy.false_positive_draft = True
+		parent.false_positive_draft=True
+
 	selected_copy.save()
 	parent.save()
 	data='success'
@@ -577,7 +578,7 @@ def librarian_validate2(request):
 	current_user=request.user
 	cur_user_detail=UserDetail.objects.get(user=current_user)
 	affiliation=cur_user_detail.affiliation
-	child_copies=ChildCopy.objects.all().filter(Owner=affiliation, librarian_validated=False)
+	child_copies=ChildCopy.objects.all().filter(Owner=affiliation, librarian_validated=False, false_positive=True)
 
 	context={
 		'user_detail': cur_user_detail,
@@ -602,7 +603,46 @@ def admin_start(request):
 	context={}
 	return HttpResponse(template.render(context, request))
 
-@login_required()
+@login_required
+def admin_verify_fp(request):
+	template=loader.get_template('census/admin_verify_fp.html')
+	selected_copies=ChildCopy.objects.all().filter(false_positive=None).exclude(false_positive_draft=None)
+	# copy_list=[copy for copy in all_copies if copy.librarian_validated and not copy.admin_validated]
+
+	paginator = Paginator(selected_copies, 10)
+	page = request.GET.get('page')
+	try:
+		copies = paginator.page(page)
+	except PageNotAnInteger:
+		copies = paginator.page(1)
+	except EmptyPage:
+		copies = paginator.page(paginator.num_pages)
+
+	context={
+		'copies': copies,
+	}
+	return HttpResponse(template.render(context, request))
+
+@login_required
+def admin_verify_copy_fp(request, copy_id):
+	selected_copy=ChildCopy.objects.get(pk=copy_id)
+	print "success"
+	parent = selected_copy.parent
+	if selected_copy.false_positive_draft:
+		selected_copy.false_positive = True
+		parent.false_positive=True
+		selected_copy.save()
+		parent.save()
+
+	else:
+		parent.false_positive=False
+		selected_copy.delete()
+		parent.save()
+	
+	data='success'
+	return HttpResponse(json.dumps(data), content_type='application/json')
+
+@login_required
 def admin_verify(request):
 	template=loader.get_template('census/admin_verify.html')
 	all_copies=ChildCopy.objects.all()
