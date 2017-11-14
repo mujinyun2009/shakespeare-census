@@ -73,7 +73,7 @@ class ChildCopy(Copy):
 	held_by_library=models.BooleanField(default=False)
 
 class CopyHistory(Copy):
-	stored_copy = models.ForeignKey(Copy, related_name="copy_history")  #copy of which the current object is the history of
+	stored_copy = models.ForeignKey(Copy, related_name="copy_history", default=None, null=True)  #copy of which the current object is the history of
 	date_created = models.DateTimeField(auto_now_add=True)
 
 class UserProfile(models.Model):

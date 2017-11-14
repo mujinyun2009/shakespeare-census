@@ -625,17 +625,30 @@ def admin_verify_fp(request):
 
 @login_required
 def admin_verify_copy_fp(request, copy_id):
+	"""admin verifies the false_positive attribute of a copy"""
 	selected_copy=ChildCopy.objects.get(pk=copy_id)
-	parent = selected_copy.parent
+	copy_parent = selected_copy.parent
 	if selected_copy.false_positive_draft:
-		parent.false_positive=True
+		#create a copyHistory object and copy all copy_parent info to that object
+		copyHistory=CopyHistory.objects.create(Owner=copy_parent.Owner, issue=copy_parent.issue, \
+		thumbnail_URL=copy_parent.thumbnail_URL, NSC=copy_parent.NSC, Shelfmark=copy_parent.Shelfmark,\
+		Height=copy_parent.Height, Width=copy_parent.Width, Marginalia=copy_parent.Marginalia, \
+		Condition=copy_parent.Condition, Binding=copy_parent.Binding, Binder=copy_parent.Binder, \
+		Bookplate=copy_parent.Bookplate, Bookplate_Location=copy_parent.Bookplate_Location, Bartlett1939=copy_parent.Bartlett1939,\
+		Bartlett1939_Notes=copy_parent.Bartlett1939_Notes, Bartlett1916=copy_parent.Bartlett1916, Bartlett1916_Notes=copy_parent.Bartlett1916_Notes,\
+		Lee_Notes=copy_parent.Lee_Notes, Library_Notes=copy_parent.Library_Notes, created_by=copy_parent.created_by,\
+		copynote=copy_parent.copynote, prov_info=copy_parent.prov_info, librarian_validated=copy_parent.librarian_validated, \
+		admin_validated=True, is_history=True, is_parent=False, from_estc=copy_parent.from_estc, false_positive=True, \
+		stored_copy=None)
+		
+		copy_parent.delete()
 		selected_copy.delete()
-		parent.save()
+
 	else:
-		parent.false_positive=False
+		copy_parent.false_positive=False
 		selected_copy.false_positive=False
 		selected_copy.save()
-		parent.save()
+		copy_parent.save()
 
 	data='success'
 	return HttpResponse(json.dumps(data), content_type='application/json')
