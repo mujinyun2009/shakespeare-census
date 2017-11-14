@@ -578,7 +578,7 @@ def librarian_validate2(request):
 	current_user=request.user
 	cur_user_detail=UserDetail.objects.get(user=current_user)
 	affiliation=cur_user_detail.affiliation
-	child_copies=ChildCopy.objects.all().filter(Owner=affiliation, librarian_validated=False, false_positive=True)
+	child_copies=ChildCopy.objects.all().filter(Owner=affiliation, librarian_validated=False, false_positive=False)
 
 	context={
 		'user_detail': cur_user_detail,
@@ -626,19 +626,17 @@ def admin_verify_fp(request):
 @login_required
 def admin_verify_copy_fp(request, copy_id):
 	selected_copy=ChildCopy.objects.get(pk=copy_id)
-	print "success"
 	parent = selected_copy.parent
 	if selected_copy.false_positive_draft:
-		selected_copy.false_positive = True
 		parent.false_positive=True
+		selected_copy.delete()
+		parent.save()
+	else:
+		parent.false_positive=False
+		selected_copy.false_positive=False
 		selected_copy.save()
 		parent.save()
 
-	else:
-		parent.false_positive=False
-		selected_copy.delete()
-		parent.save()
-	
 	data='success'
 	return HttpResponse(json.dumps(data), content_type='application/json')
 
