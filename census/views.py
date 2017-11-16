@@ -588,7 +588,7 @@ def librarian_validate2(request):
 	return HttpResponse(template.render(context, request))
 
 def librarian_confirm(request, id):
-	#Libririan confirms all infor is correct; the childcopy's librarian_validated will be marked true; so is its parent
+	#Librarian confirms all infor is correct; the childcopy's librarian_validated will be marked true; so is its parent
 	selected_copy = ChildCopy.objects.get(pk=id)
 	selected_copy.librarian_validated = True
 	selected_copy.parent.librarian_validated=True
@@ -604,7 +604,7 @@ def admin_start(request):
 	return HttpResponse(template.render(context, request))
 
 @login_required
-def admin_verify_fp(request):
+def admin_verify_fp(request): #fp -false_positive
 	template=loader.get_template('census/admin_verify_fp.html')
 	selected_copies=ChildCopy.objects.all().filter(false_positive=None).exclude(false_positive_draft=None)
 	# copy_list=[copy for copy in all_copies if copy.librarian_validated and not copy.admin_validated]
@@ -688,7 +688,8 @@ def admin_verify_copy(request, id):
 		Bartlett1939_Notes=copy_parent.Bartlett1939_Notes, Bartlett1916=copy_parent.Bartlett1916, Bartlett1916_Notes=copy_parent.Bartlett1916_Notes,\
 		Lee_Notes=copy_parent.Lee_Notes, Library_Notes=copy_parent.Library_Notes, created_by=copy_parent.created_by,\
 		copynote=copy_parent.copynote, prov_info=copy_parent.prov_info, librarian_validated=copy_parent.librarian_validated, \
-		admin_validated=copy_parent.admin_validated, is_history=True, from_estc=copy_parent.from_estc, stored_copy=copy_parent)
+		admin_validated=copy_parent.admin_validated, is_history=True, is_parent=False, from_estc=copy_parent.from_estc, \
+		false_positive=copy_parent.false_positive, stored_copy=copy_parent)
 
 		#update parent copy info:
 		copy_parent.Owner=selected_copy.Owner
@@ -713,12 +714,10 @@ def admin_verify_copy(request, id):
 		copy_parent.created_by=selected_copy.created_by
 		copy_parent.copynote=selected_copy.copynote
 		copy_parent.prov_info=selected_copy.prov_info
+		copy_parent.false_positive=False
 		copy_parent.librarian_validated=True
 		copy_parent.admin_validated=True
-		if selected_copy.held_by_library:
-			copy_parent.false_positive=False
-		else:
-			copy_parent.false_positive=True
+		
 		copy_parent.save()
 
 		#delete the child copy

@@ -14,7 +14,7 @@
 <table class="center" align="center" width="90%">
 <tr>
 <td colspan="6" class="announcer">
-  <div class = "announcer2"> Veriy copies:</div>
+  <div class = "announcer2"> Verify copies:</div>
 </td>
 </tr>
 <tr>
@@ -35,18 +35,19 @@
 <table class="center" align="center" width="90%">
 <tr>
 <td colspan="6" class="announcer">
-  <div class = "announcer2"> Veriy copy details:</div>
+  <div class = "announcer2"> Edit copy details:</div>
 </td>
 </tr>
 <tr>
   <td>
-  	Or you can edit the data associated with verified copies at {{ affiliation }} by clicking here:
+    <p>(Your verified copies will appear here once confirmed by an administrator.) </p>
+    <p>You can edit the data associated with the verified copies at {{ affiliation }} by clicking here:</p>
   </td>
 </tr>
 <tr>
   <td>
     <br>
-    <a href="{% url 'librarian_validate2' %}" class="btn btn-success">Verify copy details</a>
+    <a href="{% url 'librarian_validate2' %}" class="btn btn-success">Edit copy details</a>
   </td>
 </tr>
 </table>
@@ -54,12 +55,12 @@
 <table class="center" align="center" width="90%">
 <tr>
 <td colspan="6" class="announcer">
-  <div class = "announcer2"> Sumbit other copies:</div>
+  <div class = "announcer2"> Submit other copies:</div>
 </td>
 </tr>
 <tr>
   <td>
-  	Or you can add a new copy held at {{ affiliation }} here:
+  	If {{ affiliation }} holds a copy that is not in our database but should be, you can add it here.
   </td>
 </tr>
 <tr>
