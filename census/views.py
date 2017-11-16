@@ -717,7 +717,7 @@ def admin_verify_copy(request, id):
 		copy_parent.false_positive=False
 		copy_parent.librarian_validated=True
 		copy_parent.admin_validated=True
-		
+
 		copy_parent.save()
 
 		#delete the child copy
@@ -996,81 +996,40 @@ def update_copy(request, copy_id):
 @login_required()
 def update_child_copy(request, copy_id):
 	template = loader.get_template('census/edit_child_modal.html')
-	all_titles = Title.objects.all()
 	copy_to_edit=ChildCopy.objects.get(pk=copy_id)
-	old_issue=copy_to_edit.issue
-	old_edition=old_issue.edition
-	old_title=old_edition.title
 
 	if request.method=='POST':
 		data={}
 		if request.POST.get('cancel', None):
 			return HttpResponseRedirect(reverse('user_history'))
+		
+		copy_form=ChildCopyForm(request.POST, instance=copy_to_edit)
 
-		issue_id=request.POST.get('issue')
-		edition_id=request.POST.get('edition')
-		title_id=request.POST.get('title')
-		if not issue_id or issue_id == 'Z':
-			issue_id = old_issue.id
-			messages.error(request, 'Error: Please choose or add an issue!')
-			data['stat']='issue error'
-		elif not edition_id or edition_id == 'Z':
-			edition_id = old_edition.id
-			messages.error(request, 'Error: Please choose or add an edition!')
-			data['stat']='edition error'
-		elif not title_id or title_id == 'Z':
-			title_id = old_title.id
-			messages.error(request, 'Error: Please choose or add a title!')
-			data['stat']='title error'
+		if copy_form.is_valid():
+			new_copy=copy_form.save()
+			new_copy.save(force_update=True)
+			data['stat']="ok"
+			return HttpResponse(json.dumps(data), content_type='application/json')
+
 		else:
-			selected_issue=Issue.objects.get(pk=issue_id)
-			copy_form=CopyForm(request.POST, instance=copy_to_edit)
+			messages.error(request, 'Invalid copy information!')
+			data['stat'] = "copy error"
 
-			if copy_form.is_valid():
-				new_copy=copy_form.save()
-				new_copy.issue = selected_issue
-				new_copy.save(force_update=True)
-				current_user = request.user
-				current_userDetail=UserDetail.objects.get(user=current_user)
-				data['stat']="ok"
-				return HttpResponse(json.dumps(data), content_type='application/json')
-
-			else:
-				messages.error(request, 'Invalid copy information!')
-				data['stat'] = "copy error"
-
-		copy_form=CopyForm(data=request.POST)
-		selected_title=Title.objects.get(pk=title_id)
-		selected_edition=Edition.objects.get(pk=edition_id)
-		selected_issue=Issue.objects.get(pk=issue_id)
-
+		copy_form=ChildCopyForm(data=request.POST)
 		context = {
-				'all_titles': all_titles,
 				'copy_form': copy_form,
 				'copy_id': copy_id,
-				'old_title_id': selected_title.id,
-				'old_edition_set': selected_title.edition_set.all(),
-				'old_edition_id': selected_edition.id,
-				'old_issue_set': selected_edition.issue_set.all(),
-				'old_issue_id': selected_issue.id,
 				}
 		html=loader.render_to_string('census/edit_modal.html', context, request=request)
 		data['form']=html
-		print(title_id)
 		return HttpResponse(json.dumps(data), content_type='application/json')
 
 	else:
-		copy_form=CopyForm(instance=copy_to_edit)
+		copy_form=ChildCopyForm(instance=copy_to_edit)
 
 	context = {
-			'all_titles': all_titles,
 			'copy_form': copy_form,
 			'copy_id': copy_id,
-			'old_title_id': old_title.id,
-			'old_edition_set': old_title.edition_set.all(),
-			'old_edition_id': old_edition.id,
-			'old_issue_set': old_edition.issue_set.all(),
-			'old_issue_id': old_issue.id,
 			}
 	return HttpResponse(template.render(context, request))
 #The functions below are not used right now.
