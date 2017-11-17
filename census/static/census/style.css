@@ -584,6 +584,7 @@ td.hoverspecial:hover {
   display: none;
   overflow: auto;
 }
+
 tr.errors {
   background-color: none;
 }

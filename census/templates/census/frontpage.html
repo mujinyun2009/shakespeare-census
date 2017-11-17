@@ -32,11 +32,11 @@ table {
     width: 0;
     height: 0;
     border: solid 30px;
-    border-color: transparent transparent #2b2c2d transparent;
+    border-color: transparent transparent #000000 transparent;
     margin: auto;
     margin-left:auto;
     margin-right:auto;
-    box-shadow: inset 10px 10px 10px #000000;
+    box-shadow: inset 0px 0px 0px #000000;
 
 }
 tr {
@@ -110,7 +110,7 @@ td {
 <div class = "ui list">
 <div class="item">
 <div id = "submitz" style="text-align:center; overflow:hidden;">
-<div class = "div1" style="display:inline-block;"><p class = "title" style="text-align:center;"><a href="{% url 'index' %}" class="linkbutton" style="float:left;">shakespeare census</a></p><div class="popuparrow"> <i class="angle double right icon"></i></div></div></div>
+<div class = "div1" style="display:inline-block;"><p class = "title" style="text-align:center;"><a href="{% url 'index' %}" class="linkbutton" style="float:left;">shakespeare census</a></p><div class="popuparrow" style="display:inline-block"> <i class="angle double right icon"></i></div></div></div>
 
 </div>
 </div>
@@ -393,9 +393,17 @@ account</p></a>
 </tr>
 </table>
 </nav>
+<div id = "unhidebutton3">
 <p class="sansserif" style="text-align:center">
-about
+<a class="linkbutton">about</a></p>
+</div>
+<div id = "hideme5" class = "hidden3">
+<p style="font-size:8px; font-family:'Raleway', sans-serif; text-align:center">
+Shakespeare Census is a creation of the
+<br> Price Labs at the University of Pennsylvania, 
+<br>designed to track Shakespeare copies around the world.
 </p>
+</div>
 </body>
 </tr>
 <script>
@@ -404,7 +412,13 @@ var unhidebutton = document.getElementById('unhidebutton');
 unhidebutton.addEventListener('click', function() {
   tohide.classList.remove('hidden')
 });
-
+var tohide5 = document.getElementById('hideme5');
+var unhidebutton3= document.getElementById('unhidebutton3');
+unhidebutton3.addEventListener('click', function() {
+  if ($(tohide5).hasClass('hidden3')) {
+    tohide5.classList.remove('hidden3')
+  }
+})
 var tohide2 = document.getElementById('hide2');
 var search = document.getElementById('search');
 var tohide3 =document.getElementById('hide3');

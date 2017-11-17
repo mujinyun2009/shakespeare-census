@@ -61,7 +61,6 @@ urlpatterns = [
     url(r'^change_hold_status/(?P<id>[0-9]+)/$', views.change_hold_status, name='change_hold_status'),
     url(r'^librarian_validate2$', views.librarian_validate2, name='librarian_validate2'),
     url(r'^librarian_start$', views.librarian_start, name='librarian_start'),
-
 	url(r'^editProfile$', views.edit_profile, name='edit_profile'),
 	url(r'^welcome$', views.welcome, name='welcome'),
 

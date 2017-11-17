@@ -207,6 +207,10 @@ input[type=text]:focus {
   display: none;
   overflow: auto;
 }
+.hidden3 {
+  display: none;
+  overflow: auto;
+}
 .addfields {
   text-decoration: none;
   width: 100px;
