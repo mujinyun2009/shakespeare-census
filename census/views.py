@@ -236,16 +236,16 @@ def copy_info(request, copy_id):
 def submission(request):
 	template = loader.get_template('census/submission.html')
 	all_titles = Title.objects.all()
-	copy_form = CopyForm()
+	copy_form = ChildCopyFormSubmit()
 
 	if request.method=='POST':
 		issue_id=request.POST.get('issue')
 		if not issue_id or issue_id == 'Z':
-			copy_form=CopyForm()
+			copy_form=ChildCopyFormSubmit()
 			messages.error(request, 'Error: Please choose or add an issue.')
 		else:
 			selected_issue=Issue.objects.get(pk=issue_id)
-			copy_form=CopyForm(data=request.POST)
+			copy_form=ChildCopyFormSubmit(data=request.POST)
 			if copy_form.is_valid():
 				copy=copy_form.save(commit=False)
 				copy.issue=selected_issue
@@ -255,20 +255,18 @@ def submission(request):
 				copy.librarian_validated=True
 				copy.is_submission=True
 				copy.is_parent=False
+				copy.false_positive=False
 				copy.save()
 				return HttpResponseRedirect(reverse('copy_info', args=(copy.id,)))
 			else:
-				copy_form=CopyForm(data=request.POST)
+				copy_form=ChildCopyFormSubmit(data=request.POST)
 				messages.error(request, 'Error: invalid copy information!')
-
 	else:
-		copy_form=CopyForm()
-
+		copy_form=ChildCopyFormSubmit()
 	context = {
-	'all_titles': all_titles,
-	'copy_form': copy_form,
+		'all_titles': all_titles,
+		'copy_form': copy_form,
 	}
-
 	return HttpResponse(template.render(context, request))
 
 @login_required()
@@ -522,7 +520,7 @@ def validate_hold(request, id):
 	Bookplate=selected_copy.Bookplate, Bookplate_Location=selected_copy.Bookplate_Location, Bartlett1939=selected_copy.Bartlett1939,\
 	Bartlett1939_Notes=selected_copy.Bartlett1939_Notes, Bartlett1916=selected_copy.Bartlett1916, Bartlett1916_Notes=selected_copy.Bartlett1916_Notes,\
 	Lee_Notes=selected_copy.Lee_Notes, Library_Notes=selected_copy.Library_Notes, created_by=selected_copy.created_by,\
-	copynote=selected_copy.copynote, prov_info=selected_copy.prov_info, from_estc=selected_copy.from_estc,\
+	prov_info=selected_copy.prov_info, from_estc=selected_copy.from_estc,\
 	librarian_validated=False, admin_validated=False, is_parent=False, is_history=False, held_by_library=True, parent=selected_copy)
 
 	data='success'
@@ -539,7 +537,7 @@ def validate_not_hold(request, id):
 	Bookplate=selected_copy.Bookplate, Bookplate_Location=selected_copy.Bookplate_Location, Bartlett1939=selected_copy.Bartlett1939,\
 	Bartlett1939_Notes=selected_copy.Bartlett1939_Notes, Bartlett1916=selected_copy.Bartlett1916, Bartlett1916_Notes=selected_copy.Bartlett1916_Notes,\
 	Lee_Notes=selected_copy.Lee_Notes, Library_Notes=selected_copy.Library_Notes, created_by=selected_copy.created_by,\
-	copynote=selected_copy.copynote, prov_info=selected_copy.prov_info, from_estc=selected_copy.from_estc,\
+	prov_info=selected_copy.prov_info, from_estc=selected_copy.from_estc,\
 	librarian_validated=False, admin_validated=False, is_parent=False, is_history=False, held_by_library=False, parent=selected_copy)
 
 	data='success'
@@ -637,7 +635,7 @@ def admin_verify_copy_fp(request, copy_id):
 		Bookplate=copy_parent.Bookplate, Bookplate_Location=copy_parent.Bookplate_Location, Bartlett1939=copy_parent.Bartlett1939,\
 		Bartlett1939_Notes=copy_parent.Bartlett1939_Notes, Bartlett1916=copy_parent.Bartlett1916, Bartlett1916_Notes=copy_parent.Bartlett1916_Notes,\
 		Lee_Notes=copy_parent.Lee_Notes, Library_Notes=copy_parent.Library_Notes, created_by=copy_parent.created_by,\
-		copynote=copy_parent.copynote, prov_info=copy_parent.prov_info, librarian_validated=copy_parent.librarian_validated, \
+		prov_info=copy_parent.prov_info, librarian_validated=copy_parent.librarian_validated, \
 		admin_validated=True, is_history=True, is_parent=False, from_estc=copy_parent.from_estc, false_positive=True, \
 		stored_copy=None)
 
@@ -687,7 +685,7 @@ def admin_verify_copy(request, id):
 		Bookplate=copy_parent.Bookplate, Bookplate_Location=copy_parent.Bookplate_Location, Bartlett1939=copy_parent.Bartlett1939,\
 		Bartlett1939_Notes=copy_parent.Bartlett1939_Notes, Bartlett1916=copy_parent.Bartlett1916, Bartlett1916_Notes=copy_parent.Bartlett1916_Notes,\
 		Lee_Notes=copy_parent.Lee_Notes, Library_Notes=copy_parent.Library_Notes, created_by=copy_parent.created_by,\
-		copynote=copy_parent.copynote, prov_info=copy_parent.prov_info, librarian_validated=copy_parent.librarian_validated, \
+		prov_info=copy_parent.prov_info, librarian_validated=copy_parent.librarian_validated, \
 		admin_validated=copy_parent.admin_validated, is_history=True, is_parent=False, from_estc=copy_parent.from_estc, \
 		false_positive=copy_parent.false_positive, stored_copy=copy_parent)
 
@@ -712,7 +710,6 @@ def admin_verify_copy(request, id):
 		copy_parent.Lee_Notes=selected_copy.Lee_Notes
 		copy_parent.Library_Notes=selected_copy.Library_Notes
 		copy_parent.created_by=selected_copy.created_by
-		copy_parent.copynote=selected_copy.copynote
 		copy_parent.prov_info=selected_copy.prov_info
 		copy_parent.false_positive=False
 		copy_parent.librarian_validated=True
@@ -734,7 +731,7 @@ def admin_verify_copy(request, id):
 		Bookplate=selected_copy.Bookplate, Bookplate_Location=selected_copy.Bookplate_Location, Bartlett1939=selected_copy.Bartlett1939,\
 		Bartlett1939_Notes=selected_copy.Bartlett1939_Notes, Bartlett1916=selected_copy.Bartlett1916, Bartlett1916_Notes=selected_copy.Bartlett1916_Notes,\
 		Lee_Notes=selected_copy.Lee_Notes, Library_Notes=selected_copy.Library_Notes, created_by=selected_copy.created_by,\
-		copynote=selected_copy.copynote, prov_info=selected_copy.prov_info, \
+		prov_info=selected_copy.prov_info, \
 		librarian_validated=True, admin_validated=True, from_estc=False, false_positive=False, is_parent=True, is_history=False)
 
 		#delete the child copy
@@ -1002,7 +999,7 @@ def update_child_copy(request, copy_id):
 		data={}
 		if request.POST.get('cancel', None):
 			return HttpResponseRedirect(reverse('user_history'))
-		
+
 		copy_form=ChildCopyForm(request.POST, instance=copy_to_edit)
 
 		if copy_form.is_valid():

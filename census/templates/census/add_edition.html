@@ -1,13 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-
-<div align="center">
-<p class="sansserif">
-Edition input is currently disabled for librarians. If you'd like to input a new edition, please email something@upenn.edu with your request.
-</p>
-</div>
-
+{% if user.is_superuser %}
 <div align="center">
 	<p class="sansserifgrey">
 	<font size = "6"> <light>Edition</light> </font></br>1. Input your edition. Fields with * are required.</br> 2. Click "Submit".
@@ -38,5 +32,12 @@ Edition input is currently disabled for librarians. If you'd like to input a new
 		</form>
 	</p>
 </div>
+{% else %}
+<div align="center">
+<p class="sansserif">
+Edition input is currently disabled for librarians. If you'd like to input a new edition, please email something@upenn.edu with your request.
+</p>
+</div>
+{% endif %}
 
 {% endblock content %}

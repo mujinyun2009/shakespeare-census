@@ -45,7 +45,6 @@ class CopyForm(forms.ModelForm):
 	Bartlett1916_Notes=forms.CharField(required=False)
 	Lee_Notes=forms.CharField(required=False)
 	Library_Notes=forms.CharField(required=False)
-	copynote=forms.CharField(required=False)
 	prov_info=forms.CharField(widget=forms.Textarea, required=False)
 	class Meta:
 		model = Copy
@@ -59,7 +58,6 @@ class CopyForm(forms.ModelForm):
 		return cleaned_data
 
 class ChildCopyForm(forms.ModelForm):
-	# NSC=forms.IntegerField(label="NSC", initial=0, required=False)
 	Shelfmark=forms.CharField(required=False)
 	Height=forms.IntegerField(initial=0, required=False)
 	Width=forms.IntegerField(initial=0, required=False)
@@ -69,14 +67,31 @@ class ChildCopyForm(forms.ModelForm):
 	Binder=forms.CharField(required=False)
 	Bookplate=forms.CharField(required=False)
 	Bookplate_Location=forms.CharField(required=False)
-	# Bartlett1939=forms.IntegerField(initial=0, required=False)
-	# Bartlett1939_Notes=forms.CharField(required=False)
-	# Bartlett1916=forms.IntegerField(initial=0, required=False)
-	# Bartlett1916_Notes=forms.CharField(required=False)
-	# Lee_Notes=forms.CharField(required=False)
 	Library_Notes=forms.CharField(label="Local notes", required=False)
-	copynote=forms.CharField(required=False)
+
 	prov_info=forms.CharField(label='Provenance', widget=forms.Textarea, required=False)
+	class Meta:
+		model = ChildCopy
+		exclude = ['issue', 'Owner', 'thumbnail_URL', 'NSC', 'created_by', 'librarian_validated', \
+		          'admin_validated', 'parent', 'is_parent', 'is_history', \
+				  'from_estc', 'held_by_library', 'false_positive', 'false_positive_draft',\
+				  'Bartlett1939', 'Bartlett1939_Notes', 'Bartlett1916', 'Bartlett1916_Notes', \
+				  'Lee_Notes']
+
+class ChildCopyFormSubmit(forms.ModelForm):
+	Shelfmark=forms.CharField(required=True)
+	Library_Notes=forms.CharField(label="Local notes", required=False)
+	prov_info=forms.CharField(label='Provenance', widget=forms.Textarea, required=False)
+
+	Height=forms.IntegerField(initial=0, required=False)
+	Width=forms.IntegerField(initial=0, required=False)
+	Condition=forms.CharField(required=False)
+	Binding=forms.CharField(required=False)
+	Binder=forms.CharField(required=False)
+	Bookplate=forms.CharField(required=False)
+	Bookplate_Location=forms.CharField(required=False)
+	Marginalia=forms.CharField(required=False)
+
 	class Meta:
 		model = ChildCopy
 		exclude = ['issue', 'Owner', 'thumbnail_URL', 'NSC', 'created_by', 'librarian_validated', \

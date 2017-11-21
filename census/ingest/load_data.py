@@ -12,7 +12,7 @@ def create_issue(new_edition, new_date, new_start_date, new_end_date, new_STC_Wi
 	return Issue.objects.create(edition=new_edition, year=new_date, start_date=new_start_date, end_date=new_end_date, STC_Wing=new_STC_Wing, ESTC=new_ESTC, notes=new_notes)
 
 def create_copy(new_issue, library, shelfmark, copy_note, provinfo):
-	return Copy.objects.create(issue=new_issue, Owner=library, Shelfmark=shelfmark, copynote=copy_note, prov_info=provinfo, is_parent=True, from_estc=True)
+	return Copy.objects.create(issue=new_issue, Owner=library, Shelfmark=shelfmark, Library_Notes=copy_note, prov_info=provinfo, is_parent=True, from_estc=True)
 
 def remove_all_titles():
 	titles=Title.objects.all()
