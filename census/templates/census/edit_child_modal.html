@@ -1,19 +1,19 @@
 <style>
-#title {
- width: 300px;
- margin:0px, 0px;
-}
-#edition {
- width: 200px;
- margin:0px, 0px;
-}
-
- #issue {
- width: 200px;
- margin:0px, 0px;
-}
 #width_tmp_select{
  display : none;
+}
+.closebutton {
+  border:none;
+  background:none;
+  font-size:15px;
+  font-weight: lighter;
+}
+.closebutton:hover {
+  border:none;
+  background:none;
+  font-size:15px;
+  font-weight: lighter;
+  color:#a4b7d6;
 }
 </style>
 
@@ -112,12 +112,9 @@
                 {% endfor %}
               </ul>
             </div>
-
-
-        <!-- <div class="modal-footer"> -->
-          <!-- <a href="#" data-toggle="modal" class="btn btn-primary" onclick="genChildDialog({{copy_id}});">Save</a> -->
-          <!-- <a href="#" class="btn" data-dismiss="modal">Cancel</a> -->
-        <!-- </div> -->
+            <div class="modal-footer">
+              <button type="button" class="closebutton" id="closebtn">close</button>
+            </div>
 </form>
 
 <script>
@@ -200,7 +197,12 @@
               });
           }
         }
-        setInterval(callback, 10000);  //save changes every minute
+        var interval=setInterval(callback, 10000);  //save changes every minute
+
+        document.getElementById('closebtn').addEventListener('click', function() {
+          clearInterval(interval);
+          $("#editChildModal").modal('hide');
+        });
       });
 </script>
 </div>

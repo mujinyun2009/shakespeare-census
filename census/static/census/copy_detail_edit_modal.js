@@ -141,24 +141,3 @@ function genTitleDialog(title_id) {
     });
   return false;
 }
-
-// function genChildDialog(copy_id) {
-//   $.ajax({
-//     url: $('.editForm').attr('action'),
-//     type: "POST",
-//     datatype: "json",
-//     data: $('.editForm').serialize(),
-//     success: function(data) {
-//       if(data['stat'] === "ok") {
-//         alert('Success! Your changes have been saved.');
-//         $("#editChildModal").modal('hide');
-//         window.location.reload();
-//       } else {
-//         alert("Error: invalid input! Please correct the errors in your input and submit again!");
-//         $("#editChildModal").html(data['form']);
-//         $("#editChildModal").modal('show');
-//       }
-//       }
-//     });
-//   return false;
-// }
