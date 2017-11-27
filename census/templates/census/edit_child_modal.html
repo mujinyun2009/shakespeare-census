@@ -39,9 +39,9 @@
                 {% endfor %}
               </ul>
 
-              <p>{{ copy_form.Library_Notes.label_tag }}{{ copy_form.Library_Notes }}</p>
+              <p>{{ copy_form.Local_Notes.label_tag }}{{ copy_form.Local_Notes }}</p>
               <ul class="errorlist">
-                {% for error in copy_form.Library_Notes.errors %}
+                {% for error in copy_form.Local_Notes.errors %}
                 <li>{{error}}</li>
                 {% endfor %}
               </ul>
@@ -120,7 +120,7 @@
 <script>
       $(document).ready(function() {
         var shelfmark=$('#id_Shelfmark').val();
-        var notes=$('#id_Library_Notes').val();
+        var notes=$('#id_Local_Notes').val();
         var provenance=$('#id_prov_info').val();
         var height=$('#id_Height').val();
         var width=$('#id_Width').val();
@@ -137,9 +137,9 @@
             changed = true;
             shelfmark = $('#id_Shelfmark').val();
           }
-          if (notes !== $('#id_Library_Notes').val()) {
+          if (notes !== $('#id_Local_Notes').val()) {
             changed = true;
-            notes = $('#id_Library_Notes').val();
+            notes = $('#id_Local_Notes').val();
           }
           if (provenance!==$('#id_prov_info').val()) {
             changed = true;

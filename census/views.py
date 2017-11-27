@@ -519,7 +519,7 @@ def validate_hold(request, id):
 	Condition=selected_copy.Condition, Binding=selected_copy.Binding, Binder=selected_copy.Binder, \
 	Bookplate=selected_copy.Bookplate, Bookplate_Location=selected_copy.Bookplate_Location, Bartlett1939=selected_copy.Bartlett1939,\
 	Bartlett1939_Notes=selected_copy.Bartlett1939_Notes, Bartlett1916=selected_copy.Bartlett1916, Bartlett1916_Notes=selected_copy.Bartlett1916_Notes,\
-	Lee_Notes=selected_copy.Lee_Notes, Library_Notes=selected_copy.Library_Notes, created_by=selected_copy.created_by,\
+	Lee_Notes=selected_copy.Lee_Notes, Local_Notes=selected_copy.Local_Notes, created_by=selected_copy.created_by,\
 	prov_info=selected_copy.prov_info, from_estc=selected_copy.from_estc,\
 	librarian_validated=False, admin_validated=False, is_parent=False, is_history=False, held_by_library=True, parent=selected_copy)
 
@@ -536,7 +536,7 @@ def validate_not_hold(request, id):
 	Condition=selected_copy.Condition, Binding=selected_copy.Binding, Binder=selected_copy.Binder, \
 	Bookplate=selected_copy.Bookplate, Bookplate_Location=selected_copy.Bookplate_Location, Bartlett1939=selected_copy.Bartlett1939,\
 	Bartlett1939_Notes=selected_copy.Bartlett1939_Notes, Bartlett1916=selected_copy.Bartlett1916, Bartlett1916_Notes=selected_copy.Bartlett1916_Notes,\
-	Lee_Notes=selected_copy.Lee_Notes, Library_Notes=selected_copy.Library_Notes, created_by=selected_copy.created_by,\
+	Lee_Notes=selected_copy.Lee_Notes, Local_Notes=selected_copy.Local_Notes, created_by=selected_copy.created_by,\
 	prov_info=selected_copy.prov_info, from_estc=selected_copy.from_estc,\
 	librarian_validated=False, admin_validated=False, is_parent=False, is_history=False, held_by_library=False, parent=selected_copy)
 
@@ -634,7 +634,7 @@ def admin_verify_copy_fp(request, copy_id):
 		Condition=copy_parent.Condition, Binding=copy_parent.Binding, Binder=copy_parent.Binder, \
 		Bookplate=copy_parent.Bookplate, Bookplate_Location=copy_parent.Bookplate_Location, Bartlett1939=copy_parent.Bartlett1939,\
 		Bartlett1939_Notes=copy_parent.Bartlett1939_Notes, Bartlett1916=copy_parent.Bartlett1916, Bartlett1916_Notes=copy_parent.Bartlett1916_Notes,\
-		Lee_Notes=copy_parent.Lee_Notes, Library_Notes=copy_parent.Library_Notes, created_by=copy_parent.created_by,\
+		Lee_Notes=copy_parent.Lee_Notes, Local_Notes=copy_parent.Local_Notes, created_by=copy_parent.created_by,\
 		prov_info=copy_parent.prov_info, librarian_validated=copy_parent.librarian_validated, \
 		admin_validated=True, is_history=True, is_parent=False, from_estc=copy_parent.from_estc, false_positive=True, \
 		stored_copy=None)
@@ -684,7 +684,7 @@ def admin_verify_copy(request, id):
 		Condition=copy_parent.Condition, Binding=copy_parent.Binding, Binder=copy_parent.Binder, \
 		Bookplate=copy_parent.Bookplate, Bookplate_Location=copy_parent.Bookplate_Location, Bartlett1939=copy_parent.Bartlett1939,\
 		Bartlett1939_Notes=copy_parent.Bartlett1939_Notes, Bartlett1916=copy_parent.Bartlett1916, Bartlett1916_Notes=copy_parent.Bartlett1916_Notes,\
-		Lee_Notes=copy_parent.Lee_Notes, Library_Notes=copy_parent.Library_Notes, created_by=copy_parent.created_by,\
+		Lee_Notes=copy_parent.Lee_Notes, Local_Notes=copy_parent.Local_Notes, created_by=copy_parent.created_by,\
 		prov_info=copy_parent.prov_info, librarian_validated=copy_parent.librarian_validated, \
 		admin_validated=copy_parent.admin_validated, is_history=True, is_parent=False, from_estc=copy_parent.from_estc, \
 		false_positive=copy_parent.false_positive, stored_copy=copy_parent)
@@ -708,7 +708,7 @@ def admin_verify_copy(request, id):
 		copy_parent.Bartlett1916=selected_copy.Bartlett1916
 		copy_parent.Bartlett1916_Notes=selected_copy.Bartlett1916_Notes
 		copy_parent.Lee_Notes=selected_copy.Lee_Notes
-		copy_parent.Library_Notes=selected_copy.Library_Notes
+		copy_parent.Local_Notes=selected_copy.Local_Notes
 		copy_parent.created_by=selected_copy.created_by
 		copy_parent.prov_info=selected_copy.prov_info
 		copy_parent.false_positive=False
@@ -730,7 +730,7 @@ def admin_verify_copy(request, id):
 		Condition=selected_copy.Condition, Binding=selected_copy.Binding, Binder=selected_copy.Binder, \
 		Bookplate=selected_copy.Bookplate, Bookplate_Location=selected_copy.Bookplate_Location, Bartlett1939=selected_copy.Bartlett1939,\
 		Bartlett1939_Notes=selected_copy.Bartlett1939_Notes, Bartlett1916=selected_copy.Bartlett1916, Bartlett1916_Notes=selected_copy.Bartlett1916_Notes,\
-		Lee_Notes=selected_copy.Lee_Notes, Library_Notes=selected_copy.Library_Notes, created_by=selected_copy.created_by,\
+		Lee_Notes=selected_copy.Lee_Notes, Local_Notes=selected_copy.Local_Notes, created_by=selected_copy.created_by,\
 		prov_info=selected_copy.prov_info, \
 		librarian_validated=True, admin_validated=True, from_estc=False, false_positive=False, is_parent=True, is_history=False)
 

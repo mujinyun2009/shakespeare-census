@@ -44,7 +44,7 @@ class CopyForm(forms.ModelForm):
 	Bartlett1916=forms.IntegerField(initial=0, required=False)
 	Bartlett1916_Notes=forms.CharField(required=False)
 	Lee_Notes=forms.CharField(required=False)
-	Library_Notes=forms.CharField(required=False)
+	Local_Notes=forms.CharField(required=False)
 	prov_info=forms.CharField(widget=forms.Textarea, required=False)
 	class Meta:
 		model = Copy
@@ -67,7 +67,7 @@ class ChildCopyForm(forms.ModelForm):
 	Binder=forms.CharField(required=False)
 	Bookplate=forms.CharField(required=False)
 	Bookplate_Location=forms.CharField(required=False)
-	Library_Notes=forms.CharField(label="Local notes", required=False)
+	Local_Notes=forms.CharField(label="Local notes", required=False)
 
 	prov_info=forms.CharField(label='Provenance', widget=forms.Textarea, required=False)
 	class Meta:
@@ -80,7 +80,7 @@ class ChildCopyForm(forms.ModelForm):
 
 class ChildCopyFormSubmit(forms.ModelForm):
 	Shelfmark=forms.CharField(required=True)
-	Library_Notes=forms.CharField(label="Local notes", required=False)
+	Local_Notes=forms.CharField(label="Local notes", required=False)
 	prov_info=forms.CharField(label='Provenance', widget=forms.Textarea, required=False)
 
 	Height=forms.IntegerField(initial=0, required=False)
