@@ -63,7 +63,6 @@ $(document).ready(function() {
   });
 
   $(".update_title").unbind('click');
-
   $(".update_title").click(function(ev) {
     ev.preventDefault();
     var url=$(this).data("form");
@@ -72,6 +71,27 @@ $(document).ready(function() {
     });
     return false;
   });
+
+  $(".update_edition").unbind('click');
+  $(".update_edition").click(function(ev) {
+    ev.preventDefault();
+    var url=$(this).data("form");
+    $("#editionUpdateModal").load(url, function() {
+      $("#editionUpdateModal").modal('show');
+    });
+    return false;
+  });
+
+  $(".update_issue").unbind('click');
+  $(".update_issue").click(function(ev) {
+    ev.preventDefault();
+    var url=$(this).data("form");
+    $("#issueUpdateModal").load(url, function() {
+      $("#issueUpdateModal").modal('show');
+    });
+    return false;
+  });
+
 
 });
 });
@@ -136,6 +156,48 @@ function genTitleDialog(title_id) {
         alert("Error: invalid input! Please correct the errors in your input and submit again!");
         $("#titleUpdateModal").html(data['form']);
         $("#titleUpdateModal").modal('show');
+      }
+      }
+    });
+  return false;
+}
+
+function genEditionDialog(edition_id) {
+  $.ajax({
+    url: $('.editForm').attr('action'),
+    type: "POST",
+    datatype: "json",
+    data: $('.editForm').serialize(),
+    success: function(data) {
+      if(data['stat'] === "ok") {
+        alert('Success! Your changes have been saved.');
+        $("#editionUpdateModal").modal('hide');
+        window.location.reload();
+      } else {
+        alert("Error: invalid input! Please correct the errors in your input and submit again!");
+        $("#editionUpdateModal").html(data['form']);
+        $("#editionUpdateModal").modal('show');
+      }
+      }
+    });
+  return false;
+}
+
+function genIssueDialog(issue_id) {
+  $.ajax({
+    url: $('.editForm').attr('action'),
+    type: "POST",
+    datatype: "json",
+    data: $('.editForm').serialize(),
+    success: function(data) {
+      if(data['stat'] === "ok") {
+        alert('Success! Your changes have been saved.');
+        $("#issueUpdateModal").modal('hide');
+        window.location.reload();
+      } else {
+        alert("Error: invalid input! Please correct the errors in your input and submit again!");
+        $("#issueUpdateModal").html(data['form']);
+        $("#issueUpdateModal").modal('show');
       }
       }
     });

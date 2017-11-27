@@ -15,6 +15,8 @@
 <div id="editionModal" class="modal fade" role="dialog"></div>
 <div id="issueModal" class="modal fade" role="dialog"></div>
 <div id="titleUpdateModal" class="modal fade" role="dialog"></div>
+<div id="editionUpdateModal" class="modal fade" role="dialog"></div>
+<div id="issueUpdateModal" class="modal fade" role="dialog"></div>
 
 <div class="wrapper">
 <hr class="style14" width = "50%"></hr>
@@ -45,7 +47,7 @@
           <i class="fa fa-caret-down" aria-hidden="true" onclick="toggleEditions({{title.id}});"></i>{{ title.title }}
           <a class="title_data" id="title_modal{{title.id}}" href="#" data-form="{% url 'title_data' title.id %}" title="Details">
             more details...</a>
-          <a href="#"  class="btn btn-default" style="float:right">Edit</a>
+          <a class="btn btn-default update_title" href="#" data-form="{% url 'update_title' title.id %}" title="Edit" style="float:right">Edit</a>
 
         <div id="editions {{title.id}}" class="hidden">
           <br>
@@ -56,7 +58,7 @@
               Edition {{ edition.Edition_number }}
               <a class="edition_data" id="edition_modal{{edition.id}}" href="#" data-form="{% url 'edition_data' edition.id %}" title="Details">
                 more details...</a>
-              <a href="#" style="margin-left: 1.5em" >Edit</a>
+              <a class="update_edition" href="#" data-form="{% url 'update_edition' edition.id %}" title="Edit" style="margin-left: 1.5em" >Edit</a>
 
               <div id="issue {{edition.id}}" class="hidden">
               {% for issue in edition.issue_set.all %}
@@ -64,7 +66,8 @@
                 STC/Wing {{ issue.STC_Wing }}
                 <a class="issue_data" id="issue_modal{{issue.id}}" href="#" data-form="{% url 'issue_data' issue.id %}" title="Details">
                   more details...</a>
-                <a href="#" style="margin-left: 1.5em">Edit</a>
+                <a class="update_issue" href="#" data-form="{% url 'update_issue' issue.id %}" title="Edit" style="margin-left: 1.5em" >Edit</a>
+                <!-- <a href="#" style="margin-left: 1.5em">Edit</a> -->
               </ul>
               {% endfor %}
               </div>
@@ -101,7 +104,6 @@
       {% endif %}
     </tr>
   </table>
-  <!-- Pages generated: {{ object_list.paginator.num_pages }} -->
 </div>
 </p>
 {% else %}
@@ -118,7 +120,6 @@
           <i class="fa fa-caret-down" aria-hidden="true" onclick="toggleEditions({{title.id}});"></i>{{ title.title }}
           <a class="title_data" id="title_modal{{title.id}}" href="#" data-form="{% url 'title_data' title.id %}" title="Details">
             more details...</a>
-          <!-- <a href="#"  class="btn btn-default" style="float:right">Edit</a> -->
           <a class="btn btn-default update_title" href="#" data-form="{% url 'update_title' title.id %}" title="Edit" style="float:right">Edit</a>
 
         <div id="editions {{title.id}}" class="hidden">
@@ -130,7 +131,8 @@
               Edition {{ edition.Edition_number }}
               <a class="edition_data" id="edition_modal{{edition.id}}" href="#" data-form="{% url 'edition_data' edition.id %}" title="Details">
                 more details...</a>
-              <a href="#" style="margin-left: 1.5em" >Edit</a>
+
+              <a class="update_edition" href="#" data-form="{% url 'update_edition' edition.id %}" title="Edit" style="margin-left: 1.5em" >Edit</a>
 
               <div id="issue {{edition.id}}" class="hidden">
               {% for issue in edition.issue_set.all %}
@@ -138,7 +140,9 @@
                 STC/Wing {{ issue.STC_Wing }}
                 <a class="issue_data" id="issue_modal{{issue.id}}" href="#" data-form="{% url 'issue_data' issue.id %}" title="Details">
                   more details...</a>
-                <a href="#" style="margin-left: 1.5em">Edit</a>
+                <!-- <a href="#" style="margin-left: 1.5em">Edit</a> -->
+                <a class="update_issue" href="#"
+                data-form="{% url 'update_issue' issue.id %}" title="Edit" style="margin-left: 1.5em" >Edit</a>
               </ul>
               {% endfor %}
               </div>

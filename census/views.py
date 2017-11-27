@@ -865,7 +865,7 @@ def issue_data(request, issue_id):
 	return HttpResponse(template.render(context, request))
 
 @login_required
-def update_title(request, title_id):
+def update_title (request, title_id):
 	template=loader.get_template('census/title_update_modal.html')
 	title_to_update = Title.objects.get(pk=title_id)
 	data = {}
@@ -899,6 +899,75 @@ def update_title(request, title_id):
 		}
 		return HttpResponse(template.render(context, request))
 
+@login_required
+def update_edition(request, edition_id):
+	template=loader.get_template('census/edition_update_modal.html')
+	edition_to_update = Edition.objects.get(pk=edition_id)
+	data = {}
+	if request.method=='POST':
+		if request.POST.get('cancel', None):
+			return HttpResponseRedirect(reverse('admin_edit_titles'))
+
+		edition_form=EditionForm(request.POST, instance=edition_to_update)
+		if edition_form.is_valid():
+			new_edition=edition_form.save()
+			new_edition.save(force_update=True)
+			data['stat']="ok"
+			return HttpResponse(json.dumps(data), content_type='application/json')
+		else:
+			messages.error(request, 'Invalid edition information!')
+			data['stat'] = "copy error"
+
+		edition_form=EditionForm(data=request.POST)
+		context = {
+			'edition_form': edition_form,
+			'edition_id': edition_id,
+		}
+		html=loader.render_to_string('census/edition_update_modal.html', context, request=request)
+		data['form']=html
+		return HttpResponse(json.dumps(data), content_type='application/json')
+	else:
+		edition_form = EditionForm(instance=edition_to_update)
+		context = {
+			'edition_form': edition_form,
+			'edition_id': edition_id,
+		}
+		return HttpResponse(template.render(context, request))
+
+@login_required
+def update_issue(request, issue_id):
+	template=loader.get_template('census/issue_update_modal.html')
+	issue_to_update = Issue.objects.get(pk=issue_id)
+	data = {}
+	if request.method=='POST':
+		if request.POST.get('cancel', None):
+			return HttpResponseRedirect(reverse('admin_edit_titles'))
+
+		issue_form=IssueForm(request.POST, instance=issue_to_update)
+		if issue_form.is_valid():
+			new_issue=issue_form.save()
+			new_issue.save(force_update=True)
+			data['stat']="ok"
+			return HttpResponse(json.dumps(data), content_type='application/json')
+		else:
+			messages.error(request, 'Invalid issue information!')
+			data['stat'] = "copy error"
+
+		issue_form=IssueForm(data=request.POST)
+		context = {
+			'issue_form': issue_form,
+			'issue_id': issue_id,
+		}
+		html=loader.render_to_string('census/issue_update_modal.html', context, request=request)
+		data['form']=html
+		return HttpResponse(json.dumps(data), content_type='application/json')
+	else:
+		issue_form = IssueForm(instance=issue_to_update)
+		context = {
+			'issue_form': issue_form,
+			'issue_id': issue_id,
+		}
+		return HttpResponse(template.render(context, request))
 
 @login_required()
 def update_copy(request, copy_id):

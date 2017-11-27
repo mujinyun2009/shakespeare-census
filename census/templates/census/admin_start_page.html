@@ -14,6 +14,35 @@
 <table class="center" align="center" width="90%">
 <tr>
 <td colspan="6" class="announcer">
+  <div class = "announcer2"> Verify librarian's changes:</div>
+</td>
+</tr>
+<tr>
+  <td>
+    Click here to see changes made by librarians about whether they hold the copies:
+  </td>
+</tr>
+<tr>
+  <td>
+    <a href="{% url 'admin_verify_fp' %}" class="btn btn-success">Verify whether held by library</a>
+  </td>
+</tr>
+<tr>
+  <td>
+  	Click here to verify other changes made by librarians:
+  </td>
+</tr>
+<tr>
+  <td>
+    <br>
+    <a href="{% url 'admin_verify' %}" class="btn btn-success">Verify other details</a>
+  </td>
+</tr>
+</table>
+
+<table class="center" align="center" width="90%">
+<tr>
+<td colspan="6" class="announcer">
   <div class = "announcer2"> Edit title/edition/issue:</div>
 </td>
 </tr>
@@ -30,7 +59,7 @@
 </tr>
 </table>
 
-<table class="center" align="center" width="90%">
+<!-- <table class="center" align="center" width="90%">
 <tr>
 <td colspan="6" class="announcer">
   <div class = "announcer2"> Edit copies:</div>
@@ -47,36 +76,7 @@
     <a href="#" class="btn btn-success">Edit copy</a>
   </td>
 </tr>
-</table>
-
-<table class="center" align="center" width="90%">
-<tr>
-<td colspan="6" class="announcer">
-  <div class = "announcer2"> Verify librarian's changes:</div>
-</td>
-</tr>
-<tr>
-  <td>
-    Click here to see changes made by librarians about whether they hold the copies:
-  </td>
-</tr>
-<tr>
-  <td>
-    <a href="{% url 'admin_verify_fp' %}" class="btn btn-success">Verify whether held by library'</a>
-  </td>
-</tr>
-<tr>
-  <td>
-  	Click here to verify other changes made by librarians:
-  </td>
-</tr>
-<tr>
-  <td>
-    <br>
-    <a href="{% url 'admin_verify' %}" class="btn btn-success">Verify other details</a>
-  </td>
-</tr>
-</table>
+</table> -->
 </div>
 
 {% endblock content %}
