@@ -73,10 +73,10 @@ tr {
 <div class="item">
 	{% if user.is_authenticated %}
 		<!-- <i class="large grey link user icon" style="float:right;"></i> -->
-		<a class="btn btn-primary" href="{% url 'logout_user' %}" style="float: right;">logout</a>
+		<a class="btn btn-primary" href="{% url 'logout_user' %}" style="float: right;">Sign out</a>
 	{% else %}
 		<!-- <i class="large grey link upload icon" style="float:right;"></i> -->
-		<a class="btn btn-primary" href="{% url 'login_user' %}" style="float: right;">login</a>
+		<a class="btn btn-primary" href="{% url 'login_user' %}" style="float: right;">Sign in</a>
 	{% endif %}
 </div>
 </div>
@@ -105,11 +105,12 @@ tr {
 <ul>
 <li class = "test"><div id = "unhidebutton"><p class = sansserif>search</div></p></li>
 <li><a class="not.active" href="{% url 'submission' %}"><p class = sansserif>submit</p></a></li>
+{% if user.is_authenticated %}
 <li class="dropdown">
 <a href="" class="dropbtn" data-toggle="dropdown" role="button">  <p class = sansserif>
 account</p></a>
 <div class="dropdown-content">
-  {% if user.is_authenticated %}
+
 	<a href="{% url 'profile' %}"><p class = sansserif>my profile</p></a>
 	{% if user.is_superuser %}
 	<a href="{% url 'admin_start' %}" id="historylink"><p class = sansserif>admin interface</p></a>
@@ -122,11 +123,10 @@ account</p></a>
 	<!-- <a href="{% url 'login_user' %}"><p class = sansserif>login</p></a> -->
   {% if user.is_authenticated %}
 	<!-- <a href="{% url 'logout_user' %}"><p class = sansserif>logout</p></a> -->
-  {% endif %}
-
 
 </div>
 </li>
+{% endif %}
 </ul>
 
 

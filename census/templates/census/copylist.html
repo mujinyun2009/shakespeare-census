@@ -52,7 +52,7 @@
 									None
 									{% endif %}
 								</td>
-								<td><a class="copy_data" id="data{{obj.id}}" href="#" data-form="{% url 'copy_data' obj.id %}" title="Details">Details</a></td>
+								<td><a class="copy_data" id="data{{obj.id}}" href="#" data-form="{% url 'copy_data' obj.id %}" title="Details" style="font-size:100%">Details</a></td>
 				        <div id="copyModal" class="modal fade" role="dialog"></div>
 
 								{% if user.is_superuser %}
@@ -127,7 +127,7 @@
 									None
 									{% endif %}
 								</td>
-								<td><a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">Details</a></td>
+								<td><a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details" style="font-size:100%">Details</a></td>
 				        <div id="copyModal" class="modal fade" role="dialog"></div>
 
 								{% if user.is_superuser %}
