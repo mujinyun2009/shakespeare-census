@@ -82,8 +82,7 @@ def search(request):
 def homepage(request):
 	template=loader.get_template('census/frontpage.html')
 	titlelist=Title.objects.all()
-	print(titlelist)
-	print('hello')
+
 	context = {
 		'titlelist':titlelist
 	}
@@ -153,9 +152,11 @@ def copy(request, id):
 
 #showing all copies in the database
 def copylist(request):
-	all_copies = Copy.objects.all().filter(is_parent=True, is_history=False).order_by('issue__start_date', 'issue__edition__title__title')
+	all_copies = Copy.objects.all().filter(is_parent=True, is_history=False).exclude(false_positive=True).\
+	             order_by('issue__start_date', 'issue__edition__title__title')
 	template = loader.get_template('census/copylist.html')
-	queryset_list = Copy.objects.all().filter(is_parent=True, is_history=False).order_by('issue__start_date', 'issue__edition__title__title')
+	queryset_list = Copy.objects.all().filter(is_parent=True, is_history=False).exclude(false_positive=True).\
+	                order_by('issue__start_date', 'issue__edition__title__title')
 	query = request.GET.get("q")
 
 	if query:
@@ -253,7 +254,6 @@ def submission(request):
 				user_detail=UserDetail.objects.get(user=request.user)
 				copy.Owner=user_detail.affiliation
 				copy.librarian_validated=True
-				copy.is_submission=True
 				copy.is_parent=False
 				copy.false_positive=False
 				copy.save()
@@ -320,44 +320,6 @@ def edit_copy_submission(request, copy_id):
 	'old_edition_id': old_edition.id,
 	'old_issue_set': old_edition.issue_set.all(),
 	'old_issue_id': old_issue.id,
-	}
-	return HttpResponse(template.render(context, request))
-
-@login_required()
-def edit_title_submission(request, title_id):
-	template = loader.get_template('census/edit_title_submission.html')
-	all_titles = Title.objects.all()
-	title_to_edit = Title.object.get(pk=title_id)
-	if request.method=='POST':
-		title_id=request.POST.get('title')
-		if not issue_id or issue_id == 'Z':
-			title_form=TitleForm(instance=copy_to_edit)
-			copy_form=CopyForm(instance=copy_to_edit)
-			messages.error(request, 'Error: Please choose or add a title.')
-
-		else:
-			selected_issue=Issue.objects.get(pk=issue_id)
-			copy_form=CopyForm(request.POST, instance=copy_to_edit)
-
-			if copy_form.is_valid():
-				new_copy=copy_form.save()
-				new_copy.issue = selected_issue
-				new_copy.save(force_update=True)
-				current_user = request.user
-				current_userDetail=UserDetailobjects.get(user=current_user)
-				current_userDetail.edited_copies.add(new_copy)
-				return HttpResponseRedirect(reverse('copy_info', args=(new_copy.id,)))
-			else:
-				messages.error(request, 'Error: invalid copy information!')
-				copy_form=CopyForm(data=request.POST)
-
-	else:
-		copy_form=CopyForm(instance=copy_to_edit)
-
-	context = {
-	'all_titles': all_titles,
-	'copy_form': copy_form,
-	'old_title_id': old_title.id,
 	}
 	return HttpResponse(template.render(context, request))
 
@@ -478,7 +440,8 @@ def librarian_start(request):
 	current_user=request.user
 	cur_user_detail=UserDetail.objects.get(user=current_user)
 	affiliation=cur_user_detail.affiliation
-	copy_count=Copy.objects.all().filter(Owner=affiliation, from_estc=True, librarian_validated=False, is_parent=True, is_history=False).count()
+	copy_count=Copy.objects.all().filter(Owner=affiliation, from_estc=True, false_positive_draft=None, \
+	           librarian_validated=False, is_parent=True, is_history=False).count()
 	context={
 		'affiliation': affiliation,
 		'copyCount': copy_count,
@@ -605,7 +568,6 @@ def admin_start(request):
 def admin_verify_fp(request): #fp -false_positive
 	template=loader.get_template('census/admin_verify_fp.html')
 	selected_copies=ChildCopy.objects.all().filter(false_positive=None).exclude(false_positive_draft=None)
-	# copy_list=[copy for copy in all_copies if copy.librarian_validated and not copy.admin_validated]
 
 	paginator = Paginator(selected_copies, 10)
 	page = request.GET.get('page')
@@ -635,7 +597,7 @@ def admin_verify_copy_fp(request, copy_id):
 		Bookplate=copy_parent.Bookplate, Bookplate_Location=copy_parent.Bookplate_Location, Bartlett1939=copy_parent.Bartlett1939,\
 		Bartlett1939_Notes=copy_parent.Bartlett1939_Notes, Bartlett1916=copy_parent.Bartlett1916, Bartlett1916_Notes=copy_parent.Bartlett1916_Notes,\
 		Lee_Notes=copy_parent.Lee_Notes, Local_Notes=copy_parent.Local_Notes, created_by=copy_parent.created_by,\
-		prov_info=copy_parent.prov_info, librarian_validated=copy_parent.librarian_validated, \
+		prov_info=copy_parent.prov_info, librarian_validated=False, \
 		admin_validated=True, is_history=True, is_parent=False, from_estc=copy_parent.from_estc, false_positive=True, \
 		stored_copy=None)
 
@@ -674,7 +636,7 @@ def admin_verify(request):
 def admin_verify_copy(request, id):
 	selected_copy = ChildCopy.objects.get(pk=id)
 	data=[]
-	if selected_copy.parent:
+	if selected_copy.parent:  #if this child copy has parent, i.e. not directly submitted
 		copy_parent=selected_copy.parent
 
 		#create a copyHistory object and copy all copy_parent info to that object
@@ -802,42 +764,6 @@ def edit_profile(request):
 		'profile_form': profile_form,
 	}
 	return HttpResponse(template.render(context, request))
-
-@login_required()
-def user_history(request):
-	template=loader.get_template('census/user_history.html')
-	current_user=request.user
-	copy_form=CopyForm()
-	all_titles=Title.objects.all()
-	all_submissions=current_user.submitted_copies.all().order_by('issue__start_date', 'issue__edition__title__title')
-	paginator=Paginator(all_submissions, 10)
-	page = request.GET.get('page')
-	try:
-		submissions = paginator.page(page)
-	except PageNotAnInteger:
-		submissions = paginator.page(1)
-	except EmptyPage:
-		copies = paginator.page(paginator.num_pages)
-	cur_user_detail=UserDetail.objects.get(user=current_user)
-	edited_copies=cur_user_detail.edited_copies.all()
-	context={
-		'submissions': submissions,
-		'edited_copies': edited_copies,
-		'all_titles': all_titles,
-		'copy_form': copy_form,
-	}
-	return HttpResponse(template.render(context, request))
-
-def copy_detail(request, copy_id):
-	template=loader.get_template('census/copy_detail.html')
-	selected_copy=get_object_or_404(Copy, pk=copy_id)
-	selected_issue=selected_copy.issue
-	selected_edition=selected_issue.edition
-	context={
-		'selected_edition': selected_edition,
-		'selected_copy': selected_copy,
-	}
-	return HttpResponse(template.render(context,request))
 
 def copy_data(request, copy_id):
 	template = loader.get_template('census/copy_modal.html')
@@ -1011,10 +937,7 @@ def update_copy(request, copy_id):
 				new_copy.parent = copy_to_edit
 				new_copy.is_parent=False
 				new_copy.save()
-				#
-				current_user = request.user
-				current_userDetail=UserDetail.objects.get(user=current_user)
-				# current_userDetail.edited_copies.add(new_copy)
+
 				data['stat']="ok"
 				return HttpResponse(json.dumps(data), content_type='application/json')
 
@@ -1057,8 +980,6 @@ def update_copy(request, copy_id):
 			}
 	return HttpResponse(template.render(context, request))
 
-
-
 @login_required()
 def update_child_copy(request, copy_id):
 	template = loader.get_template('census/edit_child_modal.html')
@@ -1098,6 +1019,8 @@ def update_child_copy(request, copy_id):
 			'copy_id': copy_id,
 			}
 	return HttpResponse(template.render(context, request))
+
+
 #The functions below are not used right now.
 
 #not used right now
@@ -1169,3 +1092,41 @@ def issue(request, id):
 		'selected_edition': selected_edition,
 	}
 	return HttpResponse(template.render(context, request))
+
+#showing user history, not using right now
+@login_required()
+def user_history(request):
+	template=loader.get_template('census/user_history.html')
+	current_user=request.user
+	copy_form=CopyForm()
+	all_titles=Title.objects.all()
+	all_submissions=current_user.submitted_copies.all().order_by('issue__start_date', 'issue__edition__title__title')
+	paginator=Paginator(all_submissions, 10)
+	page = request.GET.get('page')
+	try:
+		submissions = paginator.page(page)
+	except PageNotAnInteger:
+		submissions = paginator.page(1)
+	except EmptyPage:
+		copies = paginator.page(paginator.num_pages)
+	cur_user_detail=UserDetail.objects.get(user=current_user)
+	edited_copies=cur_user_detail.edited_copies.all()
+	context={
+		'submissions': submissions,
+		'edited_copies': edited_copies,
+		'all_titles': all_titles,
+		'copy_form': copy_form,
+	}
+	return HttpResponse(template.render(context, request))
+
+#showing the details of a copy, not using right now
+def copy_detail(request, copy_id):
+	template=loader.get_template('census/copy_detail.html')
+	selected_copy=get_object_or_404(Copy, pk=copy_id)
+	selected_issue=selected_copy.issue
+	selected_edition=selected_issue.edition
+	context={
+		'selected_edition': selected_edition,
+		'selected_copy': selected_copy,
+	}
+	return HttpResponse(template.render(context,request))

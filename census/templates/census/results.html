@@ -28,9 +28,9 @@
 <td class="subhead">STC/Wing</td>
 <td class="subhead">Owner</td>
 <td class="subhead"></td>
-<!-- {% if user.is_authenticated %}
+{% if user.is_superuser %}
 <td class="subhead"></td>
-{% endif %} -->
+{% endif %}
 </tr>
 <tr>
 {% for copy in result_list %}
@@ -44,10 +44,10 @@
 <td><a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">Details</a></td>
 <div id="copyModal" class="modal fade" role="dialog"></div>
 
-<!-- {% if user.is_authenticated %} -->
-<!-- <td><a class="update_copy" href="#" data-form="{% url 'update_copy' copy.id %}" title="Edit">Edit</a></td>
-<div id="editModal" class="modal fade" role="dialog"></div> -->
-<!-- {% endif %} -->
+{% if user.is_superuser %}
+<td><a class="update_copy" href="#" data-form="{% url 'update_copy' copy.id %}" title="Edit">Edit</a></td>
+<div id="editModal" class="modal fade" role="dialog"></div>
+{% endif %}
 </tr>
 {% endfor %}
 </tbody>

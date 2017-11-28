@@ -45,10 +45,11 @@ class CopyForm(forms.ModelForm):
 	Bartlett1916_Notes=forms.CharField(required=False)
 	Lee_Notes=forms.CharField(required=False)
 	Local_Notes=forms.CharField(required=False)
-	prov_info=forms.CharField(widget=forms.Textarea, required=False)
+	prov_info=forms.CharField(label='Provenance', widget=forms.Textarea, required=False)
 	class Meta:
 		model = Copy
-		exclude = ['issue', 'created_by', 'librarian_validated', 'admin_validated', 'parent', 'is_parent', 'is_history', 'from_estc', 'held_by_library', 'false_positive']
+		exclude = ['issue', 'created_by', 'librarian_validated', 'admin_validated', 'parent', 'is_parent', \
+		           'is_history', 'from_estc', 'held_by_library', 'false_positive', 'false_positive_draft']
 
 	def clean_url(self):
 		entered_URL=self.cleaned_data['thumbnail_URL']
