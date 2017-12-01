@@ -13,7 +13,12 @@
 <hr class = "style14" width = "50%"></hr>
 	<p class="sansserifgrey" align="center">
 	Here is a list of the copies we think your affiliation holds.</p>
-  <p class="sansserifgrey" align="center">Do you actually hold these copies?</p>
+  <p class="sansserifgrey" align="center">
+    Do you actually hold these copies?
+  </p>
+  <p class="sansserifgrey" align="center">
+    Please choose 'Yes'/'No' and then click 'Confirm'.
+  </p>
 </div>
 <hr class="style14" width = "50%"></hr>
 
@@ -23,6 +28,7 @@
     <tr>
       <th>Copies in {{ affiliation }}</th>
       <th>Held by library?</th>
+      <th></th>
 
     </tr>
 	{% if copies %}
@@ -32,10 +38,8 @@
         <a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">
           more details...</a>
         </td>
-        {% if copy.librarian_validated %}
-        <td>Validated</td>
-        {% else %}
-          {% if copy.children.all %}
+
+        {% if copy.children.all %}
           {% for child_copy in copy.children.all %}
            <td>
              {% if child_copy.held_by_library %}
@@ -46,12 +50,19 @@
              <button class="btn btn-primary">No</button>
              {% endif %}
            </td>
+           <td>
+             <button class="btn btn-default" onclick="changeFalsePositive({{ child_copy.id }});">Confirm Choice</button>
+           </td>
           {% endfor %}
-          {% else %}
-        <td id='validate {{ copy.id }}'> <button class="btn btn-default" onclick="holdCopy({{ copy.id }});">Yes</button>
-        <button class="btn btn-default" onclick="notHoldCopy({{ copy.id }});">No</button> </td>
-          {% endif %}
-          {% endif %}
+        {% else %}
+        <td id='validate {{ copy.id }}'>
+          <button class="btn btn-default" onclick="holdCopy({{ copy.id }});">Yes</button>
+          <button class="btn btn-default" onclick="notHoldCopy({{ copy.id }});">No</button>
+        </td>
+        <td>
+
+        </td>
+        {% endif %}
 		</tr>
   {% endfor %}
   {% endif %}
@@ -60,8 +71,8 @@
 </table>
 
 <br>
-<a href="{% url 'librarian_start' %}" class="btn btn-default" style="margin-left: 200px">Back</a>
-<a href="{% url 'librarian_validate2' %}" class="btn btn-default" style="margin-left: 700px">Continue to verify copy detail</a>
+<!-- <a href="{% url 'librarian_start' %}" class="btn btn-default" style="margin-left: 1000px">Back</a> -->
+<!-- <a href="{% url 'librarian_validate2' %}" class="btn btn-default" style="margin-left: 600px">Continue to verify copy detail</a> -->
 
 <div class="pagination">
     <table class = "pagenavigator" align="center">
@@ -92,7 +103,7 @@
       {% endif %}
     </tr>
   </table>
-  Pages generated: {{ copies.paginator.num_pages }}
+  <!-- Pages generated: {{ copies.paginator.num_pages }} -->
 </div>
 
 <script>
@@ -131,5 +142,17 @@ function toggleState(childcopyid){
       window.location.reload();
     }
   }
+
+function changeFalsePositive(childcopyid) {
+  var req = new XMLHttpRequest();
+  var url = 'change_false_positive_draft/' + childcopyid;
+  req.open('GET', url, false);
+  req.setRequestHeader('Content-Type', 'application/json');
+  req.send();
+  var res = JSON.parse(req.responseText);
+  if (res === "success") {
+      window.location.reload();
+    }
+}
 </script>
 {% endblock content %}

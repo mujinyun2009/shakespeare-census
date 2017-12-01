@@ -104,20 +104,60 @@
 </div>
 <div class='copy_section' id='copy_section' style='display:none'>
   <center><p style="font-size:25; font-weight: lighter;">4. fill in the information about the copy.</p><p>Field with * is required.</p></center>
+  <h3 style="margin-left:410px">
+    <td>Primary</td>
+  </h3>
   <table class = "table2" align="center">
-    {% for field in copy_form.visible_fields %}
-    <td>{{ field.label_tag }}{% if field.field.required %}*{% endif %}</td>
-    <td>{{ field }}</td>
+    <tr>
+      <td>Shelfmark:*</td>
+      <td>{{ copy_form.Shelfmark }}</td>
     </tr>
     <tr>
-      <td></td>
-      <td>
-		{% if field.errors %}
-			<ul class="errorlist">{% for error in field.errors %}<li>{{error}}</li>{% endfor %}</ul>
-		{% endif %}
-    </td>
+      <td>Local notes:</td>
+      <td>{{ copy_form.Local_Notes }}</td>
+    </tr>
     <tr>
-    {% endfor %}
+      <td>Provenance</td>
+      <td>{{ copy_form.prov_info }}</td>
+    </tr>
+  </table>
+
+  <h3 style="margin-left:410px">
+    <td>Secondary</td>
+  </h3>
+  <table class = "table2" align="center">
+    <tr>
+      <td>Height:</td>
+      <td>{{ copy_form.Height }}</td>
+    </tr>
+    <tr>
+      <td>Width:</td>
+      <td>{{ copy_form.Width }}</td>
+    </tr>
+    <tr>
+      <td>Condition:</td>
+      <td>{{ copy_form.Condition }}</td>
+    </tr>
+    <tr>
+      <td>Binding:</td>
+      <td>{{ copy_form.Binding }}</td>
+    </tr>
+    <tr>
+      <td>Binder:</td>
+      <td>{{ copy_form.Binder }}</td>
+    </tr>
+    <tr>
+      <td>Bookplate:</td>
+      <td>{{ copy_form.Bookplate }}</td>
+    </tr>
+    <tr>
+      <td>Bookplate location:</td>
+      <td>{{ copy_form.Bookplate_Location }}</td>
+    </tr>
+    <tr>
+      <td>Marginalia:</td>
+      <td>{{ copy_form.Marginalia }}</td>
+    </tr>
   </table>
 
   <br>

@@ -32,9 +32,9 @@
                 <th> Owner </th>
 								<th> Shelfmark </th>
 								<th>  </th>
-								<!-- {% if user.is_authenticated %}
+								{% if user.is_superuser %}
 								<th> </th>
-								{% endif %} -->
+								{% endif %}
 
         </tr>
         <tr>
@@ -52,13 +52,13 @@
 									None
 									{% endif %}
 								</td>
-								<td><a class="copy_data" id="data{{obj.id}}" href="#" data-form="{% url 'copy_data' obj.id %}" title="Details">Details</a></td>
+								<td><a class="copy_data" id="data{{obj.id}}" href="#" data-form="{% url 'copy_data' obj.id %}" title="Details" style="font-size:100%">Details</a></td>
 				        <div id="copyModal" class="modal fade" role="dialog"></div>
 
-								<!-- {% if user.is_authenticated %}
+								{% if user.is_superuser %}
 								<td><a class="update_copy" href="#" data-form="{% url 'update_copy' obj.id %}" title="Edit">Edit</a></td>
 								<div id="editModal" class="modal fade" role="dialog"></div>
-								{% endif %} -->
+								{% endif %}
 
 
         </tr>
@@ -91,7 +91,7 @@
       {% endif %}
     </tr>
   </table>
-  Pages generated: {{ object_list.paginator.num_pages }}
+  <!-- Pages generated: {{ object_list.paginator.num_pages }} -->
 </div>
 
 {% else %}
@@ -107,9 +107,9 @@
                 <th> Owner </th>
 								<th> Shelfmark</th>
 								<th>  </th>
-								<!-- {% if user.is_authenticated %}
+								{% if user.is_superuser %}
 								<th> </th>
-								{% endif %} -->
+								{% endif %}
 
     		</tr>
     		<tr>
@@ -127,13 +127,13 @@
 									None
 									{% endif %}
 								</td>
-								<td><a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">Details</a></td>
+								<td><a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details" style="font-size:100%">Details</a></td>
 				        <div id="copyModal" class="modal fade" role="dialog"></div>
 
-								<!-- {% if user.is_authenticated %}
+								{% if user.is_superuser %}
 								<td><a class="update_copy" href="#" data-form="{% url 'update_copy' copy.id %}" title="Edit">Edit</a></td>
 								<div id="editModal" class="modal fade" role="dialog"></div>
-								{% endif %} -->
+								{% endif %}
 
    			</tr>
 
@@ -172,7 +172,7 @@
       {% endif %}
     </tr>
   </table>
-  Pages generated: {{ copies.paginator.num_pages }}
+  <!-- Pages generated: {{ copies.paginator.num_pages }} -->
 </div>
 {% else %}
     <p class="sansserif" align="center">Oh no! No copies are available.</p>

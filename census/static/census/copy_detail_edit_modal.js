@@ -31,6 +31,68 @@ $(document).ready(function() {
     });
     return false;
   });
+
+  $(".title_data").unbind('click');
+  $(".title_data").click(function(ev) {
+    ev.preventDefault();
+    var url=$(this).data("form");
+    $("#titleModal").load(url, function() {
+      $("#titleModal").modal('show');
+    });
+    return false;
+  });
+
+  $(".edition_data").unbind('click');
+  $(".edition_data").click(function(ev) {
+    ev.preventDefault();
+    var url=$(this).data("form");
+    $("#editionModal").load(url, function() {
+      $("#editionModal").modal('show');
+    });
+    return false;
+  });
+
+  $(".issue_data").unbind('click');
+  $(".issue_data").click(function(ev) {
+    ev.preventDefault();
+    var url=$(this).data("form");
+    $("#issueModal").load(url, function() {
+      $("#issueModal").modal('show');
+    });
+    return false;
+  });
+
+  $(".update_title").unbind('click');
+  $(".update_title").click(function(ev) {
+    ev.preventDefault();
+    var url=$(this).data("form");
+    $("#titleUpdateModal").load(url, function() {
+      $("#titleUpdateModal").modal('show');
+    });
+    return false;
+  });
+
+  $(".update_edition").unbind('click');
+  $(".update_edition").click(function(ev) {
+    ev.preventDefault();
+    var url=$(this).data("form");
+    $("#editionUpdateModal").load(url, function() {
+      $("#editionUpdateModal").modal('show');
+    });
+    return false;
+  });
+
+  $(".update_issue").unbind('click');
+  $(".update_issue").click(function(ev) {
+    ev.preventDefault();
+    var url=$(this).data("form");
+    $("#issueUpdateModal").load(url, function() {
+      $("#issueUpdateModal").modal('show');
+    });
+    return false;
+  });
+
+
 });
 });
 
@@ -73,6 +135,27 @@ function generateDialog(copy_id) {
           option.selected = true;
         }
         $("#editModal").modal('show');
+      }
+      }
+    });
+  return false;
+}
+
+function genTitleDialog(title_id) {
+  $.ajax({
+    url: $('.editForm').attr('action'),
+    type: "POST",
+    datatype: "json",
+    data: $('.editForm').serialize(),
+    success: function(data) {
+      if(data['stat'] === "ok") {
+        alert('Success! Your changes have been saved.');
+        $("#titleUpdateModal").modal('hide');
+        window.location.reload();
+      } else {
+        alert("Error: invalid input! Please correct the errors in your input and submit again!");
+        $("#titleUpdateModal").html(data['form']);
+        $("#titleUpdateModal").modal('show');
       }
       }
     });

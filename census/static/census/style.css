@@ -363,6 +363,19 @@ input:focus:not(.finalsubmit):not(.editprofilesubmit):not(.editprofilesubmit2){
 .copy_data {
   font-size:75%;
 }
+
+.title_data {
+  font-size:75%;
+}
+
+.edition_data {
+  font-size:75%;
+}
+
+.issue_data {
+  font-size:75%;
+}
+
 .editmodalsubmission {
   font-size:12px;
   border:none;
@@ -814,6 +827,16 @@ td.table3:last-child{
   cursor:pointer;
   overflow: hidden;
   font-size: 12px;
+}
+
+.adminedit {
+  font-size:20px;
+  border:none;
+  padding: 10px 10px;
+  left:0%;
+  color: #000000;
+  background: #FFFFFF;
+  font-family: "Century Gothic", AppleGothic, sans-serif;
 }
 
 </style>

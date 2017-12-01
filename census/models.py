@@ -51,15 +51,15 @@ class Copy (models.Model):
 	Bartlett1916 = models.IntegerField(default=0, null=True)
 	Bartlett1916_Notes = models.CharField(max_length=1000, default=None, null=True)
 	Lee_Notes = models.CharField(max_length=2000, default=None, null=True)
-	Library_Notes=models.CharField(max_length=2000, default=None, null=True)
+	Local_Notes=models.CharField(max_length=5000, default=None, null=True)
 	created_by=models.ForeignKey(User, related_name="submitted_copies", default=1, null=True)
-	copynote=models.CharField(max_length=5000, default=None, null=True)
 	prov_info=models.TextField(null=True, default=None)
 	librarian_validated = models.BooleanField(default=False)
 	admin_validated = models.BooleanField(default=False)
 	is_parent=models.BooleanField(default=False)
 	is_history=models.BooleanField(default=False)
 	from_estc=models.BooleanField(default=False)
+	false_positive_draft=models.NullBooleanField(default=None)
 	false_positive=models.NullBooleanField(default=None)
 
 	def __str__(self):
@@ -72,7 +72,7 @@ class ChildCopy(Copy):
 	held_by_library=models.BooleanField(default=False)
 
 class CopyHistory(Copy):
-	stored_copy = models.ForeignKey(Copy, related_name="copy_history")  #copy of which the current object is the history of
+	stored_copy = models.ForeignKey(Copy, related_name="copy_history", default=None, null=True)  #copy of which the current object is the history of
 	date_created = models.DateTimeField(auto_now_add=True)
 
 class UserProfile(models.Model):

@@ -11,14 +11,12 @@
 
 <!-- models -->
 <div id="copyModal" class="modal fade" role="dialog"></div>
-<!-- <div id="editModal" class="modal fade" role="dialog"></div>
-<div id="editChildModal" class="modal fade" role="dialog"></div> -->
 
 <hr class = "style14" width = "50%"></hr>
 	<p class="sansserifgrey" align="center">
-	Here is a list of the copies librarians have verified.</p>
+	Here is a list of the copies librarians have verified with regards to whether they hold the copies.</p>
   <p class="sansserifgrey" align="center">
-    Please check the details and verify the information.
+    Please check and verify the information.
   </p>
 </div>
 <hr class="style14" width = "50%"></hr>
@@ -29,6 +27,7 @@
   <tbody>
     <tr>
       <th>Copy</th>
+      <th>Held by library?</th>
       <th></th>
     </tr>
 	{% if copies %}
@@ -37,9 +36,12 @@
 			<td>{{ copy }}
         <a class="copy_data" id="data{{copy.id}}" href="#" data-form="{% url 'copy_data' copy.id %}" title="Details">more details...</a>
       </td>
+      <td>
+        {{ copy.held_by_library }}
+      </td>
 
         <td id="validate {{ copy.id }}">
-         <button class="btn btn-default" onclick="adminValidate({{ copy.id }});">Verify</button>
+         <button class="btn btn-default" onclick="adminVerifyFp({{ copy.id }});">Verify</button>
         </td>
 
 		</tr>
@@ -83,9 +85,9 @@
 </div>
 
 <script>
-function adminValidate(copy_id) {
+function adminVerifyFp(copy_id) {
   var req = new XMLHttpRequest();
-  var url = 'admin_validate_copy/' + copy_id;
+  var url = 'admin_verify_copy_fp/' + copy_id;
   req.open('GET', url, false);
   req.setRequestHeader('Content-Type', 'application/json');
   req.send();

@@ -32,7 +32,8 @@
         </tr>
         <tr>
         {% for obj in object_list %}
-        <td>{{ obj.title }}</a></td>
+        <td>{{ obj.title }}
+        </td>
           <td>
             {% for edition in obj.edition_set.all %}
                 {% if edition.Edition_number %}
@@ -87,7 +88,7 @@
       {% endif %}
     </tr>
   </table>
-  Pages generated: {{ object_list.paginator.num_pages }}
+  <!-- Pages generated: {{ object_list.paginator.num_pages }} -->
 </div>
 </p>
 {% else %}
@@ -100,7 +101,7 @@
         </tr>
         <tr>
     {% for title in titles %}
-    			<td>{{ title.title }}</a></td>
+    			<td>{{ title.title }}</td>
           <td>
             {% for edition in title.edition_set.all %}
                 {% if edition.Edition_number %}
@@ -164,7 +165,7 @@
       {% endif %}
         </tr>
       </table>
-        Pages generated: {{ titles.paginator.num_pages }}
+        <!-- Pages generated: {{ titles.paginator.num_pages }} -->
 
 </div>
 
